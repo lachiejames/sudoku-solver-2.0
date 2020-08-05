@@ -5,7 +5,9 @@ class TileModel extends ChangeNotifier {
   final int col;
   int value;
 
-  TileModel({this.row, this.col});
+  TileModel(int value,{this.row, this.col}) {
+    this.value = value;
+  }
 
   String toString() {
     return 'Tile($row, $col) value=${(value != null) ? value : 'null'}';
