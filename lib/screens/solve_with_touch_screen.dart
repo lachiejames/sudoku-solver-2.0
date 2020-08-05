@@ -5,7 +5,9 @@ import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
+import 'package:sudoku_solver_2/models/tile_model.dart';
 import 'package:sudoku_solver_2/models/top_text_model.dart';
+import 'package:sudoku_solver_2/widgets/tile_widget.dart';
 import 'package:sudoku_solver_2/widgets/top_text_widget.dart';
 
 class SolveWithTouchScreen extends StatefulWidget {
@@ -109,8 +111,10 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<TopTextModel>(
-      create: (context) => TopTextModel(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<TopTextModel>(create: (_) => TopTextModel()),
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
@@ -121,6 +125,9 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
             children: <Widget>[
               TopTextWidget(),
               makeSolveMySudokuButton(),
+              TileWidget(
+                tileModel: TileModel(5,row: 6, col: 9),
+              ),
             ],
           ),
         ),
