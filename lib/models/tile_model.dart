@@ -10,7 +10,7 @@ class TileModel extends ChangeNotifier {
   }
 
   String toString() {
-    return 'Tile($row, $col) value=${(value != null) ? value : 'null'}';
+    return 'TileModel($row, $col) value=${(value != null) ? value : 'null'}';
   }
 
   int getSegment() {
