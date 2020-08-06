@@ -1,8 +1,8 @@
 class MyValues {
   static bool prodMode = false;
   static int gameNumber = 0;
-  static double screenHeight = 0;
-  static double screenWidth = 0;
+  static double screenHeight = 683;
+  static double screenWidth = 411;
 
   static double topTextFontSize = 40;
   static double appBarFontSize = 30;
