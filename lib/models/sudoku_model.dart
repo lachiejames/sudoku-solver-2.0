@@ -31,7 +31,7 @@ class SudokuModel extends ChangeNotifier {
     HashMap<TileKey, TileModel> _tileMap = HashMap<TileKey, TileModel>();
     for (int row = 1; row <= 9; row++) {
       for (int col = 1; col <= 9; col++) {
-        _tileMap[TileKey(row: row, col: col)] = TileModel(null, row: row, col: col);
+        _tileMap[TileKey(row: row, col: col)] = TileModel(row: row, col: col);
       }
     }
     return _tileMap;
@@ -39,5 +39,19 @@ class SudokuModel extends ChangeNotifier {
 
   TileModel getTileAt(int row, int col) {
     return tileMap[TileKey(row: row, col: col)];
+  }
+
+  void applyExampleValues(List<List<int>> exampleValues) {
+    for (int row = 1; row <= 9; row++) {
+      for (int col = 1; col <= 9; col++) {
+        int nextValue = exampleValues[row - 1][col - 1];
+        TileModel nextTile = this.getTileAt(row, col);
+        this.addValueToTile(nextValue, nextTile);
+      }
+    }
+  }
+
+  void addValueToTile(int value, TileModel tile) {
+    tile.setValue(value);
   }
 }

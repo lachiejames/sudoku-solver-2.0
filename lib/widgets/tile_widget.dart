@@ -49,7 +49,7 @@ class TileWidgetState extends State<TileWidget> {
           ),
         ),
         onTap: () {
-          print('tile pressed');
+          print('$tileModel pressed');
         },
       ),
     );
