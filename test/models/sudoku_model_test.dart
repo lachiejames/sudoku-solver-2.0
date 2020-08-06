@@ -15,11 +15,11 @@ void main() {
   });
 
   test('initTileMap - initialised with 81 tiles', () {
-    expect(sudokuModel.tileMap.length, 81);
+    expect(sudokuModel.tileModelMap.length, 81);
   });
 
   test('initTileMap - tiles are all valid', () {
-    for (TileModel tileModel in sudokuModel.tileMap.values.toList()) {
+    for (TileModel tileModel in sudokuModel.tileModelMap.values.toList()) {
       expect(tileModel, isNotNull);
       expect(1 <= tileModel.row && tileModel.row <= 9, true);
       expect(1 <= tileModel.col && tileModel.col <= 9, true);

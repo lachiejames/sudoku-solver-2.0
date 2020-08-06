@@ -5,22 +5,20 @@ import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
+import 'package:sudoku_solver_2/models/game_model.dart';
 import 'package:sudoku_solver_2/models/sudoku_model.dart';
-import 'package:sudoku_solver_2/models/top_text_model.dart';
 import 'package:sudoku_solver_2/widgets/number_bar_widget.dart';
 import 'package:sudoku_solver_2/widgets/sudoku_widget.dart';
 import 'package:sudoku_solver_2/widgets/top_text_widget.dart';
 
 class SolveWithTouchScreen extends StatefulWidget {
-  SolveWithTouchScreen({Key key, this.title}) : super(key: key);
-
-  final String title;
-
   @override
   _SolveWithTouchScreenState createState() => _SolveWithTouchScreenState();
 }
 
 class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
+  GameModel gameModel = GameModel();
+
   Widget makeAppBar(BuildContext context) {
     return AppBar(
       iconTheme: IconThemeData(color: MyColors.white),
@@ -42,7 +40,6 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
 
   Widget makeDropDownMenu() {
     return DropdownButton<String>(
-      key: Key('dropDownMenuButton_SolveWithTouchScreen'),
       icon: Icon(
         Icons.more_vert,
         color: MyColors.white,
@@ -84,24 +81,13 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
         child: Row(
           children: <Widget>[
             Expanded(
-              child: Consumer<TopTextModel>(
-                builder: (context, topTextModel, child) {
-                  return RaisedButton(
-                    key: Key('solveMySudokuButton_SolveWithTouchScreen'),
-                    shape: MyStyles.buttonShape,
-                    padding: MyStyles.buttonPadding,
-                    color: MyColors.primaryTheme,
-                    child: MyWidgets.makeButtonText('SOLVE MY SUDOKU'),
-                    // Should be disabled while solving
-                    onPressed: (false)
-                        ? null
-                        : () {
-                            topTextModel.setText(MyStrings.topTextPickANumber);
-                            // Provider.of<TopTextModel>(context, listen: false).updateText('pop dat pussy');
-                            // context.watch<TopTextModel>().setText('pop dat pussy');
-                          },
-                  );
-                },
+              child: RaisedButton(
+                shape: MyStyles.buttonShape,
+                padding: MyStyles.buttonPadding,
+                color: MyColors.primaryTheme,
+                child: MyWidgets.makeButtonText('SOLVE MY SUDOKU'),
+                // Should be disabled while solving
+                onPressed: null,
               ),
             ),
           ],
@@ -114,11 +100,11 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<TopTextModel>(create: (_) => TopTextModel()),
+        ChangeNotifierProvider.value(value: this.gameModel),
       ],
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(MyStrings.appBarTextSolveWithTouchScreen),
         ),
         body: Center(
           child: Column(

@@ -5,14 +5,6 @@ class NumberBarModel extends ChangeNotifier{
   List<NumberModel> numberModels;
   int tappedNumber;
 
-  static NumberBarModel instance;
-  static NumberBarModel getInstance() {
-    if (instance == null) {
-      instance = NumberBarModel();
-    }
-    return instance;
-  }
-
   NumberBarModel() {
     numberModels = this.initNumberModels();
   }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
+import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
-import 'package:sudoku_solver_2/models/top_text_model.dart';
+import 'package:sudoku_solver_2/models/game_model.dart';
 
 class TopTextWidget extends StatefulWidget {
   @override
@@ -13,17 +14,22 @@ class TopTextWidget extends StatefulWidget {
 class _TopTextWidgetState extends State<TopTextWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      padding: MyStyles.topTextMargins,
-      child: Consumer<TopTextModel>(
-        builder: (context, topTextModel, child) {
-          return Text(
-            topTextModel.text,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: MyValues.topTextFontSize,
-              color: MyColors.black,
+    return ChangeNotifierProvider.value(
+      value: GameModel.getInstance(),
+      child: Consumer<GameModel>(
+        builder: (context, gameModel, child) {
+          print('toptextWidget rebuilding');
+
+          return Container(
+            alignment: Alignment.center,
+            padding: MyStyles.topTextMargins,
+            child: Text(
+              MyStrings.topTextPickATile,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: MyValues.topTextFontSize,
+                color: MyColors.black,
+              ),
             ),
           );
         },

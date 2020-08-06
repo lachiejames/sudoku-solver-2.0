@@ -9,7 +9,7 @@ class NumberBarWidget extends StatefulWidget {
 
 class NumberBarWidgetState extends State<NumberBarWidget> {
 
-  NumberBarModel numberBarModel = NumberBarModel.getInstance();
+  NumberBarModel numberBarModel = NumberBarModel();
 
   Widget makeNumber(int number) {
     return NumberWidget(numberModel: this.numberBarModel.numberModels[number-1]);

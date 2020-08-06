@@ -47,15 +47,15 @@ class SudokuWidgetState extends State<SudokuWidget> {
   TableRow makeTableRow(int rowNum) {
     return TableRow(
       children: [
-        this.makeTileCell(this.sudokuModel.getTileAt(rowNum, 1)),
-        this.makeTileCell(this.sudokuModel.getTileAt(rowNum, 2)),
-        this.makeTileCell(this.sudokuModel.getTileAt(rowNum, 3)),
-        this.makeTileCell(this.sudokuModel.getTileAt(rowNum, 4)),
-        this.makeTileCell(this.sudokuModel.getTileAt(rowNum, 5)),
-        this.makeTileCell(this.sudokuModel.getTileAt(rowNum, 6)),
-        this.makeTileCell(this.sudokuModel.getTileAt(rowNum, 7)),
-        this.makeTileCell(this.sudokuModel.getTileAt(rowNum, 8)),
-        this.makeTileCell(this.sudokuModel.getTileAt(rowNum, 9)),
+        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 1)),
+        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 2)),
+        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 3)),
+        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 4)),
+        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 5)),
+        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 6)),
+        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 7)),
+        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 8)),
+        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 9)),
       ],
     );
   }

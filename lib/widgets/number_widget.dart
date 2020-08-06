@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
-import 'package:sudoku_solver_2/models/number_bar_model.dart';
+import 'package:sudoku_solver_2/models/game_model.dart';
 import 'package:sudoku_solver_2/models/number_model.dart';
 
 class NumberWidget extends StatefulWidget {
@@ -20,10 +20,12 @@ class NumberWidgetState extends State<NumberWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<NumberModel>(
-      create: (_) => NumberBarModel.getInstance().numberModels[numberModel.number-1],
-      child: Consumer<NumberModel>(
-        builder: (context, numberModel, child) {
+    return ChangeNotifierProvider.value(
+      value: GameModel.getInstance(),
+      child: Consumer<GameModel>(
+        builder: (context, gameModel, child) {
+          print('numberWidget rebuilding');
+
           return GestureDetector(
             child: Container(
               height: MyValues.screenWidth / 11.5,
@@ -50,9 +52,7 @@ class NumberWidgetState extends State<NumberWidget> {
               ),
             ),
             onTap: () {
-              numberModel.setIsTapped(true);
-              print('numberModel = $numberModel');
-              NumberBarModel.getInstance().numberTappedEvent(numberModel.number);
+              gameModel.sentNumberPressedEvent(this.numberModel.number);
             },
           );
         },
