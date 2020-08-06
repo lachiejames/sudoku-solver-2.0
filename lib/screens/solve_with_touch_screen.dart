@@ -6,12 +6,9 @@ import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/models/sudoku_model.dart';
-import 'package:sudoku_solver_2/models/tile_model.dart';
 import 'package:sudoku_solver_2/models/top_text_model.dart';
 import 'package:sudoku_solver_2/widgets/number_bar_widget.dart';
-import 'package:sudoku_solver_2/widgets/number_widget.dart';
 import 'package:sudoku_solver_2/widgets/sudoku_widget.dart';
-import 'package:sudoku_solver_2/widgets/tile_widget.dart';
 import 'package:sudoku_solver_2/widgets/top_text_widget.dart';
 
 class SolveWithTouchScreen extends StatefulWidget {

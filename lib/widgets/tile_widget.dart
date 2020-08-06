@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
+import 'package:sudoku_solver_2/models/number_bar_model.dart';
+import 'package:sudoku_solver_2/models/number_model.dart';
 import 'package:sudoku_solver_2/models/tile_model.dart';
 
 class TileWidget extends StatefulWidget {
@@ -17,39 +20,49 @@ class TileWidgetState extends State<TileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<TileModel>(
-      create: (_) => TileModel(
-        row: this.tileModel.row,
-        col: this.tileModel.col,
-        value:this.tileModel.value,
-      ),
-      child: GestureDetector(
-        child: Container(
-          height: 32,
-          width: 32,
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(width: (this.tileModel.row == 3 || this.tileModel.row == 6) ? 3 : 0, color: Colors.black),
-              right: BorderSide(width: (this.tileModel.row == 3 || this.tileModel.row == 6) ? 3 : 0, color: Colors.black),
-            ),
-          ),
-          child: Center(
-            child: Consumer<TileModel>(
-              builder: (context, model, child) {
-                return Text(
-                  (model.value == null) ? '' : '${model.value}',
-                  style: TextStyle(
-                    fontSize: MyValues.tileFontSize,
-                    fontFamily: MyStyles.fontStyleNumber,
-                    fontWeight: FontWeight.w400,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: this.tileModel),
+        ChangeNotifierProvider.value(value: NumberBarModel.getInstance()),
+      ],
+      child: Consumer<TileModel>(
+        builder: (context, tmodel, child) {
+          return Consumer<NumberBarModel>(
+            builder: (context, numberBarModel, child) {
+              if (this.tileModel.isTapped) {
+                if (numberBarModel.tappedNumber!=null) {
+                  this.tileModel.value = numberBarModel.tappedNumber;//setValue(numberBarModel.tappedNumber);
+                }
+              }
+              return GestureDetector(
+                child: Container(
+                  height: 32,
+                  width: 32,
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(width: (this.tileModel.row == 3 || this.tileModel.row == 6) ? 3 : 0, color: Colors.black),
+                      right: BorderSide(width: (this.tileModel.col == 3 || this.tileModel.col == 6) ? 3 : 0, color: Colors.black),
+                    ),
+                    color: (tmodel.isTapped) ? MyColors.green : MyColors.white,
                   ),
-                );
-              },
-            ),
-          ),
-        ),
-        onTap: () {
-          print('$tileModel pressed');
+                  child: Center(
+                    child: Text(
+                      (tmodel.value == null) ? '' : '${tmodel.value}',
+                      style: TextStyle(
+                        fontSize: MyValues.tileFontSize,
+                        fontFamily: MyStyles.fontStyleNumber,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  this.tileModel.setIsTapped(true);
+                  print('tileModel = $tileModel');
+                },
+              );
+            },
+          );
         },
       ),
     );

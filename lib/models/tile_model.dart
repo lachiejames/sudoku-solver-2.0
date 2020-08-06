@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 class TileModel extends ChangeNotifier {
   final int row;
   final int col;
+
   int value;
+  bool isTapped = false;
 
   TileModel({this.row, this.col, this.value});
 
@@ -35,6 +37,11 @@ class TileModel extends ChangeNotifier {
 
   void setValue(int value) {
     this.value = value;
+    notifyListeners();
+  }
+
+  void setIsTapped(bool isTapped) {
+    this.isTapped = isTapped;
     notifyListeners();
   }
 }

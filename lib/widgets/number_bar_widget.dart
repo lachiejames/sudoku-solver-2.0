@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sudoku_solver_2/models/number_bar_model.dart';
 import 'package:sudoku_solver_2/widgets/number_widget.dart';
 
 class NumberBarWidget extends StatefulWidget {
@@ -7,8 +8,11 @@ class NumberBarWidget extends StatefulWidget {
 }
 
 class NumberBarWidgetState extends State<NumberBarWidget> {
+
+  NumberBarModel numberBarModel = NumberBarModel.getInstance();
+
   Widget makeNumber(int number) {
-    return NumberWidget(number: number);
+    return NumberWidget(numberModel: this.numberBarModel.numberModels[number-1]);
   }
 
   @override
@@ -30,8 +34,4 @@ class NumberBarWidgetState extends State<NumberBarWidget> {
       ),
     );
   }
-
-  // void updateState() {
-  //   setState(() {});
-  // }
 }
