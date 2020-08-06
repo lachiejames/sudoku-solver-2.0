@@ -6,8 +6,8 @@ void main() {
   TileModel tileModelWithValue;
 
   setUp(() {
-    tileModelWithoutValue = TileModel(null, row: 6, col: 9);
-    tileModelWithValue = TileModel(5, row: 1, col: 3);
+    tileModelWithoutValue = TileModel(row: 6, col: 9, value: null);
+    tileModelWithValue = TileModel(row: 1, col: 3, value: 5);
   });
 
   test('TileModel is correctly initialised', () {

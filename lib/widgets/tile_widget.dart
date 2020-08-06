@@ -19,9 +19,9 @@ class TileWidgetState extends State<TileWidget> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<TileModel>(
       create: (_) => TileModel(
-        this.tileModel.value,
         row: this.tileModel.row,
         col: this.tileModel.col,
+        value:this.tileModel.value,
       ),
       child: GestureDetector(
         child: Container(

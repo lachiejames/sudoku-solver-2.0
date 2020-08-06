@@ -126,7 +126,7 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
               TopTextWidget(),
               makeSolveMySudokuButton(),
               TileWidget(
-                tileModel: TileModel(5,row: 6, col: 9),
+                tileModel: TileModel(row: 6, col: 9, value: 5),
               ),
             ],
           ),
