@@ -18,7 +18,7 @@ class _TopTextWidgetState extends State<TopTextWidget> {
       value: GameModel.getInstance(),
       child: Consumer<GameModel>(
         builder: (context, gameModel, child) {
-          print('toptextWidget rebuilding');
+          // print('toptextWidget rebuilding');
 
           return Container(
             alignment: Alignment.center,

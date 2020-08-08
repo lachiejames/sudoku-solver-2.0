@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
-class NumberModel extends ChangeNotifier {
+class NumberState extends ChangeNotifier {
   final int number;
-  
+
   bool isTapped = false;
 
-  NumberModel({@required this.number});
+  NumberState({@required this.number});
 
   String toString() {
     return 'NumberModel($number)';
@@ -14,5 +14,10 @@ class NumberModel extends ChangeNotifier {
   void setIsTapped(bool isTapped) {
     this.isTapped = isTapped;
     notifyListeners();
+  }
+
+  NumberState copyWith({@required int newNumber}) {
+    print('copyWith on $this -> $newNumber');
+    return NumberState(number: newNumber);
   }
 }

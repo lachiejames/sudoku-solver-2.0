@@ -2,17 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:sudoku_solver_2/models/number_model.dart';
 
 class NumberBarModel extends ChangeNotifier{
-  List<NumberModel> numberModels;
+  List<NumberState> numberModels;
   int tappedNumber;
 
   NumberBarModel() {
     numberModels = this.initNumberModels();
   }
 
-  List<NumberModel> initNumberModels() {
-    List<NumberModel> _numberModels = [];
+  List<NumberState> initNumberModels() {
+    List<NumberState> _numberModels = [];
     for (int number = 1; number <= 9; number++) {
-      _numberModels.add(NumberModel(number: number));
+      _numberModels.add(NumberState(number: number));
     }
     return _numberModels;
   }
@@ -22,7 +22,7 @@ class NumberBarModel extends ChangeNotifier{
   }
 
   int getPressedNumber() {
-    for (NumberModel numberModel in this.numberModels) {
+    for (NumberState numberModel in this.numberModels) {
       if (numberModel.isTapped) {
         return numberModel.number;
       }

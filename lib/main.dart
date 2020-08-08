@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:sudoku_solver_2/models/store.dart';
 import 'package:sudoku_solver_2/screens/solve_with_touch_screen.dart';
 
-void main() {
+void main() async {
+  await Redux.init();
+
   runApp(MyApp());
 }
 
@@ -14,7 +18,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SolveWithTouchScreen(),
+      home: StoreProvider<AppState>(
+        store: Redux.store,
+        child: SolveWithTouchScreen(),
+      ),
     );
   }
 }
