@@ -3,20 +3,20 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
-import 'package:sudoku_solver_2/models/number_model.dart';
-import 'package:sudoku_solver_2/models/store.dart';
+import 'package:sudoku_solver_2/state/number_state.dart';
+import 'package:sudoku_solver_2/state/store.dart';
 
 class NumberWidget extends StatefulWidget {
-  final NumberState numberModel;
-  NumberWidget({this.numberModel});
+  final NumberState numberState;
+  NumberWidget({this.numberState});
   @override
-  State<StatefulWidget> createState() => NumberWidgetState(numberModel: this.numberModel);
+  State<StatefulWidget> createState() => NumberWidgetState(numberState: this.numberState);
 }
 
 class NumberWidgetState extends State<NumberWidget> {
-  final NumberState numberModel;
+  final NumberState numberState;
 
-  NumberWidgetState({@required this.numberModel});
+  NumberWidgetState({@required this.numberState});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class NumberWidgetState extends State<NumberWidget> {
       distinct: true,
       converter: (store) => store.state.numberState.number,
       builder: (context, numb) {
-        print('rebuilding $numberModel');
+        print('rebuilding $numberState');
         return GestureDetector(
           child: Container(
             height: MyValues.screenWidth / 11.5,
@@ -36,12 +36,12 @@ class NumberWidgetState extends State<NumberWidget> {
               right: MyValues.screenWidth / 100,
             ),
             decoration: ShapeDecoration(
-              color: (numberModel.isTapped) ? MyColors.green : MyColors.white,
+              color: (numberState.isTapped) ? MyColors.green : MyColors.white,
               shape: CircleBorder(),
             ),
             child: Center(
               child: Text(
-                '${numberModel.number}',
+                '${numberState.number}',
                 style: TextStyle(
                   fontSize: MyValues.numberFontSize,
                   fontFamily: MyStyles.fontStyleNumber,
@@ -51,7 +51,7 @@ class NumberWidgetState extends State<NumberWidget> {
             ),
           ),
           onTap: () {
-            print('tapped - $numberModel');
+            print('tapped - $numberState');
           },
         );
       },

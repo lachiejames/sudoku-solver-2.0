@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
 
-class TopTextModel extends ChangeNotifier {
+class TopTextState extends ChangeNotifier {
   String text = MyStrings.topTextPickATile;
 
   void setText(String newText) {

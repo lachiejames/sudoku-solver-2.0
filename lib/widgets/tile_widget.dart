@@ -4,21 +4,21 @@ import 'package:provider/provider.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
-import 'package:sudoku_solver_2/models/game_model.dart';
-import 'package:sudoku_solver_2/models/my_action.dart';
-import 'package:sudoku_solver_2/models/store.dart';
-import 'package:sudoku_solver_2/models/tile_model.dart';
+import 'package:sudoku_solver_2/state/game_state.dart';
+import 'package:sudoku_solver_2/state/my_action.dart';
+import 'package:sudoku_solver_2/state/store.dart';
+import 'package:sudoku_solver_2/state/tile_state.dart';
 
 class TileWidget extends StatefulWidget {
-  final TileModel tileModel;
-  TileWidget({@required this.tileModel});
+  final TileState tileState;
+  TileWidget({@required this.tileState});
   @override
-  State<StatefulWidget> createState() => TileWidgetState(tileModel: this.tileModel);
+  State<StatefulWidget> createState() => TileWidgetState(tileState: this.tileState);
 }
 
 class TileWidgetState extends State<TileWidget> {
-  final TileModel tileModel;
-  TileWidgetState({this.tileModel});
+  final TileState tileState;
+  TileWidgetState({this.tileState});
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +32,14 @@ class TileWidgetState extends State<TileWidget> {
             width: 32,
             decoration: BoxDecoration(
               border: Border(
-                bottom: BorderSide(width: (this.tileModel.row == 3 || this.tileModel.row == 6) ? 3 : 0, color: Colors.black),
-                right: BorderSide(width: (this.tileModel.col == 3 || this.tileModel.col == 6) ? 3 : 0, color: Colors.black),
+                bottom: BorderSide(width: (this.tileState.row == 3 || this.tileState.row == 6) ? 3 : 0, color: Colors.black),
+                right: BorderSide(width: (this.tileState.col == 3 || this.tileState.col == 6) ? 3 : 0, color: Colors.black),
               ),
-              color: (tileModel.isTapped) ? MyColors.green : MyColors.white,
+              color: (tileState.isTapped) ? MyColors.green : MyColors.white,
             ),
             child: Center(
               child: Text(
-                (tileModel.value == null) ? '' : '${tileModel.value}',
+                (tileState.value == null) ? '' : '${tileState.value}',
                 style: TextStyle(
                   fontSize: MyValues.tileFontSize,
                   fontFamily: MyStyles.fontStyleNumber,
@@ -49,7 +49,7 @@ class TileWidgetState extends State<TileWidget> {
             ),
           ),
           onTap: () {
-            print('dispatching numberPressedAction from $tileModel');
+            print('dispatching numberPressedAction from $tileState');
             Redux.store.dispatch(numberPressedAction);
           },
         );

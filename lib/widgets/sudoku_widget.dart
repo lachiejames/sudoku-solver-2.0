@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
-import 'package:sudoku_solver_2/models/sudoku_model.dart';
-import 'package:sudoku_solver_2/models/tile_model.dart';
+import 'package:sudoku_solver_2/state/sudoku_state.dart';
+import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:sudoku_solver_2/widgets/tile_widget.dart';
 
 class SudokuWidget extends StatefulWidget {
-  final SudokuModel sudokuModel;
-  SudokuWidget({@required this.sudokuModel});
+  final SudokuState sudokuState;
+  SudokuWidget({@required this.sudokuState});
   @override
-  State<StatefulWidget> createState() => SudokuWidgetState(sudokuModel: this.sudokuModel);
+  State<StatefulWidget> createState() => SudokuWidgetState(sudokuState: this.sudokuState);
 }
 
 class SudokuWidgetState extends State<SudokuWidget> {
-  final SudokuModel sudokuModel;
-  SudokuWidgetState({@required this.sudokuModel});
+  final SudokuState sudokuState;
+  SudokuWidgetState({@required this.sudokuState});
 
   @override
   Widget build(BuildContext context) {
@@ -47,20 +47,20 @@ class SudokuWidgetState extends State<SudokuWidget> {
   TableRow makeTableRow(int rowNum) {
     return TableRow(
       children: [
-        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 1)),
-        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 2)),
-        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 3)),
-        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 4)),
-        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 5)),
-        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 6)),
-        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 7)),
-        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 8)),
-        this.makeTileCell(this.sudokuModel.getTileModelAt(rowNum, 9)),
+        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 1)),
+        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 2)),
+        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 3)),
+        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 4)),
+        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 5)),
+        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 6)),
+        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 7)),
+        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 8)),
+        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 9)),
       ],
     );
   }
 
-  Widget makeTileCell(TileModel tileModel) {
-    return TileWidget(tileModel: tileModel);
+  Widget makeTileCell(TileState tileState) {
+    return TileWidget(tileState: tileState);
   }
 }

@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 
-class TileModel extends ChangeNotifier {
+class TileState extends ChangeNotifier {
   final int row;
   final int col;
 
   int value;
   bool isTapped = false;
 
-  TileModel({this.row, this.col, this.value});
+  TileState({this.row, this.col, this.value});
 
   String toString() {
-    return 'TileModel($row, $col) value=${(value != null) ? value : 'null'}';
+    return 'TileState($row, $col) value=${(value != null) ? value : 'null'}';
   }
 
   int getSegment() {

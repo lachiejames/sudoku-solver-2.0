@@ -1,44 +1,44 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sudoku_solver_2/models/tile_model.dart';
+import 'package:sudoku_solver_2/state/tile_state.dart';
 
 void main() {
-  TileModel tileModelWithoutValue;
-  TileModel tileModelWithValue;
+  TileState tileStateWithoutValue;
+  TileState tileStateWithValue;
 
   setUp(() {
-    tileModelWithoutValue = TileModel(row: 6, col: 9, value: null);
-    tileModelWithValue = TileModel(row: 1, col: 3, value: 5);
+    tileStateWithoutValue = TileState(row: 6, col: 9, value: null);
+    tileStateWithValue = TileState(row: 1, col: 3, value: 5);
   });
 
-  test('TileModel is correctly initialised', () {
-    expect(tileModelWithoutValue, isNotNull);
-    expect(tileModelWithoutValue.row, 6);
-    expect(tileModelWithoutValue.col, 9);
-    expect(tileModelWithoutValue.value, null);
+  test('TileState is correctly initialised', () {
+    expect(tileStateWithoutValue, isNotNull);
+    expect(tileStateWithoutValue.row, 6);
+    expect(tileStateWithoutValue.col, 9);
+    expect(tileStateWithoutValue.value, null);
 
-    expect(tileModelWithValue, isNotNull);
-    expect(tileModelWithValue.row, 1);
-    expect(tileModelWithValue.col, 3);
-    expect(tileModelWithValue.value, 5);
+    expect(tileStateWithValue, isNotNull);
+    expect(tileStateWithValue.row, 1);
+    expect(tileStateWithValue.col, 3);
+    expect(tileStateWithValue.value, 5);
   });
 
   test('toString() returns expected string', () {
-    expect(tileModelWithoutValue.toString(), 'TileModel(6, 9) value=null');
-    expect(tileModelWithValue.toString(), 'TileModel(1, 3) value=5');
+    expect(tileStateWithoutValue.toString(), 'TileState(6, 9) value=null');
+    expect(tileStateWithValue.toString(), 'TileState(1, 3) value=5');
   });
 
   test('getSegment() returns correct segment', () {
-    expect(tileModelWithoutValue.getSegment(), 6);
-    expect(tileModelWithValue.getSegment(), 1);
+    expect(tileStateWithoutValue.getSegment(), 6);
+    expect(tileStateWithValue.getSegment(), 1);
   });
 
   test('setValue will update the value', () {
-    expect(tileModelWithoutValue.value, null);
-    tileModelWithoutValue.setValue(9);
-    expect(tileModelWithoutValue.value, 9);
+    expect(tileStateWithoutValue.value, null);
+    tileStateWithoutValue.setValue(9);
+    expect(tileStateWithoutValue.value, 9);
 
-    expect(tileModelWithValue.value, 5);
-    tileModelWithValue.setValue(1);
-    expect(tileModelWithValue.value, 1);
+    expect(tileStateWithValue.value, 5);
+    tileStateWithValue.setValue(1);
+    expect(tileStateWithValue.value, 1);
   });
 }

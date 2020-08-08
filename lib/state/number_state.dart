@@ -8,7 +8,7 @@ class NumberState extends ChangeNotifier {
   NumberState({@required this.number});
 
   String toString() {
-    return 'NumberModel($number)';
+    return 'NumberState($number)';
   }
 
   void setIsTapped(bool isTapped) {

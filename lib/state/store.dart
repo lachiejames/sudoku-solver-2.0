@@ -1,9 +1,9 @@
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
-import 'package:sudoku_solver_2/models/my_action.dart';
-import 'package:sudoku_solver_2/models/my_reducer.dart';
-import 'package:sudoku_solver_2/models/number_model.dart';
+import 'package:sudoku_solver_2/state/my_action.dart';
+import 'package:sudoku_solver_2/state/my_reducer.dart';
+import 'package:sudoku_solver_2/state/number_state.dart';
 
 AppState appReducer(AppState appState, dynamic action) {
   print('appReducer with appState and action');

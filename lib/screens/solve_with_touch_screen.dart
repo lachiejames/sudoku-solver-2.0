@@ -5,8 +5,8 @@ import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
-import 'package:sudoku_solver_2/models/game_model.dart';
-import 'package:sudoku_solver_2/models/sudoku_model.dart';
+import 'package:sudoku_solver_2/state/game_state.dart';
+import 'package:sudoku_solver_2/state/sudoku_state.dart';
 import 'package:sudoku_solver_2/widgets/number_bar_widget.dart';
 import 'package:sudoku_solver_2/widgets/sudoku_widget.dart';
 import 'package:sudoku_solver_2/widgets/top_text_widget.dart';
@@ -17,7 +17,7 @@ class SolveWithTouchScreen extends StatefulWidget {
 }
 
 class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
-  GameModel gameModel = GameModel();
+  GameState gameState = GameState();
 
   Widget makeAppBar(BuildContext context) {
     return AppBar(
@@ -100,7 +100,7 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: this.gameModel),
+        ChangeNotifierProvider.value(value: this.gameState),
       ],
       child: Scaffold(
         appBar: AppBar(
@@ -113,7 +113,7 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
               TopTextWidget(),
               NumberBarWidget(),
               SudokuWidget(
-                sudokuModel: SudokuModel(),
+                sudokuState: SudokuState(),
               ),
               makeSolveMySudokuButton(),
             ],

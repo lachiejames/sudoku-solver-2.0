@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/models/number_model.dart';
-import 'package:sudoku_solver_2/models/store.dart';
+import 'package:sudoku_solver_2/state/number_state.dart';
+import 'package:sudoku_solver_2/state/store.dart';
 import 'package:redux/redux.dart';
 
 
 @immutable
 class NumberAction {
-  final NumberState numberModel;
+  final NumberState numberState;
 
-  NumberAction(this.numberModel);
+  NumberAction(this.numberState);
 }
 
 Future<void> numberPressedAction(Store<AppState> store) async {

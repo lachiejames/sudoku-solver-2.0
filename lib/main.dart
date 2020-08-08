@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/models/store.dart';
+import 'package:sudoku_solver_2/state/store.dart';
 import 'package:sudoku_solver_2/screens/solve_with_touch_screen.dart';
 
 void main() async {

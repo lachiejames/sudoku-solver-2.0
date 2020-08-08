@@ -4,7 +4,7 @@ import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
-import 'package:sudoku_solver_2/models/game_model.dart';
+import 'package:sudoku_solver_2/state/game_state.dart';
 
 class TopTextWidget extends StatefulWidget {
   @override
@@ -15,9 +15,9 @@ class _TopTextWidgetState extends State<TopTextWidget> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: GameModel.getInstance(),
-      child: Consumer<GameModel>(
-        builder: (context, gameModel, child) {
+      value: GameState.getInstance(),
+      child: Consumer<GameState>(
+        builder: (context, gameState, child) {
           // print('toptextWidget rebuilding');
 
           return Container(
