@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 
-class TileState extends ChangeNotifier {
+class TileState {
   final int row;
   final int col;
 
@@ -37,11 +36,9 @@ class TileState extends ChangeNotifier {
 
   void setValue(int value) {
     this.value = value;
-    notifyListeners();
   }
 
   void setIsTapped(bool isTapped) {
     this.isTapped = isTapped;
-    notifyListeners();
   }
 }

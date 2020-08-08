@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
-import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/sudoku_state.dart';
 import 'package:sudoku_solver_2/widgets/number_bar_widget.dart';
 import 'package:sudoku_solver_2/widgets/sudoku_widget.dart';
@@ -17,7 +15,6 @@ class SolveWithTouchScreen extends StatefulWidget {
 }
 
 class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
-  GameState gameState = GameState();
 
   Widget makeAppBar(BuildContext context) {
     return AppBar(
@@ -98,11 +95,7 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(value: this.gameState),
-      ],
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text(MyStrings.appBarTextSolveWithTouchScreen),
         ),
@@ -119,7 +112,7 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
             ],
           ),
         ),
-      ),
+      
     );
   }
 }

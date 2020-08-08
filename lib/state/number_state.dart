@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class NumberState extends ChangeNotifier {
+class NumberState {
   final int number;
 
   bool isTapped = false;
@@ -13,7 +13,6 @@ class NumberState extends ChangeNotifier {
 
   void setIsTapped(bool isTapped) {
     this.isTapped = isTapped;
-    notifyListeners();
   }
 
   NumberState copyWith({@required int newNumber}) {

@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
 
-class NumberBarState extends ChangeNotifier{
+class NumberBarState{
   List<NumberState> numberStates;
   int tappedNumber;
 
@@ -32,6 +31,5 @@ class NumberBarState extends ChangeNotifier{
 
   void numberTappedEvent(int numberTapped) {
     this.tappedNumber = numberTapped;
-    notifyListeners();
   }
 }

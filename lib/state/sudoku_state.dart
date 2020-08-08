@@ -1,10 +1,8 @@
 import 'dart:collection';
-
-import 'package:flutter/cupertino.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
-class SudokuState extends ChangeNotifier {
+class SudokuState {
   HashMap<TileKey, TileState> tileStateMap;
 
   SudokuState() {
