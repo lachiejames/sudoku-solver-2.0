@@ -24,26 +24,26 @@ AppState appReducer(AppState state, dynamic action) {
 @immutable
 class AppState {
   final HashMap<TileKey, TileState> tileStateMap;
-  final TileState selectedTile;
+  final bool hasSelectedTile;
   final List<NumberState> numberStateList;
   final TopTextState topTextState;
 
   AppState({
     @required this.tileStateMap,
-    @required this.selectedTile,
+    @required this.hasSelectedTile,
     @required this.numberStateList,
     @required this.topTextState,
   });
 
   AppState copyWith({
     HashMap<TileKey, TileState> tileStateMap,
-    TileState selectedTile,
+    bool hasSelectedTile,
     List<NumberState> numberStateList,
     TopTextState topTextState,
   }) {
     return AppState(
       tileStateMap: tileStateMap ?? this.tileStateMap,
-      selectedTile: selectedTile ?? this.selectedTile,
+      hasSelectedTile: hasSelectedTile ?? this.hasSelectedTile,
       numberStateList: numberStateList ?? this.numberStateList,
       topTextState: topTextState ?? this.topTextState,
     );
@@ -67,7 +67,7 @@ class Redux {
       middleware: [thunkMiddleware],
       initialState: AppState(
         tileStateMap: MyWidgets.initTileStateMap(),
-        selectedTile: null,
+        hasSelectedTile: false,
         numberStateList: MyWidgets.initNumberStateList(),
         topTextState: TopTextState(),
       ),

@@ -13,9 +13,9 @@ AppState tileSelectedReducer(AppState appState, TileSelectedAction action) {
   newTileStateMap[nextSelectedTileKey] = nextSelectedTile;
 
   // deselect old tile if applicable
-  if (appState.selectedTile != null) {
-    final TileKey prevSelectedTileKey = TileKey(row: appState.selectedTile.row, col: appState.selectedTile.col);
-    newTileStateMap[prevSelectedTileKey] = appState.selectedTile.copyWith(isTapped: false);
+  if (appState.hasSelectedTile) {
+    final TileKey prevSelectedTileKey = extractSelectedTileKey(appState.tileStateMap);
+    newTileStateMap[prevSelectedTileKey] = newTileStateMap[prevSelectedTileKey].copyWith(isTapped: false);
   }
 
   // Highlight the numbers
@@ -26,7 +26,7 @@ AppState tileSelectedReducer(AppState appState, TileSelectedAction action) {
 
   return appState.copyWith(
     tileStateMap: newTileStateMap,
-    selectedTile: nextSelectedTile,
+    hasSelectedTile: true,
     numberStateList: newNumberStateList,
   );
 }
@@ -46,7 +46,16 @@ AppState tileDeselectedReducer(AppState appState, TileDeselectedAction action) {
 
   return appState.copyWith(
     tileStateMap: newTileStateMap,
-    selectedTile: null,
+    hasSelectedTile: false,
     numberStateList: newNumberStateList,
   );
+}
+
+TileKey extractSelectedTileKey(HashMap<TileKey, TileState> tileStateMap) {
+  for (MapEntry<TileKey, TileState> entry in tileStateMap.entries) {
+    if (entry.value.isTapped) {
+      return entry.key;
+    }
+  }
+  return null;
 }
