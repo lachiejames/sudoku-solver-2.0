@@ -16,6 +16,8 @@ AppState appReducer(AppState state, dynamic action) {
     return tileSelectedReducer(state, action);
   } else if (action is TileDeselectedAction) {
     return tileDeselectedReducer(state, action);
+  }else if (action is NumberPressedAction) {
+    return numberPressedReducer(state, action);
   }
 
   return state;

@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
+import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/store.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
 
@@ -49,7 +50,9 @@ class NumberWidgetState extends State<NumberWidget> {
               ),
             ),
           ),
-          onTap: () {},
+          onTap: () {
+            Redux.store.dispatch(NumberPressedAction(numberState));
+          },
         );
       },
     );

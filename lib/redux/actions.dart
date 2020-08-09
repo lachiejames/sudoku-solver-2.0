@@ -1,3 +1,4 @@
+import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
 class TileSelectedAction {
@@ -10,4 +11,10 @@ class TileDeselectedAction {
   final TileState deselectedTile;
 
   TileDeselectedAction(this.deselectedTile);
+}
+
+class NumberPressedAction {
+  final NumberState pressedNumber;
+
+  NumberPressedAction(this.pressedNumber);
 }
