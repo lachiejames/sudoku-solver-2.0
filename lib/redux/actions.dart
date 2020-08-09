@@ -24,3 +24,8 @@ class NumberPressedAction {
 
   NumberPressedAction(this.pressedNumber);
 }
+
+
+class SolveButtonPressedAction {
+  SolveButtonPressedAction();
+}

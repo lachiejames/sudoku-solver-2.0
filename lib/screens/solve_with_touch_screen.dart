@@ -4,6 +4,8 @@ import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
+import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/widgets/number_bar_widget.dart';
 import 'package:sudoku_solver_2/widgets/sudoku_widget.dart';
 import 'package:sudoku_solver_2/widgets/top_text_widget.dart';
@@ -82,7 +84,9 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
                 color: MyColors.primaryTheme,
                 child: MyWidgets.makeButtonText('SOLVE MY SUDOKU'),
                 // Should be disabled while solving
-                onPressed: null,
+                onPressed: (){
+                  Redux.store.dispatch(SolveButtonPressedAction());
+                },
               ),
             ),
           ],

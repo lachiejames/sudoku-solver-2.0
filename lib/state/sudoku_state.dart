@@ -7,7 +7,7 @@ import 'package:sudoku_solver_2/state/tile_state.dart';
 class SudokuState {
   final HashMap<TileKey, TileState> tileStateMap;
 
-  SudokuState({this.tileStateMap});
+  SudokuState({@required this.tileStateMap});
 
   String toString() {
     String s = '-------------------------------------\n';
@@ -47,9 +47,9 @@ class SudokuState {
     tileState = tileState.copyWith(value: value);
   }
 
-  SudokuState copyWith({TileState tileState}) {
-    SudokuState nextSudokuState = SudokuState();
-    nextSudokuState.tileStateMap[TileKey(row: tileState.row, col: tileState.col)] = tileState;
-    return nextSudokuState;
+  SudokuState copyWith({HashMap<TileKey, TileState> tileStateMap}) {
+    return SudokuState(
+      tileStateMap: tileStateMap,
+    );
   }
 }
