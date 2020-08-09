@@ -5,7 +5,7 @@ import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
-import 'package:sudoku_solver_2/state/number_bar_state.dart';
+import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
@@ -22,23 +22,23 @@ AppState appReducer(AppState state, dynamic action) {
 @immutable
 class AppState {
   final HashMap<TileKey, TileState> tileStateMap;
-  final NumberBarState numberBarState;
+  final List<NumberState> numberStateList;
   final TopTextState topTextState;
 
   AppState({
     @required this.tileStateMap,
-    @required this.numberBarState,
+    @required this.numberStateList,
     @required this.topTextState,
   });
 
   AppState copyWith({
     HashMap<TileKey, TileState> tileStateMap,
-    NumberBarState numberBarState,
+    List<NumberState> numberStateList,
     TopTextState topTextState,
   }) {
     return AppState(
       tileStateMap: tileStateMap ?? this.tileStateMap,
-      numberBarState: numberBarState ?? this.numberBarState,
+      numberStateList: numberStateList ?? this.numberStateList,
       topTextState: topTextState ?? this.topTextState,
     );
   }
@@ -61,7 +61,7 @@ class Redux {
       middleware: [thunkMiddleware],
       initialState: AppState(
         tileStateMap: MyWidgets.initTileStateMap(),
-        numberBarState: NumberBarState(),
+        numberStateList: MyWidgets.initNumberStateList(),
         topTextState: TopTextState(),
       ),
     );
