@@ -25,7 +25,6 @@ class TileWidgetState extends State<TileWidget> {
       distinct: true,
       converter: (store) => store.state.tileStateMap[this.tileKey],
       builder: (context, tileState) {
-        
         return GestureDetector(
           child: Container(
             height: 32,
@@ -49,7 +48,11 @@ class TileWidgetState extends State<TileWidget> {
             ),
           ),
           onTap: () {
-            Redux.store.dispatch(TilePressedAction(tileState));
+            if (tileState.isTapped) {
+              Redux.store.dispatch(TileDeselectedAction(tileState));
+            } else {
+              Redux.store.dispatch(TileSelectedAction(tileState));
+            }
           },
         );
       },

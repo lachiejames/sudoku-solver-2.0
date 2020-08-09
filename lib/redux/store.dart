@@ -12,8 +12,10 @@ import 'package:sudoku_solver_2/state/top_text_state.dart';
 import 'package:sudoku_solver_2/redux/reducers.dart';
 
 AppState appReducer(AppState state, dynamic action) {
-  if (action is TilePressedAction) {
-    return state.copyWith(tileStateMap: tilePressedReducer(state.tileStateMap, action));
+  if (action is TileSelectedAction) {
+    return tileSelectedReducer(state,action);
+  } else if (action is TileDeselectedAction) {
+    return tileDeselectedReducer(state, action);
   }
 
   return state;

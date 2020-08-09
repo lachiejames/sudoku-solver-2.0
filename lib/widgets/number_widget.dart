@@ -35,7 +35,7 @@ class NumberWidgetState extends State<NumberWidget> {
               right: MyValues.screenWidth / 100,
             ),
             decoration: ShapeDecoration(
-              color: (numberState.isTapped) ? MyColors.green : MyColors.white,
+              color: (numberState.isActive) ? MyColors.green : MyColors.white,
               shape: CircleBorder(),
             ),
             child: Center(

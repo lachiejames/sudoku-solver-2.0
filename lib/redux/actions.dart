@@ -1,9 +1,13 @@
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
-class TilePressedAction {
-  final TileState nextPressedTile;
+class TileSelectedAction {
+  final TileState selectedTile;
 
-  TilePressedAction(this.nextPressedTile);
+  TileSelectedAction(this.selectedTile);
 }
 
+class TileDeselectedAction {
+  final TileState deselectedTile;
 
+  TileDeselectedAction(this.deselectedTile);
+}

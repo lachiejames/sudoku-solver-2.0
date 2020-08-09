@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 class NumberState {
   final int number;
 
-  final bool isTapped;
+  final bool isActive;
 
-  NumberState({@required this.number, this.isTapped = false});
+  NumberState({@required this.number, this.isActive = false});
 
   String toString() {
     return 'NumberState($number)';
@@ -14,11 +14,11 @@ class NumberState {
 
   NumberState copyWith({
     int number,
-    int isTapped,
+    bool isActive,
   }) {
     return NumberState(
       number: number ?? this.number,
-      isTapped: isTapped ?? this.isTapped,
+      isActive: isActive ?? this.isActive,
     );
   }
 }
