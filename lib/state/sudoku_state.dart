@@ -1,13 +1,13 @@
 import 'dart:collection';
+import 'package:flutter/cupertino.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
+@immutable
 class SudokuState {
-  HashMap<TileKey, TileState> tileStateMap;
+  final HashMap<TileKey, TileState> tileStateMap;
 
-  SudokuState() {
-    this.tileStateMap = this.initTileStateMap();
-  }
+  SudokuState({this.tileStateMap});
 
   String toString() {
     String s = '-------------------------------------\n';
@@ -25,18 +25,14 @@ class SudokuState {
     return s;
   }
 
-  HashMap<TileKey, TileState> initTileStateMap() {
-    HashMap<TileKey, TileState> _tileStateMap = HashMap<TileKey, TileState>();
-    for (int row = 1; row <= 9; row++) {
-      for (int col = 1; col <= 9; col++) {
-        _tileStateMap[TileKey(row: row, col: col)] = TileState(row: row, col: col);
-      }
-    }
-    return _tileStateMap;
-  }
+
 
   TileState getTileStateAt(int row, int col) {
     return tileStateMap[TileKey(row: row, col: col)];
+  }
+
+  void replaceTile(TileState newTileState) {
+    this.tileStateMap[TileKey(row: newTileState.row, col: newTileState.col)] = newTileState;
   }
 
   void applyExampleValues(List<List<int>> exampleValues) {
@@ -50,6 +46,12 @@ class SudokuState {
   }
 
   void addValueToTile(int value, TileState tileState) {
-    tileState.setValue(value);
+    tileState = tileState.copyWith(value: value);
+  }
+
+  SudokuState copyWith({TileState tileState}) {
+    SudokuState nextSudokuState = SudokuState();
+    nextSudokuState.tileStateMap[TileKey(row: tileState.row, col: tileState.col)] = tileState;
+    return nextSudokuState;
   }
 }

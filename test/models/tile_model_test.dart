@@ -31,14 +31,4 @@ void main() {
     expect(tileStateWithoutValue.getSegment(), 6);
     expect(tileStateWithValue.getSegment(), 1);
   });
-
-  test('setValue will update the value', () {
-    expect(tileStateWithoutValue.value, null);
-    tileStateWithoutValue.setValue(9);
-    expect(tileStateWithoutValue.value, 9);
-
-    expect(tileStateWithValue.value, 5);
-    tileStateWithValue.setValue(1);
-    expect(tileStateWithValue.value, 1);
-  });
 }

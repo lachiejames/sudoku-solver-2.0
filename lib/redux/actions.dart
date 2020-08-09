@@ -1,20 +1,9 @@
-import 'package:sudoku_solver_2/state/model.dart';
+import 'package:sudoku_solver_2/state/tile_state.dart';
 
-class AddItemAction {
-  static int _id = 0;
-  final String item;
+class TilePressedAction {
+  final TileState tileState;
 
-  AddItemAction(this.item) {
-    _id++;
-  }
-
-  int get id => _id;
+  TilePressedAction(this.tileState);
 }
 
-class RemoveItemAction {
-  final Item item;
 
-  RemoveItemAction(this.item);
-}
-
-class RemoveItemsAction {}

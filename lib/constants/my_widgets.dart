@@ -1,7 +1,11 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
+import 'package:sudoku_solver_2/state/tile_key.dart';
+import 'package:sudoku_solver_2/state/tile_state.dart';
 
 class MyWidgets {
   static Widget getEmptyWidget() {
@@ -57,5 +61,15 @@ class MyWidgets {
         style: MyStyles.howToTextStyle,
       ),
     );
+  }
+
+    static HashMap<TileKey, TileState> initTileStateMap() {
+    HashMap<TileKey, TileState> _tileStateMap = HashMap<TileKey, TileState>();
+    for (int row = 1; row <= 9; row++) {
+      for (int col = 1; col <= 9; col++) {
+        _tileStateMap[TileKey(row: row, col: col)] = TileState(row: row, col: col);
+      }
+    }
+    return _tileStateMap;
   }
 }

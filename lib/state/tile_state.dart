@@ -1,12 +1,13 @@
+import 'package:flutter/foundation.dart';
 
+@immutable
 class TileState {
   final int row;
   final int col;
+  final int value;
+  final bool isTapped;
 
-  int value;
-  bool isTapped = false;
-
-  TileState({this.row, this.col, this.value});
+  TileState({this.row, this.col, this.value, this.isTapped = false});
 
   String toString() {
     return 'TileState($row, $col) value=${(value != null) ? value : 'null'}';
@@ -34,11 +35,17 @@ class TileState {
     }
   }
 
-  void setValue(int value) {
-    this.value = value;
-  }
-
-  void setIsTapped(bool isTapped) {
-    this.isTapped = isTapped;
+  TileState copyWith({
+    int row,
+    int col,
+    int value,
+    bool isTapped,
+  }) {
+    return TileState(
+      row: row ?? this.row,
+      col: col ?? this.col,
+      value: value ?? this.value,
+      isTapped: isTapped ?? this.isTapped,
+    );
   }
 }

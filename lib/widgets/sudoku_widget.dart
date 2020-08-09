@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
-import 'package:sudoku_solver_2/state/sudoku_state.dart';
-import 'package:sudoku_solver_2/state/tile_state.dart';
+import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/widgets/tile_widget.dart';
 
 class SudokuWidget extends StatefulWidget {
-  final SudokuState sudokuState;
-  SudokuWidget({@required this.sudokuState});
   @override
-  State<StatefulWidget> createState() => SudokuWidgetState(sudokuState: this.sudokuState);
+  State<StatefulWidget> createState() => SudokuWidgetState();
 }
 
 class SudokuWidgetState extends State<SudokuWidget> {
-  final SudokuState sudokuState;
-  SudokuWidgetState({@required this.sudokuState});
+  SudokuWidgetState();
 
   @override
   Widget build(BuildContext context) {
@@ -47,20 +43,20 @@ class SudokuWidgetState extends State<SudokuWidget> {
   TableRow makeTableRow(int rowNum) {
     return TableRow(
       children: [
-        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 1)),
-        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 2)),
-        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 3)),
-        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 4)),
-        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 5)),
-        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 6)),
-        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 7)),
-        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 8)),
-        this.makeTileCell(this.sudokuState.getTileStateAt(rowNum, 9)),
+        this.makeTileCell(TileKey(row:rowNum, col:1)),
+        this.makeTileCell(TileKey(row:rowNum, col:2)),
+        this.makeTileCell(TileKey(row:rowNum, col:3)),
+        this.makeTileCell(TileKey(row:rowNum, col:4)),
+        this.makeTileCell(TileKey(row:rowNum, col:5)),
+        this.makeTileCell(TileKey(row:rowNum, col:6)),
+        this.makeTileCell(TileKey(row:rowNum, col:7)),
+        this.makeTileCell(TileKey(row:rowNum, col:8)),
+        this.makeTileCell(TileKey(row:rowNum, col:9)),
       ],
     );
   }
 
-  Widget makeTileCell(TileState tileState) {
-    return TileWidget(tileState: tileState);
+  Widget makeTileCell(TileKey tileKey) {
+    return TileWidget(tileKey: tileKey);
   }
 }

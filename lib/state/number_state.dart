@@ -1,22 +1,24 @@
 import 'package:flutter/cupertino.dart';
 
+@immutable
 class NumberState {
   final int number;
 
-  bool isTapped = false;
+  final bool isTapped;
 
-  NumberState({@required this.number});
+  NumberState({@required this.number, this.isTapped = false});
 
   String toString() {
     return 'NumberState($number)';
   }
 
-  void setIsTapped(bool isTapped) {
-    this.isTapped = isTapped;
-  }
-
-  NumberState copyWith({@required int newNumber}) {
-    print('copyWith on $this -> $newNumber');
-    return NumberState(number: newNumber);
+  NumberState copyWith({
+    int number,
+    int isTapped,
+  }) {
+    return NumberState(
+      number: number ?? this.number,
+      isTapped: isTapped ?? this.isTapped,
+    );
   }
 }

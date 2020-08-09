@@ -1,26 +1,21 @@
+import 'dart:collection';
+
 import 'package:sudoku_solver_2/redux/actions.dart';
-import 'package:sudoku_solver_2/state/model.dart';
+import 'package:sudoku_solver_2/state/tile_key.dart';
+import 'package:sudoku_solver_2/state/tile_state.dart';
 
-AppState appStateReducer(AppState state, action) {
-  return AppState(items: itemReducer(state.items, action));
-}
+HashMap<TileKey, TileState> tilePressedReducer(HashMap<TileKey, TileState> oldTileStateMap, TilePressedAction action) {
+  print('tilePressedReducer');
+  print(action.tileState);
+  HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
+  TileKey pressedTileKey = TileKey(row: action.tileState.row, col: action.tileState.col);
 
-List<Item> itemReducer(List<Item> state, action) {
-  if (action is AddItemAction) {
-    return []
-      ..addAll(state)
-      ..add(Item(
-        id: action.id,
-        body: action.item,
-      ));
+  for (MapEntry<TileKey, TileState> entry in oldTileStateMap.entries) {
+    if (entry.key == pressedTileKey) {
+      newTileStateMap.putIfAbsent(entry.key, () => entry.value.copyWith(isTapped: true));
+    } else {
+      newTileStateMap.putIfAbsent(entry.key, () => entry.value);
+    }
   }
-
-  if (action is RemoveItemAction) {
-    return List.unmodifiable(List.from(state)..remove(action.item));
-  }
-
-  if (action is RemoveItemsAction) {
-    return List.unmodifiable([]);
-  }
-  return state;
+  return newTileStateMap;
 }

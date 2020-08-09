@@ -1,14 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
 
-class NumberBarState{
-  List<NumberState> numberStates;
-  int tappedNumber;
+@immutable
+class NumberBarState {
+  final List<NumberState> numberStates;
 
-  NumberBarState() {
-    numberStates = this.initNumberStates();
-  }
+  NumberBarState() : numberStates = _initNumberStates();
 
-  List<NumberState> initNumberStates() {
+  static List<NumberState> _initNumberStates() {
     List<NumberState> _numberStates = [];
     for (int number = 1; number <= 9; number++) {
       _numberStates.add(NumberState(number: number));
@@ -18,18 +17,5 @@ class NumberBarState{
 
   String toString() {
     return '';
-  }
-
-  int getPressedNumber() {
-    for (NumberState numberState in this.numberStates) {
-      if (numberState.isTapped) {
-        return numberState.number;
-      }
-    }
-    return null;
-  }
-
-  void numberTappedEvent(int numberTapped) {
-    this.tappedNumber = numberTapped;
   }
 }

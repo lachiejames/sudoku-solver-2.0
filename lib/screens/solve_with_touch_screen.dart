@@ -4,7 +4,6 @@ import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
-import 'package:sudoku_solver_2/state/sudoku_state.dart';
 import 'package:sudoku_solver_2/widgets/number_bar_widget.dart';
 import 'package:sudoku_solver_2/widgets/sudoku_widget.dart';
 import 'package:sudoku_solver_2/widgets/top_text_widget.dart';
@@ -105,9 +104,7 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
             children: <Widget>[
               TopTextWidget(),
               NumberBarWidget(),
-              SudokuWidget(
-                sudokuState: SudokuState(),
-              ),
+              SudokuWidget(),
               makeSolveMySudokuButton(),
             ],
           ),
