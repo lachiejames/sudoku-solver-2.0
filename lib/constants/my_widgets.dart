@@ -81,4 +81,13 @@ class MyWidgets {
     }
     return _numberStateList;
   }
+
+  static TileKey extractSelectedTileKey(HashMap<TileKey, TileState> tileStateMap) {
+    for (MapEntry<TileKey, TileState> entry in tileStateMap.entries) {
+      if (entry.value.isTapped) {
+        return entry.key;
+      }
+    }
+    return null;
+  }
 }

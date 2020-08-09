@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/redux/store.dart';
 import 'package:sudoku_solver_2/screens/solve_with_touch_screen.dart';
+import 'package:sudoku_solver_2/state/app_state.dart';
 
 void main() {
   Redux.init();
