@@ -21,12 +21,10 @@ class TileWidgetState extends State<TileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('rebuilding $tileKey');
     return StoreConnector<AppState, TileState>(
       distinct: true,
       converter: (store) => store.state.tileStateMap[this.tileKey],
       builder: (context, tileState) {
-        print('rebuilding $tileKey');
         return GestureDetector(
           child: Container(
             height: 32,
@@ -50,8 +48,10 @@ class TileWidgetState extends State<TileWidget> {
             ),
           ),
           onTap: () {
-            if (tileState.isTapped) {
+            if (tileState.isTapped && tileState.value == null) {
               Redux.store.dispatch(TileDeselectedAction(tileState));
+            } else if (tileState.isTapped && tileState.value != null) {
+              Redux.store.dispatch(RemoveValueFromTileAction(tileState));
             } else {
               Redux.store.dispatch(TileSelectedAction(tileState));
             }

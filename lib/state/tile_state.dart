@@ -44,8 +44,20 @@ class TileState {
     return TileState(
       row: row ?? this.row,
       col: col ?? this.col,
-      value: value ?? this.value,
+      value: _decideValueToPass(value),
       isTapped: isTapped ?? this.isTapped,
     );
+  }
+
+  int _decideValueToPass(int valueProvided) {
+    int valueToPass;
+    if (valueProvided == null) {
+      valueToPass = this.value;
+    } else if (valueProvided == -1) {
+      valueToPass = null;
+    } else {
+      valueToPass = valueProvided;
+    }
+    return valueToPass;
   }
 }

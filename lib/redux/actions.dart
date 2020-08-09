@@ -13,6 +13,12 @@ class TileDeselectedAction {
   TileDeselectedAction(this.deselectedTile);
 }
 
+class RemoveValueFromTileAction {
+  final TileState selectedTile;
+
+  RemoveValueFromTileAction(this.selectedTile);
+}
+
 class NumberPressedAction {
   final NumberState pressedNumber;
 
