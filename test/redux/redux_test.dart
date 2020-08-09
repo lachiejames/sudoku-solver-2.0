@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sudoku_solver_2/redux/store.dart';
+import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
