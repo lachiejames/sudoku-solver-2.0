@@ -10,7 +10,7 @@ class TileState {
   TileState({this.row, this.col, this.value, this.isTapped = false});
 
   String toString() {
-    return 'TileState($row, $col) value=${(value != null) ? value : 'null'}';
+    return 'TileState(row=$row, col=$col, value=${(value != null) ? value : 'null'}, isTapped=${this.isTapped})';
   }
 
   int getSegment() {

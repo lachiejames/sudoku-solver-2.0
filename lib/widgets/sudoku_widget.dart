@@ -43,15 +43,15 @@ class SudokuWidgetState extends State<SudokuWidget> {
   TableRow makeTableRow(int rowNum) {
     return TableRow(
       children: [
-        this.makeTileCell(TileKey(row:rowNum, col:1)),
-        this.makeTileCell(TileKey(row:rowNum, col:2)),
-        this.makeTileCell(TileKey(row:rowNum, col:3)),
-        this.makeTileCell(TileKey(row:rowNum, col:4)),
-        this.makeTileCell(TileKey(row:rowNum, col:5)),
-        this.makeTileCell(TileKey(row:rowNum, col:6)),
-        this.makeTileCell(TileKey(row:rowNum, col:7)),
-        this.makeTileCell(TileKey(row:rowNum, col:8)),
-        this.makeTileCell(TileKey(row:rowNum, col:9)),
+        this.makeTileCell(TileKey(row: rowNum, col: 1)),
+        this.makeTileCell(TileKey(row: rowNum, col: 2)),
+        this.makeTileCell(TileKey(row: rowNum, col: 3)),
+        this.makeTileCell(TileKey(row: rowNum, col: 4)),
+        this.makeTileCell(TileKey(row: rowNum, col: 5)),
+        this.makeTileCell(TileKey(row: rowNum, col: 6)),
+        this.makeTileCell(TileKey(row: rowNum, col: 7)),
+        this.makeTileCell(TileKey(row: rowNum, col: 8)),
+        this.makeTileCell(TileKey(row: rowNum, col: 9)),
       ],
     );
   }

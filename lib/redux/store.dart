@@ -13,7 +13,7 @@ import 'package:sudoku_solver_2/redux/reducers.dart';
 
 AppState appReducer(AppState state, dynamic action) {
   if (action is TileSelectedAction) {
-    return tileSelectedReducer(state,action);
+    return tileSelectedReducer(state, action);
   } else if (action is TileDeselectedAction) {
     return tileDeselectedReducer(state, action);
   }
@@ -61,7 +61,7 @@ class Redux {
     }
   }
 
-  static Future<void> init() async {
+  static void init() {
     _store = Store<AppState>(
       appReducer,
       middleware: [thunkMiddleware],

@@ -14,7 +14,6 @@ class SolveWithTouchScreen extends StatefulWidget {
 }
 
 class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
-
   Widget makeAppBar(BuildContext context) {
     return AppBar(
       iconTheme: IconThemeData(color: MyColors.white),
@@ -95,21 +94,20 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(MyStrings.appBarTextSolveWithTouchScreen),
+      appBar: AppBar(
+        title: Text(MyStrings.appBarTextSolveWithTouchScreen),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TopTextWidget(),
+            NumberBarWidget(),
+            SudokuWidget(),
+            makeSolveMySudokuButton(),
+          ],
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TopTextWidget(),
-              NumberBarWidget(),
-              SudokuWidget(),
-              makeSolveMySudokuButton(),
-            ],
-          ),
-        ),
-      
+      ),
     );
   }
 }

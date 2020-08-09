@@ -49,9 +49,7 @@ class NumberWidgetState extends State<NumberWidget> {
               ),
             ),
           ),
-          onTap: () {
-            print('tapped - $numberState');
-          },
+          onTap: () {},
         );
       },
     );

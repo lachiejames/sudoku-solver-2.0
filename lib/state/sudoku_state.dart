@@ -25,8 +25,6 @@ class SudokuState {
     return s;
   }
 
-
-
   TileState getTileStateAt(int row, int col) {
     return tileStateMap[TileKey(row: row, col: col)];
   }
