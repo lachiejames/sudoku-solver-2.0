@@ -90,6 +90,15 @@ class MyGames {
 -------------------------------------
 ''';
 
+  static final String game1TilesInRow1String =
+      '[TileState(row=1, col=1, value=null, isTapped=false), TileState(row=1, col=2, value=null, isTapped=false), TileState(row=1, col=3, value=null, isTapped=false), TileState(row=1, col=4, value=5, isTapped=false), TileState(row=1, col=5, value=4, isTapped=false), TileState(row=1, col=6, value=3, isTapped=false), TileState(row=1, col=7, value=9, isTapped=false), TileState(row=1, col=8, value=null, isTapped=false), TileState(row=1, col=9, value=null, isTapped=false)]';
+
+  static final String game1TilesInCol3String =
+      '[TileState(row=1, col=3, value=null, isTapped=false), TileState(row=2, col=3, value=7, isTapped=false), TileState(row=3, col=3, value=null, isTapped=false), TileState(row=4, col=3, value=null, isTapped=false), TileState(row=5, col=3, value=8, isTapped=false), TileState(row=6, col=3, value=9, isTapped=false), TileState(row=7, col=3, value=null, isTapped=false), TileState(row=8, col=3, value=null, isTapped=false), TileState(row=9, col=3, value=4, isTapped=false)]';
+
+  static final String game1TilesInSegment2String =
+      '[TileState(row=1, col=4, value=5, isTapped=false), TileState(row=1, col=5, value=4, isTapped=false), TileState(row=1, col=6, value=3, isTapped=false), TileState(row=2, col=4, value=null, isTapped=false), TileState(row=2, col=5, value=null, isTapped=false), TileState(row=2, col=6, value=null, isTapped=false), TileState(row=3, col=4, value=6, isTapped=false), TileState(row=3, col=5, value=null, isTapped=false), TileState(row=3, col=6, value=null, isTapped=false)]';
+
   static final String game1ValuesStringSolved = '''
 -------------------------------------
 | 6 | 8 | 2 | 5 | 4 | 3 | 9 | 1 | 7 |
