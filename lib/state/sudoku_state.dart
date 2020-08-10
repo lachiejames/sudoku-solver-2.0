@@ -103,6 +103,44 @@ class SudokuState {
     return _valuesInSegment;
   }
 
+  List<int> getPossibleValuesAtTile(TileState tile) {
+    if (tile.value != null) {
+      return [];
+    }
+    List<int> possibleValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    Set<int> invalidValues = Set<int>();
+    for (int invalidValue in getValuesInRow(tile.row)) {
+      invalidValues.add(invalidValue);
+    }
+    for (int invalidValue in getValuesInCol(tile.col)) {
+      invalidValues.add(invalidValue);
+    }
+    for (int invalidValue in getValuesInSegment(tile.getSegment())) {
+      invalidValues.add(invalidValue);
+    }
+
+    for (int invalidValue in invalidValues) {
+      possibleValues.remove(invalidValue);
+    }
+
+    return possibleValues;
+  }
+
+  bool allConstraintsSatisfied() {
+    for (int i = 1; i <= 9; i++) {
+      List<int> valuesInRow = getValuesInRow(i);
+      List<int> valuesInCol = getValuesInCol(i);
+      List<int> valuesInSegment = getValuesInSegment(i);
+
+      if (valuesInRow.length != valuesInRow.toSet().length ||
+          valuesInCol.length != valuesInCol.toSet().length ||
+          valuesInSegment.length != valuesInSegment.toSet().length) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   SudokuState copyWith({HashMap<TileKey, TileState> tileStateMap}) {
     return SudokuState(
       tileStateMap: tileStateMap,

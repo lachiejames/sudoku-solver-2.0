@@ -63,7 +63,7 @@ void main() {
       test('getTilesInRow() returns a list of tiles in the given row', () {
         List<TileState> tilesInRow = sudokuState.getTilesInRow(1);
         expect(tilesInRow.length, 9);
-        expect(tilesInRow.toString(), TestConstants.solvedGames[1]);
+        expect(tilesInRow.toString(), TestConstants.game1TilesInRow1String);
       });
 
       test('getTilesInCol() returns a list of tiles in the given column', () {
@@ -94,6 +94,42 @@ void main() {
         expect(sudokuState.getValuesInSegment(1), [7]);
         expect(sudokuState.getValuesInSegment(5), [9, 8, 4]);
         expect(sudokuState.getValuesInSegment(9), [4, 2, 7]);
+      });
+
+      test('getPossibleValuesAtTile() an empty list if the tile has a value', () {
+        TileState tileState = sudokuState.getTileStateAt(3, 4);
+        expect(tileState.value, 6);
+        expect(sudokuState.getPossibleValuesAtTile(tileState), []);
+      });
+
+      test('getPossibleValuesAtTile() returns correct values allowed at a tile', () {
+        TileState tileState = sudokuState.getTileStateAt(1, 1);
+        expect(tileState.value, null);
+        expect(sudokuState.getPossibleValuesAtTile(tileState), [1, 6, 8]);
+      });
+
+      test('allConstraintsSatisfied() returns false when identical values occupy the same row', () {
+        sudokuState.addValueToTile(1, sudokuState.getTileStateAt(1, 1));
+        sudokuState.addValueToTile(1, sudokuState.getTileStateAt(1, 3));
+        expect(sudokuState.allConstraintsSatisfied(), false);
+      });
+
+      test('allConstraintsSatisfied() returns false when identical values occupy the same column', () {
+        sudokuState.addValueToTile(1, sudokuState.getTileStateAt(1, 1));
+        sudokuState.addValueToTile(1, sudokuState.getTileStateAt(3, 1));
+        expect(sudokuState.allConstraintsSatisfied(), false);
+      });
+
+      test('allConstraintsSatisfied() returns false when identical values occupy the same segment', () {
+        sudokuState.addValueToTile(1, sudokuState.getTileStateAt(1, 1));
+        sudokuState.addValueToTile(1, sudokuState.getTileStateAt(3, 3));
+        expect(sudokuState.allConstraintsSatisfied(), false);
+      });
+
+      test('allConstraintsSatisfied() returns true for a solved game', () {
+        sudokuState = SudokuState(tileStateMap: MyWidgets.initTileStateMap());
+        sudokuState.applyExampleValues(TestConstants.game2ValuesListSolved);
+        expect(sudokuState.allConstraintsSatisfied(), true);
       });
     });
   });
