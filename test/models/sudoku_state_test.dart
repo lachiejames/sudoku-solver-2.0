@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sudoku_solver_2/constants/my_games.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
-import 'package:sudoku_solver_2/state/sudoku_state.dart';
+import 'package:sudoku_solver_2/algorithm/sudoku_state.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
 import '../constants/test_constants.dart';
