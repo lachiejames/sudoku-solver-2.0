@@ -60,6 +60,18 @@ void main() {
         expect(sudokuState.getTileStateAt(6, 9).toString(), 'TileState(row=6, col=9, value=7, isTapped=false)');
       });
 
+      test('addValueToTile() increases numValue, if replacing value with a different value', () {
+        expect(sudokuState.numValues, 22);
+        sudokuState.addValueToTile(7, sudokuState.getTileStateAt(1, 4));
+        expect(sudokuState.numValues, 22);
+      });
+
+      test('addValueToTile() decreases numValue, if removing a value from a tile', () {
+        expect(sudokuState.numValues, 22);
+        sudokuState.addValueToTile(null, sudokuState.getTileStateAt(1, 4));
+        expect(sudokuState.numValues, 21);
+      });
+
       test('getTilesInRow() returns a list of tiles in the given row', () {
         List<TileState> tilesInRow = sudokuState.getTilesInRow(1);
         expect(tilesInRow.length, 9);
@@ -130,6 +142,22 @@ void main() {
         sudokuState = SudokuState(tileStateMap: MyWidgets.initTileStateMap());
         sudokuState.applyExampleValues(TestConstants.game2ValuesListSolved);
         expect(sudokuState.allConstraintsSatisfied(), true);
+      });
+
+      test('isFull() returns true when all tiles have a value', () {
+        sudokuState = SudokuState(tileStateMap: MyWidgets.initTileStateMap());
+        sudokuState.applyExampleValues(TestConstants.game2ValuesListSolved);
+        expect(sudokuState.isFull(), true);
+      });
+
+      test('getNextUnassignedTile() returns a tile without a value, if possible', () {
+        expect(sudokuState.getNextTileWithoutValue().toString(), 'TileState(row=1, col=1, value=null, isTapped=false)');
+      });
+
+      test('getNextUnassignedTile() returns null if the sudoku is complete', () {
+        sudokuState = SudokuState(tileStateMap: MyWidgets.initTileStateMap());
+        sudokuState.applyExampleValues(TestConstants.game2ValuesListSolved);
+        expect(sudokuState.getNextTileWithoutValue(), null);
       });
     });
   });

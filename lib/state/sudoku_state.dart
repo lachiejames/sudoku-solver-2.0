@@ -4,9 +4,9 @@ import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
-@immutable
 class SudokuState {
   final HashMap<TileKey, TileState> tileStateMap;
+  int numValues = 0;
 
   SudokuState({@required this.tileStateMap});
 
@@ -41,6 +41,20 @@ class SudokuState {
   }
 
   void addValueToTile(int value, TileState tileState) {
+    // tile already has a value, that is not this value
+    if ((tileState.value == null && value == null) || (tileState.value != null && value != null)) {
+      tileState = tileState.copyWith(value: value);
+      return;
+    }
+
+    // removing a value from this tile
+    if (value == null) {
+      this.numValues--;
+    } else {
+      // adding a value to this tile, when it did not previously have one
+      this.numValues++;
+    }
+
     tileState = tileState.copyWith(value: value);
     TileKey tileKey = TileKey(row: tileState.row, col: tileState.col);
     this.tileStateMap[tileKey] = tileState;
@@ -139,6 +153,27 @@ class SudokuState {
       }
     }
     return true;
+  }
+
+  bool isFull() {
+    return this.numValues == 81;
+  }
+
+  TileState getNextTileWithoutValue() {
+    if (this.isFull()) {
+      return null;
+    }
+
+    for (int row = 1; row <= 9; row++) {
+      for (int col = 1; col <= 9; col++) {
+        TileState _tileState = this.getTileStateAt(row, col);
+        if (_tileState.value == null) {
+          return _tileState;
+        }
+      }
+    }
+
+    return null;
   }
 
   SudokuState copyWith({HashMap<TileKey, TileState> tileStateMap}) {

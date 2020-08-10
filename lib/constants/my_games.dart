@@ -36,18 +36,6 @@ class MyGames {
     [9, 6, 2, 3, null, null, null, 1, null],
   ];
 
-  static final List<List<int>> game2ValuesListSolved = [
-    [8, 2, 1, 4, 9, 7, 3, 5, 6],
-    [6, 9, 5, 1, 3, 2, 7, 4, 8],
-    [3, 4, 7, 6, 5, 8, 9, 2, 1],
-    [4, 7, 9, 2, 6, 3, 1, 8, 5],
-    [2, 1, 8, 9, 7, 5, 4, 6, 3],
-    [5, 3, 6, 8, 4, 1, 2, 7, 9],
-    [1, 5, 3, 7, 2, 6, 8, 9, 4],
-    [7, 8, 4, 5, 1, 9, 6, 3, 2],
-    [9, 6, 2, 3, 8, 4, 5, 1, 7],
-  ];
-
   static final List<List<int>> game3ValuesList = [
     [2, null, 7, null, 3, 5, null, null, 4],
     [6, null, 9, null, null, null, null, null, null],
