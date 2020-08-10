@@ -4,6 +4,8 @@ import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/state/sudoku_state.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
+import '../constants/test_constants.dart';
+
 void main() {
   group('SudokuState', () {
     SudokuState sudokuState;
@@ -14,7 +16,7 @@ void main() {
 
     group('before example values added', () {
       test('toString() is correctly formatted', () {
-        expect(sudokuState.toString(), MyGames.emptySudokuString);
+        expect(sudokuState.toString(), TestConstants.emptySudokuString);
       });
 
       test('initTileMap() initialised with 81 tiles', () {
@@ -43,7 +45,7 @@ void main() {
       });
 
       test('applyExampleValues() updates the state with the given values list', () {
-        expect(sudokuState.toString(), MyGames.game1ValuesListString);
+        expect(sudokuState.toString(), TestConstants.game1ValuesListString);
       });
 
       test('addValueToTile() provides tileStateMap with a copy of the tile', () {
@@ -61,19 +63,19 @@ void main() {
       test('getTilesInRow() returns a list of tiles in the given row', () {
         List<TileState> tilesInRow = sudokuState.getTilesInRow(1);
         expect(tilesInRow.length, 9);
-        expect(tilesInRow.toString(), MyGames.game1TilesInRow1String);
+        expect(tilesInRow.toString(), TestConstants.solvedGames[1]);
       });
 
       test('getTilesInCol() returns a list of tiles in the given column', () {
         List<TileState> tilesInCol = sudokuState.getTilesInCol(3);
         expect(tilesInCol.length, 9);
-        expect(tilesInCol.toString(), MyGames.game1TilesInCol3String);
+        expect(tilesInCol.toString(), TestConstants.game1TilesInCol3String);
       });
 
       test('getTilesInSegment() returns a list of tiles in the given column', () {
         List<TileState> tilesInSegment = sudokuState.getTilesInSegment(2);
         expect(tilesInSegment.length, 9);
-        expect(tilesInSegment.toString(), MyGames.game1TilesInSegment2String);
+        expect(tilesInSegment.toString(), TestConstants.game1TilesInSegment2String);
       });
 
       test('getValuesInRow() returns a list of values in the given row', () {
