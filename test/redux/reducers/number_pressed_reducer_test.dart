@@ -20,7 +20,7 @@ void main() {
     state = Redux.store.state;
   });
 
-  group('NumberPressedAction & NumberPressedReducer', () {
+  group('NumberPressedAction & NumberPressedReducer ->', () {
     TileKey tileKey = TileKey(row: 6, col: 9);
     NumberState pressedNumber;
 

@@ -20,7 +20,7 @@ void main() {
     state = Redux.store.state;
   });
 
-  group('RemoveValueFromTileAction & removeValueFromTileReducer', () {
+  group('RemoveValueFromTileAction & removeValueFromTileReducer ->', () {
     TileKey tileKey = TileKey(row: 6, col: 9);
 
     setUp(() {

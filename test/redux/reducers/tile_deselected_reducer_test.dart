@@ -20,7 +20,7 @@ void main() {
     state = Redux.store.state;
   });
 
-  group('TileDeselectedAction & tileDeselectedReducer', () {
+  group('TileDeselectedAction & tileDeselectedReducer ->', () {
     TileKey tileKey = TileKey(row: 6, col: 9);
 
     setUp(() {

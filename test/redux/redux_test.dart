@@ -15,7 +15,7 @@ void main() {
     state = Redux.store.state;
   });
 
-  group('Redux initialisation', () {
+  group('Redux initialisation ->', () {
     test('AppState correctly initialised', () {
       expect(state, isNotNull);
       expect(state.tileStateMap, isNotNull);

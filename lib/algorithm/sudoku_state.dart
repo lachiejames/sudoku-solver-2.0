@@ -43,7 +43,7 @@ class SudokuState {
   void addValueToTile(int value, TileState tileState) {
     // tile already has a value, that is not this value
     if ((tileState.value == null && value == null) || (tileState.value != null && value != null)) {
-      tileState = tileState.copyWith(value: value);
+      tileState.value = value;
       return;
     }
 
@@ -55,9 +55,7 @@ class SudokuState {
       this.numValues++;
     }
 
-    tileState = tileState.copyWith(value: value);
-    TileKey tileKey = TileKey(row: tileState.row, col: tileState.col);
-    this.tileStateMap[tileKey] = tileState;
+    tileState.value = value;
   }
 
   List<TileState> getTilesInRow(int row) {
@@ -174,11 +172,5 @@ class SudokuState {
     }
 
     return null;
-  }
-
-  SudokuState copyWith({HashMap<TileKey, TileState> tileStateMap}) {
-    return SudokuState(
-      tileStateMap: tileStateMap,
-    );
   }
 }

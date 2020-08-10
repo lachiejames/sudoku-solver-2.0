@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
 void main() {
-  group('TileState', () {
+  group('TileState ->', () {
     TileState tileState;
 
     setUp(() {

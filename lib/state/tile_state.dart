@@ -1,11 +1,9 @@
-import 'package:flutter/foundation.dart';
 
-@immutable
 class TileState {
   final int row;
   final int col;
-  final int value;
-  final bool isTapped;
+  int value;
+  bool isTapped;
 
   TileState({this.row, this.col, this.value, this.isTapped = false});
 

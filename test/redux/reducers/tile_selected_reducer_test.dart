@@ -20,7 +20,7 @@ void main() {
     state = Redux.store.state;
   });
 
-  group('TileSelectedAction & tileSelectedReducer', () {
+  group('TileSelectedAction & tileSelectedReducer ->', () {
     TileKey tileKey = TileKey(row: 6, col: 9);
 
     test('tileState replaced with new state', () {

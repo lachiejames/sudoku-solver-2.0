@@ -7,14 +7,14 @@ import 'package:sudoku_solver_2/state/tile_state.dart';
 import '../constants/test_constants.dart';
 
 void main() {
-  group('SudokuState', () {
+  group('SudokuState ->', () {
     SudokuState sudokuState;
 
     setUp(() {
       sudokuState = SudokuState(tileStateMap: MyWidgets.initTileStateMap());
     });
 
-    group('before example values added', () {
+    group('before example values added ->', () {
       test('toString() is correctly formatted', () {
         expect(sudokuState.toString(), TestConstants.emptySudokuString);
       });
@@ -34,7 +34,7 @@ void main() {
       });
     });
 
-    group('after example values added', () {
+    group('after example values added ->', () {
       setUp(() {
         sudokuState.applyExampleValues(MyGames.games[1]);
       });
@@ -46,13 +46,6 @@ void main() {
 
       test('applyExampleValues() updates the state with the given values list', () {
         expect(sudokuState.toString(), TestConstants.game1ValuesListString);
-      });
-
-      test('addValueToTile() provides tileStateMap with a copy of the tile', () {
-        TileState tileState = sudokuState.getTileStateAt(6, 9);
-        sudokuState.addValueToTile(7, tileState);
-        TileState nextTileState = sudokuState.getTileStateAt(6, 9);
-        expect(tileState == nextTileState, false);
       });
 
       test('addValueToTile() adds the given value to the given tile', () {
