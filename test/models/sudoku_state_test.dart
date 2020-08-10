@@ -75,6 +75,24 @@ void main() {
         expect(tilesInSegment.length, 9);
         expect(tilesInSegment.toString(), MyGames.game1TilesInSegment2String);
       });
+
+      test('getValuesInRow() returns a list of values in the given row', () {
+        expect(sudokuState.getValuesInRow(1), [5, 4, 3, 9]);
+        expect(sudokuState.getValuesInRow(5), [8, 9]);
+        expect(sudokuState.getValuesInRow(9), [2, 4, 1, 7]);
+      });
+
+      test('getValuesInCol() returns a list of values in the given column', () {
+        expect(sudokuState.getValuesInCol(1), [2]);
+        expect(sudokuState.getValuesInCol(5), [4, 8, 1]);
+        expect(sudokuState.getValuesInCol(9), [6, 4]);
+      });
+
+      test('getValuesInSegment() returns a list of values in the given segment', () {
+        expect(sudokuState.getValuesInSegment(1), [7]);
+        expect(sudokuState.getValuesInSegment(5), [9, 8, 4]);
+        expect(sudokuState.getValuesInSegment(9), [4, 2, 7]);
+      });
     });
   });
 }

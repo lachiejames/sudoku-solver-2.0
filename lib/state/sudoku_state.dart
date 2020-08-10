@@ -27,7 +27,7 @@ class SudokuState {
   }
 
   TileState getTileStateAt(int row, int col) {
-    return tileStateMap[TileKey(row: row, col: col)];
+    return this.tileStateMap[TileKey(row: row, col: col)];
   }
 
   void applyExampleValues(List<List<int>> exampleValues) {
@@ -65,9 +65,42 @@ class SudokuState {
   List<TileState> getTilesInSegment(int segment) {
     List<TileState> _tilesInSegment = List<TileState>();
     for (TileKey tileKey in MyWidgets.getTileKeysInSegment(segment)) {
-      _tilesInSegment.add(tileStateMap[tileKey]);
+      _tilesInSegment.add(this.tileStateMap[tileKey]);
     }
     return _tilesInSegment;
+  }
+
+  List<int> getValuesInRow(int row) {
+    List<int> _valuesInRow = List<int>();
+    for (int col = 1; col <= 9; col++) {
+      int value = this.getTileStateAt(row, col).value;
+      if (value != null) {
+        _valuesInRow.add(value);
+      }
+    }
+    return _valuesInRow;
+  }
+
+  List<int> getValuesInCol(int col) {
+    List<int> _valuesInCol = List<int>();
+    for (int row = 1; row <= 9; row++) {
+      int value = this.getTileStateAt(row, col).value;
+      if (value != null) {
+        _valuesInCol.add(value);
+      }
+    }
+    return _valuesInCol;
+  }
+
+  List<int> getValuesInSegment(int segment) {
+    List<int> _valuesInSegment = List<int>();
+    for (TileKey tileKey in MyWidgets.getTileKeysInSegment(segment)) {
+      int value = this.tileStateMap[tileKey].value;
+      if (value != null) {
+        _valuesInSegment.add(value);
+      }
+    }
+    return _valuesInSegment;
   }
 
   SudokuState copyWith({HashMap<TileKey, TileState> tileStateMap}) {
