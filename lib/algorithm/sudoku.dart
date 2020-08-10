@@ -4,11 +4,11 @@ import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
-class SudokuState {
+class Sudoku {
   final HashMap<TileKey, TileState> tileStateMap;
   int numValues = 0;
 
-  SudokuState({@required this.tileStateMap});
+  Sudoku({@required this.tileStateMap});
 
   String toString() {
     String s = '-------------------------------------\n';

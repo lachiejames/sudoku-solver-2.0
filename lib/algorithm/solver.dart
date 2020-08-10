@@ -1,17 +1,16 @@
-import 'package:sudoku_solver_2/algorithm/sudoku_state.dart';
+import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
-SudokuState cspState;
+Sudoku cspState;
 
-bool backtracking(SudokuState sudokuState) {
-  if (sudokuState.isFull()) {
+bool backtracking(Sudoku sudoku) {
+  if (sudoku.isFull()) {
     return true;
   }
 
-  TileState tileState = sudokuState.getNextTileWithoutValue();
+  TileState tileState = sudoku.getNextTileWithoutValue();
 
-  for (int value in sudokuState.getPossibleValuesAtTile(tileState)) {
-    // This deletes the old tile and makes a new tile
+  for (int value in sudoku.getPossibleValuesAtTile(tileState)) {
     cspState.addValueToTile(value, tileState);
 
     if (cspState.allConstraintsSatisfied()) {
@@ -19,13 +18,14 @@ bool backtracking(SudokuState sudokuState) {
         return true;
       }
     }
+    
     cspState.addValueToTile(null, tileState);
   }
 
   return false;
 }
 
-SudokuState solveSudoku(SudokuState cs) {
+Sudoku solveSudoku(Sudoku cs) {
   cspState = cs;
   backtracking(cs);
   return cs;

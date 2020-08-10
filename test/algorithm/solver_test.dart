@@ -1,17 +1,17 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sudoku_solver_2/algorithm/solver.dart';
-import 'package:sudoku_solver_2/algorithm/sudoku_state.dart';
+import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/constants/my_games.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import '../constants/test_constants.dart';
 
 void main() {
   group('Solver ->', () {
-    SudokuState currentStateHere;
+    Sudoku currentStateHere;
 
     group('backtracking() algorithm ->', () {
       setUp(() {
-        currentStateHere = SudokuState(tileStateMap: MyWidgets.initTileStateMap());
+        currentStateHere = Sudoku(tileStateMap: MyWidgets.initTileStateMap());
         currentStateHere.applyExampleValues(MyGames.games[0]);
         cspState = currentStateHere;
       });
@@ -24,7 +24,7 @@ void main() {
 
     group('solve games ->', () {
       setUp(() {
-        currentStateHere = SudokuState(tileStateMap: MyWidgets.initTileStateMap());
+        currentStateHere = Sudoku(tileStateMap: MyWidgets.initTileStateMap());
       });
 
       void solveGame(exampleValues) {

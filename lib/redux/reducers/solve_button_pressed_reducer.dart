@@ -13,15 +13,15 @@ AppState solveButtonPressedReducer(AppState appState, SolveButtonPressedAction a
 }
 
 
-// SudokuState cspState;
-// bool backtracking(SudokuState sudokuState) {
-//   if (sudokuState.isComplete() || timeElapsed > MyValues.maxSolveTime) {
+// sudoku cspState;
+// bool backtracking(sudoku sudoku) {
+//   if (sudoku.isComplete() || timeElapsed > MyValues.maxSolveTime) {
 //     return true;
 //   }
 
-//   TileState tile = sudokuState.getNextUnassignedTile();
+//   TileState tile = sudoku.getNextUnassignedTile();
 
-//   for (int value in sudokuState.getPossibleValuesAtTile(tile)) {
+//   for (int value in sudoku.getPossibleValuesAtTile(tile)) {
 //     cspState.addValueToTile(value, tile);
 
 //     if (cspState.allConstraintsSatisfied()) {
@@ -35,14 +35,14 @@ AppState solveButtonPressedReducer(AppState appState, SolveButtonPressedAction a
 //   return false;
 // }
 
-// SudokuState solveSudoku(SudokuState cs) {
+// sudoku solveSudoku(sudoku cs) {
 //   startTime = DateTime.now().millisecondsSinceEpoch;
 //   cspState = cs;
 //   backtracking(cs);
 //   return cs;
 // }
 
-// solveWithCompute(SudokuState cs) async {
-//   SudokuState solvedSudoku = await compute(solveSudoku, cs);
+// solveWithCompute(sudoku cs) async {
+//   sudoku solvedSudoku = await compute(solveSudoku, cs);
 //   return solvedSudoku;
 // }
