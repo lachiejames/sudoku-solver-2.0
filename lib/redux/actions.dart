@@ -1,3 +1,4 @@
+import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
@@ -29,3 +30,10 @@ class NumberPressedAction {
 class SolveButtonPressedAction {
   SolveButtonPressedAction();
 }
+
+class SudokuSolvedAction {
+  final Sudoku solvedSudoku;
+
+  SudokuSolvedAction(this.solvedSudoku);
+}
+
