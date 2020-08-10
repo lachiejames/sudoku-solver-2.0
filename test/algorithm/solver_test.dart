@@ -13,7 +13,6 @@ void main() {
       setUp(() {
         currentStateHere = Sudoku(tileStateMap: MyWidgets.initTileStateMap());
         currentStateHere.applyExampleValues(MyGames.games[0]);
-        cspState = currentStateHere;
       });
 
       test('results in a solved sudoku', () {

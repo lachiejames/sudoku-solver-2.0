@@ -1,7 +1,6 @@
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
-Sudoku cspState;
 
 bool backtracking(Sudoku sudoku) {
   if (sudoku.isFull()) {
@@ -11,22 +10,21 @@ bool backtracking(Sudoku sudoku) {
   TileState tileState = sudoku.getNextTileWithoutValue();
 
   for (int value in sudoku.getPossibleValuesAtTile(tileState)) {
-    cspState.addValueToTile(value, tileState);
+    sudoku.addValueToTile(value, tileState);
 
-    if (cspState.allConstraintsSatisfied()) {
-      if (backtracking(cspState)) {
+    if (sudoku.allConstraintsSatisfied()) {
+      if (backtracking(sudoku)) {
         return true;
       }
     }
-    
-    cspState.addValueToTile(null, tileState);
+
+    sudoku.addValueToTile(null, tileState);
   }
 
   return false;
 }
 
 Sudoku solveSudoku(Sudoku cs) {
-  cspState = cs;
   backtracking(cs);
   return cs;
 }
