@@ -1,6 +1,12 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
+import 'package:sudoku_solver_2/constants/my_widgets.dart';
+import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
+import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:sudoku_solver_2/widgets/tile_widget.dart';
 
 class SudokuWidget extends StatefulWidget {
@@ -13,13 +19,24 @@ class SudokuWidgetState extends State<SudokuWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      margin: EdgeInsets.only(
-        left: MyValues.screenWidth / 15,
-        right: MyValues.screenWidth / 15,
-      ),
-      child: this.makeTable(),
+    return StoreConnector<AppState, bool>(
+      distinct: true,
+      converter: (store) => store.state.isSolving,
+      builder: (context, isSolving) {
+        return Stack(
+          children: <Widget>[
+            Container(
+              color: Colors.white,
+              margin: EdgeInsets.only(
+                left: MyValues.screenWidth / 15,
+                right: MyValues.screenWidth / 15,
+              ),
+              child: this.makeTable(),
+            ),
+            (isSolving) ? MyWidgets.makeProgressIndicator() : MyWidgets.getEmptyWidget(),
+          ],
+        );
+      },
     );
   }
 

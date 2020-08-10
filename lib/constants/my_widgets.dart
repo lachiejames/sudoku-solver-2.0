@@ -13,6 +13,14 @@ class MyWidgets {
     return Text('');
   }
 
+  static Widget makeProgressIndicator() {
+    return Center(
+      child: CircularProgressIndicator(
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
+
   static Widget makeButtonText(String text) {
     return Text(
       text,
