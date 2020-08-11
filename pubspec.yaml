@@ -14,9 +14,11 @@ dependencies:
   redux_thunk: ^0.3.0
 
 dev_dependencies:
+  test: any
+  flutter_test:
+    sdk: flutter
   flutter_driver:
     sdk: flutter
-  test: any
 
 flutter:
   uses-material-design: true
