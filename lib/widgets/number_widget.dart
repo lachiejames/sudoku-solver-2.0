@@ -48,6 +48,7 @@ class NumberWidgetState extends State<NumberWidget> {
                   fontFamily: MyStyles.fontStyleNumber,
                   fontWeight: FontWeight.w400,
                 ),
+                textDirection: TextDirection.ltr,
               ),
             ),
           ),

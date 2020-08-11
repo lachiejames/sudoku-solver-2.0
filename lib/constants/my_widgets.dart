@@ -10,7 +10,10 @@ import 'package:sudoku_solver_2/state/tile_state.dart';
 
 class MyWidgets {
   static Widget getEmptyWidget() {
-    return Text('');
+    return Text(
+      '',
+      textDirection: TextDirection.ltr,
+    );
   }
 
   static Widget makeProgressIndicator() {
@@ -25,6 +28,7 @@ class MyWidgets {
     return Text(
       text,
       style: MyStyles.buttonTextStyle,
+      textDirection: TextDirection.ltr,
     );
   }
 
@@ -32,6 +36,7 @@ class MyWidgets {
     return Text(
       text,
       style: MyStyles.appBarTextStyle,
+      textDirection: TextDirection.ltr,
     );
   }
 
@@ -42,6 +47,7 @@ class MyWidgets {
         appBarText,
         textAlign: TextAlign.left,
         style: MyStyles.appBarTextStyle,
+        textDirection: TextDirection.ltr,
       ),
     );
   }
@@ -57,6 +63,7 @@ class MyWidgets {
           fontSize: MyValues.topTextFontSize,
           color: color,
         ),
+        textDirection: TextDirection.ltr,
       ),
     );
   }
@@ -68,6 +75,7 @@ class MyWidgets {
         text,
         textAlign: TextAlign.left,
         style: MyStyles.howToTextStyle,
+        textDirection: TextDirection.ltr,
       ),
     );
   }

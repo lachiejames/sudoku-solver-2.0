@@ -22,6 +22,7 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
       title: Text(
         MyStrings.appBarTextSolveWithTouchScreen,
         style: MyStyles.appBarTextStyle,
+        textDirection: TextDirection.ltr,
       ),
       actions: <Widget>[
         Padding(
@@ -52,7 +53,10 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
         (String value) {
           return DropdownMenuItem<String>(
             value: value,
-            child: Text(value),
+            child: Text(
+              value,
+              textDirection: TextDirection.ltr,
+            ),
           );
         },
       ).toList(),
@@ -84,7 +88,7 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
                 color: MyColors.primaryTheme,
                 child: MyWidgets.makeButtonText('SOLVE MY SUDOKU'),
                 // Should be disabled while solving
-                onPressed: (){
+                onPressed: () {
                   Redux.store.dispatch(SolveButtonPressedAction());
                 },
               ),
@@ -99,7 +103,10 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(MyStrings.appBarTextSolveWithTouchScreen),
+        title: Text(
+          MyStrings.appBarTextSolveWithTouchScreen,
+          textDirection: TextDirection.ltr,
+        ),
       ),
       body: Center(
         child: Column(

@@ -45,6 +45,7 @@ class TileWidgetState extends State<TileWidget> {
                   fontFamily: MyStyles.fontStyleNumber,
                   fontWeight: FontWeight.w400,
                 ),
+                textDirection: TextDirection.ltr,
               ),
             ),
           ),

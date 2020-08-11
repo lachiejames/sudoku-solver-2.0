@@ -22,6 +22,7 @@ class _TopTextWidgetState extends State<TopTextWidget> {
           fontSize: MyValues.topTextFontSize,
           color: MyColors.black,
         ),
+        textDirection: TextDirection.ltr,
       ),
     );
   }
