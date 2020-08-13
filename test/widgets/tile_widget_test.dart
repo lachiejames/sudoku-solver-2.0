@@ -38,12 +38,12 @@ void main() {
     });
 
     group('initial state -', () {
-      testWidgets('should initially contain no text', (WidgetTester tester) async {
+      testWidgets('should contain no text', (WidgetTester tester) async {
         await createTileWidget(tester);
         expect(find.text(''), findsOneWidget);
       });
 
-      testWidgets('should initially be white', (WidgetTester tester) async {
+      testWidgets('should be white', (WidgetTester tester) async {
         await createTileWidget(tester);
         expect(getTileWidgetColor(tester), MyColors.white);
       });
