@@ -1,16 +1,12 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/number_bar_widget.dart';
-import 'package:sudoku_solver_2/widgets/shared/sudoku_widget.dart';
 
 void main() {
   group('NumberBarWidget -', () {
-    final Duration debounceTime = Duration(milliseconds: 100);
     NumberBarWidget numberBarWidget;
 
     Future<void> createNumberBarWidget(WidgetTester tester) async {
