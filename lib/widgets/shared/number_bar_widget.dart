@@ -15,6 +15,7 @@ class NumberBarWidgetState extends State<NumberBarWidget> {
   Widget build(BuildContext context) {
     return Container(
       child: Row(
+        textDirection: TextDirection.ltr,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           makeNumber(1),
