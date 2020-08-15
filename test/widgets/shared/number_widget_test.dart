@@ -6,7 +6,7 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
-import 'package:sudoku_solver_2/widgets/number_widget.dart';
+import 'package:sudoku_solver_2/widgets/shared/number_widget.dart';
 
 void main() {
   group('NumberWidget -', () {

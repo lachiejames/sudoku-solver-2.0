@@ -3,10 +3,11 @@ import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
-import 'package:sudoku_solver_2/widgets/number_bar_widget.dart';
-import 'package:sudoku_solver_2/widgets/solve_my_sudoku_button_widget.dart';
-import 'package:sudoku_solver_2/widgets/sudoku_widget.dart';
-import 'package:sudoku_solver_2/widgets/top_text_widget.dart';
+import 'package:sudoku_solver_2/widgets/shared/number_bar_widget.dart';
+import 'package:sudoku_solver_2/widgets/solve_with_touch_screen/solve_my_sudoku_button_widget.dart';
+import 'package:sudoku_solver_2/widgets/solve_with_touch_screen/drop_down_menu_widget.dart';
+import 'package:sudoku_solver_2/widgets/shared/sudoku_widget.dart';
+import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 
 class SolveWithTouchScreen extends StatefulWidget {
   @override
@@ -27,50 +28,12 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
           padding: EdgeInsets.only(right: MyValues.screenWidth / 18),
           child: GestureDetector(
             onTap: () {},
-            child: makeDropDownMenu(),
+            child: SolveWithTouchScreenDropDownMenu(),
           ),
         ),
       ],
     );
   }
-
-  Widget makeDropDownMenu() {
-    return DropdownButton<String>(
-      icon: Icon(
-        Icons.more_vert,
-        color: MyColors.white,
-      ),
-      style: TextStyle(
-        fontWeight: FontWeight.w500,
-        color: Colors.black,
-      ),
-      items: <String>[
-        'Restart',
-        MyStrings.appBarTextHowToSolveScreen,
-      ].map(
-        (String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(
-              value,
-              textDirection: TextDirection.ltr,
-            ),
-          );
-        },
-      ).toList(),
-      onChanged: (value) {
-        if (value == 'Restart') {
-          restart();
-        } else if (value == MyStrings.appBarTextHowToSolveScreen) {
-          navigateToHowToSolveScreen(context);
-        }
-      },
-    );
-  }
-
-  void restart() {}
-
-  void navigateToHowToSolveScreen(BuildContext context) {}
 
   @override
   Widget build(BuildContext context) {

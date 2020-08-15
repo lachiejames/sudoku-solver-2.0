@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/widgets/number_widget.dart';
+import 'package:sudoku_solver_2/widgets/shared/number_widget.dart';
 
 class NumberBarWidget extends StatefulWidget {
   @override

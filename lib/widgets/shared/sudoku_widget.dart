@@ -4,7 +4,7 @@ import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
-import 'package:sudoku_solver_2/widgets/tile_widget.dart';
+import 'package:sudoku_solver_2/widgets/shared/tile_widget.dart';
 
 class SudokuWidget extends StatefulWidget {
   @override
