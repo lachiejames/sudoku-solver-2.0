@@ -33,4 +33,8 @@ class MyStrings {
   static final String dropDownMenuItemRestart = 'Restart';
   static final String dropDownMenuItemHowToSolve = 'How To Solve';
   static final String dropDownMenuItemHowToPlay = 'How To Play';
+
+    static final String solveMySudokuButtonText = 'SOLVE MY SUDOKU';
+    static final String newGameButtonText = 'NEW GAME';
+
 }

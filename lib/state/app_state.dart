@@ -13,6 +13,7 @@ class AppState {
   final List<NumberState> numberStateList;
   final TopTextState topTextState;
   final bool isSolving;
+  final bool isSolved;
 
   AppState({
     @required this.tileStateMap,
@@ -20,6 +21,7 @@ class AppState {
     @required this.numberStateList,
     @required this.topTextState,
     @required this.isSolving,
+    @required this.isSolved,
   });
 
   AppState copyWith({
@@ -28,6 +30,7 @@ class AppState {
     List<NumberState> numberStateList,
     TopTextState topTextState,
     bool isSolving,
+    bool isSolved,
   }) {
     return AppState(
       tileStateMap: tileStateMap ?? this.tileStateMap,
@@ -35,6 +38,7 @@ class AppState {
       numberStateList: numberStateList ?? this.numberStateList,
       topTextState: topTextState ?? this.topTextState,
       isSolving: isSolving ?? this.isSolving,
+      isSolved: isSolved ?? this.isSolved,
     );
   }
 }

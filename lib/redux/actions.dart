@@ -47,3 +47,7 @@ class RestartAction {
 class LoadPlayScreenWithSudokuAction {
   LoadPlayScreenWithSudokuAction();
 }
+
+class NewGameButtonPressedAction {
+  NewGameButtonPressedAction();
+}

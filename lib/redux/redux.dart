@@ -3,6 +3,7 @@ import 'package:redux_thunk/redux_thunk.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/reducers/load_play_screen_with_sudoku_reducer.dart';
+import 'package:sudoku_solver_2/redux/reducers/new_game_button_pressed_reducer.dart';
 import 'package:sudoku_solver_2/redux/reducers/number_pressed_reducer.dart';
 import 'package:sudoku_solver_2/redux/reducers/remove_value_from_tile_reducer.dart';
 import 'package:sudoku_solver_2/redux/reducers/restart_reducer.dart';
@@ -35,6 +36,7 @@ class Redux {
         numberStateList: MyWidgets.initNumberStateList(),
         topTextState: TopTextState.initialState(),
         isSolving: false,
+        isSolved: false,
       ),
     );
   }
@@ -58,6 +60,8 @@ class Redux {
       return restartReducer(state, action);
     } else if (action is LoadPlayScreenWithSudokuAction) {
       return loadPlayScreenWithSudokuReducer(state, action);
+    } else if (action is NewGameButtonPressedAction) {
+      return newGameButtonPressedReducer(state, action);
     }
 
     return state;
