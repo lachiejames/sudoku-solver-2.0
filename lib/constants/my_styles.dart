@@ -47,7 +47,7 @@ class MyStyles {
     fontFamily: fontStyleSplashScreen,
     fontWeight: FontWeight.w500,
     fontSize: MyValues.appBarFontSize,
-    color: MyColors.secondaryTheme,
+    color: MyColors.pink,
   );
 
   static final TextStyle howToTextStyle = TextStyle(

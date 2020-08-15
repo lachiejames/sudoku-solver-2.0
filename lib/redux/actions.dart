@@ -31,6 +31,10 @@ class SolveButtonPressedAction {
   SolveButtonPressedAction();
 }
 
+class StartSolvingSudokuAction {
+  StartSolvingSudokuAction();
+}
+
 class SudokuSolvedAction {
   final Sudoku solvedSudoku;
 
