@@ -11,6 +11,7 @@ import 'package:sudoku_solver_2/widgets/number_widget.dart';
 void main() {
   group('NumberWidget -', () {
     final Duration debounceTime = Duration(milliseconds: 100);
+    final TileKey tileKey = TileKey(row: 1, col: 1);
     NumberWidget numberWidget;
 
     Future<void> createNumberWidget(WidgetTester tester, int number) async {
@@ -21,6 +22,16 @@ void main() {
           child: numberWidget,
         ),
       );
+    }
+
+    Future<void> tapTileWidget(WidgetTester tester) async {
+      Redux.store.dispatch(TileSelectedAction(Redux.store.state.tileStateMap[tileKey]));
+      await tester.pump(debounceTime);
+    }
+
+        Future<void> tapNumberWidget(WidgetTester tester) async {
+      await tester.tap(find.byWidget(numberWidget));
+        await tester.pump(debounceTime);
     }
 
     Color getNumberWidgetColor(WidgetTester tester) {
@@ -45,39 +56,36 @@ void main() {
       testWidgets('not tappable', (WidgetTester tester) async {
         await createNumberWidget(tester, 1);
 
-        await tester.tap(find.byWidget(numberWidget));
-        await tester.pump(debounceTime);
+        await tapNumberWidget(tester);
 
         expect(getNumberWidgetColor(tester), MyColors.white);
       });
     });
 
     group('after a tile was selected -', () {
-      testWidgets('should be green', (WidgetTester tester) async {
+      testWidgets('numberWidget should be green', (WidgetTester tester) async {
         await createNumberWidget(tester, 1);
-        Redux.store.dispatch(TileSelectedAction(Redux.store.state.tileStateMap[TileKey(row: 1, col: 1)]));
+
+        await tapTileWidget(tester);
 
         expect(getNumberWidgetColor(tester), MyColors.green);
       });
 
-      testWidgets('tapping sets color back to white', (WidgetTester tester) async {
+      testWidgets('tapping this numberWidget sets color back to white', (WidgetTester tester) async {
         await createNumberWidget(tester, 1);
-        Redux.store.dispatch(TileSelectedAction(Redux.store.state.tileStateMap[TileKey(row: 1, col: 1)]));
 
-        await tester.tap(find.byWidget(numberWidget));
-        await tester.pump(debounceTime);
+        await tapNumberWidget(tester);
 
         expect(getNumberWidgetColor(tester), MyColors.white);
       });
 
-      testWidgets('tapping caused tile to display this number', (WidgetTester tester) async {
+      testWidgets('tapping this numberWidget caused tile to display this number', (WidgetTester tester) async {
         await createNumberWidget(tester, 1);
-        Redux.store.dispatch(TileSelectedAction(Redux.store.state.tileStateMap[TileKey(row: 1, col: 1)]));
 
-        await tester.tap(find.byWidget(numberWidget));
-        await tester.pump(debounceTime);
+        await tapTileWidget(tester);
+        await tapNumberWidget(tester);
 
-        expect(Redux.store.state.tileStateMap[TileKey(row: 1, col: 1)].value, 1);
+        expect(Redux.store.state.tileStateMap[tileKey].value, 1);
       });
     });
   });
