@@ -32,20 +32,15 @@ class TileWidgetState extends State<TileWidget> {
             height: 32,
             width: 32,
             decoration: BoxDecoration(
-              color: (tileState.isTapped) ? MyColors.green : MyColors.white,
+              color: _determineTileColor(tileState),
               border: Border(
                 bottom: BorderSide(width: (tileState.row == 3 || tileState.row == 6) ? 3 : 0, color: MyColors.black),
                 right: BorderSide(width: (tileState.col == 3 || tileState.col == 6) ? 3 : 0, color: MyColors.black),
               ),
             ),
             child: Stack(
+              textDirection: TextDirection.ltr,
               children: <Widget>[
-                // Has a grey background if the tile should not be removable
-                (tileState.isOriginalTile)
-                    ? Container(
-                        color: MyColors.grey,
-                      )
-                    : MyWidgets.getEmptyWidget(),
 
                 // Displays the tile's value
                 Center(
@@ -61,6 +56,7 @@ class TileWidgetState extends State<TileWidget> {
                     ? Text(
                         'X',
                         style: MyStyles.tileWithRemovableValueTextStyle,
+                        textDirection: TextDirection.ltr,
                       )
                     : MyWidgets.getEmptyWidget(),
               ],
@@ -78,5 +74,15 @@ class TileWidgetState extends State<TileWidget> {
         );
       },
     );
+  }
+
+  Color _determineTileColor(TileState tileState) {
+    if (tileState.isOriginalTile) {
+      return MyColors.grey;
+    } else if (tileState.isTapped) {
+      return MyColors.green;
+    } else {
+      return MyColors.white;
+    }
   }
 }

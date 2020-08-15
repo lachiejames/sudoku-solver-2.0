@@ -17,6 +17,7 @@ class SolveWithTouchScreenAppBarWidget extends StatelessWidget implements Prefer
       title: Text(
         MyStrings.appBarTextSolveWithTouchScreen,
         style: MyStyles.appBarTextStyle,
+        textDirection: TextDirection.ltr,
       ),
       actions: <Widget>[
         Padding(

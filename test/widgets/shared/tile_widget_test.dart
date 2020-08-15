@@ -6,15 +6,18 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
+import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/tile_widget.dart';
 
 void main() {
   group('TileWidget -', () {
     final Duration debounceTime = Duration(milliseconds: 100);
+    final TileKey tileKey = TileKey(row: 1, col: 1);
+
     TileWidget tileWidget;
 
     Future<void> createTileWidget(WidgetTester tester) async {
-      tileWidget = TileWidget(tileKey: TileKey(row: 1, col: 1));
+      tileWidget = TileWidget(tileKey: tileKey);
       await tester.pumpWidget(
         StoreProvider<AppState>(
           store: Redux.store,
@@ -33,6 +36,11 @@ void main() {
       await tester.pump(debounceTime);
     }
 
+    void setIsOriginalTile() {
+      TileState tileState = Redux.store.state.tileStateMap[tileKey];
+      Redux.store.state.tileStateMap[tileKey] = tileState.copyWith(isOriginalTile: true);
+    }
+
     setUp(() {
       Redux.init();
     });
@@ -43,9 +51,15 @@ void main() {
         expect(find.text(''), findsOneWidget);
       });
 
-      testWidgets('should be white', (WidgetTester tester) async {
+      testWidgets('if its NOT an original tile, it should be white', (WidgetTester tester) async {
         await createTileWidget(tester);
         expect(getTileWidgetColor(tester), MyColors.white);
+      });
+
+      testWidgets('if its an original tile, it should be grey', (WidgetTester tester) async {
+        setIsOriginalTile();
+        await createTileWidget(tester);
+        expect(getTileWidgetColor(tester), MyColors.grey);
       });
     });
 
@@ -62,6 +76,27 @@ void main() {
         await tester.tap(find.byWidget(tileWidget));
         await addValueToSelectedTileWidget(tester, 1);
         expect(find.text('1'), findsOneWidget);
+      });
+
+      testWidgets('should NOT display an "X" too, if it has no value', (WidgetTester tester) async {
+        await createTileWidget(tester);
+
+        await tester.tap(find.byWidget(tileWidget));
+        await tester.pump(debounceTime);
+
+        expect(find.text('X'), findsNothing);
+      });
+
+      testWidgets('should display an "X" too, if it already has a value', (WidgetTester tester) async {
+        await createTileWidget(tester);
+
+        await tester.tap(find.byWidget(tileWidget));
+        await addValueToSelectedTileWidget(tester, 1);
+
+        await tester.tap(find.byWidget(tileWidget));
+        await tester.pump(debounceTime);
+
+        expect(find.text('X'), findsOneWidget);
       });
     });
 

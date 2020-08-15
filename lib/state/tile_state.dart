@@ -43,12 +43,14 @@ class TileState {
   TileState copyWith({
     int value,
     bool isTapped,
+    bool isOriginalTile,
   }) {
     return TileState(
       row: this.row,
       col: this.col,
       value: _decideValueToPass(value),
       isTapped: isTapped ?? this.isTapped,
+      isOriginalTile: isOriginalTile ?? this.isOriginalTile,
     );
   }
 

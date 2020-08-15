@@ -10,10 +10,7 @@ import 'package:sudoku_solver_2/state/tile_state.dart';
 
 class MyWidgets {
   static Widget getEmptyWidget() {
-    return Text(
-      '',
-      textDirection: TextDirection.ltr,
-    );
+    return Container();
   }
 
   static Widget makeProgressIndicator() {
