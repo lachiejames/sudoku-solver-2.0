@@ -9,7 +9,7 @@ class Sudoku {
   int numValues = 0;
 
   Sudoku({@required this.tileStateMap}) {
-    this.numValues = initNumValues(this.tileStateMap.values);
+    this.numValues = initNumValues(this.tileStateMap.values.toList());
   }
 
   int initNumValues(List<TileState> tileStates) {
