@@ -3,10 +3,8 @@ import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
-import 'package:sudoku_solver_2/constants/my_widgets.dart';
-import 'package:sudoku_solver_2/redux/actions.dart';
-import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/widgets/number_bar_widget.dart';
+import 'package:sudoku_solver_2/widgets/solve_my_sudoku_button_widget.dart';
 import 'package:sudoku_solver_2/widgets/sudoku_widget.dart';
 import 'package:sudoku_solver_2/widgets/top_text_widget.dart';
 
@@ -74,31 +72,6 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
 
   void navigateToHowToSolveScreen(BuildContext context) {}
 
-  Widget makeSolveMySudokuButton() {
-    return SingleChildScrollView(
-      child: Container(
-        alignment: Alignment.center,
-        margin: MyStyles.buttonMargins,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: RaisedButton(
-                shape: MyStyles.buttonShape,
-                padding: MyStyles.buttonPadding,
-                color: MyColors.primaryTheme,
-                child: MyWidgets.makeButtonText('SOLVE MY SUDOKU'),
-                // Should be disabled while solving
-                onPressed: () {
-                  Redux.store.dispatch(SolveButtonPressedAction());
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,7 +88,7 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
             TopTextWidget(),
             NumberBarWidget(),
             SudokuWidget(),
-            makeSolveMySudokuButton(),
+            SolveMySudokuButtonWidget(),
           ],
         ),
       ),
