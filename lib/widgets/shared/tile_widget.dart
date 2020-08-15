@@ -41,7 +41,6 @@ class TileWidgetState extends State<TileWidget> {
             child: Stack(
               textDirection: TextDirection.ltr,
               children: <Widget>[
-
                 // Displays the tile's value
                 Center(
                   child: Text(
@@ -63,7 +62,9 @@ class TileWidgetState extends State<TileWidget> {
             ),
           ),
           onTap: () {
-            if (tileState.isTapped && tileState.value == null) {
+            if (tileState.isOriginalTile) {
+              return;
+            } else if (tileState.isTapped && tileState.value == null) {
               Redux.store.dispatch(TileDeselectedAction(tileState));
             } else if (tileState.isTapped && tileState.value != null) {
               Redux.store.dispatch(RemoveValueFromTileAction(tileState));

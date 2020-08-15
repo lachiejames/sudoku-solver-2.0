@@ -4,9 +4,9 @@ import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
-import 'package:sudoku_solver_2/screens/solve_with_touch_help_screen.dart';
+import 'package:sudoku_solver_2/screens/just_play_help_screen.dart';
 
-class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
+class JustPlayScreenDropDownMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
@@ -25,7 +25,7 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
   List<DropdownMenuItem<String>> _createDropdownMenuItems() {
     return <String>[
       MyStrings.dropDownMenuItemRestart,
-      MyStrings.dropDownMenuItemHowToSolve,
+      MyStrings.dropDownMenuItemHowToPlay,
     ].map(
       (String value) {
         return this._createDropdownMenuItem(value);
@@ -46,8 +46,8 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
   void _performAction(String value, BuildContext context) {
     if (value == MyStrings.dropDownMenuItemRestart) {
       _restart();
-    } else if (value == MyStrings.dropDownMenuItemHowToSolve) {
-      _navigateToSolveWithTouchHelpScreen(context);
+    } else if (value == MyStrings.dropDownMenuItemHowToPlay) {
+      _navigateToJustPlayHelpScreen(context);
     }
   }
 
@@ -55,11 +55,11 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
     Redux.store.dispatch(RestartAction());
   }
 
-  void _navigateToSolveWithTouchHelpScreen(BuildContext context) {
+  void _navigateToJustPlayHelpScreen(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SolveWithTouchHelpScreen(),
+        builder: (context) => JustPlayHelpScreen(),
       ),
     );
   }

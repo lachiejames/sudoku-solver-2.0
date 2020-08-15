@@ -3,19 +3,19 @@ import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
-import 'package:sudoku_solver_2/widgets/solve_with_touch_screen/solve_with_touch_screen_drop_down_menu_widget.dart';
+import 'package:sudoku_solver_2/widgets/just_play_screen/just_play_screen_drop_down_menu_widget.dart';
 
-class SolveWithTouchScreenAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
+class JustPlayScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   // Required so I can return preferredSize
   final AppBar appBar;
-  SolveWithTouchScreenAppBarWidget(this.appBar);
+  JustPlayScreenAppBar(this.appBar);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       iconTheme: IconThemeData(color: MyColors.white),
       title: Text(
-        MyStrings.appBarTextSolveWithTouchScreen,
+        MyStrings.appBarTextJustPlayScreen,
         style: MyStyles.appBarTextStyle,
         textDirection: TextDirection.ltr,
       ),
@@ -23,7 +23,7 @@ class SolveWithTouchScreenAppBarWidget extends StatelessWidget implements Prefer
         Padding(
           padding: EdgeInsets.only(right: MyValues.screenWidth / 18),
           child: GestureDetector(
-            child: SolveWithTouchScreenDropDownMenuWidget(),
+            child: JustPlayScreenDropDownMenuWidget(),
           ),
         ),
       ],

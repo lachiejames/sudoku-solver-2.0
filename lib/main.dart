@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
-import 'package:sudoku_solver_2/screens/solve_with_touch_screen.dart';
+import 'package:sudoku_solver_2/screens/just_play_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
-
 import 'constants/my_colors.dart';
 
 void main() {
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: MyColors.pink,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: SolveWithTouchScreen(),
+        home: JustPlayScreen(),
       ),
     );
   }

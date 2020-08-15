@@ -9,7 +9,8 @@ AppState restartReducer(AppState appState, RestartAction action) {
   final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
 
   appState.tileStateMap.forEach((tileKey, tileState) {
-    newTileStateMap[tileKey] = tileState.copyWith(value: -1, isTapped: false);
+    int value = (tileState.isOriginalTile) ? tileState.value : -1;
+    newTileStateMap[tileKey] = tileState.copyWith(value: value, isTapped: false);
   });
   assert(newTileStateMap.length == 81);
 

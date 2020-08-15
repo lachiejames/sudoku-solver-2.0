@@ -43,3 +43,7 @@ class SudokuSolvedAction {
 class RestartAction {
   RestartAction();
 }
+
+class LoadPlayScreenWithSudokuAction {
+  LoadPlayScreenWithSudokuAction();
+}
