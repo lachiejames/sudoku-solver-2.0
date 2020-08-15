@@ -26,7 +26,6 @@ class NumberPressedAction {
   NumberPressedAction(this.pressedNumber);
 }
 
-
 class SolveButtonPressedAction {
   SolveButtonPressedAction();
 }
@@ -41,3 +40,6 @@ class SudokuSolvedAction {
   SudokuSolvedAction(this.solvedSudoku);
 }
 
+class RestartAction {
+  RestartAction();
+}

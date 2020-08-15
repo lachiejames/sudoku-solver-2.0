@@ -4,6 +4,7 @@ import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/reducers/number_pressed_reducer.dart';
 import 'package:sudoku_solver_2/redux/reducers/remove_value_from_tile_reducer.dart';
+import 'package:sudoku_solver_2/redux/reducers/restart_reducer.dart';
 import 'package:sudoku_solver_2/redux/reducers/solve_button_pressed_reducer.dart';
 import 'package:sudoku_solver_2/redux/reducers/start_solving_sudoku_reducer.dart';
 import 'package:sudoku_solver_2/redux/reducers/sudoku_solved_reducer.dart';
@@ -52,7 +53,9 @@ class Redux {
       return startSolvingSudokuReducer(state, action);
     } else if (action is SudokuSolvedAction) {
       return sudokuSolvedReducer(state, action);
-    } 
+    } else if (action is RestartAction) {
+      return restartReducer(state, action);
+    }
 
     return state;
   }

@@ -29,4 +29,7 @@ class MyStrings {
   static final String step3TextHowToPlayScreen = '3. Fill all tiles to win';
   static final String tip1TextHowToPlayScreen = 'To remove a number, drag it off of the board and release';
   static final String tip2TextHowToPlayScreen = 'CHECK IF VALID will check that only valid numbers have been entered';
+
+    static final String dropDownMenuItemRestart = 'Restart';
+    static final String dropDownMenuItemHowToSolve = 'How To Solve';
 }
