@@ -32,7 +32,7 @@ class Redux {
         tileStateMap: MyWidgets.initTileStateMap(),
         hasSelectedTile: false,
         numberStateList: MyWidgets.initNumberStateList(),
-        topTextState: TopTextState(),
+        topTextState: TopTextState.initialState(),
         isSolving: false,
       ),
     );
