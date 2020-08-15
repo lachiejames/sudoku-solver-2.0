@@ -16,15 +16,15 @@ class MyStyles {
   );
 
   static final EdgeInsetsGeometry buttonMargins = EdgeInsets.only(
-    top: 16,
+    top: 32,
     bottom: 16,
-    left: 64,
-    right: 64,
   );
 
   static final EdgeInsetsGeometry buttonPadding = EdgeInsets.only(
     top: 16,
     bottom: 16,
+    left:32,
+    right:32,
   );
 
   static final EdgeInsetsGeometry topTextMargins = EdgeInsets.only(
@@ -58,5 +58,16 @@ class MyStyles {
   static final TextStyle dropDownMenuTextStyle = TextStyle(
     fontWeight: FontWeight.w500,
     color: MyColors.black,
+  );
+
+  static final TextStyle tileTextStyle = TextStyle(
+    fontSize: MyValues.tileFontSize,
+    fontFamily: MyStyles.fontStyleNumber,
+    fontWeight: FontWeight.w400,
+  );
+
+  static final TextStyle tileWithRemovableValueTextStyle = TextStyle(
+    fontSize: MyValues.tileFontSize,
+    color: MyColors.red,
   );
 }

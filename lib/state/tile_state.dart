@@ -1,11 +1,18 @@
-
 class TileState {
   final int row;
   final int col;
+  final bool isOriginalTile;
+
   int value;
   bool isTapped;
 
-  TileState({this.row, this.col, this.value, this.isTapped = false});
+  TileState({
+    this.row,
+    this.col,
+    this.value,
+    this.isTapped = false,
+    this.isOriginalTile = false,
+  });
 
   String toString() {
     return 'TileState(row=$row, col=$col, value=${(value != null) ? value : 'null'}, isTapped=${this.isTapped})';

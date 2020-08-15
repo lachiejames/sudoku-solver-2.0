@@ -1,9 +1,11 @@
-import 'package:sudoku_solver_2/constants/my_strings.dart';
+import 'package:flutter/foundation.dart';
 
 class TopTextState {
-  String text = MyStrings.topTextPickATile;
+  final String text;
 
-  void setText(String newText) {
-    this.text = newText;
+  TopTextState({@required this.text});
+
+  TopTextState copyWith({String text}) {
+    return TopTextState(text: text);
   }
 }
