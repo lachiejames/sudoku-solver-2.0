@@ -22,6 +22,7 @@ class SudokuWidgetState extends State<SudokuWidget> {
       converter: (store) => store.state.isSolving,
       builder: (context, isSolving) {
         return Stack(
+          textDirection: TextDirection.ltr,
           children: <Widget>[
             Container(
               color: MyColors.white,
@@ -38,20 +39,23 @@ class SudokuWidgetState extends State<SudokuWidget> {
     );
   }
 
-  Table makeTable() {
-    return Table(
-      border: TableBorder.all(),
-      children: [
-        makeTableRow(1),
-        makeTableRow(2),
-        makeTableRow(3),
-        makeTableRow(4),
-        makeTableRow(5),
-        makeTableRow(6),
-        makeTableRow(7),
-        makeTableRow(8),
-        makeTableRow(9),
-      ],
+  Widget makeTable() {
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Table(
+        border: TableBorder.all(),
+        children: [
+          makeTableRow(1),
+          makeTableRow(2),
+          makeTableRow(3),
+          makeTableRow(4),
+          makeTableRow(5),
+          makeTableRow(6),
+          makeTableRow(7),
+          makeTableRow(8),
+          makeTableRow(9),
+        ],
+      ),
     );
   }
 
