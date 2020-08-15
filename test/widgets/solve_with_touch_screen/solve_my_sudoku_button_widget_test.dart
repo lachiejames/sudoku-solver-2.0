@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -71,17 +71,41 @@ void main() {
       });
     });
 
-        group('after sudoku is solved -', () {
+    group('after sudoku is solved -', () {
       testWidgets('should turn back to blue', (WidgetTester tester) async {
         await createSolveMySudokuButtonWidget(tester);
 
-        await tester.tap(find.byWidget(solveMySudokuButtonWidget));
-        await tester.pump(debounceTime);
-        expect(getSolveMySudokuButtonWidgetColor(tester), MyColors.grey);
-        
-        sleep(Duration(seconds: 10));
-        await tester.pump(debounceTime);
-        expect(getSolveMySudokuButtonWidgetColor(tester), MyColors.blue);
+        // Uses real a real async instead of fakeAsync like other tests
+        await tester.runAsync(() async {
+          await tester.tap(find.byWidget(solveMySudokuButtonWidget));
+
+          // Becomes grey while solving
+          await tester.pump(debounceTime);
+          expect(getSolveMySudokuButtonWidgetColor(tester), MyColors.grey);
+
+          // Give it enough time to solve the sudoku
+          await Future.delayed(Duration(milliseconds: 1000));
+
+          // Turns back to blue after solving
+          await tester.pump(debounceTime);
+          expect(getSolveMySudokuButtonWidgetColor(tester), MyColors.blue);
+        });
+      });
+
+      testWidgets('should have stopped solving the sudoku', (WidgetTester tester) async {
+        await createSolveMySudokuButtonWidget(tester);
+
+        // Uses real a real async instead of fakeAsync like other tests
+        await tester.runAsync(() async {
+          await tester.tap(find.byWidget(solveMySudokuButtonWidget));
+
+          expect(Redux.store.state.isSolving, true);
+
+          // Give it enough time to solve the sudoku
+          await Future.delayed(Duration(milliseconds: 1000));
+          
+          expect(Redux.store.state.isSolving, false);
+        });
       });
     });
   });

@@ -47,7 +47,6 @@ class Sudoku {
     for (int row = 1; row <= 9; row++) {
       for (int col = 1; col <= 9; col++) {
         int nextValue = exampleValues[row - 1][col - 1];
-        assert(nextValue != null);
         TileState nextTile = this.getTileStateAt(row, col);
         this.addValueToTile(nextValue, nextTile);
       }

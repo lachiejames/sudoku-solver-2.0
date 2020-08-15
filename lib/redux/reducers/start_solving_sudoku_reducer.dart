@@ -5,6 +5,7 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 
 AppState startSolvingSudokuReducer(AppState appState, StartSolvingSudokuAction action) {
+
   Sudoku sudoku = Sudoku(tileStateMap: appState.tileStateMap);
   assert(sudoku.tileStateMap.length == 81);
 
