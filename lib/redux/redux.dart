@@ -1,5 +1,6 @@
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/reducers/load_play_screen_with_sudoku_reducer.dart';
@@ -17,6 +18,7 @@ import 'package:sudoku_solver_2/state/top_text_state.dart';
 
 class Redux {
   static Store<AppState> _store;
+  static SharedPreferences sharedPreferences;
 
   static Store<AppState> get store {
     if (_store == null) {
@@ -37,8 +39,20 @@ class Redux {
         topTextState: TopTextState.initialState(),
         isSolving: false,
         isSolved: false,
+        gameNumber: _getGameNumber(),
       ),
     );
+  }
+
+  static int _getGameNumber() {
+    int gameNumber = sharedPreferences.getInt('sudoku_solver_game_number');
+
+    if (gameNumber == null) {
+      gameNumber = 0;
+      sharedPreferences.setInt('sudoku_solver_game_number', gameNumber);
+    }
+
+    return gameNumber;
   }
 
   static AppState appReducer(AppState state, dynamic action) {

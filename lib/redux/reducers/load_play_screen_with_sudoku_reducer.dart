@@ -9,12 +9,9 @@ AppState loadPlayScreenWithSudokuReducer(AppState appState, LoadPlayScreenWithSu
   assert(appState.hasSelectedTile == false);
   assert(appState.isSolving == false);
 
-  // change this to a sharedPrefs value in appState
-  final int gameNumber = 0;
-  final List<List<int>> exampleValues = MyGames.games[gameNumber];
+  final List<List<int>> exampleValues = MyGames.games[appState.gameNumber];
 
   final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
-
   appState.tileStateMap.forEach((tileKey, tileState) {
     int value = exampleValues[tileKey.row - 1][tileKey.col - 1];
     bool isOriginalTile = (value != null);

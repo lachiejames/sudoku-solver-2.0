@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/just_play_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'constants/my_colors.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  Redux.sharedPreferences = await SharedPreferences.getInstance();
   Redux.init();
   runApp(MyApp());
 }

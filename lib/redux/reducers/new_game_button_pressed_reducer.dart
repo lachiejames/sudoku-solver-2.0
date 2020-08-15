@@ -14,12 +14,11 @@ import 'package:sudoku_solver_2/state/top_text_state.dart';
 AppState newGameButtonPressedReducer(AppState appState, NewGameButtonPressedAction action) {
   Redux.store.dispatch(StartSolvingSudokuAction());
 
-  // change this to a sharedPrefs value in appState
-  final int gameNumber = 1;
-  final List<List<int>> exampleValues = MyGames.games[gameNumber];
+  // proceed to the next game, using % to prevent index error
+  final int newGameNumber = (appState.gameNumber + 1) % MyGames.games.length;
+  final List<List<int>> exampleValues = MyGames.games[newGameNumber];
 
   final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
-
   appState.tileStateMap.forEach((tileKey, tileState) {
     int value = exampleValues[tileKey.row - 1][tileKey.col - 1];
     bool isOriginalTile = (value != null);
@@ -44,5 +43,6 @@ AppState newGameButtonPressedReducer(AppState appState, NewGameButtonPressedActi
     topTextState: newTopTextState,
     isSolving: false,
     isSolved: false,
+    gameNumber: newGameNumber,
   );
 }
