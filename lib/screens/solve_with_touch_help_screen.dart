@@ -7,21 +7,21 @@ class SolveWithTouchHelpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: MyColors.pink,
-      // // appBar: MyWidgets.makeAppBar(MyStrings.appBarTextHowToSolveScreen),
-      // body: SingleChildScrollView(
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.center,
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: <Widget>[
-      //       MyWidgets.makeHowToText(MyStrings.step1TextHowToSolveScreen),
-      //       MyWidgets.makeHowToText(MyStrings.step2TextHowToSolveScreen),
-      //       MyWidgets.makeHowToText(MyStrings.step3TextHowToSolveScreen),
-      //       MyWidgets.makeHowToText(MyStrings.tip1TextHowToSolveScreen),
-      //       MyWidgets.makeHowToText(MyStrings.tip2TextHowToSolveScreen),
-      //     ],
-      //   ),
-      // ),
+      backgroundColor: MyColors.pink,
+      appBar: MyWidgets.makeAppBar(MyStrings.appBarTextHowToSolveScreen),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            MyWidgets.makeHowToText(MyStrings.step1TextHowToSolveScreen),
+            MyWidgets.makeHowToText(MyStrings.step2TextHowToSolveScreen),
+            MyWidgets.makeHowToText(MyStrings.step3TextHowToSolveScreen),
+            MyWidgets.makeHowToText(MyStrings.tip1TextHowToSolveScreen),
+            MyWidgets.makeHowToText(MyStrings.tip2TextHowToSolveScreen),
+          ],
+        ),
+      ),
     );
   }
 }

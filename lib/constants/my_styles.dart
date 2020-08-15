@@ -57,6 +57,6 @@ class MyStyles {
 
   static final TextStyle dropDownMenuTextStyle = TextStyle(
     fontWeight: FontWeight.w500,
-    color: Colors.black,
+    color: MyColors.black,
   );
 }

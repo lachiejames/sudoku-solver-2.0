@@ -4,7 +4,7 @@ import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
-import 'package:sudoku_solver_2/screens/solve_with_touch_screen.dart';
+import 'package:sudoku_solver_2/screens/solve_with_touch_help_screen.dart';
 
 class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
   @override
@@ -59,7 +59,7 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SolveWithTouchScreen(),
+        builder: (context) => SolveWithTouchHelpScreen(),
       ),
     );
   }

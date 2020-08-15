@@ -33,8 +33,8 @@ class TileWidgetState extends State<TileWidget> {
             width: 32,
             decoration: BoxDecoration(
               border: Border(
-                bottom: BorderSide(width: (tileState.row == 3 || tileState.row == 6) ? 3 : 0, color: Colors.black),
-                right: BorderSide(width: (tileState.col == 3 || tileState.col == 6) ? 3 : 0, color: Colors.black),
+                bottom: BorderSide(width: (tileState.row == 3 || tileState.row == 6) ? 3 : 0, color: MyColors.black),
+                right: BorderSide(width: (tileState.col == 3 || tileState.col == 6) ? 3 : 0, color: MyColors.black),
               ),
               color: (tileState.isTapped) ? MyColors.green : MyColors.white,
             ),

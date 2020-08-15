@@ -19,7 +19,7 @@ class MyWidgets {
   static Widget makeProgressIndicator() {
     return Center(
       child: CircularProgressIndicator(
-        backgroundColor: Colors.green,
+        backgroundColor: MyColors.green,
       ),
     );
   }
