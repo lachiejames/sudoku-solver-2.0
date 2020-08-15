@@ -39,12 +39,13 @@ class Redux {
         topTextState: TopTextState.initialState(),
         isSolving: false,
         isSolved: false,
-        gameNumber: _getGameNumber(),
+        gameNumber: (sharedPreferences != null) ? _getGameNumber() : 0,
       ),
     );
   }
 
   static int _getGameNumber() {
+    assert(sharedPreferences != null);
     int gameNumber = sharedPreferences.getInt('sudoku_solver_game_number');
 
     if (gameNumber == null) {
