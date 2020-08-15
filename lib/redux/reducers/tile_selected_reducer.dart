@@ -8,15 +8,18 @@ import 'package:sudoku_solver_2/state/tile_state.dart';
 
 AppState tileSelectedReducer(AppState appState, TileSelectedAction action) {
   final TileState nextSelectedTile = action.selectedTile;
+  assert(nextSelectedTile != null);
   final TileKey nextSelectedTileKey = TileKey(row: nextSelectedTile.row, col: nextSelectedTile.col);
 
   final HashMap<TileKey, TileState> newTileStateMap = HashMap.from(appState.tileStateMap);
   newTileStateMap[nextSelectedTileKey] = nextSelectedTile.copyWith(isTapped: true);
+  assert(newTileStateMap.length == 81);
 
   // deselect old tile if applicable
   if (appState.hasSelectedTile) {
     final TileKey prevSelectedTileKey = MyWidgets.extractSelectedTileKey(appState.tileStateMap);
     newTileStateMap[prevSelectedTileKey] = newTileStateMap[prevSelectedTileKey].copyWith(isTapped: false);
+    assert(newTileStateMap[prevSelectedTileKey] != null);
   }
 
   // Highlight the numbers
@@ -24,6 +27,7 @@ AppState tileSelectedReducer(AppState appState, TileSelectedAction action) {
   appState.numberStateList.forEach((numberState) {
     newNumberStateList.add(numberState.copyWith(isActive: true));
   });
+  assert(newNumberStateList.length == 9);
 
   return appState.copyWith(
     tileStateMap: newTileStateMap,

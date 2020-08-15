@@ -26,6 +26,7 @@ class TileWidgetState extends State<TileWidget> {
       distinct: true,
       converter: (store) => store.state.tileStateMap[this.tileKey],
       builder: (context, tileState) {
+        assert(tileState!=null);
         return GestureDetector(
           child: Container(
             height: 32,

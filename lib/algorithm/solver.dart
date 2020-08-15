@@ -8,10 +8,10 @@ bool backtracking(Sudoku sudoku) {
   }
 
   TileState tileState = sudoku.getNextTileWithoutValue();
-
+  assert(tileState != null);
   for (int value in sudoku.getPossibleValuesAtTile(tileState)) {
+    assert(value != null);
     sudoku.addValueToTile(value, tileState);
-
     if (sudoku.allConstraintsSatisfied()) {
       if (backtracking(sudoku)) {
         return true;
@@ -24,7 +24,7 @@ bool backtracking(Sudoku sudoku) {
   return false;
 }
 
-// required since backtracking() returns a bool, and this returns a sudoku, 
+// required since backtracking() returns a bool, and this returns a sudoku,
 // which we need for solveSudokuAsync
 Sudoku _solveSudoku(Sudoku sudoku) {
   backtracking(sudoku);

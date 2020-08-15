@@ -26,6 +26,7 @@ class NumberWidgetState extends State<NumberWidget> {
       distinct: true,
       converter: (store) => store.state.numberStateList[this.number - 1],
       builder: (context, numberState) {
+        assert(numberState.number != null);
         return GestureDetector(
           child: Container(
             height: MyValues.screenWidth / 11.5,

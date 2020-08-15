@@ -8,7 +8,19 @@ class Sudoku {
   final HashMap<TileKey, TileState> tileStateMap;
   int numValues = 0;
 
-  Sudoku({@required this.tileStateMap});
+  Sudoku({@required this.tileStateMap}) {
+    this.numValues = initNumValues(this.tileStateMap.values);
+  }
+
+  int initNumValues(List<TileState> tileStates) {
+    int _numValues = 0;
+    for (TileState tileState in tileStates) {
+      if (tileState.value != null) {
+        _numValues++;
+      }
+    }
+    return _numValues;
+  }
 
   String toString() {
     String s = '-------------------------------------\n';
@@ -31,9 +43,11 @@ class Sudoku {
   }
 
   void applyExampleValues(List<List<int>> exampleValues) {
+    assert(exampleValues != null);
     for (int row = 1; row <= 9; row++) {
       for (int col = 1; col <= 9; col++) {
         int nextValue = exampleValues[row - 1][col - 1];
+        assert(nextValue != null);
         TileState nextTile = this.getTileStateAt(row, col);
         this.addValueToTile(nextValue, nextTile);
       }
@@ -54,6 +68,7 @@ class Sudoku {
       // adding a value to this tile, when it did not previously have one
       this.numValues++;
     }
+    assert(0 <= this.numValues && this.numValues <= 81);
 
     tileState.value = value;
   }
@@ -154,6 +169,7 @@ class Sudoku {
   }
 
   bool isFull() {
+    assert(0 <= this.numValues && this.numValues <= 81);
     return this.numValues == 81;
   }
 
@@ -170,7 +186,6 @@ class Sudoku {
         }
       }
     }
-
     return null;
   }
 }
