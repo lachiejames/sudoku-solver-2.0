@@ -4,6 +4,7 @@ import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
+import 'package:sudoku_solver_2/state/game_state.dart';
 
 class TakePhotoButtonWidget extends StatefulWidget {
   @override
@@ -13,10 +14,10 @@ class TakePhotoButtonWidget extends StatefulWidget {
 class TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, bool>(
+    return StoreConnector<AppState, GameState>(
       distinct: true,
-      converter: (store) => store.state.isSolving,
-      builder: (context, isSolving) {
+      converter: (store) => store.state.gameState,
+      builder: (context, gameState) {
         return Container(
           alignment: Alignment.center,
           margin: MyStyles.buttonMargins,
@@ -25,7 +26,7 @@ class TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
             child: RaisedButton(
               shape: MyStyles.buttonShape,
               padding: MyStyles.buttonPadding,
-              color: (isSolving) ? MyColors.grey : MyColors.blue,
+              color: (gameState == GameState.IsSolving) ? MyColors.grey : MyColors.blue,
               child: Text(
                 MyStrings.takePhotoButtonText,
                 style: MyStyles.buttonTextStyle,

@@ -4,6 +4,7 @@ import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
+import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/widgets/shared/tile_widget.dart';
 
@@ -17,10 +18,10 @@ class SudokuWidgetState extends State<SudokuWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, bool>(
+    return StoreConnector<AppState, GameState>(
       distinct: true,
-      converter: (store) => store.state.isSolving,
-      builder: (context, isSolving) {
+      converter: (store) => store.state.gameState,
+      builder: (context, gameState) {
         return Stack(
           textDirection: TextDirection.ltr,
           children: <Widget>[
@@ -32,7 +33,7 @@ class SudokuWidgetState extends State<SudokuWidget> {
               ),
               child: this.makeTable(),
             ),
-            (isSolving) ? MyWidgets.makeProgressIndicator() : MyWidgets.getEmptyWidget(),
+            (gameState == GameState.IsSolving) ? MyWidgets.makeProgressIndicator() : MyWidgets.getEmptyWidget(),
           ],
         );
       },

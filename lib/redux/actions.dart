@@ -61,3 +61,11 @@ class ChangeScreenAction {
   final ScreenState screenState;
   ChangeScreenAction(this.screenState);
 }
+
+class MakeNumbersInactiveAction {
+  MakeNumbersInactiveAction();
+}
+
+class DeselectAllTilesAction {
+  DeselectAllTilesAction();
+}

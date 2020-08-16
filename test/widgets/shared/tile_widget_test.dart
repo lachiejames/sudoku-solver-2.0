@@ -104,6 +104,7 @@ void main() {
       testWidgets('should turn back to white', (WidgetTester tester) async {
         await createTileWidget(tester);
         await tester.tap(find.byWidget(tileWidget));
+        await tester.pump(debounceTime);
         await tester.tap(find.byWidget(tileWidget));
         await tester.pump(debounceTime);
         expect(getTileWidgetColor(tester), MyColors.white);

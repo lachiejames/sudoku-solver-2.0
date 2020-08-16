@@ -6,6 +6,7 @@ import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
+import 'package:sudoku_solver_2/state/game_state.dart';
 
 class NewGameButtonWidget extends StatefulWidget {
   @override
@@ -15,13 +16,13 @@ class NewGameButtonWidget extends StatefulWidget {
 class NewGameButtonWidgetState extends State<NewGameButtonWidget> {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, bool>(
+    return StoreConnector<AppState, GameState>(
       distinct: true,
-      converter: (store) => store.state.isSolved,
-      builder: (context, isSolved) {
+      converter: (store) => store.state.gameState,
+      builder: (context, gameState) {
         // Should only be visible when solved
         return Opacity(
-          opacity: (isSolved) ? 1.0 : 0.0,
+          opacity: (gameState == GameState.Solved) ? 1.0 : 0.0,
           child: Container(
             alignment: Alignment.center,
             margin: MyStyles.buttonMargins,
@@ -36,7 +37,8 @@ class NewGameButtonWidgetState extends State<NewGameButtonWidget> {
                   style: MyStyles.buttonTextStyle,
                 ),
                 onPressed: () {
-                  if (isSolved) {
+                  print(gameState);
+                  if (gameState == GameState.Solved) {
                     Redux.store.dispatch(NewGameButtonPressedAction());
                   }
                 },

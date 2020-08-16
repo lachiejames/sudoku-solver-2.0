@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
+import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_touch_screen/solve_my_sudoku_button_widget.dart';
 
 void main() {
@@ -67,7 +68,7 @@ void main() {
         await tester.tap(find.byWidget(solveMySudokuButtonWidget));
         await tester.pump(debounceTime);
 
-        expect(Redux.store.state.isSolving, true);
+        expect(Redux.store.state.gameState==GameState.IsSolving, true);
       });
     });
 
@@ -99,12 +100,12 @@ void main() {
         await tester.runAsync(() async {
           await tester.tap(find.byWidget(solveMySudokuButtonWidget));
 
-          expect(Redux.store.state.isSolving, true);
+          expect(Redux.store.state.gameState==GameState.IsSolving, true);
 
           // Give it enough time to solve the sudoku
           await Future.delayed(Duration(milliseconds: 1000));
           
-          expect(Redux.store.state.isSolving, false);
+          expect(Redux.store.state.gameState==GameState.IsSolving, false);
         });
       });
     });
