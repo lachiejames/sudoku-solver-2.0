@@ -40,7 +40,8 @@ class RestartAction {
 }
 
 class LoadPlayScreenWithSudokuAction {
-  LoadPlayScreenWithSudokuAction();
+  final int gameNumber;
+  LoadPlayScreenWithSudokuAction(this.gameNumber);
 }
 
 class NewGameButtonPressedAction {
@@ -54,12 +55,4 @@ class GameSolvedAction {
 class ChangeScreenAction {
   final ScreenState screenState;
   ChangeScreenAction(this.screenState);
-}
-
-class MakeNumbersInactiveAction {
-  MakeNumbersInactiveAction();
-}
-
-class DeselectAllTilesAction {
-  DeselectAllTilesAction();
 }

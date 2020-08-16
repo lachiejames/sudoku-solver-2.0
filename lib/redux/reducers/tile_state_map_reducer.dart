@@ -45,7 +45,7 @@ HashMap<TileKey, TileState> _tileDeselectedReducer(HashMap<TileKey, TileState> t
 }
 
 HashMap<TileKey, TileState> _loadExampleValues(HashMap<TileKey, TileState> tileStateMap, LoadPlayScreenWithSudokuAction action) {
-  final List<List<int>> exampleValues = MyGames.games[0];
+  final List<List<int>> exampleValues = MyGames.games[action.gameNumber];
 
   final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
   tileStateMap.forEach((tileKey, tileState) {
