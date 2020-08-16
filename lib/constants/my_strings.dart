@@ -6,7 +6,7 @@ class MyStrings {
   static final String topTextNoSolution = 'NO SOLUTION';
 
   static final String appBarTextSolveWithCameraScreen = 'Solve With Camera';
-  static final String topTextAlignWithTheCamera = 'Align with the camera';
+  static final String topTextAlignWithTheCamera = 'Align with camera';
 
   static final String appBarTextJustPlayScreen = 'Just Play';
   static final String topTextPickATile = 'Pick a tile';
@@ -34,7 +34,7 @@ class MyStrings {
   static final String dropDownMenuItemHowToSolve = 'How To Solve';
   static final String dropDownMenuItemHowToPlay = 'How To Play';
 
-    static final String solveMySudokuButtonText = 'SOLVE MY SUDOKU';
-    static final String newGameButtonText = 'NEW GAME';
-
+  static final String solveMySudokuButtonText = 'SOLVE MY SUDOKU';
+  static final String newGameButtonText = 'NEW GAME';
+  static final String takePhotoButtonText = 'TAKE PHOTO';
 }

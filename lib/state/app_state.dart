@@ -5,6 +5,8 @@ import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
+import 'package:sudoku_solver_2/state/screen_state.dart';
+
 
 @immutable
 class AppState {
@@ -15,6 +17,7 @@ class AppState {
   final bool isSolving;
   final bool isSolved;
   final int gameNumber;
+  final ScreenState screenState;
 
   AppState({
     @required this.tileStateMap,
@@ -24,6 +27,7 @@ class AppState {
     @required this.isSolving,
     @required this.isSolved,
     @required this.gameNumber,
+    @required this.screenState,
   });
 
   AppState copyWith({
@@ -34,6 +38,7 @@ class AppState {
     bool isSolving,
     bool isSolved,
     int gameNumber,
+    ScreenState screenState,
   }) {
     return AppState(
       tileStateMap: tileStateMap ?? this.tileStateMap,
@@ -43,6 +48,7 @@ class AppState {
       isSolving: isSolving ?? this.isSolving,
       isSolved: isSolved ?? this.isSolved,
       gameNumber: gameNumber ?? this.gameNumber,
+      screenState: screenState ?? this.screenState,
     );
   }
 }

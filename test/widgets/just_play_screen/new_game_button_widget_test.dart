@@ -12,10 +12,9 @@ import 'package:sudoku_solver_2/widgets/just_play_screen/new_game_button_widget.
 
 void main() {
   group('NewGameButtonWidget -', () {
-    final Duration debounceTime = Duration(milliseconds: 100);
     NewGameButtonWidget newGameButtonWidget;
 
-    Future<void> createSolveMySudokuButtonWidget(WidgetTester tester) async {
+    Future<void> createNewGameButtonWidget(WidgetTester tester) async {
       newGameButtonWidget = NewGameButtonWidget();
       await tester.pumpWidget(
         StoreProvider<AppState>(
@@ -25,7 +24,7 @@ void main() {
       );
     }
 
-    Color getSolveMySudokuButtonWidgetColor(WidgetTester tester) {
+    Color newGameButtonWidgetColor(WidgetTester tester) {
       return ((tester.firstWidget(find.byType(RaisedButton)) as RaisedButton)).color;
     }
 
@@ -37,25 +36,25 @@ void main() {
 
     group('initial state -', () {
       testWidgets('should be defined', (WidgetTester tester) async {
-        await createSolveMySudokuButtonWidget(tester);
+        await createNewGameButtonWidget(tester);
 
         expect(newGameButtonWidget, isNotNull);
       });
 
       testWidgets('should display "NEW GAME"', (WidgetTester tester) async {
-        await createSolveMySudokuButtonWidget(tester);
+        await createNewGameButtonWidget(tester);
 
         expect(find.text('NEW GAME'), findsOneWidget);
       });
 
       testWidgets('should be blue', (WidgetTester tester) async {
-        await createSolveMySudokuButtonWidget(tester);
+        await createNewGameButtonWidget(tester);
 
-        expect(getSolveMySudokuButtonWidgetColor(tester), MyColors.blue);
+        expect(newGameButtonWidgetColor(tester), MyColors.blue);
       });
 
       testWidgets('should not be tappable', (WidgetTester tester) async {
-        await createSolveMySudokuButtonWidget(tester);
+        await createNewGameButtonWidget(tester);
 
         int oldGameNumber = Redux.store.state.gameNumber;
         await tester.tap(find.byWidget(newGameButtonWidget));
@@ -70,7 +69,7 @@ void main() {
       testWidgets('tapping should increment the gameNumber', (WidgetTester tester) async {
         Redux.store.dispatch(GameSolvedAction());
 
-        await createSolveMySudokuButtonWidget(tester);
+        await createNewGameButtonWidget(tester);
 
         int oldGameNumber = Redux.store.state.gameNumber;
         await tester.tap(find.byWidget(newGameButtonWidget));

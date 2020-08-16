@@ -1,5 +1,6 @@
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
+import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
 class TileSelectedAction {
@@ -54,4 +55,9 @@ class NewGameButtonPressedAction {
 
 class GameSolvedAction {
   GameSolvedAction();
+}
+
+class ChangeScreenAction {
+  final ScreenState screenState;
+  ChangeScreenAction(this.screenState);
 }

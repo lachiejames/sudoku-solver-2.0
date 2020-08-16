@@ -3,6 +3,7 @@ import 'package:redux_thunk/redux_thunk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/redux/reducers/change_screen_reducer.dart';
 import 'package:sudoku_solver_2/redux/reducers/load_play_screen_with_sudoku_reducer.dart';
 import 'package:sudoku_solver_2/redux/reducers/new_game_button_pressed_reducer.dart';
 import 'package:sudoku_solver_2/redux/reducers/number_pressed_reducer.dart';
@@ -16,6 +17,7 @@ import 'package:sudoku_solver_2/redux/reducers/tile_selected_reducer.dart';
 import 'package:sudoku_solver_2/redux/reducers/game_solved_reducer.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
+import 'package:sudoku_solver_2/state/screen_state.dart';
 
 class Redux {
   static Store<AppState> _store;
@@ -41,6 +43,7 @@ class Redux {
         isSolving: false,
         isSolved: false,
         gameNumber: (sharedPreferences != null) ? _getGameNumber() : 0,
+        screenState: ScreenState.HomeScreen,
       ),
     );
   }
@@ -79,7 +82,9 @@ class Redux {
     } else if (action is NewGameButtonPressedAction) {
       return newGameButtonPressedReducer(state, action);
     } else if (action is GameSolvedAction) {
-      return gameSolvedReducer(state,action);
+      return gameSolvedReducer(state, action);
+    } else if (action is ChangeScreenAction) {
+      return changeScreenReducer(state, action);
     }
 
     return state;
