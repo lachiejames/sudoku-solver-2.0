@@ -64,10 +64,10 @@ class TileWidgetState extends State<TileWidget> {
           onTap: () {
             if (tileState.isOriginalTile) {
               return;
-            } else if (tileState.isTapped && tileState.value == null) {
+            } 
+            
+            if (tileState.isTapped) {
               Redux.store.dispatch(TileDeselectedAction(tileState));
-            } else if (tileState.isTapped && tileState.value != null) {
-              Redux.store.dispatch(RemoveValueFromTileAction(tileState));
             } else {
               Redux.store.dispatch(TileSelectedAction(tileState));
             }

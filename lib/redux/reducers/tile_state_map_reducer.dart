@@ -8,7 +8,6 @@ import 'package:sudoku_solver_2/state/tile_state.dart';
 final Reducer<HashMap<TileKey, TileState>> tileStateMapReducer = combineReducers<HashMap<TileKey, TileState>>([
   TypedReducer<HashMap<TileKey, TileState>, TileSelectedAction>(_tileSelectedReducer),
   TypedReducer<HashMap<TileKey, TileState>, TileDeselectedAction>(_tileDeselectedReducer),
-  TypedReducer<HashMap<TileKey, TileState>, RemoveValueFromTileAction>(_removeValueFromTileReducer),
   TypedReducer<HashMap<TileKey, TileState>, LoadPlayScreenWithSudokuAction>(_loadExampleValues),
   TypedReducer<HashMap<TileKey, TileState>, NumberPressedAction>(_addPressedNumberToTile),
   TypedReducer<HashMap<TileKey, TileState>, SudokuSolvedAction>(_updateTileMapWithSolvedSudokuReducer),
@@ -17,47 +16,30 @@ final Reducer<HashMap<TileKey, TileState>> tileStateMapReducer = combineReducers
 
 HashMap<TileKey, TileState> _tileSelectedReducer(HashMap<TileKey, TileState> tileStateMap, TileSelectedAction action) {
   // Get tileKey of selected Tile
-  final TileState nextSelectedTile = action.selectedTile;
-  assert(nextSelectedTile != null);
-  final TileKey nextSelectedTileKey = TileKey(row: nextSelectedTile.row, col: nextSelectedTile.col);
+  final TileKey nextSelectedTileKey = TileKey(row: action.selectedTile.row, col: action.selectedTile.col);
 
   // Use tileKey to select the tile, in a new tilemap
   final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
   tileStateMap.forEach((tileKey, tileState) {
-    if (tileKey == nextSelectedTileKey) {
-      newTileStateMap[tileKey] = tileState.copyWith(isTapped: true);
-    } else {
-      newTileStateMap[tileKey] = tileState.copyWith(isTapped: false);
-    }
+    bool isTapped = (tileKey == nextSelectedTileKey);
+    newTileStateMap[tileKey] = tileState.copyWith(isTapped: isTapped);
   });
 
   return newTileStateMap;
 }
 
 HashMap<TileKey, TileState> _tileDeselectedReducer(HashMap<TileKey, TileState> tileStateMap, TileDeselectedAction action) {
-  assert(action.deselectedTile.value == null);
+  assert(action.deselectedTile.isTapped == true);
 
   // Get tileKey of selected Tile
-  final TileState deselectedTile = action.deselectedTile;
-  final TileKey deselectedTileKey = TileKey(row: deselectedTile.row, col: deselectedTile.col);
+  final TileKey deselectedTileKey = TileKey(row: action.deselectedTile.row, col: action.deselectedTile.col);
 
   // Use tileKey to deselect the tile, in a new tilemap
-  final HashMap<TileKey, TileState> newTileStateMap = HashMap.from(tileStateMap);
-  newTileStateMap[deselectedTileKey] = deselectedTile.copyWith(isTapped: false);
-
-  return newTileStateMap;
-}
-
-HashMap<TileKey, TileState> _removeValueFromTileReducer(HashMap<TileKey, TileState> tileStateMap, RemoveValueFromTileAction action) {
-  assert(action.selectedTile.value != null);
-
-  // Get tileKey of selected Tile
-  final TileState selectedTile = action.selectedTile;
-  final TileKey selectedTileKey = TileKey(row: selectedTile.row, col: selectedTile.col);
-
-  // Use tileKey to deselect the tile and remove its value, in a new tilemap
-  final HashMap<TileKey, TileState> newTileStateMap = HashMap.from(tileStateMap);
-  newTileStateMap[selectedTileKey] = selectedTile.copyWith(isTapped: false, value: -1);
+  final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
+  tileStateMap.forEach((tileKey, tileState) {
+    int value = (tileKey == deselectedTileKey) ? -1 : tileState.value;
+    newTileStateMap[tileKey] = tileState.copyWith(isTapped: false, value: value);
+  });
 
   return newTileStateMap;
 }
@@ -81,11 +63,8 @@ HashMap<TileKey, TileState> _addPressedNumberToTile(HashMap<TileKey, TileState> 
   final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
 
   tileStateMap.forEach((tileKey, tileState) {
-    if (tileState.isTapped) {
-      newTileStateMap[tileKey] = tileState.copyWith(value: action.pressedNumber.number, isTapped: false);
-    } else {
-      newTileStateMap[tileKey] = tileState.copyWith(isTapped: false);
-    }
+    int value = (tileState.isTapped) ? action.pressedNumber.number : tileState.value;
+    newTileStateMap[tileKey] = tileState.copyWith(value: value, isTapped: false);
   });
 
   return newTileStateMap;

@@ -37,7 +37,6 @@ class NewGameButtonWidgetState extends State<NewGameButtonWidget> {
                   style: MyStyles.buttonTextStyle,
                 ),
                 onPressed: () {
-                  print(gameState);
                   if (gameState == GameState.Solved) {
                     Redux.store.dispatch(NewGameButtonPressedAction());
                   }
