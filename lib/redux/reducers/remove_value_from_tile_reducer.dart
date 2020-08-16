@@ -32,5 +32,6 @@ AppState removeValueFromTileReducer(AppState appState, RemoveValueFromTileAction
     hasSelectedTile: false,
     numberStateList: newNumberStateList,
     topTextState: newTopTextState,
+    isSolved: false,
   );
 }

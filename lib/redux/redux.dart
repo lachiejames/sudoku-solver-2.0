@@ -13,6 +13,7 @@ import 'package:sudoku_solver_2/redux/reducers/start_solving_sudoku_reducer.dart
 import 'package:sudoku_solver_2/redux/reducers/sudoku_solved_reducer.dart';
 import 'package:sudoku_solver_2/redux/reducers/tile_deselected_reducer.dart';
 import 'package:sudoku_solver_2/redux/reducers/tile_selected_reducer.dart';
+import 'package:sudoku_solver_2/redux/reducers/game_solved_reducer.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
 
@@ -77,6 +78,8 @@ class Redux {
       return loadPlayScreenWithSudokuReducer(state, action);
     } else if (action is NewGameButtonPressedAction) {
       return newGameButtonPressedReducer(state, action);
+    } else if (action is GameSolvedAction) {
+      return gameSolvedReducer(state,action);
     }
 
     return state;

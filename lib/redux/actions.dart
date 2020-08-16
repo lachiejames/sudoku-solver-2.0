@@ -51,3 +51,7 @@ class LoadPlayScreenWithSudokuAction {
 class NewGameButtonPressedAction {
   NewGameButtonPressedAction();
 }
+
+class GameSolvedAction {
+  GameSolvedAction();
+}
