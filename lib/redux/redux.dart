@@ -61,32 +61,19 @@ class Redux {
   }
 
   static AppState appReducer(AppState state, dynamic action) {
-    if (action is TileSelectedAction) {
-      return tileSelectedReducer(state, action);
-    } else if (action is TileDeselectedAction) {
-      return tileDeselectedReducer(state, action);
-    } else if (action is RemoveValueFromTileAction) {
-      return removeValueFromTileReducer(state, action);
-    } else if (action is NumberPressedAction) {
-      return numberPressedReducer(state, action);
-    } else if (action is SolveButtonPressedAction) {
-      return solveButtonPressedReducer(state, action);
-    } else if (action is StartSolvingSudokuAction) {
-      return startSolvingSudokuReducer(state, action);
-    } else if (action is SudokuSolvedAction) {
-      return sudokuSolvedReducer(state, action);
-    } else if (action is RestartAction) {
-      return restartReducer(state, action);
-    } else if (action is LoadPlayScreenWithSudokuAction) {
-      return loadPlayScreenWithSudokuReducer(state, action);
-    } else if (action is NewGameButtonPressedAction) {
-      return newGameButtonPressedReducer(state, action);
-    } else if (action is GameSolvedAction) {
-      return gameSolvedReducer(state, action);
-    } else if (action is ChangeScreenAction) {
-      return changeScreenReducer(state, action);
-    }
-
-    return state;
+    return combineReducers<AppState>([
+      TypedReducer<AppState, TileSelectedAction>(tileSelectedReducer),
+      TypedReducer<AppState, TileDeselectedAction>(tileDeselectedReducer),
+      TypedReducer<AppState, RemoveValueFromTileAction>(removeValueFromTileReducer),
+      TypedReducer<AppState, NumberPressedAction>(numberPressedReducer),
+      TypedReducer<AppState, SolveButtonPressedAction>(solveButtonPressedReducer),
+      TypedReducer<AppState, StartSolvingSudokuAction>(startSolvingSudokuReducer),
+      TypedReducer<AppState, SudokuSolvedAction>(sudokuSolvedReducer),
+      TypedReducer<AppState, RestartAction>(restartReducer),
+      TypedReducer<AppState, LoadPlayScreenWithSudokuAction>(loadPlayScreenWithSudokuReducer),
+      TypedReducer<AppState, NewGameButtonPressedAction>(newGameButtonPressedReducer),
+      TypedReducer<AppState, GameSolvedAction>(gameSolvedReducer),
+      TypedReducer<AppState, ChangeScreenAction>(changeScreenReducer),
+    ]).call(state, action);
   }
 }
