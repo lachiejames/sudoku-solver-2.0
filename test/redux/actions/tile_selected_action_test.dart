@@ -51,12 +51,12 @@ void main() {
       expect(prevNumberStateList == nextNumberStateList, false);
     });
 
-    test('sets tile.isTapped to true', () {
-      expect(state.tileStateMap[tileKey].isTapped, false);
+    test('sets tile.isSelected to true', () {
+      expect(state.tileStateMap[tileKey].isSelected, false);
 
       dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
 
-      expect(state.tileStateMap[tileKey].isTapped, true);
+      expect(state.tileStateMap[tileKey].isSelected, true);
     });
 
     test('all numberStates are now active', () {
@@ -74,14 +74,14 @@ void main() {
     });
 
     test('tapping another tile will deselect previous tile', () {
-      expect(state.tileStateMap[tileKey].isTapped, false);
+      expect(state.tileStateMap[tileKey].isSelected, false);
       dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
-      expect(state.tileStateMap[tileKey].isTapped, true);
+      expect(state.tileStateMap[tileKey].isSelected, true);
 
       TileKey newTileKey = TileKey(row: 3, col: 4);
       dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[newTileKey]));
-      expect(state.tileStateMap[newTileKey].isTapped, true);
-      expect(state.tileStateMap[tileKey].isTapped, false);
+      expect(state.tileStateMap[newTileKey].isSelected, true);
+      expect(state.tileStateMap[tileKey].isSelected, false);
     });
 
     test('topText displays "Pick a number" in white', () {

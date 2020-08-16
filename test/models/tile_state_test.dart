@@ -14,11 +14,11 @@ void main() {
       expect(tileState.row, 6);
       expect(tileState.col, 9);
       expect(tileState.value, null);
-      expect(tileState.isTapped, false);
+      expect(tileState.isSelected, false);
     });
 
     test('toString() returns expected string', () {
-      expect(tileState.toString(), 'TileState(row=6, col=9, value=null, isTapped=false)');
+      expect(tileState.toString(), 'TileState(row=6, col=9, value=null, isSelected=false)');
     });
 
     test('getSegment() returns correct segment', () {
@@ -26,10 +26,10 @@ void main() {
     });
 
     test('copyWith() returns a new object', () {
-      TileState cloneTileState = tileState.copyWith(value: 5, isTapped: true);
+      TileState cloneTileState = tileState.copyWith(value: 5, isSelected: true);
       expect(tileState == cloneTileState, false);
       expect(cloneTileState.value, 5);
-      expect(cloneTileState.isTapped, true);
+      expect(cloneTileState.isSelected, true);
     });
   });
 }

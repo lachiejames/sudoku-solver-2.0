@@ -21,15 +21,15 @@ HashMap<TileKey, TileState> _tileSelectedReducer(HashMap<TileKey, TileState> til
   // Use tileKey to select the tile, in a new tilemap
   final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
   tileStateMap.forEach((tileKey, tileState) {
-    bool isTapped = (tileKey == nextSelectedTileKey);
-    newTileStateMap[tileKey] = tileState.copyWith(isTapped: isTapped);
+    bool isSelected = (tileKey == nextSelectedTileKey);
+    newTileStateMap[tileKey] = tileState.copyWith(isSelected: isSelected);
   });
 
   return newTileStateMap;
 }
 
 HashMap<TileKey, TileState> _tileDeselectedReducer(HashMap<TileKey, TileState> tileStateMap, TileDeselectedAction action) {
-  assert(action.deselectedTile.isTapped == true);
+  assert(action.deselectedTile.isSelected == true);
 
   // Get tileKey of selected Tile
   final TileKey deselectedTileKey = TileKey(row: action.deselectedTile.row, col: action.deselectedTile.col);
@@ -38,7 +38,7 @@ HashMap<TileKey, TileState> _tileDeselectedReducer(HashMap<TileKey, TileState> t
   final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
   tileStateMap.forEach((tileKey, tileState) {
     int value = (tileKey == deselectedTileKey) ? -1 : tileState.value;
-    newTileStateMap[tileKey] = tileState.copyWith(isTapped: false, value: value);
+    newTileStateMap[tileKey] = tileState.copyWith(isSelected: false, value: value);
   });
 
   return newTileStateMap;
@@ -63,8 +63,8 @@ HashMap<TileKey, TileState> _addPressedNumberToTile(HashMap<TileKey, TileState> 
   final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
 
   tileStateMap.forEach((tileKey, tileState) {
-    int value = (tileState.isTapped) ? action.pressedNumber.number : tileState.value;
-    newTileStateMap[tileKey] = tileState.copyWith(value: value, isTapped: false);
+    int value = (tileState.isSelected) ? action.pressedNumber.number : tileState.value;
+    newTileStateMap[tileKey] = tileState.copyWith(value: value, isSelected: false);
   });
 
   return newTileStateMap;
@@ -75,7 +75,7 @@ HashMap<TileKey, TileState> _updateTileMapWithSolvedSudokuReducer(HashMap<TileKe
   action.solvedSudoku.tileStateMap.forEach((tileKey, tileState) {
     assert(tileState.value != null);
     assert(1 <= tileState.value && tileState.value <= 9);
-    newTileStateMap[tileKey] = tileState.copyWith(value: tileState.value, isTapped: false);
+    newTileStateMap[tileKey] = tileState.copyWith(value: tileState.value, isSelected: false);
   });
 
   return newTileStateMap;
@@ -85,7 +85,7 @@ HashMap<TileKey, TileState> _clearAllValuesReducer(HashMap<TileKey, TileState> t
   final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
   tileStateMap.forEach((tileKey, tileState) {
     int value = (tileState.isOriginalTile) ? tileState.value : -1;
-    newTileStateMap[tileKey] = tileState.copyWith(value: value, isTapped: false);
+    newTileStateMap[tileKey] = tileState.copyWith(value: value, isSelected: false);
   });
 
   return newTileStateMap;

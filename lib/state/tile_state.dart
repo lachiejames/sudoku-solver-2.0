@@ -4,18 +4,18 @@ class TileState {
   final bool isOriginalTile;
 
   int value;
-  bool isTapped;
+  bool isSelected;
 
   TileState({
     this.row,
     this.col,
     this.value,
-    this.isTapped = false,
+    this.isSelected = false,
     this.isOriginalTile = false,
   });
 
   String toString() {
-    return 'TileState(row=$row, col=$col, value=${(value != null) ? value : 'null'}, isTapped=${this.isTapped})';
+    return 'TileState(row=$row, col=$col, value=${(value != null) ? value : 'null'}, isSelected=${this.isSelected})';
   }
 
   int getSegment() {
@@ -42,14 +42,14 @@ class TileState {
 
   TileState copyWith({
     int value,
-    bool isTapped,
+    bool isSelected,
     bool isOriginalTile,
   }) {
     return TileState(
       row: this.row,
       col: this.col,
       value: _decideValueToPass(value),
-      isTapped: isTapped ?? this.isTapped,
+      isSelected: isSelected ?? this.isSelected,
       isOriginalTile: isOriginalTile ?? this.isOriginalTile,
     );
   }

@@ -51,7 +51,7 @@ class TileWidgetState extends State<TileWidget> {
                 ),
 
                 // Displays a red X in the corner if the value can be removed
-                (tileState.isTapped && tileState.value != null)
+                (tileState.isSelected && tileState.value != null)
                     ? Text(
                         'X',
                         style: MyStyles.tileWithRemovableValueTextStyle,
@@ -66,7 +66,7 @@ class TileWidgetState extends State<TileWidget> {
               return;
             } 
             
-            if (tileState.isTapped) {
+            if (tileState.isSelected) {
               Redux.store.dispatch(TileDeselectedAction(tileState));
             } else {
               Redux.store.dispatch(TileSelectedAction(tileState));
@@ -80,7 +80,7 @@ class TileWidgetState extends State<TileWidget> {
   Color _determineTileColor(TileState tileState) {
     if (tileState.isOriginalTile) {
       return MyColors.grey;
-    } else if (tileState.isTapped) {
+    } else if (tileState.isSelected) {
       return MyColors.green;
     } else {
       return MyColors.white;

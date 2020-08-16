@@ -97,7 +97,7 @@ class MyWidgets {
 
   static TileKey extractSelectedTileKey(HashMap<TileKey, TileState> tileStateMap) {
     for (MapEntry<TileKey, TileState> entry in tileStateMap.entries) {
-      if (entry.value.isTapped) {
+      if (entry.value.isSelected) {
         return entry.key;
       }
     }

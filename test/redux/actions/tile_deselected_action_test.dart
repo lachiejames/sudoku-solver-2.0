@@ -56,12 +56,12 @@ void main() {
       expect(prevNumberStateList == nextNumberStateList, false);
     });
 
-    test('sets tile.isTapped to false', () {
-      expect(state.tileStateMap[tileKey].isTapped, true);
+    test('sets tile.isSelected to false', () {
+      expect(state.tileStateMap[tileKey].isSelected, true);
 
       dispatchActionAndUpdateState(TileDeselectedAction(state.tileStateMap[tileKey]));
 
-      expect(state.tileStateMap[tileKey].isTapped, false);
+      expect(state.tileStateMap[tileKey].isSelected, false);
     });
 
     test('all numberStates are now unactive', () {
