@@ -11,6 +11,7 @@ final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
   TypedReducer<GameState, SudokuSolvedAction>(_sudokuSolvedReducer),
   TypedReducer<GameState, NumberPressedAction>(_setToSolvedIfAllTilesFilled),
   TypedReducer<GameState, GameSolvedAction>(_setToSolved),
+  TypedReducer<GameState, RestartAction>(_setToDefault),
 ]);
 
 GameState _solveButtonPressedReducer(GameState gameState, SolveButtonPressedAction action) {
@@ -57,4 +58,8 @@ GameState _setToSolvedIfAllTilesFilled(GameState gameState, NumberPressedAction 
 
 GameState _setToSolved(GameState gameState, GameSolvedAction action) {
   return GameState.Solved;
+}
+
+GameState _setToDefault(GameState gameState, RestartAction action) {
+  return GameState.Default;
 }

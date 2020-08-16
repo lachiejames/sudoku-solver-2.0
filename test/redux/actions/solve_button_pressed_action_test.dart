@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
@@ -6,9 +5,6 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
-import 'package:sudoku_solver_2/state/number_state.dart';
-import 'package:sudoku_solver_2/state/tile_key.dart';
-import 'package:sudoku_solver_2/state/tile_state.dart';
 
 void main() {
   AppState state;
