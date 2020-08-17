@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
+import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
@@ -16,6 +17,7 @@ class AppState {
   final int gameNumber;
   final ScreenState screenState;
   final GameState gameState;
+  final CameraState cameraState;
 
   AppState({
     @required this.tileStateMap,
@@ -24,6 +26,7 @@ class AppState {
     @required this.gameNumber,
     @required this.screenState,
     @required this.gameState,
+    @required this.cameraState,
   });
 
   AppState copyWith({
@@ -33,6 +36,7 @@ class AppState {
     int gameNumber,
     ScreenState screenState,
     GameState gameState,
+    CameraState cameraState,
   }) {
     return AppState(
       tileStateMap: tileStateMap ?? this.tileStateMap,
@@ -41,6 +45,7 @@ class AppState {
       gameNumber: gameNumber ?? this.gameNumber,
       screenState: screenState ?? this.screenState,
       gameState: gameState ?? this.gameState,
+      cameraState: cameraState ?? this.cameraState,
     );
   }
 }

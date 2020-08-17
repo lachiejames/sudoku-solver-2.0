@@ -56,3 +56,7 @@ class ChangeScreenAction {
   final ScreenState screenState;
   ChangeScreenAction(this.screenState);
 }
+
+class TakePhotoAction {
+  TakePhotoAction();
+}
