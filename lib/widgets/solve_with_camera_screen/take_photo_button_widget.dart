@@ -28,7 +28,6 @@ class TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
           ),
           onPressed: () {
             Redux.store.dispatch(TakePhotoAction());
-            print(Redux.store.state.cameraState.cameraController == null);
           },
         ),
       ),

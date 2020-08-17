@@ -60,3 +60,7 @@ class ChangeScreenAction {
 class TakePhotoAction {
   TakePhotoAction();
 }
+
+class VerifyPhotoCreatedSudokuAction {
+  VerifyPhotoCreatedSudokuAction();
+}
