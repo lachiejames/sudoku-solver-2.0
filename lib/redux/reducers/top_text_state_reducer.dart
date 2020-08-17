@@ -1,6 +1,7 @@
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
 import 'package:redux/redux.dart';
 
@@ -12,6 +13,7 @@ final Reducer<TopTextState> topTextStateReducer = combineReducers<TopTextState>(
   TypedReducer<TopTextState, SolveButtonPressedAction>(_setTopTextToAiThinking),
   TypedReducer<TopTextState, SudokuSolvedAction>(_setTopTextToSolved),
   TypedReducer<TopTextState, GameSolvedAction>(_setTopTextToSolved2),
+  TypedReducer<TopTextState, ChangeScreenAction>(_setTopTextAlignWithCamera),
 ]);
 
 TopTextState _setTopTextToPickATile(TopTextState topTextState, TileDeselectedAction action) {
@@ -43,4 +45,12 @@ TopTextState _setTopTextToSolved(TopTextState topTextState, SudokuSolvedAction a
 
 TopTextState _setTopTextToSolved2(TopTextState topTextState, GameSolvedAction action) {
   return topTextState.copyWith(text: MyStrings.topTextSolved, color: MyColors.green);
+}
+
+TopTextState _setTopTextAlignWithCamera(TopTextState topTextState, ChangeScreenAction action) {
+  if (action.screenState == ScreenState.SolveWithCameraScreen) {
+    return topTextState.copyWith(text: MyStrings.topTextAlignWithTheCamera, color: MyColors.white);
+  } else {
+    return topTextState.copyWith(text: MyStrings.topTextPickATile, color: MyColors.white);
+  }
 }
