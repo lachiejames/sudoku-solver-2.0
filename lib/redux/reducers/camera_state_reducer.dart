@@ -9,9 +9,10 @@ final Reducer<CameraState> cameraStateReducer = combineReducers<CameraState>([
 ]);
 
 CameraState _takePhotoReducer(CameraState cameraState, TakePhotoAction action) {
-  print('_takePhotoReducer');
-
-  cameraState.takePicture().then((_) => Redux.store.dispatch(VerifyPhotoCreatedSudokuAction()));
+  cameraState
+      .takePicture()
+      .then((_) => cameraState.getSudokuFromImage())
+      .then((constructedSudoku) => Redux.store.dispatch(VerifyPhotoCreatedSudokuAction(constructedSudoku)));
   return cameraState;
 }
 

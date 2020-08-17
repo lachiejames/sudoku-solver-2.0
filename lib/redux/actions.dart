@@ -62,5 +62,6 @@ class TakePhotoAction {
 }
 
 class VerifyPhotoCreatedSudokuAction {
-  VerifyPhotoCreatedSudokuAction();
+  final Sudoku constructedSudoku;
+  VerifyPhotoCreatedSudokuAction(this.constructedSudoku);
 }

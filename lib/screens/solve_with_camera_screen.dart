@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
+import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
@@ -14,9 +15,16 @@ class SolveWithCameraScreen extends StatefulWidget {
 }
 
 class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
+  void initScreenSize(BuildContext context) {
+    MyValues.screenHeight = MediaQuery.of(context).size.height;
+    MyValues.screenWidth = MediaQuery.of(context).size.width;
+  }
+
   @override
   Widget build(BuildContext context) {
+    this.initScreenSize(context);
     Redux.store.dispatch(ChangeScreenAction(ScreenState.SolveWithCameraScreen));
+
     return Scaffold(
       appBar: SolveWithCameraScreenAppBar(AppBar()),
       backgroundColor: MyColors.pink,
