@@ -1,9 +1,11 @@
 import 'dart:collection';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
+import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
@@ -137,5 +139,22 @@ class MyWidgets {
       _tileKeys.addAll(makeTileKeysFromRowsAndCols([7, 8, 9], [7, 8, 9]));
     }
     return _tileKeys;
+  }
+
+  static Future<CameraState> initCamera() async {
+    CameraDescription cameraDescription;
+    CameraController cameraController;
+    try {
+      cameraDescription = (await availableCameras())[0];
+      cameraController = CameraController(cameraDescription, ResolutionPreset.low);
+      await cameraController.initialize();
+    } catch (e) {
+      print(e);
+    }
+
+    return CameraState(
+      cameraDescription: cameraDescription,
+      cameraController: cameraController,
+    );
   }
 }

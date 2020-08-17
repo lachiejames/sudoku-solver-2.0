@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/solve_with_camera_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -11,6 +12,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Redux.sharedPreferences = await SharedPreferences.getInstance();
+  Redux.cameraState = await MyWidgets.initCamera();
   Redux.init();
   runApp(MyApp());
 }

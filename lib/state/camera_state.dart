@@ -1,12 +1,27 @@
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 
 class CameraState {
-  CameraDescription cameraDescription;
-  CameraController cameraController;
+  final CameraDescription cameraDescription;
+  final CameraController cameraController;
 
-  Future<void> initCamera() async {
-    cameraDescription = (await availableCameras()).first;
-    cameraController = CameraController(cameraDescription, ResolutionPreset.ultraHigh);
-    cameraController.initialize();
+  CameraState({
+    @required this.cameraDescription,
+    @required this.cameraController,
+  }) {
+    assert(this.cameraDescription != null);
+    assert(this.cameraController != null);
+  }
+
+  blah() {}
+
+  CameraState copyWith({
+    CameraDescription cameraDescription,
+    CameraController cameraController,
+  }) {
+    return CameraState(
+      cameraDescription: cameraDescription ?? this.cameraDescription,
+      cameraController: cameraController ?? this.cameraController,
+    );
   }
 }

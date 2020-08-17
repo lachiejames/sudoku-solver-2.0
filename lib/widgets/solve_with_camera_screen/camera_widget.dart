@@ -16,30 +16,10 @@ class CameraWidgetState extends State<CameraWidget> {
       distinct: true,
       converter: (store) => store.state.cameraState,
       builder: (context, cameraState) {
-        return FutureBuilder<void>(
-          future: cameraState.initCamera(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              print('\n\n\n Connection done \n\n\n');
-              return Container(
-                height: 300,
-                width: 300,
-                child: CameraPreview(cameraState.cameraController),
-              );
-            } else if (snapshot.hasError) {
-              print('\n\n\n Connection ERROR \n\n\n');
-              return Text('Could not load camera :(');
-            } else {
-              print('\n\n\n Connection waiting \n\n\n');
-              return Container(
-                  child: Column(
-                children: <Widget>[
-                  CircularProgressIndicator(),
-                  Text('Camera will appear here'),
-                ],
-              ));
-            }
-          },
+        return Container(
+          height: 300,
+          width: 300,
+          child: CameraPreview(cameraState.cameraController),
         );
       },
     );
