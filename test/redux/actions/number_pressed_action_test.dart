@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
@@ -6,7 +5,6 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
-import 'package:sudoku_solver_2/state/tile_state.dart';
 
 void main() {
   AppState state;
@@ -29,33 +27,6 @@ void main() {
       // Need a tile to be selected before add a number
       dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
       pressedNumber = state.numberStateList[6];
-    });
-
-    test('tileState replaced with new state', () {
-      TileState prevTileState = state.tileStateMap[tileKey];
-
-      dispatchActionAndUpdateState(NumberPressedAction(pressedNumber));
-
-      TileState nextTileState = state.tileStateMap[tileKey];
-      expect(prevTileState == nextTileState, false);
-    });
-
-    test('tileStateMap replaced with new state', () {
-      HashMap<TileKey, TileState> prevTileStateMap = state.tileStateMap;
-
-      dispatchActionAndUpdateState(NumberPressedAction(pressedNumber));
-
-      HashMap<TileKey, TileState> nextTileStateMap = state.tileStateMap;
-      expect(prevTileStateMap == nextTileStateMap, false);
-    });
-
-    test('numberStateList replaced with new state', () {
-      List<NumberState> prevNumberStateList = state.numberStateList;
-
-      dispatchActionAndUpdateState(NumberPressedAction(pressedNumber));
-
-      List<NumberState> nextNumberStateList = state.numberStateList;
-      expect(prevNumberStateList == nextNumberStateList, false);
     });
 
     test('sets tile.value to selected number', () {
