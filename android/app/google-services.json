@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "627853225879",
+    "firebase_url": "https://sudoku-solver-2.firebaseio.com",
+    "project_id": "sudoku-solver-2",
+    "storage_bucket": "sudoku-solver-2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627853225879:android:5d9ed64e1dedba41d91ed2",
+        "android_client_info": {
+          "package_name": "com.lachie.sudoku_solver_2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "627853225879-pvkdqlblat8n8bkmtvkk8986vrvmiqst.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXS9wSTO6ERYs2G6kvRlWPmMOji_9-XuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "627853225879-pvkdqlblat8n8bkmtvkk8986vrvmiqst.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "627853225879-4pulo1r0s7l616jpalohcv98fgg75h4p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.lachie.sudoku-solver-2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

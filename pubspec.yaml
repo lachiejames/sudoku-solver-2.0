@@ -16,6 +16,7 @@ dependencies:
   redux_thunk: ^0.3.0
   shared_preferences: ^0.5.8
   image: ^2.1.12
+  firebase_core: ^0.4.0+9
   firebase_ml_vision: ^0.9.4
 
 dev_dependencies:
