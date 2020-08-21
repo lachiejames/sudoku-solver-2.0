@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_touch_screen/solve_with_touch_screen_drop_down_menu_widget.dart';
 
 class SolveWithCameraScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -21,7 +20,7 @@ class SolveWithCameraScreenAppBar extends StatelessWidget implements PreferredSi
       ),
       actions: <Widget>[
         Padding(
-          padding: EdgeInsets.only(right: MyValues.screenWidth / 18),
+          padding: EdgeInsets.only(right: 23),
           child: GestureDetector(
             child: SolveWithTouchScreenDropDownMenuWidget(),
           ),

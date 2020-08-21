@@ -1,7 +1,10 @@
 class MyValues {
   static bool prodMode = false;
-  static double screenHeight = 683;
-  static double screenWidth = 411;
+  static double screenHeight;
+  static double screenWidth;
+  static double pad = 32;
+  static double verticalPadding = (screenHeight - screenWidth - pad) / 2;
+  static double horizontalPadding = (pad) / 2;
 
   static double topTextFontSize = 40;
   static double appBarFontSize = 30;
@@ -11,7 +14,5 @@ class MyValues {
   static double toastFontSize = 15;
   static double tileFontSize = 15;
   static double numberFontSize = 15;
-  
-
   static int maxSolveTime = 30000;
 }

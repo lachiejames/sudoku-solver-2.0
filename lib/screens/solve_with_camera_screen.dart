@@ -28,15 +28,27 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
     return Scaffold(
       appBar: SolveWithCameraScreenAppBar(AppBar()),
       backgroundColor: MyColors.pink,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TopTextWidget(),
-            CameraWidget(),
-            TakePhotoButtonWidget(),
-          ],
-        ),
+      body: Stack(
+        children: <Widget>[
+          // Camera
+          CameraWidget(),
+
+          // topText and button
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TopTextWidget(),
+                Container(
+                  child: Text(""),
+                  width: MyValues.screenWidth - MyValues.pad,
+                  height: MyValues.screenWidth - MyValues.pad,
+                ),
+                TakePhotoButtonWidget(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

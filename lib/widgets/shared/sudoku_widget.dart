@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
@@ -28,8 +27,8 @@ class SudokuWidgetState extends State<SudokuWidget> {
             Container(
               color: MyColors.white,
               margin: EdgeInsets.only(
-                left: MyValues.screenWidth / 15,
-                right: MyValues.screenWidth / 15,
+                left: 27,
+                right: 27,
               ),
               child: this.makeTable(),
             ),

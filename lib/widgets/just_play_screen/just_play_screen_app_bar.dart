@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/widgets/just_play_screen/just_play_screen_drop_down_menu_widget.dart';
 
 class JustPlayScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -21,7 +20,7 @@ class JustPlayScreenAppBar extends StatelessWidget implements PreferredSizeWidge
       ),
       actions: <Widget>[
         Padding(
-          padding: EdgeInsets.only(right: MyValues.screenWidth / 18),
+          padding: EdgeInsets.only(right: 24),
           child: GestureDetector(
             child: JustPlayScreenDropDownMenuWidget(),
           ),

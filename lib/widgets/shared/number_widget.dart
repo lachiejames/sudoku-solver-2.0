@@ -29,13 +29,13 @@ class NumberWidgetState extends State<NumberWidget> {
         assert(numberState.number != null);
         return GestureDetector(
           child: Container(
-            height: MyValues.screenWidth / 11.5,
-            width: MyValues.screenWidth / 11.5,
+            height: 36,
+            width: 36,
             margin: EdgeInsets.only(
-              top: MyValues.screenWidth / 11.25,
-              bottom: MyValues.screenWidth / 11.25,
-              left: MyValues.screenWidth / 100,
-              right: MyValues.screenWidth / 100,
+              top: 36,
+              bottom: 36,
+              left: 4,
+              right: 4,
             ),
             decoration: ShapeDecoration(
               color: (numberState.isActive) ? MyColors.green : MyColors.white,
