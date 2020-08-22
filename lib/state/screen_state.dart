@@ -3,4 +3,7 @@ enum ScreenState {
   SolveWithCameraScreen,
   SolveWithTouchScreen,
   JustPlayScreen,
+  SolveWithCameraHelpScreen,
+  SolveWithTouchHelpScreen,
+  JustPlayHelpScreen,
 }

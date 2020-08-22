@@ -50,6 +50,8 @@ TopTextState _setTopTextToSolved2(TopTextState topTextState, GameSolvedAction ac
 TopTextState _setTopTextAlignWithCamera(TopTextState topTextState, ChangeScreenAction action) {
   if (action.screenState == ScreenState.SolveWithCameraScreen) {
     return topTextState.copyWith(text: MyStrings.topTextAlignWithTheCamera, color: MyColors.white);
+  } else if (action.screenState == ScreenState.HomeScreen) {
+    return topTextState.copyWith(text: MyStrings.topTextHome, color: MyColors.white);
   } else {
     return topTextState.copyWith(text: MyStrings.topTextPickATile, color: MyColors.white);
   }

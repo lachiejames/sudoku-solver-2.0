@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
+import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/redux/redux.dart';
+import 'package:sudoku_solver_2/state/screen_state.dart';
 
 class SolveWithTouchHelpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+        Redux.store.dispatch(ChangeScreenAction(ScreenState.SolveWithTouchHelpScreen));
+
     return Scaffold(
       backgroundColor: MyColors.pink,
       appBar: MyWidgets.makeAppBar(MyStrings.appBarTextHowToSolveScreen),

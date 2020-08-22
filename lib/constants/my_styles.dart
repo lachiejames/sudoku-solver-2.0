@@ -18,13 +18,15 @@ class MyStyles {
   static final EdgeInsetsGeometry buttonMargins = EdgeInsets.only(
     top: 32,
     bottom: 16,
+    left: 32,
+    right: 32,
   );
 
   static final EdgeInsetsGeometry buttonPadding = EdgeInsets.only(
     top: 16,
     bottom: 16,
-    left:32,
-    right:32,
+    left: 32,
+    right: 32,
   );
 
   static final EdgeInsetsGeometry topTextMargins = EdgeInsets.only(
