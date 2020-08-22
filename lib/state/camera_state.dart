@@ -17,10 +17,7 @@ class CameraState {
   CameraState({
     @required this.cameraDescription,
     @required this.cameraController,
-  }) {
-    assert(this.cameraDescription != null);
-    assert(this.cameraController != null);
-  }
+  });
 
   Future<void> takePicture() async {
     try {
