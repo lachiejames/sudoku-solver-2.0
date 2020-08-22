@@ -26,7 +26,7 @@ class TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
             MyStrings.takePhotoButtonText,
             style: MyStyles.buttonTextStyle,
           ),
-          onPressed: () {
+          onPressed: () async {
             Redux.store.dispatch(TakePhotoAction());
           },
         ),

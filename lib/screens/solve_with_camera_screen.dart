@@ -24,6 +24,13 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
   Widget build(BuildContext context) {
     this.initScreenSize(context);
     Redux.store.dispatch(ChangeScreenAction(ScreenState.SolveWithCameraScreen));
+    print('screenHeight=${MyValues.screenHeight}'); // 722.6666666666666
+    print('screenWidth=${MyValues.screenWidth}'); // 360.0
+
+    MyValues.cameraWidth = MyValues.screenWidth - 2 * MyValues.pad;
+    MyValues.cameraHeight = MyValues.cameraWidth;
+    print('cameraWidth=${MyValues.cameraWidth}'); // 296.0
+    print('cameraHeight=${MyValues.cameraHeight}'); // 296.0
 
     return Scaffold(
       appBar: SolveWithCameraScreenAppBar(AppBar()),
@@ -40,11 +47,22 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
               children: <Widget>[
                 TopTextWidget(),
                 Container(
-                  child: Text(""),
-                  width: MyValues.screenWidth - MyValues.pad,
-                  height: MyValues.screenWidth - MyValues.pad,
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(width: MyValues.verticalPadding, color: MyColors.transparent),
+                      bottom: BorderSide(width: MyValues.verticalPadding, color: MyColors.transparent),
+                      left: BorderSide(width: MyValues.horizontalPadding, color: MyColors.transparent),
+                      right: BorderSide(width: MyValues.horizontalPadding, color: MyColors.transparent),
+                    ),
+                  ),
                 ),
                 TakePhotoButtonWidget(),
+                RaisedButton(
+                  child: Text('refresh'),
+                  onPressed: () {
+                    setState(() {});
+                  },
+                ),
               ],
             ),
           ),

@@ -146,7 +146,7 @@ class MyWidgets {
     CameraController cameraController;
     try {
       cameraDescription = (await availableCameras())[0];
-      cameraController = CameraController(cameraDescription, ResolutionPreset.low);
+      cameraController = CameraController(cameraDescription, ResolutionPreset.max);
       await cameraController.initialize();
     } catch (e) {
       print(e);

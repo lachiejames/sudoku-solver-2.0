@@ -8,5 +8,6 @@ class MyColors {
   static final Color black = Color.fromARGB(200, 50, 50, 50);
   static final Color green = Color.fromARGB(255, 178, 255, 175);
   static final Color red = Color.fromARGB(255, 255, 128, 128);
+  static final Color transparent = Color.fromARGB(0, 0, 0, 0);
   static final Color originalTile = Color.fromARGB(50, 50, 50, 50);
 }

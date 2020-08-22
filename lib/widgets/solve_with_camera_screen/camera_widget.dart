@@ -20,7 +20,7 @@ class CameraWidgetState extends State<CameraWidget> {
       builder: (context, cameraState) {
         return Stack(
           children: <Widget>[
-            CameraPreview(cameraState.cameraController),
+            (cameraState.pickedImageFile == null) ? CameraPreview(cameraState.cameraController) : Image.file(cameraState.croppedImageFile),
             Container(
               decoration: BoxDecoration(
                 border: Border(

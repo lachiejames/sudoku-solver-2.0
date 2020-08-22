@@ -5,6 +5,8 @@ class MyValues {
   static double pad = 32;
   static double verticalPadding = (screenHeight - screenWidth - pad) / 2;
   static double horizontalPadding = (pad) / 2;
+  static double cameraHeight;
+  static double cameraWidth;
 
   static double topTextFontSize = 40;
   static double appBarFontSize = 30;
