@@ -3,4 +3,7 @@ enum GameState {
   IsSolving,
   Solved,
   NoSolution,
+  TakingPhoto,
+  ProcessingPhoto,
+  PhotoProcessed
 }

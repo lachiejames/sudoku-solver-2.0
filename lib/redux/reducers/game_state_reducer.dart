@@ -12,6 +12,9 @@ final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
   TypedReducer<GameState, NumberPressedAction>(_setToSolvedIfAllTilesFilled),
   TypedReducer<GameState, GameSolvedAction>(_setToSolved),
   TypedReducer<GameState, RestartAction>(_setToDefault),
+  TypedReducer<GameState, TakePhotoAction>(_takePhotoReducer),
+  TypedReducer<GameState, PhotoProcessedAction>(_photoProcessedReducer),
+  TypedReducer<GameState, RetakePhotoAction>(_retakePhotoReducer),
 ]);
 
 GameState _solveButtonPressedReducer(GameState gameState, SolveButtonPressedAction action) {
@@ -62,4 +65,20 @@ GameState _setToSolved(GameState gameState, GameSolvedAction action) {
 
 GameState _setToDefault(GameState gameState, RestartAction action) {
   return GameState.Default;
+}
+
+GameState _takePhotoReducer(GameState gameState, TakePhotoAction action) {
+  // This makes the function not pure unfortunately
+  Redux.store.dispatch(StartProcessingPhotoAction());
+
+  return GameState.ProcessingPhoto;
+}
+
+GameState _photoProcessedReducer(GameState gameState, PhotoProcessedAction action) {
+  return GameState.PhotoProcessed;
+}
+
+
+GameState _retakePhotoReducer(GameState gameState, RetakePhotoAction action) {
+  return GameState.TakingPhoto;
 }

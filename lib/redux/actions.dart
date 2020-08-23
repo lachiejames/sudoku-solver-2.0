@@ -65,3 +65,16 @@ class VerifyPhotoCreatedSudokuAction {
   final Sudoku constructedSudoku;
   VerifyPhotoCreatedSudokuAction(this.constructedSudoku);
 }
+
+class StartProcessingPhotoAction {
+  StartProcessingPhotoAction();
+}
+
+class PhotoProcessedAction {
+  Sudoku sudoku;
+  PhotoProcessedAction(this.sudoku);
+}
+
+class RetakePhotoAction {
+  RetakePhotoAction();
+}

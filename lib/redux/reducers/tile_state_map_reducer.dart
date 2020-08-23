@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'package:redux/redux.dart';
 import 'package:sudoku_solver_2/constants/my_games.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
@@ -12,6 +13,7 @@ final Reducer<HashMap<TileKey, TileState>> tileStateMapReducer = combineReducers
   TypedReducer<HashMap<TileKey, TileState>, NumberPressedAction>(_addPressedNumberToTile),
   TypedReducer<HashMap<TileKey, TileState>, SudokuSolvedAction>(_updateTileMapWithSolvedSudokuReducer),
   TypedReducer<HashMap<TileKey, TileState>, RestartAction>(_clearAllValuesReducer),
+  TypedReducer<HashMap<TileKey, TileState>, ChangeScreenAction>(_clearTileStateMapReducer),
 ]);
 
 HashMap<TileKey, TileState> _tileSelectedReducer(HashMap<TileKey, TileState> tileStateMap, TileSelectedAction action) {
@@ -86,6 +88,20 @@ HashMap<TileKey, TileState> _clearAllValuesReducer(HashMap<TileKey, TileState> t
   tileStateMap.forEach((tileKey, tileState) {
     int value = (tileState.isOriginalTile) ? tileState.value : -1;
     newTileStateMap[tileKey] = tileState.copyWith(value: value, isSelected: false);
+  });
+
+  return newTileStateMap;
+}
+
+HashMap<TileKey, TileState> _clearTileStateMapReducer(HashMap<TileKey, TileState> tileStateMap, ChangeScreenAction action) {
+  // Should not clear if looking at help screen
+  if (action.screenState != ScreenState.HomeScreen) {
+    return tileStateMap;
+  }
+
+  final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
+  tileStateMap.forEach((tileKey, tileState) {
+    newTileStateMap[tileKey] = tileState.copyWith(value: -1, isSelected: false, isOriginalTile: false);
   });
 
   return newTileStateMap;

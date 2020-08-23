@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
+import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/redux/redux.dart';
+import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/widgets/just_play_screen/just_play_screen_drop_down_menu_widget.dart';
 
 class JustPlayScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -26,6 +31,13 @@ class JustPlayScreenAppBar extends StatelessWidget implements PreferredSizeWidge
           ),
         ),
       ],
+      leading: IconButton(
+        onPressed: () {
+          Redux.store.dispatch(ChangeScreenAction(ScreenState.HomeScreen));
+          Navigator.pop(context);
+        },
+        icon: (Platform.isAndroid) ? const Icon(Icons.arrow_back) : const Icon(Icons.arrow_back_ios),
+      ),
     );
   }
 
