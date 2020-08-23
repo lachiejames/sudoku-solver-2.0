@@ -24,7 +24,7 @@ class SolveWithCameraButtonWidget extends StatelessWidget {
           ),
           color: MyColors.pink,
           child: Text(
-            MyStrings.appBarTextSolveWithCameraScreen,
+            MyStrings.solveWithCameraButtonText,
             style: MyStyles.buttonTextStyle,
           ),
           onPressed: () {

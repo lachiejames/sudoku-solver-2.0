@@ -24,7 +24,7 @@ class SolveWithTouchButtonWidget extends StatelessWidget {
           ),
           color: MyColors.pink,
           child: Text(
-            MyStrings.appBarTextSolveWithTouchScreen,
+            MyStrings.solveWithTouchButtonText,
             style: MyStyles.buttonTextStyle,
           ),
           onPressed: () {

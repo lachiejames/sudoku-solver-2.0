@@ -13,7 +13,7 @@ class TopTextState {
   });
 
   static TopTextState initialState() {
-    return TopTextState(text: MyStrings.topTextPickATile, color: MyColors.white);
+    return TopTextState(text: MyStrings.topTextNoTileSelected, color: MyColors.white);
   }
 
   TopTextState copyWith({

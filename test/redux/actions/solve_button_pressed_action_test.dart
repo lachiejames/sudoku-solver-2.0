@@ -28,9 +28,9 @@ void main() {
       });
 
       test('sets topText to "AI thinking..." in white', () {
-        expect(state.topTextState.text, MyStrings.topTextPickATile);
+        expect(state.topTextState.text, MyStrings.topTextNoTileSelected);
         dispatchActionAndUpdateState(SolveButtonPressedAction());
-        expect(state.topTextState.text, MyStrings.topTextAiThinking);
+        expect(state.topTextState.text, MyStrings.topTextWhenSolving);
         expect(state.topTextState.color, MyColors.white);
       });
     });

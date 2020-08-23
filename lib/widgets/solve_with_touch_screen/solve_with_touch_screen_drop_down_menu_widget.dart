@@ -26,8 +26,8 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
 
   List<DropdownMenuItem<String>> _createDropdownMenuItems() {
     return <String>[
-      MyStrings.dropDownMenuItemRestart,
-      MyStrings.dropDownMenuItemHowToSolve,
+      MyStrings.dropDownMenuOption1,
+      MyStrings.dropDownMenuOption2,
     ].map(
       (String value) {
         return this._createDropdownMenuItem(value);
@@ -46,9 +46,9 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
   }
 
   void _performAction(String value, BuildContext context) {
-    if (value == MyStrings.dropDownMenuItemRestart) {
+    if (value == MyStrings.dropDownMenuOption1) {
       _restart();
-    } else if (value == MyStrings.dropDownMenuItemHowToSolve) {
+    } else if (value == MyStrings.dropDownMenuOption2) {
       _navigateToSolveWithTouchHelpScreen(context);
     }
   }

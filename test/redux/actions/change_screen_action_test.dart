@@ -28,14 +28,14 @@ void main() {
 
     test('if updating to SolveWithCameraScreen, should set topText to "Align with camera" in white', () {
       dispatchActionAndUpdateState(ChangeScreenAction(ScreenState.SolveWithCameraScreen));
-      expect(state.topTextState.text, MyStrings.topTextAlignWithTheCamera);
+      expect(state.topTextState.text, MyStrings.topTextTakingPhoto);
       expect(state.topTextState.color, MyColors.white);
     });
 
     test('if updating to any other screen after, should set topText back to "Pick a tile" in white', () {
       dispatchActionAndUpdateState(ChangeScreenAction(ScreenState.SolveWithCameraScreen));
       dispatchActionAndUpdateState(ChangeScreenAction(ScreenState.SolveWithTouchScreen));
-      expect(state.topTextState.text, MyStrings.topTextPickATile);
+      expect(state.topTextState.text, MyStrings.topTextNoTileSelected);
       expect(state.topTextState.color, MyColors.white);
     });
   });

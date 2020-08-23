@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
-import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
+import 'package:sudoku_solver_2/widgets/shared/help_screen_app_bar.dart';
+import 'package:sudoku_solver_2/widgets/shared/help_screen_text_widget.dart';
 
 class JustPlayHelpScreen extends StatelessWidget {
   JustPlayHelpScreen({Key key}) : super(key: key);
@@ -20,15 +21,15 @@ class JustPlayHelpScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            MyWidgets.makeHowToText(MyStrings.step1TextHowToPlayScreen),
-            MyWidgets.makeHowToText(MyStrings.step2TextHowToPlayScreen),
-            MyWidgets.makeHowToText(MyStrings.step3TextHowToPlayScreen),
-            MyWidgets.makeHowToText(MyStrings.tip1TextHowToPlayScreen),
-            MyWidgets.makeHowToText(MyStrings.tip2TextHowToPlayScreen),
+            HelpScreenTextWidget(text: MyStrings.tip1JustPlayScreen),
+            HelpScreenTextWidget(text: MyStrings.tip2JustPlayScreen),
+            HelpScreenTextWidget(text: MyStrings.tip3JustPlayScreen),
+            HelpScreenTextWidget(text: MyStrings.tip4JustPlayScreen),
+            HelpScreenTextWidget(text: MyStrings.tip5JustPlayScreen),
           ],
         ),
       ),
-      appBar: MyWidgets.makeAppBar(MyStrings.appBarTextHowToPlayScreen),
+      appBar: HelpScreenAppBar(AppBar()),
     );
   }
 }

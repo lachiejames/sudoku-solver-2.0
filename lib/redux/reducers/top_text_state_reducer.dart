@@ -17,26 +17,26 @@ final Reducer<TopTextState> topTextStateReducer = combineReducers<TopTextState>(
 ]);
 
 TopTextState _setTopTextToPickATile(TopTextState topTextState, TileDeselectedAction action) {
-  return topTextState.copyWith(text: MyStrings.topTextPickATile, color: MyColors.white);
+  return topTextState.copyWith(text: MyStrings.topTextNoTileSelected, color: MyColors.white);
 }
 
 TopTextState _setTopTextToPickATile2(TopTextState topTextState, NumberPressedAction action) {
-  return topTextState.copyWith(text: MyStrings.topTextPickATile, color: MyColors.white);
+  return topTextState.copyWith(text: MyStrings.topTextNoTileSelected, color: MyColors.white);
 }
 
 TopTextState _setTopTextToPickATile3(TopTextState topTextState, RestartAction action) {
-  return topTextState.copyWith(text: MyStrings.topTextPickATile, color: MyColors.white);
+  return topTextState.copyWith(text: MyStrings.topTextNoTileSelected, color: MyColors.white);
 }
 
 TopTextState _setTopTextToPickANumberOrTapToRemove(TopTextState topTextState, TileSelectedAction action) {
   return topTextState.copyWith(
-    text: (action.selectedTile.value != null) ? MyStrings.topTextTapToRemove : MyStrings.topTextPickANumber,
+    text: (action.selectedTile.value != null) ? MyStrings.topTextTileWithValueSelected : MyStrings.topTextTileSelected,
     color: MyColors.white,
   );
 }
 
 TopTextState _setTopTextToAiThinking(TopTextState topTextState, SolveButtonPressedAction action) {
-  return topTextState.copyWith(text: MyStrings.topTextAiThinking, color: MyColors.white);
+  return topTextState.copyWith(text: MyStrings.topTextWhenSolving, color: MyColors.white);
 }
 
 TopTextState _setTopTextToSolved(TopTextState topTextState, SudokuSolvedAction action) {
@@ -49,10 +49,10 @@ TopTextState _setTopTextToSolved2(TopTextState topTextState, GameSolvedAction ac
 
 TopTextState _setTopTextAlignWithCamera(TopTextState topTextState, ChangeScreenAction action) {
   if (action.screenState == ScreenState.SolveWithCameraScreen) {
-    return topTextState.copyWith(text: MyStrings.topTextAlignWithTheCamera, color: MyColors.white);
+    return topTextState.copyWith(text: MyStrings.topTextTakingPhoto, color: MyColors.white);
   } else if (action.screenState == ScreenState.HomeScreen) {
     return topTextState.copyWith(text: MyStrings.topTextHome, color: MyColors.white);
   } else {
-    return topTextState.copyWith(text: MyStrings.topTextPickATile, color: MyColors.white);
+    return topTextState.copyWith(text: MyStrings.topTextNoTileSelected, color: MyColors.white);
   }
 }

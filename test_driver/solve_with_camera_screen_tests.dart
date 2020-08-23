@@ -1,21 +1,12 @@
-import 'dart:async';
-import 'dart:io';
 import 'package:flutter_driver/flutter_driver.dart';
+import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:test/test.dart';
 
 void main() {
   FlutterDriver driver;
 
-  Future<void> pressBackButton() async {
-    await Process.run(
-      'adb',
-      <String>['shell', 'input', 'keyevent', 'KEYCODE_BACK'],
-      runInShell: true,
-    );
-  }
-
   setUpAll(() async {
-    driver = await FlutterDriver.connect(dartVmServiceUrl: 'http://127.0.0.1:8888/');
+    driver = await FlutterDriver.connect(dartVmServiceUrl: MyStrings.dartVMServiceURL);
   });
 
   tearDownAll(() async {
@@ -24,16 +15,13 @@ void main() {
 
   // Restart app at beginning of each test
   setUp(() async {
-    if (driver != null) await driver.requestData('restart');
+    if (driver != null) await driver.requestData(MyStrings.hotRestart);
   });
 
   group('HomeScreen tests -', () {
-    test('pressing "Solve With Camera" button brings us to the SolveWithCameraScreen', () async {
-      await driver.tap(find.text('Solve With Camera'));
-      await driver.getText(find.text('Align with camera'));
-
-      // Back to homeScreen
-      await pressBackButton();
+    test('pressing "SOLVE WITH CAMERA" button brings us to the SolveWithCameraScreen', () async {
+      await driver.tap(find.text(MyStrings.solveWithCameraButtonText));
+      await driver.getText(find.text(MyStrings.topTextTakingPhoto));
     });
   });
 }

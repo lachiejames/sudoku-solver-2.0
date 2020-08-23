@@ -7,12 +7,12 @@ import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/help_screen_app_bar.dart';
 import 'package:sudoku_solver_2/widgets/shared/help_screen_text_widget.dart';
 
-class SolveWithTouchHelpScreen extends StatelessWidget {
-  SolveWithTouchHelpScreen({Key key}) : super(key: key);
+class SolveWithCameraHelpScreen extends StatelessWidget {
+  SolveWithCameraHelpScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Redux.store.dispatch(ChangeScreenAction(ScreenState.SolveWithTouchHelpScreen));
+    Redux.store.dispatch(ChangeScreenAction(ScreenState.SolveWithCameraHelpScreen));
 
     return Scaffold(
       backgroundColor: MyColors.pink,
@@ -22,11 +22,10 @@ class SolveWithTouchHelpScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            HelpScreenTextWidget(text: MyStrings.tip1SolveWithTouchScreen),
-            HelpScreenTextWidget(text: MyStrings.tip2SolveWithTouchScreen),
-            HelpScreenTextWidget(text: MyStrings.tip3SolveWithTouchScreen),
-            HelpScreenTextWidget(text: MyStrings.tip4SolveWithTouchScreen),
-            HelpScreenTextWidget(text: MyStrings.tip5SolveWithTouchScreen),
+            HelpScreenTextWidget(text: MyStrings.tip1SolveWithCameraScreen),
+            HelpScreenTextWidget(text: MyStrings.tip2SolveWithCameraScreen),
+            HelpScreenTextWidget(text: MyStrings.tip3SolveWithCameraScreen),
+            HelpScreenTextWidget(text: MyStrings.tip4SolveWithCameraScreen),
           ],
         ),
       ),

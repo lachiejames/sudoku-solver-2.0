@@ -1,21 +1,12 @@
-import 'dart:async';
-import 'dart:io';
 import 'package:flutter_driver/flutter_driver.dart';
+import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:test/test.dart';
 
 void main() {
   FlutterDriver driver;
 
-  Future<void> pressBackButton() async {
-    await Process.run(
-      'adb',
-      <String>['shell', 'input', 'keyevent', 'KEYCODE_BACK'],
-      runInShell: true,
-    );
-  }
-
   setUpAll(() async {
-    driver = await FlutterDriver.connect(dartVmServiceUrl: 'http://127.0.0.1:8888/');
+    driver = await FlutterDriver.connect(dartVmServiceUrl: MyStrings.dartVMServiceURL);
   });
 
   tearDownAll(() async {
@@ -24,27 +15,48 @@ void main() {
 
   // Restart app at beginning of each test
   setUp(() async {
-    if (driver != null) await driver.requestData('restart');
+    if (driver != null) await driver.requestData(MyStrings.hotRestart);
   });
 
   group('Screen navigation tests -', () {
     test('we start on the HomeScreen', () async {
-      await driver.getText(find.text('How would you like it to be solved?'));
+      await driver.getText(find.text(MyStrings.topTextHome));
     });
 
-    test('pressing "Solve With Camera" button brings us to the SolveWithCameraScreen', () async {
-      await driver.tap(find.text('Solve With Camera'));
-      await driver.getText(find.text('Align with camera'));
+    test('pressing "SOLVE WITH CAMERA" button on HomeScreen brings us to the SolveWithCameraScreen', () async {
+      await driver.tap(find.text(MyStrings.solveWithCameraButtonText));
+      await driver.getText(find.text(MyStrings.topTextTakingPhoto));
     });
 
-    test('pressing "Solve With Touch" button brings us to the SolveWithTouchScreen', () async {
-      await driver.tap(find.text('Solve With Touch'));
-      await driver.getText(find.text('Pick a tile'));
+    test('pressing "SOLVE WITH TOUCH" button on HomeScreen brings us to the SolveWithTouchScreen', () async {
+      await driver.tap(find.text(MyStrings.solveWithTouchButtonText));
+      await driver.getText(find.text(MyStrings.topTextNoTileSelected));
     });
 
-    test('pressing "Just Play" button brings us to the JustPlayScreen', () async {
-      await driver.tap(find.text('Just Play'));
-      await driver.getText(find.text('Pick a tile'));
+    test('pressing "JUST PLAY" button on HomeScreen brings us to the JustPlayScreen', () async {
+      await driver.tap(find.text(MyStrings.justPlayButtonText));
+      await driver.getText(find.text(MyStrings.topTextNoTileSelected));
+    });
+
+    test('pressing "Help" on SolveWithCameraScreen takes you to SolveWithCameraHelpScreen', () async {
+      await driver.tap(find.text(MyStrings.solveWithCameraButtonText));
+      await driver.tap(find.byType('SolveWithCameraScreenDropDownMenuWidget'));
+      await driver.tap(find.text(MyStrings.dropDownMenuOption2));
+      await driver.getText(find.text(MyStrings.tip1SolveWithCameraScreen));
+    });
+
+    test('pressing "Help" on SolveWithTouchScreen takes you to SolveWithTouchHelpScreen', () async {
+      await driver.tap(find.text(MyStrings.solveWithTouchButtonText));
+      await driver.tap(find.byType('SolveWithTouchScreenDropDownMenuWidget'));
+      await driver.tap(find.text(MyStrings.dropDownMenuOption2));
+      await driver.getText(find.text(MyStrings.tip1SolveWithTouchScreen));
+    });
+
+    test('pressing "Help" on JustPlayScreen takes you to JustPlayHelpScreen', () async {
+      await driver.tap(find.text(MyStrings.justPlayButtonText));
+      await driver.tap(find.byType('JustPlayScreenDropDownMenuWidget'));
+      await driver.tap(find.text(MyStrings.dropDownMenuOption2));
+      await driver.getText(find.text(MyStrings.tip1JustPlayScreen));
     });
   });
 }

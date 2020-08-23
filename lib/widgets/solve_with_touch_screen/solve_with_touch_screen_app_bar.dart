@@ -14,7 +14,7 @@ class SolveWithTouchScreenAppBar extends StatelessWidget implements PreferredSiz
     return AppBar(
       iconTheme: IconThemeData(color: MyColors.white),
       title: Text(
-        MyStrings.appBarTextSolveWithTouchScreen,
+        MyStrings.solveWithTouchScreenName,
         style: MyStyles.appBarTextStyle,
         textDirection: TextDirection.ltr,
       ),

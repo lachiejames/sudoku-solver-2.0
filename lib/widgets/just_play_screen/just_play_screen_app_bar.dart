@@ -14,7 +14,7 @@ class JustPlayScreenAppBar extends StatelessWidget implements PreferredSizeWidge
     return AppBar(
       iconTheme: IconThemeData(color: MyColors.white),
       title: Text(
-        MyStrings.appBarTextJustPlayScreen,
+        MyStrings.justPlayScreenName,
         style: MyStyles.appBarTextStyle,
         textDirection: TextDirection.ltr,
       ),

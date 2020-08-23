@@ -59,10 +59,10 @@ void main() {
 
     test('sets topText to "Pick a tile"', () {
       dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
-      expect(state.topTextState.text, MyStrings.topTextPickANumber);
+      expect(state.topTextState.text, MyStrings.topTextTileSelected);
 
       dispatchActionAndUpdateState(RestartAction());
-      expect(state.topTextState.text, MyStrings.topTextPickATile);
+      expect(state.topTextState.text, MyStrings.topTextNoTileSelected);
       expect(state.topTextState.color, MyColors.white);
     });
 

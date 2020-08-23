@@ -24,7 +24,7 @@ class JustPlayButtonWidget extends StatelessWidget {
           ),
           color: MyColors.pink,
           child: Text(
-            MyStrings.appBarTextJustPlayScreen,
+            MyStrings.justPlayButtonText,
             style: MyStyles.buttonTextStyle,
           ),
           onPressed: () {
