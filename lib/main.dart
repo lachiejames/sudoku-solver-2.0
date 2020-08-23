@@ -10,17 +10,35 @@ import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:flutter_driver/driver_extension.dart';
 
 Future<void> main() async {
-  enableFlutterDriverExtension();
+  // Allows us to run integration tests
+  enableFlutterDriverExtension(handler: (command) async {
+    switch (command) {
+      case 'restart':
+        await runThatShit();
+        return 'ok';
+    }
+    throw Exception('Unknown command');
+  });
 
+  await runThatShit();
+}
+
+Future<void> runThatShit() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Redux.sharedPreferences = await SharedPreferences.getInstance();
   Redux.cameraState = await CameraState.initCamera();
   Redux.init();
-  runApp(MyApp());
+  runApp(
+    MyApp(
+      key: UniqueKey(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
+  MyApp({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     this.setScreenProperties();

@@ -22,6 +22,11 @@ void main() {
     if (driver != null) await driver.close();
   });
 
+  // Restart app at beginning of each test
+  setUp(() async {
+    if (driver != null) await driver.requestData('restart');
+  });
+  
   group('HomeScreen tests -', () {
 
     test('pressing "Solve With Camera" button brings us to the SolveWithCameraScreen', () async {

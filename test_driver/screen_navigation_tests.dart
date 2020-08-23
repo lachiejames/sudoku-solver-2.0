@@ -22,7 +22,12 @@ void main() {
     if (driver != null) await driver.close();
   });
 
-  group('HomeScreen tests -', () {
+  // Restart app at beginning of each test
+  setUp(() async {
+    if (driver != null) await driver.requestData('restart');
+  });
+
+  group('Screen navigation tests -', () {
     test('we start on the HomeScreen', () async {
       await driver.getText(find.text('How would you like it to be solved?'));
     });
@@ -30,25 +35,16 @@ void main() {
     test('pressing "Solve With Camera" button brings us to the SolveWithCameraScreen', () async {
       await driver.tap(find.text('Solve With Camera'));
       await driver.getText(find.text('Align with camera'));
-
-      // Back to homeScreen
-      await pressBackButton();
     });
 
     test('pressing "Solve With Touch" button brings us to the SolveWithTouchScreen', () async {
       await driver.tap(find.text('Solve With Touch'));
       await driver.getText(find.text('Pick a tile'));
-
-      // Back to homeScreen
-      await pressBackButton();
     });
 
     test('pressing "Just Play" button brings us to the JustPlayScreen', () async {
       await driver.tap(find.text('Just Play'));
       await driver.getText(find.text('Pick a tile'));
-
-      // Back to homeScreen
-      await pressBackButton();
     });
   });
 }
