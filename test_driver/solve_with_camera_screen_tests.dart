@@ -19,14 +19,14 @@ void main() {
       'shell',
       'pm',
       'grant',
-      'com.lachie.sudoku_solver_2', // replace with your app id
+      'com.lachie.sudoku_solver_2',
       'android.permission.CAMERA'
     ]);
     await Process.run(adbPath, [
       'shell',
       'pm',
       'grant',
-      'com.lachie.sudoku_solver_2', // replace with your app id
+      'com.lachie.sudoku_solver_2',
       'android.permission.RECORD_AUDIO'
     ]);
   }
@@ -45,11 +45,11 @@ void main() {
     if (streamSubscription != null) streamSubscription.cancel();
   });
 
-  group('HomeScreen tests -', () {
-    test('pressing JUST PLAY button brings us to the JustPlayScreen', () async {
+  group('SolveWithCameraScreen tests -', () {
+    test('pressing Solve With Camera button brings us to the SolveWithCameraScreen', () async {
       await driver.getText(find.text('How would you like it to be solved?'));
-      await driver.tap(find.text('Just Play'));
-      await driver.getText(find.text('Pick a tile'));
+      await driver.tap(find.text('Solve With Camera'));
+      await driver.getText(find.text('Align with camera'));
     });
   });
 }
