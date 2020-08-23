@@ -26,9 +26,8 @@ void main() {
   setUp(() async {
     if (driver != null) await driver.requestData('restart');
   });
-  
-  group('HomeScreen tests -', () {
 
+  group('HomeScreen tests -', () {
     test('pressing "Solve With Camera" button brings us to the SolveWithCameraScreen', () async {
       await driver.tap(find.text('Solve With Camera'));
       await driver.getText(find.text('Align with camera'));

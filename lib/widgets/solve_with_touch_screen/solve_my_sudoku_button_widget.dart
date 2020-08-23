@@ -9,11 +9,13 @@ import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 
 class SolveMySudokuButtonWidget extends StatefulWidget {
+  SolveMySudokuButtonWidget({Key key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => SolveMySudokuButtonWidgetState();
+  _SolveMySudokuButtonWidgetState createState() => _SolveMySudokuButtonWidgetState();
 }
 
-class SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
+class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, GameState>(

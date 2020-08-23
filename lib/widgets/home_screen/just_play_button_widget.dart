@@ -5,6 +5,8 @@ import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/screens/just_play_screen.dart';
 
 class JustPlayButtonWidget extends StatelessWidget {
+  JustPlayButtonWidget({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -70,7 +70,7 @@ class TileState {
     return valueToPass;
   }
 
-    static HashMap<TileKey, TileState> initTileStateMap() {
+  static HashMap<TileKey, TileState> initTileStateMap() {
     HashMap<TileKey, TileState> _tileStateMap = HashMap<TileKey, TileState>();
     for (int row = 1; row <= 9; row++) {
       for (int col = 1; col <= 9; col++) {

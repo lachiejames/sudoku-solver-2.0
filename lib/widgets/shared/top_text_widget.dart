@@ -6,6 +6,8 @@ import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
 
 class TopTextWidget extends StatefulWidget {
+  TopTextWidget({Key key}) : super(key: key);
+
   @override
   _TopTextWidgetState createState() => _TopTextWidgetState();
 }

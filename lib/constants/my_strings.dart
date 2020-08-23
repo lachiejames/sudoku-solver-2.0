@@ -8,7 +8,6 @@ class MyStrings {
   static final String appBarTextSolveWithCameraScreen = 'Solve With Camera';
   static final String topTextAlignWithTheCamera = 'Align with camera';
 
-
   static final String appBarTextJustPlayScreen = 'Just Play';
   static final String topTextPickATile = 'Pick a tile';
   static final String topTextPickANumber = 'Pick a number';

@@ -7,6 +7,8 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 
 class JustPlayHelpScreen extends StatelessWidget {
+  JustPlayHelpScreen({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Redux.store.dispatch(ChangeScreenAction(ScreenState.JustPlayHelpScreen));

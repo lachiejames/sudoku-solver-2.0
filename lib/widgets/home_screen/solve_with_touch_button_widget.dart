@@ -5,9 +5,10 @@ import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/screens/solve_with_touch_screen.dart';
 
 class SolveWithTouchButtonWidget extends StatelessWidget {
+  SolveWithTouchButtonWidget({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    
     return Container(
       alignment: Alignment.center,
       margin: MyStyles.buttonMargins,

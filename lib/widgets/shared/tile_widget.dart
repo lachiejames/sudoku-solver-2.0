@@ -11,14 +11,15 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 
 class TileWidget extends StatefulWidget {
   final TileKey tileKey;
-  TileWidget({@required this.tileKey});
+  TileWidget({@required this.tileKey, Key key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => TileWidgetState(tileKey: this.tileKey);
+  _TileWidgetState createState() => _TileWidgetState(tileKey: this.tileKey);
 }
 
-class TileWidgetState extends State<TileWidget> {
+class _TileWidgetState extends State<TileWidget> {
   final TileKey tileKey;
-  TileWidgetState({@required this.tileKey});
+  _TileWidgetState({@required this.tileKey});
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +65,8 @@ class TileWidgetState extends State<TileWidget> {
           onTap: () {
             if (tileState.isOriginalTile) {
               return;
-            } 
-            
+            }
+
             if (tileState.isSelected) {
               Redux.store.dispatch(TileDeselectedAction(tileState));
             } else {

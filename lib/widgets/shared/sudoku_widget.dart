@@ -8,13 +8,13 @@ import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/widgets/shared/tile_widget.dart';
 
 class SudokuWidget extends StatefulWidget {
+  SudokuWidget({Key key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => SudokuWidgetState();
+  _SudokuWidgetState createState() => _SudokuWidgetState();
 }
 
-class SudokuWidgetState extends State<SudokuWidget> {
-  SudokuWidgetState();
-
+class _SudokuWidgetState extends State<SudokuWidget> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, GameState>(

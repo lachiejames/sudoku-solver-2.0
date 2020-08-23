@@ -7,6 +7,8 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/solve_with_touch_help_screen.dart';
 
 class SolveWithCameraScreenDropDownMenuWidget extends StatelessWidget {
+  SolveWithCameraScreenDropDownMenuWidget({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(

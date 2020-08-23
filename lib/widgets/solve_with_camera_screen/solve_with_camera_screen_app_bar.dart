@@ -7,7 +7,7 @@ import 'package:sudoku_solver_2/widgets/solve_with_touch_screen/solve_with_touch
 class SolveWithCameraScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   // Required so I can return preferredSize
   final AppBar appBar;
-  SolveWithCameraScreenAppBar(this.appBar);
+  SolveWithCameraScreenAppBar(this.appBar, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

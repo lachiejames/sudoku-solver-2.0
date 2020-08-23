@@ -7,9 +7,11 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 
 class SolveWithTouchHelpScreen extends StatelessWidget {
+  SolveWithTouchHelpScreen({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-        Redux.store.dispatch(ChangeScreenAction(ScreenState.SolveWithTouchHelpScreen));
+    Redux.store.dispatch(ChangeScreenAction(ScreenState.SolveWithTouchHelpScreen));
 
     return Scaffold(
       backgroundColor: MyColors.pink,

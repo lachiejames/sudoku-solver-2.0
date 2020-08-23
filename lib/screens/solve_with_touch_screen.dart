@@ -10,6 +10,8 @@ import 'package:sudoku_solver_2/widgets/shared/sudoku_widget.dart';
 import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 
 class SolveWithTouchScreen extends StatefulWidget {
+  SolveWithTouchScreen({Key key}) : super(key: key);
+
   @override
   _SolveWithTouchScreenState createState() => _SolveWithTouchScreenState();
 }

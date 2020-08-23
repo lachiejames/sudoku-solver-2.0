@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/widgets/shared/number_widget.dart';
 
 class NumberBarWidget extends StatefulWidget {
+  NumberBarWidget({Key key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => NumberBarWidgetState();
+  _NumberBarWidgetState createState() => _NumberBarWidgetState();
 }
 
-class NumberBarWidgetState extends State<NumberBarWidget> {
+class _NumberBarWidgetState extends State<NumberBarWidget> {
   Widget makeNumber(int number) {
     return NumberWidget(number: number);
   }

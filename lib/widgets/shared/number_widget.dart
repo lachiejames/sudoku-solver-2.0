@@ -10,15 +10,16 @@ import 'package:sudoku_solver_2/state/number_state.dart';
 
 class NumberWidget extends StatefulWidget {
   final int number;
-  NumberWidget({this.number});
+  NumberWidget({this.number, Key key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => NumberWidgetState(number: this.number);
+  _NumberWidgetState createState() => _NumberWidgetState(number: this.number);
 }
 
-class NumberWidgetState extends State<NumberWidget> {
+class _NumberWidgetState extends State<NumberWidget> {
   final int number;
 
-  NumberWidgetState({@required this.number});
+  _NumberWidgetState({@required this.number});
 
   @override
   Widget build(BuildContext context) {

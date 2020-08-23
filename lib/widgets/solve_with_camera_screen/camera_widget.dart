@@ -7,11 +7,13 @@ import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 
 class CameraWidget extends StatefulWidget {
+  CameraWidget({Key key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => CameraWidgetState();
+  _CameraWidgetState createState() => _CameraWidgetState();
 }
 
-class CameraWidgetState extends State<CameraWidget> {
+class _CameraWidgetState extends State<CameraWidget> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, CameraState>(

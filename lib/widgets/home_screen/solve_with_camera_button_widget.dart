@@ -5,6 +5,8 @@ import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/screens/solve_with_camera_screen.dart';
 
 class SolveWithCameraButtonWidget extends StatelessWidget {
+  SolveWithCameraButtonWidget({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(

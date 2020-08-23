@@ -29,9 +29,9 @@ void main() {
       await tester.pump(debounceTime);
     }
 
-        Future<void> tapNumberWidget(WidgetTester tester) async {
+    Future<void> tapNumberWidget(WidgetTester tester) async {
       await tester.tap(find.byWidget(numberWidget));
-        await tester.pump(debounceTime);
+      await tester.pump(debounceTime);
     }
 
     Color getNumberWidgetColor(WidgetTester tester) {

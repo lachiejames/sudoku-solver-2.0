@@ -7,7 +7,7 @@ import 'package:sudoku_solver_2/widgets/just_play_screen/just_play_screen_drop_d
 class JustPlayScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   // Required so I can return preferredSize
   final AppBar appBar;
-  JustPlayScreenAppBar(this.appBar);
+  JustPlayScreenAppBar(this.appBar, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -6,11 +6,13 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 
 class TakePhotoButtonWidget extends StatefulWidget {
+  TakePhotoButtonWidget({Key key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => TakePhotoButtonWidgetState();
+  _TakePhotoButtonWidgetState createState() => _TakePhotoButtonWidgetState();
 }
 
-class TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
+class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(

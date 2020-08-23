@@ -10,6 +10,8 @@ import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/take_photo_button_widget.dart';
 
 class SolveWithCameraScreen extends StatefulWidget {
+  SolveWithCameraScreen({Key key}) : super(key: key);
+
   @override
   _SolveWithCameraScreenState createState() => _SolveWithCameraScreenState();
 }
