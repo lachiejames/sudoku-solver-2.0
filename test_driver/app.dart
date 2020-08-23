@@ -1,7 +1,7 @@
 import 'package:flutter_driver/driver_extension.dart';
-import '../lib/main.dart' as app;
+import 'package:sudoku_solver_2/main.dart' as sudoku_solver_2;
 
 void main() {
   enableFlutterDriverExtension();
-  app.main();
+  sudoku_solver_2.main();
 }

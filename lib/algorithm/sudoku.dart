@@ -1,6 +1,5 @@
 import 'dart:collection';
 import 'package:flutter/cupertino.dart';
-import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
@@ -90,7 +89,7 @@ class Sudoku {
 
   List<TileState> getTilesInSegment(int segment) {
     List<TileState> _tilesInSegment = List<TileState>();
-    for (TileKey tileKey in MyWidgets.getTileKeysInSegment(segment)) {
+    for (TileKey tileKey in TileKey.getTileKeysInSegment(segment)) {
       _tilesInSegment.add(this.tileStateMap[tileKey]);
     }
     return _tilesInSegment;
@@ -120,7 +119,7 @@ class Sudoku {
 
   List<int> getValuesInSegment(int segment) {
     List<int> _valuesInSegment = List<int>();
-    for (TileKey tileKey in MyWidgets.getTileKeysInSegment(segment)) {
+    for (TileKey tileKey in TileKey.getTileKeysInSegment(segment)) {
       int value = this.tileStateMap[tileKey].value;
       if (value != null) {
         _valuesInSegment.add(value);

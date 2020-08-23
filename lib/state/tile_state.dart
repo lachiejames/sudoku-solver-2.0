@@ -1,3 +1,7 @@
+import 'dart:collection';
+
+import 'package:sudoku_solver_2/state/tile_key.dart';
+
 class TileState {
   final int row;
   final int col;
@@ -64,5 +68,15 @@ class TileState {
       valueToPass = valueProvided;
     }
     return valueToPass;
+  }
+
+    static HashMap<TileKey, TileState> initTileStateMap() {
+    HashMap<TileKey, TileState> _tileStateMap = HashMap<TileKey, TileState>();
+    for (int row = 1; row <= 9; row++) {
+      for (int col = 1; col <= 9; col++) {
+        _tileStateMap[TileKey(row: row, col: col)] = TileState(row: row, col: col);
+      }
+    }
+    return _tileStateMap;
   }
 }

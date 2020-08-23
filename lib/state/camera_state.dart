@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
-import 'package:sudoku_solver_2/constants/my_widgets.dart';
+import 'package:sudoku_solver_2/state/tile_state.dart';
 
 class CameraState {
   final CameraDescription cameraDescription;
@@ -92,7 +92,7 @@ class CameraState {
   }
 
   Sudoku constructSudokuFromTextElements(List<TextElement> textElements) {
-    Sudoku sudoku = Sudoku(tileStateMap: MyWidgets.initTileStateMap());
+    Sudoku sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
     double factor = 200 / 9;
     for (TextElement textElement in textElements) {
       double tileImgX = textElement.boundingBox.center.dx;
@@ -125,6 +125,23 @@ class CameraState {
       cameraDescription: cameraDescription ?? this.cameraDescription,
       cameraController: cameraController ?? this.cameraController,
       pickedImageFile: pickedImageFile ?? this.pickedImageFile,
+    );
+  }
+
+  static Future<CameraState> initCamera() async {
+    CameraDescription cameraDescription;
+    CameraController cameraController;
+    try {
+      cameraDescription = (await availableCameras())[0];
+      cameraController = CameraController(cameraDescription, ResolutionPreset.max);
+      await cameraController.initialize();
+    } catch (e) {
+      print(e);
+    }
+
+    return CameraState(
+      cameraDescription: cameraDescription,
+      cameraController: cameraController,
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sudoku_solver_2/algorithm/solver.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/constants/my_games.dart';
-import 'package:sudoku_solver_2/constants/my_widgets.dart';
+import 'package:sudoku_solver_2/state/tile_state.dart';
 
 import '../constants/test_constants.dart';
 
@@ -13,7 +13,7 @@ void main() {
     Sudoku sudoku;
 
     setUp(() {
-      sudoku = Sudoku(tileStateMap: MyWidgets.initTileStateMap());
+      sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
     });
 
     test('game 0', () async {

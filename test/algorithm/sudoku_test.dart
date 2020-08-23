@@ -1,9 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sudoku_solver_2/constants/my_games.dart';
-import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
-
 import '../constants/test_constants.dart';
 
 void main() {
@@ -11,7 +9,7 @@ void main() {
     Sudoku sudoku;
 
     setUp(() {
-      sudoku = Sudoku(tileStateMap: MyWidgets.initTileStateMap());
+      sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
     });
 
     group('before example values added ->', () {
@@ -132,13 +130,13 @@ void main() {
       });
 
       test('allConstraintsSatisfied() returns true for a solved game', () {
-        sudoku = Sudoku(tileStateMap: MyWidgets.initTileStateMap());
+        sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
         sudoku.applyExampleValues(TestConstants.game2ValuesListSolved);
         expect(sudoku.allConstraintsSatisfied(), true);
       });
 
       test('isFull() returns true when all tiles have a value', () {
-        sudoku = Sudoku(tileStateMap: MyWidgets.initTileStateMap());
+        sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
         sudoku.applyExampleValues(TestConstants.game2ValuesListSolved);
         expect(sudoku.isFull(), true);
       });
@@ -148,7 +146,7 @@ void main() {
       });
 
       test('getNextUnassignedTile() returns null if the sudoku is complete', () {
-        sudoku = Sudoku(tileStateMap: MyWidgets.initTileStateMap());
+        sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
         sudoku.applyExampleValues(TestConstants.game2ValuesListSolved);
         expect(sudoku.getNextTileWithoutValue(), null);
       });

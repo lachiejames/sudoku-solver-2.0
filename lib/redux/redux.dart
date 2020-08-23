@@ -1,7 +1,6 @@
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/redux/reducers/camera_state_reducer.dart';
 import 'package:sudoku_solver_2/redux/reducers/game_number_reducer.dart';
 import 'package:sudoku_solver_2/redux/reducers/game_state_reducer.dart';
@@ -12,6 +11,8 @@ import 'package:sudoku_solver_2/redux/reducers/tile_state_map_reducer.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
+import 'package:sudoku_solver_2/state/number_state.dart';
+import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 
@@ -33,8 +34,8 @@ class Redux {
       appReducer,
       middleware: [thunkMiddleware],
       initialState: AppState(
-        tileStateMap: MyWidgets.initTileStateMap(),
-        numberStateList: MyWidgets.initNumberStateList(),
+        tileStateMap: TileState.initTileStateMap(),
+        numberStateList: NumberState.initNumberStateList(),
         topTextState: TopTextState.initialState(),
         gameNumber: (sharedPreferences != null) ? _getGameNumber() : 0,
         screenState: ScreenState.HomeScreen,
