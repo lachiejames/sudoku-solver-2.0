@@ -32,7 +32,7 @@ class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
               padding: MyStyles.buttonPadding,
               color: (gameState == GameState.IsSolving) ? MyColors.grey : MyColors.blue,
               child: Text(
-                MyStrings.solveWithTouchButtonText,
+                MyStrings.solveMySudokuButtonText,
                 style: MyStyles.buttonTextStyle,
               ),
               // Should be disabled while solving
