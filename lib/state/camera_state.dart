@@ -13,9 +13,8 @@ import 'package:sudoku_solver_2/state/tile_state.dart';
 class CameraState {
   final CameraDescription cameraDescription;
   final CameraController cameraController;
-  File pickedImageFile;
-  File croppedImageFile;
   int croppedImageWidth;
+
   CameraState({
     @required this.cameraDescription,
     @required this.cameraController,
@@ -30,25 +29,23 @@ class CameraState {
   }
 
   Future<File> takePicture() async {
+    File _pickedImageFile;
     if (MyValues.runningIntegrationTests) {
-      File _pickedImageFile = await _getImageFileFromAssets('mock_sudoku.jpg');
-
-      assert(_pickedImageFile != null);
-      pickedImageFile = _pickedImageFile;
+      _pickedImageFile = await _getImageFileFromAssets('mock_sudoku.jpg');
       return _pickedImageFile;
     } else {
-      File _pickedImageFile;
       try {
         // Filename must be unique, or else an error is thrown
         final String imagePath = join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
         await this.cameraController.takePicture(imagePath);
         _pickedImageFile = File(imagePath);
-        assert(_pickedImageFile != null);
       } catch (e) {
         print(e);
       }
-      return _pickedImageFile;
     }
+    assert(_pickedImageFile != null);
+
+    return _pickedImageFile;
   }
 
   Future<File> cropPictureToSudokuSize(File pickedImageFile) async {
@@ -61,22 +58,21 @@ class CameraState {
     int imageWidth = pickedImage.width;
     int imageHeight = pickedImage.height;
     this.croppedImageWidth = (imageWidth * MyValues.cameraWidth / MyValues.screenWidth).round();
-    int croppedImageHeight = croppedImageWidth;
-    int horizontalStartPixel = ((imageWidth - croppedImageWidth) / 2).round();
+    int croppedImageHeight = this.croppedImageWidth;
+    int horizontalStartPixel = ((imageWidth - this.croppedImageWidth) / 2).round();
     int verticalStartPixel = ((imageHeight - croppedImageHeight) / 2).round();
 
     Image croppedImage = copyCrop(
       pickedImage,
       horizontalStartPixel,
       verticalStartPixel,
-      croppedImageWidth,
+      this.croppedImageWidth,
       croppedImageHeight,
     );
 
     final String croppedImagePath = join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
     File _croppedImageFile = await File(croppedImagePath).create();
     _croppedImageFile.writeAsBytesSync(encodePng(croppedImage));
-    croppedImageFile = _croppedImageFile;
     return _croppedImageFile;
   }
 
@@ -108,7 +104,7 @@ class CameraState {
 
   Sudoku constructSudokuFromTextElements(List<TextElement> textElements) {
     Sudoku sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
-    double factor = croppedImageWidth / 9;
+    double factor = this.croppedImageWidth / 9;
     for (TextElement textElement in textElements) {
       double tileImgX = textElement.boundingBox.center.dx;
       double tileImgY = textElement.boundingBox.center.dy;

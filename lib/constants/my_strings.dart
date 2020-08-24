@@ -25,6 +25,7 @@ class MyStrings {
   static final String justPlayButtonText = 'JUST PLAY';
   static final String takePhotoButtonText = 'TAKE PHOTO';
   static final String retakePhotoButtonText = 'NO, RETAKE PHOTO';
+  static final String solveItButtonText = 'YES, SOLVE IT';
   static final String solveMySudokuButtonText = 'SOLVE MY SUDOKU';
   static final String newGameButtonText = 'NEW GAME';
 

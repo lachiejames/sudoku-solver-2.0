@@ -18,5 +18,5 @@ class MyValues {
   static double numberFontSize = 15;
   static int maxSolveTime = 30000;
 
-  static bool runningIntegrationTests = false;
+  static bool runningIntegrationTests = true;
 }

@@ -29,6 +29,8 @@ class MyStyles {
   );
 
   static final EdgeInsetsGeometry topTextMargins = EdgeInsets.only(
+    top: 32,
+    bottom: 32,
     left: 32,
     right: 32,
   );

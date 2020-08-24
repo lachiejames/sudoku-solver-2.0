@@ -13,7 +13,7 @@ import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/retake_photo_bu
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/solve_with_camera_screen_app_bar.dart';
 import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/take_photo_button_widget.dart';
-import 'package:sudoku_solver_2/widgets/solve_with_touch_screen/solve_my_sudoku_button_widget.dart';
+import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/solve_it_button_widget.dart';
 
 class SolveWithCameraScreen extends StatefulWidget {
   SolveWithCameraScreen({Key key}) : super(key: key);
@@ -35,52 +35,51 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
     this.initScreenSize(context);
     Redux.store.dispatch(ChangeScreenAction(ScreenState.SolveWithCameraScreen));
     return StoreConnector<AppState, GameState>(
-        distinct: true,
-        converter: (store) => store.state.gameState,
-        builder: (context, gameState) {
-          return Scaffold(
-            appBar: SolveWithCameraScreenAppBar(AppBar()),
-            backgroundColor: MyColors.pink,
-            body: (gameState == GameState.PhotoProcessed)
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        TopTextWidget(),
-                        SudokuWidget(),
-                        RetakePhotoButtonWidget(),
-                        SolveMySudokuButtonWidget(),
-                      ],
-                    ),
-                  )
-                : Stack(
+      distinct: true,
+      converter: (store) => store.state.gameState,
+      builder: (context, gameState) {
+        return Scaffold(
+          appBar: SolveWithCameraScreenAppBar(AppBar()),
+          backgroundColor: MyColors.pink,
+          body: (gameState == GameState.PhotoProcessed || gameState == GameState.IsSolving || gameState == GameState.Solved)
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      // Camera
-                      CameraWidget(),
-
-                      // topText and button
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            TopTextWidget(),
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  top: BorderSide(width: MyValues.verticalPadding, color: MyColors.transparent),
-                                  bottom: BorderSide(width: MyValues.verticalPadding, color: MyColors.transparent),
-                                  left: BorderSide(width: MyValues.horizontalPadding, color: MyColors.transparent),
-                                  right: BorderSide(width: MyValues.horizontalPadding, color: MyColors.transparent),
-                                ),
-                              ),
-                            ),
-                            TakePhotoButtonWidget(),
-                          ],
-                        ),
-                      ),
+                      TopTextWidget(),
+                      SudokuWidget(),
+                      RetakePhotoButtonWidget(),
+                      SolveItButtonWidget(),
                     ],
                   ),
-          );
-        });
+                )
+              : Stack(
+                  children: <Widget>[
+                    // Camera
+                    CameraWidget(),
+
+                    // topText and button
+                    Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          TopTextWidget(),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                top: BorderSide(width: MyValues.verticalPadding, color: MyColors.transparent),
+                                bottom: BorderSide(width: MyValues.verticalPadding, color: MyColors.transparent),
+                              ),
+                            ),
+                          ),
+                          TakePhotoButtonWidget(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+        );
+      },
+    );
   }
 }
