@@ -13,14 +13,13 @@ void main() {
     if (driver != null) await driver.close();
   });
 
-  // Restart app at beginning of each test
-  setUp(() async {
-    if (driver != null) await driver.requestData(MyStrings.hotRestart);
-    await driver.tap(find.text(MyStrings.solveWithCameraButtonText));
-    await driver.getText(find.text(MyStrings.topTextTakingPhoto));
-  });
-
   group('SolveWithCameraScreen tests -', () {
+    // Restart app at beginning of each test
+    setUp(() async {
+      await driver.requestData(MyStrings.hotRestart);
+      await driver.tap(find.text(MyStrings.solveWithCameraButtonText));
+      await driver.getText(find.text(MyStrings.topTextTakingPhoto));
+    });
     test('pressing "TAKE PHOTO" replaces the CameraWidget with a SudokuWidget', () async {
       await driver.waitFor(find.byType('CameraWidget'));
       await driver.tap(find.text(MyStrings.takePhotoButtonText));

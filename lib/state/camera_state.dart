@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:flutter/services.dart';
 import 'package:image/image.dart';
 import 'package:path/path.dart';
 import 'package:camera/camera.dart';
@@ -12,41 +13,70 @@ import 'package:sudoku_solver_2/state/tile_state.dart';
 class CameraState {
   final CameraDescription cameraDescription;
   final CameraController cameraController;
-
+  File pickedImageFile;
+  File croppedImageFile;
+  int croppedImageWidth;
   CameraState({
     @required this.cameraDescription,
     @required this.cameraController,
   });
 
+  Future<File> _getImageFileFromAssets(String path) async {
+    final byteData = await rootBundle.load('assets/$path');
+    final file = File('${(await getTemporaryDirectory()).path}/$path');
+    await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    return file;
+  }
+
   Future<File> takePicture() async {
-    File _pickedImageFile;
-    try {
-      // Filename must be unique, or else an error is thrown
-      final String imagePath = join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
-      await this.cameraController.takePicture(imagePath);
-      _pickedImageFile = File(imagePath);
+    if (MyValues.runningIntegrationTests) {
+      File _pickedImageFile = await _getImageFileFromAssets('mock_sudoku.jpg');
+
       assert(_pickedImageFile != null);
-    } catch (e) {
-      print(e);
+      pickedImageFile = _pickedImageFile;
+      return _pickedImageFile;
+    } else {
+      File _pickedImageFile;
+      try {
+        // Filename must be unique, or else an error is thrown
+        final String imagePath = join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
+        await this.cameraController.takePicture(imagePath);
+        _pickedImageFile = File(imagePath);
+        assert(_pickedImageFile != null);
+      } catch (e) {
+        print(e);
+      }
+      return _pickedImageFile;
     }
-    return _pickedImageFile;
   }
 
   Future<File> cropPictureToSudokuSize(File pickedImageFile) async {
     Image pickedImage = decodeImage(pickedImageFile.readAsBytesSync());
-    pickedImage = copyRotate(pickedImage, 90);
+
+    if (pickedImage.height < pickedImage.width) {
+      pickedImage = copyRotate(pickedImage, 90);
+    }
+
     int imageWidth = pickedImage.width;
     int imageHeight = pickedImage.height;
-    int croppedImageWidth = (imageWidth * MyValues.cameraWidth / MyValues.screenWidth).round();
+    this.croppedImageWidth = (imageWidth * MyValues.cameraWidth / MyValues.screenWidth).round();
     int croppedImageHeight = croppedImageWidth;
-    int x = ((imageWidth - croppedImageWidth) / 2).round();
-    int y = ((imageHeight - croppedImageHeight) / 2).round();
+    int horizontalStartPixel = ((imageWidth - croppedImageWidth) / 2).round();
+    int verticalStartPixel = ((imageHeight - croppedImageHeight) / 2).round();
 
-    Image croppedImage = copyCrop(pickedImage, x, y, croppedImageWidth, croppedImageHeight);
+    Image croppedImage = copyCrop(
+      pickedImage,
+      horizontalStartPixel,
+      verticalStartPixel,
+      croppedImageWidth,
+      croppedImageHeight,
+    );
 
     final String croppedImagePath = join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
     File _croppedImageFile = await File(croppedImagePath).create();
     _croppedImageFile.writeAsBytesSync(encodePng(croppedImage));
+    croppedImageFile = _croppedImageFile;
     return _croppedImageFile;
   }
 
@@ -78,7 +108,7 @@ class CameraState {
 
   Sudoku constructSudokuFromTextElements(List<TextElement> textElements) {
     Sudoku sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
-    double factor = 200 / 9;
+    double factor = croppedImageWidth / 9;
     for (TextElement textElement in textElements) {
       double tileImgX = textElement.boundingBox.center.dx;
       double tileImgY = textElement.boundingBox.center.dy;

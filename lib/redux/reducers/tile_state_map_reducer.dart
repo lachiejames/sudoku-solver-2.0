@@ -14,6 +14,7 @@ final Reducer<HashMap<TileKey, TileState>> tileStateMapReducer = combineReducers
   TypedReducer<HashMap<TileKey, TileState>, SudokuSolvedAction>(_updateTileMapWithSolvedSudokuReducer),
   TypedReducer<HashMap<TileKey, TileState>, RestartAction>(_clearAllValuesReducer),
   TypedReducer<HashMap<TileKey, TileState>, ChangeScreenAction>(_clearTileStateMapReducer),
+  TypedReducer<HashMap<TileKey, TileState>, PhotoProcessedAction>(_updateTileMapWithSudokuReducer),
 ]);
 
 HashMap<TileKey, TileState> _tileSelectedReducer(HashMap<TileKey, TileState> tileStateMap, TileSelectedAction action) {
@@ -102,6 +103,15 @@ HashMap<TileKey, TileState> _clearTileStateMapReducer(HashMap<TileKey, TileState
   final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
   tileStateMap.forEach((tileKey, tileState) {
     newTileStateMap[tileKey] = tileState.copyWith(value: -1, isSelected: false, isOriginalTile: false);
+  });
+
+  return newTileStateMap;
+}
+
+HashMap<TileKey, TileState> _updateTileMapWithSudokuReducer(HashMap<TileKey, TileState> tileStateMap, PhotoProcessedAction action) {
+  final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
+  action.sudoku.tileStateMap.forEach((tileKey, tileState) {
+    newTileStateMap[tileKey] = tileState.copyWith(value: tileState.value, isSelected: false);
   });
 
   return newTileStateMap;

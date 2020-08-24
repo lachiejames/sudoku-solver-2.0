@@ -3,10 +3,10 @@ class MyValues {
   static double screenHeight;
   static double screenWidth;
   static double pad = 32;
-  static double verticalPadding = (screenHeight - screenWidth - pad) / 2;
-  static double horizontalPadding = (pad) / 2;
   static double cameraHeight;
   static double cameraWidth;
+  static double verticalPadding = (screenHeight - cameraHeight) / 2 - pad;
+  static double horizontalPadding = pad;
 
   static double topTextFontSize = 40;
   static double appBarFontSize = 30;
@@ -17,4 +17,6 @@ class MyValues {
   static double tileFontSize = 15;
   static double numberFontSize = 15;
   static int maxSolveTime = 30000;
+
+  static bool runningIntegrationTests = false;
 }

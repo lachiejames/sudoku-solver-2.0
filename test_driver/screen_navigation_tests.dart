@@ -13,12 +13,11 @@ void main() {
     if (driver != null) await driver.close();
   });
 
-  // Restart app at beginning of each test
-  setUp(() async {
-    if (driver != null) await driver.requestData(MyStrings.hotRestart);
-  });
-
   group('Screen navigation tests -', () {
+    // Restart app at beginning of each test
+    setUp(() async {
+      await driver.requestData(MyStrings.hotRestart);
+    });
     test('we start on the HomeScreen', () async {
       await driver.getText(find.text(MyStrings.topTextHome));
     });

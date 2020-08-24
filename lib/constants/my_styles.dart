@@ -9,7 +9,7 @@ class MyStyles {
 
   static final TextStyle buttonTextStyle = TextStyle(
     fontFamily: fontStyle,
-    fontSize: MyValues.appBarFontSize,
+    fontSize: 20,
     color: MyColors.white,
     fontWeight: FontWeight.bold,
   );

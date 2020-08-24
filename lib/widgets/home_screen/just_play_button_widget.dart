@@ -19,8 +19,8 @@ class JustPlayButtonWidget extends StatelessWidget {
           padding: EdgeInsets.only(
             top: 16,
             bottom: 16,
-            left: 100,
-            right: 100,
+            left: 50,
+            right: 50,
           ),
           color: MyColors.pink,
           child: Text(
