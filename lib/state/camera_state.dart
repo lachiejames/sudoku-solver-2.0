@@ -147,7 +147,7 @@ class CameraState {
     } catch (e) {
       print(e);
     }
-
+    
     return CameraState(
       cameraDescription: cameraDescription,
       cameraController: cameraController,
