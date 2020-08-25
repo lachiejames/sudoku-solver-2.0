@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
+import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/home_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -39,9 +40,11 @@ Future<void> runThatShit() async {
 class MyApp extends StatelessWidget {
   MyApp({Key key}) : super(key: key);
 
+  void initScreenSize(BuildContext context) {}
+
   @override
   Widget build(BuildContext context) {
-    this.setScreenProperties();
+    this.setScreenProperties(context);
     return StoreProvider<AppState>(
       store: Redux.store,
       child: MaterialApp(
@@ -57,10 +60,16 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  void setScreenProperties() {
+  void setScreenProperties(BuildContext context) {
     // Remove status bar and system navigation bar
     SystemChrome.setEnabledSystemUIOverlays([]);
     // Prevent screen rotation
     SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp]);
+
+    // Set values required for SolveWithCameraScreen
+    MyValues.screenHeight = MediaQuery.of(context).size.height;
+    MyValues.screenWidth = MediaQuery.of(context).size.width;
+    MyValues.cameraWidth = MyValues.screenWidth - 2 * MyValues.pad;
+    MyValues.cameraHeight = MyValues.cameraWidth;
   }
 }

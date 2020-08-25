@@ -22,7 +22,6 @@ class _SolveItButtonWidgetState extends State<SolveItButtonWidget> {
       distinct: true,
       converter: (store) => store.state.gameState,
       builder: (context, gameState) {
-        print(gameState);
         return Container(
           alignment: Alignment.center,
           margin: EdgeInsets.only(

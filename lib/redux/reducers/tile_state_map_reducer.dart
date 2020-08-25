@@ -129,7 +129,7 @@ HashMap<TileKey, TileState> _checkForInvalidTilesReducer(HashMap<TileKey, TileSt
     }
    });
   Sudoku sudoku = Sudoku(tileStateMap: tileStateMap);
-  print(sudoku.allConstraintsSatisfied() && !hasInvalidTiles);
+
   if (sudoku.allConstraintsSatisfied() && !hasInvalidTiles) {
     return tileStateMap;
   } else {

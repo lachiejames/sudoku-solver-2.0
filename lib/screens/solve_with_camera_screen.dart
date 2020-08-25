@@ -23,16 +23,8 @@ class SolveWithCameraScreen extends StatefulWidget {
 }
 
 class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
-  void initScreenSize(BuildContext context) {
-    MyValues.screenHeight = MediaQuery.of(context).size.height;
-    MyValues.screenWidth = MediaQuery.of(context).size.width;
-    MyValues.cameraWidth = MyValues.screenWidth - 2 * MyValues.pad;
-    MyValues.cameraHeight = MyValues.cameraWidth;
-  }
-
   @override
   Widget build(BuildContext context) {
-    this.initScreenSize(context);
     Redux.store.dispatch(ChangeScreenAction(ScreenState.SolveWithCameraScreen));
     return StoreConnector<AppState, GameState>(
       distinct: true,
