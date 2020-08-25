@@ -9,6 +9,7 @@ class TileState {
 
   int value;
   bool isSelected;
+  bool isInvalid;
 
   TileState({
     this.row,
@@ -16,6 +17,7 @@ class TileState {
     this.value,
     this.isSelected = false,
     this.isOriginalTile = false,
+    this.isInvalid = false,
   });
 
   String toString() {
@@ -48,6 +50,7 @@ class TileState {
     int value,
     bool isSelected,
     bool isOriginalTile,
+    bool isInvalid,
   }) {
     return TileState(
       row: this.row,
@@ -55,6 +58,7 @@ class TileState {
       value: _decideValueToPass(value),
       isSelected: isSelected ?? this.isSelected,
       isOriginalTile: isOriginalTile ?? this.isOriginalTile,
+      isInvalid: isInvalid ?? this.isInvalid,
     );
   }
 

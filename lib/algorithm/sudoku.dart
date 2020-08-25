@@ -186,4 +186,56 @@ class Sudoku {
     }
     return null;
   }
+
+  List<TileKey> getInvalidTileKeys() {
+    List<TileState> invalidTiles = List<TileState>();
+    for (int i = 1; i <= 9; i++) {
+      List<int> valuesInRow = getValuesInRow(i);
+      List<int> valuesInCol = getValuesInCol(i);
+      List<int> valuesInSeg = getValuesInSegment(i);
+
+      List<int> uniqueValuesInRow = valuesInRow.toSet().toList();
+      List<int> uniqueValuesInCol = valuesInCol.toSet().toList();
+      List<int> uniqueValuesInSeg = valuesInSeg.toSet().toList();
+
+      for (int n in uniqueValuesInRow) {
+        valuesInRow.remove(n);
+      }
+      for (int n in uniqueValuesInCol) {
+        valuesInCol.remove(n);
+      }
+      for (int n in uniqueValuesInSeg) {
+        valuesInSeg.remove(n);
+      }
+
+      // Get the tiles in the row that have this duplicateValue
+      List<TileState> tilesInRow = getTilesInRow(i);
+      for (TileState tile in tilesInRow) {
+        if (valuesInRow.contains(tile.value)) {
+          invalidTiles.add(tile);
+        }
+      }
+      List<TileState> tilesInCol = getTilesInCol(i);
+      for (TileState tile in tilesInCol) {
+        if (valuesInCol.contains(tile.value)) {
+          invalidTiles.add(tile);
+        }
+      }
+      List<TileState> tilesInSeg = getTilesInSegment(i);
+      for (TileState tile in tilesInSeg) {
+        if (valuesInSeg.contains(tile.value)) {
+          invalidTiles.add(tile);
+        }
+      }
+    }
+    invalidTiles = invalidTiles.toSet().toList();
+
+    List<TileKey> invalidTileKeys = List<TileKey>();
+    invalidTiles.forEach((tile) {
+      invalidTileKeys.add(TileKey(row: tile.row, col: tile.col));
+    });
+
+    // Make it unique
+    return invalidTileKeys;
+  }
 }

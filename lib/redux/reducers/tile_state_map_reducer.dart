@@ -1,7 +1,9 @@
 import 'dart:collection';
 import 'package:redux/redux.dart';
+import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/constants/my_games.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
@@ -15,6 +17,7 @@ final Reducer<HashMap<TileKey, TileState>> tileStateMapReducer = combineReducers
   TypedReducer<HashMap<TileKey, TileState>, RestartAction>(_clearAllValuesReducer),
   TypedReducer<HashMap<TileKey, TileState>, ChangeScreenAction>(_clearTileStateMapReducer),
   TypedReducer<HashMap<TileKey, TileState>, PhotoProcessedAction>(_updateTileMapWithSudokuReducer),
+  TypedReducer<HashMap<TileKey, TileState>, CheckForInvalidTilesAction>(_checkForInvalidTilesReducer),
 ]);
 
 HashMap<TileKey, TileState> _tileSelectedReducer(HashMap<TileKey, TileState> tileStateMap, TileSelectedAction action) {
@@ -88,7 +91,7 @@ HashMap<TileKey, TileState> _clearAllValuesReducer(HashMap<TileKey, TileState> t
   final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
   tileStateMap.forEach((tileKey, tileState) {
     int value = (tileState.isOriginalTile) ? tileState.value : -1;
-    newTileStateMap[tileKey] = tileState.copyWith(value: value, isSelected: false);
+    newTileStateMap[tileKey] = tileState.copyWith(value: value, isSelected: false, isInvalid: false);
   });
 
   return newTileStateMap;
@@ -102,7 +105,7 @@ HashMap<TileKey, TileState> _clearTileStateMapReducer(HashMap<TileKey, TileState
 
   final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
   tileStateMap.forEach((tileKey, tileState) {
-    newTileStateMap[tileKey] = tileState.copyWith(value: -1, isSelected: false, isOriginalTile: false);
+    newTileStateMap[tileKey] = tileState.copyWith(value: -1, isSelected: false, isOriginalTile: false, isInvalid: false);
   });
 
   return newTileStateMap;
@@ -115,4 +118,30 @@ HashMap<TileKey, TileState> _updateTileMapWithSudokuReducer(HashMap<TileKey, Til
   });
 
   return newTileStateMap;
+}
+
+HashMap<TileKey, TileState> _checkForInvalidTilesReducer(HashMap<TileKey, TileState> tileStateMap, CheckForInvalidTilesAction action) {
+  // In case we just removed a tile, but havent reset the values yet
+  bool hasInvalidTiles = false;
+  tileStateMap.forEach((tileKey, tileState) {
+    if (tileState.isInvalid) {
+      hasInvalidTiles = true;
+    }
+   });
+  Sudoku sudoku = Sudoku(tileStateMap: tileStateMap);
+  print(sudoku.allConstraintsSatisfied() && !hasInvalidTiles);
+  if (sudoku.allConstraintsSatisfied() && !hasInvalidTiles) {
+    return tileStateMap;
+  } else {
+    final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
+    final List<TileKey> invalidTileKeys = sudoku.getInvalidTileKeys();
+    tileStateMap.forEach((tileKey, tileState) {
+      bool isInvalid = invalidTileKeys.contains(tileKey);
+      newTileStateMap[tileKey] = tileState.copyWith(isInvalid: isInvalid);
+    });
+
+    Redux.store.dispatch(InvalidTilesPresentAction());
+
+    return newTileStateMap;
+  }
 }

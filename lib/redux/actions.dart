@@ -78,3 +78,11 @@ class PhotoProcessedAction {
 class RetakePhotoAction {
   RetakePhotoAction();
 }
+
+class CheckForInvalidTilesAction {
+  CheckForInvalidTilesAction();
+}
+
+class InvalidTilesPresentAction {
+  InvalidTilesPresentAction();
+}

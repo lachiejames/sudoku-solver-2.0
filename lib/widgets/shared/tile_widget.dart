@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
+import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -46,7 +47,12 @@ class _TileWidgetState extends State<TileWidget> {
                 Center(
                   child: Text(
                     (tileState.value == null) ? '' : '${tileState.value}',
-                    style: MyStyles.tileTextStyle,
+                    style: TextStyle(
+                      fontSize: MyValues.tileFontSize,
+                      fontFamily: MyStyles.fontStyleNumber,
+                      fontWeight: FontWeight.w400,
+                      color: (tileState.isInvalid) ? MyColors.red : MyColors.black,
+                    ),
                     textDirection: TextDirection.ltr,
                   ),
                 ),
@@ -72,6 +78,7 @@ class _TileWidgetState extends State<TileWidget> {
             } else {
               Redux.store.dispatch(TileSelectedAction(tileState));
             }
+            Redux.store.dispatch(CheckForInvalidTilesAction());
           },
         );
       },

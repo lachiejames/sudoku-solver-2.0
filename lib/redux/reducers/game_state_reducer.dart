@@ -15,6 +15,7 @@ final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
   TypedReducer<GameState, TakePhotoAction>(_takePhotoReducer),
   TypedReducer<GameState, PhotoProcessedAction>(_photoProcessedReducer),
   TypedReducer<GameState, RetakePhotoAction>(_retakePhotoReducer),
+  TypedReducer<GameState, InvalidTilesPresentAction>(_invalidTilesPresentReducer),
 ]);
 
 GameState _solveButtonPressedReducer(GameState gameState, SolveButtonPressedAction action) {
@@ -81,4 +82,8 @@ GameState _photoProcessedReducer(GameState gameState, PhotoProcessedAction actio
 
 GameState _retakePhotoReducer(GameState gameState, RetakePhotoAction action) {
   return GameState.TakingPhoto;
+}
+
+GameState _invalidTilesPresentReducer(GameState gameState, InvalidTilesPresentAction action) {
+  return GameState.InvalidTilesPresent;
 }

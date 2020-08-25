@@ -7,15 +7,13 @@ final Reducer<CameraState> cameraStateReducer = combineReducers<CameraState>([
   TypedReducer<CameraState, StartProcessingPhotoAction>(_processingPhotoReducer),
 ]);
 
-
 CameraState _processingPhotoReducer(CameraState cameraState, StartProcessingPhotoAction action) {
   // This makes the function not pure unfortunately
   cameraState.takePicture().then((pickedImageFile) {
     cameraState.getSudokuFromImage(pickedImageFile).then((sudoku) {
       assert(sudoku.tileStateMap.length == 81);
-      Redux.store.dispatch(
-        PhotoProcessedAction(sudoku),
-      );
+      Redux.store.dispatch(PhotoProcessedAction(sudoku));
+      Redux.store.dispatch(CheckForInvalidTilesAction());
     });
   });
 

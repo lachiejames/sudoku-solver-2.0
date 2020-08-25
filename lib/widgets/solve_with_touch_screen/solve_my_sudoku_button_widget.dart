@@ -36,7 +36,7 @@ class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
                 style: MyStyles.buttonTextStyle,
               ),
               // Should be disabled while solving
-              onPressed: (gameState == GameState.IsSolving)
+              onPressed: (gameState == GameState.IsSolving || gameState==GameState.InvalidTilesPresent)
                   ? null
                   : () {
                       Redux.store.dispatch(SolveButtonPressedAction());
