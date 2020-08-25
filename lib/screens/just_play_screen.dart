@@ -24,15 +24,18 @@ class _JustPlayScreenState extends State<JustPlayScreen> {
     return Scaffold(
       appBar: JustPlayScreenAppBar(AppBar()),
       backgroundColor: MyColors.pink,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TopTextWidget(),
-            NumberBarWidget(),
-            SudokuWidget(),
-            NewGameButtonWidget(),
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              TopTextWidget(),
+              NumberBarWidget(),
+              SudokuWidget(),
+              NewGameButtonWidget(),
+            ],
+          ),
         ),
       ),
     );

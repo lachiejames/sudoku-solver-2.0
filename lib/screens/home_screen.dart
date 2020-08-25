@@ -20,15 +20,18 @@ class _HomeScreenState extends State<HomeScreen> {
     Redux.store.dispatch(ChangeScreenAction(ScreenState.HomeScreen));
     return Scaffold(
       backgroundColor: MyColors.blue,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TopTextWidget(),
-            SolveWithCameraButtonWidget(),
-            SolveWithTouchButtonWidget(),
-            JustPlayButtonWidget(),
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              TopTextWidget(),
+              SolveWithCameraButtonWidget(),
+              SolveWithTouchButtonWidget(),
+              JustPlayButtonWidget(),
+            ],
+          ),
         ),
       ),
     );

@@ -23,8 +23,17 @@ class SolveWithCameraScreen extends StatefulWidget {
 }
 
 class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
+  void initScreenSizeProperties(BuildContext context) {
+    // Set values required for SolveWithCameraScreen
+    MyValues.screenHeight = MediaQuery.of(context).size.height;
+    MyValues.screenWidth = MediaQuery.of(context).size.width;
+    MyValues.cameraWidth = MyValues.screenWidth - 2 * MyValues.pad;
+    MyValues.cameraHeight = MyValues.cameraWidth;
+  }
+
   @override
   Widget build(BuildContext context) {
+    this.initScreenSizeProperties(context);
     Redux.store.dispatch(ChangeScreenAction(ScreenState.SolveWithCameraScreen));
     return StoreConnector<AppState, GameState>(
       distinct: true,
@@ -33,27 +42,27 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
         return Scaffold(
           appBar: SolveWithCameraScreenAppBar(AppBar()),
           backgroundColor: MyColors.pink,
-          body: (gameState == GameState.PhotoProcessed || gameState == GameState.IsSolving || gameState == GameState.Solved)
-              ? Center(
-                  child: Column(
+          body: SingleChildScrollView(
+            child: (gameState == GameState.PhotoProcessed || gameState == GameState.IsSolving || gameState == GameState.Solved)
+                ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       TopTextWidget(),
                       SudokuWidget(),
                       RetakePhotoButtonWidget(),
                       SolveItButtonWidget(),
                     ],
-                  ),
-                )
-              : Stack(
-                  children: <Widget>[
-                    // Camera
-                    CameraWidget(),
+                  )
+                : Stack(
+                    children: <Widget>[
+                      // Camera
+                      CameraWidget(),
 
-                    // topText and button
-                    Center(
-                      child: Column(
+                      // topText and button
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           TopTextWidget(),
                           Container(
@@ -67,9 +76,9 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
                           TakePhotoButtonWidget(),
                         ],
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+          ),
         );
       },
     );

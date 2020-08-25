@@ -19,8 +19,8 @@ class SolveWithTouchHelpScreen extends StatelessWidget {
       appBar: HelpScreenAppBar(AppBar()),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             HelpScreenTextWidget(text: MyStrings.tip1SolveWithTouchScreen),
             HelpScreenTextWidget(text: MyStrings.tip2SolveWithTouchScreen),

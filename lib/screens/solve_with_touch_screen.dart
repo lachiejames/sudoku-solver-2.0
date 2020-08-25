@@ -24,16 +24,17 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
     return Scaffold(
       appBar: SolveWithTouchScreenAppBar(AppBar()),
       backgroundColor: MyColors.pink,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TopTextWidget(),
-            NumberBarWidget(),
-            SudokuWidget(),
-            SolveMySudokuButtonWidget(),
-          ],
-        ),
+      body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              TopTextWidget(),
+              NumberBarWidget(),
+              SudokuWidget(),
+              SolveMySudokuButtonWidget(),
+            ],
+          ),
       ),
     );
   }

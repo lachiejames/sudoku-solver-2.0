@@ -40,8 +40,6 @@ Future<void> runThatShit() async {
 class MyApp extends StatelessWidget {
   MyApp({Key key}) : super(key: key);
 
-  void initScreenSize(BuildContext context) {}
-
   @override
   Widget build(BuildContext context) {
     this.setScreenProperties(context);
@@ -65,11 +63,5 @@ class MyApp extends StatelessWidget {
     SystemChrome.setEnabledSystemUIOverlays([]);
     // Prevent screen rotation
     SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp]);
-
-    // Set values required for SolveWithCameraScreen
-    MyValues.screenHeight = MediaQuery.of(context).size.height;
-    MyValues.screenWidth = MediaQuery.of(context).size.width;
-    MyValues.cameraWidth = MyValues.screenWidth - 2 * MyValues.pad;
-    MyValues.cameraHeight = MyValues.cameraWidth;
   }
 }

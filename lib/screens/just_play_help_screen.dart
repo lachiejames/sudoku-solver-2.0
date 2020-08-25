@@ -18,8 +18,8 @@ class JustPlayHelpScreen extends StatelessWidget {
       backgroundColor: MyColors.pink,
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             HelpScreenTextWidget(text: MyStrings.tip1JustPlayScreen),
             HelpScreenTextWidget(text: MyStrings.tip2JustPlayScreen),
