@@ -48,11 +48,6 @@ void main() {
         await createHomeScreen(tester);
         expect(find.text('How would you like it to be solved?'), findsOneWidget);
       });
-
-      testWidgets('top text should be "How would you like it to be solved?" ', (WidgetTester tester) async {
-        await createHomeScreen(tester);
-        expect(find.text('How would you like it to be solved?'), findsOneWidget);
-      });
     });
   });
 }
