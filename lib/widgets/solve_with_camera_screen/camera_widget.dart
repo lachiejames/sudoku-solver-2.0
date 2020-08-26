@@ -22,7 +22,7 @@ class _CameraWidgetState extends State<CameraWidget> {
       builder: (context, cameraState) {
         return Stack(
           children: <Widget>[
-            CameraPreview(cameraState.cameraController),
+            (cameraState.cameraController != null) ? CameraPreview(cameraState.cameraController) : CircularProgressIndicator(),
             Container(
               decoration: BoxDecoration(
                 border: Border(
