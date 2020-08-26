@@ -1,34 +1,25 @@
 import 'dart:io';
-
+import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
-import 'package:sudoku_solver_2/state/camera_state.dart';
 
 void main() {
   CameraState cameraState;
 
-  void exposePathProviderForTesting() {
-    const MethodChannel channel = MethodChannel('plugins.flutter.io/path_provider');
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return ".";
-    });
-  }
-
   void setPathMockForTesting() {
-    const MethodChannel channel = MethodChannel('flutter.io/path');
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      if (methodCall.method == 'getTemporaryDirectory') {
-        return 'dfg';
+    const MethodChannel('plugins.flutter.io/path_provider').setMockMethodCallHandler((MethodCall methodCall) async {
+      if (methodCall.method == 'getApplicationDocumentsDirectory') {
+        final Directory directory = await Directory.systemTemp.createTemp();
+        return directory.path;
       }
-      return ".";
+      return null;
     });
   }
 
   group('CameraState ->', () {
     setUpAll(() {
       TestWidgetsFlutterBinding.ensureInitialized();
-      exposePathProviderForTesting();
       setPathMockForTesting();
     });
 

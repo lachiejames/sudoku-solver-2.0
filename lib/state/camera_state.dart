@@ -23,7 +23,7 @@ class CameraState {
       print(e);
       return null;
     }
-    final file = File('${(await getTemporaryDirectory()).path}/$path');
+    final file = File('${(await getApplicationDocumentsDirectory()).path}/$path');
     await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
 
     return file;
@@ -32,8 +32,8 @@ class CameraState {
   Future<File> takePicture(CameraController cameraController) async {
     File _pickedImageFile;
 
-    final String imagePath = join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
-    print(await getTemporaryDirectory());
+    final String imagePath = join((await getApplicationDocumentsDirectory()).path, '_pickedImageFile${DateTime.now().millisecondsSinceEpoch}.png');
+
     try {
       await cameraController.takePicture(imagePath);
       _pickedImageFile = File(imagePath);
@@ -68,10 +68,11 @@ class CameraState {
       croppedImageHeight,
     );
 
-    final String croppedImagePath = join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
+    final String croppedImagePath = join((await getApplicationDocumentsDirectory()).path, '_croppedImageFile${DateTime.now().millisecondsSinceEpoch}.png');
     File _croppedImageFile;
     try {
       _croppedImageFile = await File(croppedImagePath).create();
+      assert(_croppedImageFile!=null);
       _croppedImageFile.writeAsBytesSync(encodePng(croppedImage));
     } catch (e) {
       print('ERROR: cropped image file could not be created at $croppedImagePath');
