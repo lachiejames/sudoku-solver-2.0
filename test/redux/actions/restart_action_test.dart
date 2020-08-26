@@ -48,7 +48,7 @@ void main() {
     });
 
     test('sets gameState to default', () async {
-      dispatchActionAndUpdateState(SolveButtonPressedAction());
+      dispatchActionAndUpdateState(SolveSudokuAction());
       expect(state.gameState, GameState.IsSolving);
 
       await Future.delayed(Duration(milliseconds: 1000));

@@ -43,7 +43,7 @@ void main() {
       testWidgets('should display a progress indicator', (WidgetTester tester) async {
         await createSudokuWidget(tester);
 
-        Redux.store.dispatch(SolveButtonPressedAction());
+        Redux.store.dispatch(SolveSudokuAction());
         await tester.pump(debounceTime);
 
         expect(find.byType(CircularProgressIndicator), findsOneWidget);
@@ -55,7 +55,7 @@ void main() {
         await createSudokuWidget(tester);
 
         await tester.runAsync(() async {
-          Redux.store.dispatch(SolveButtonPressedAction());
+          Redux.store.dispatch(SolveSudokuAction());
 
           // Give it enough time to solve the sudoku
           await Future.delayed(Duration(milliseconds: 1000));

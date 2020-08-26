@@ -21,12 +21,8 @@ class NumberPressedAction {
   NumberPressedAction(this.pressedNumber);
 }
 
-class SolveButtonPressedAction {
-  SolveButtonPressedAction();
-}
-
-class StartSolvingSudokuAction {
-  StartSolvingSudokuAction();
+class SolveSudokuAction {
+  SolveSudokuAction();
 }
 
 class SudokuSolvedAction {
@@ -57,18 +53,11 @@ class ChangeScreenAction {
   ChangeScreenAction(this.screenState);
 }
 
-class TakePhotoAction {
-  TakePhotoAction();
-}
-
 class VerifyPhotoCreatedSudokuAction {
   final Sudoku constructedSudoku;
   VerifyPhotoCreatedSudokuAction(this.constructedSudoku);
 }
 
-class StartProcessingPhotoAction {
-  StartProcessingPhotoAction();
-}
 
 class PhotoProcessedAction {
   Sudoku sudoku;

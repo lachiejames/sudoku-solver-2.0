@@ -77,7 +77,7 @@ void main() {
       testWidgets('should display "AI thinking..."', (WidgetTester tester) async {
         await createNumberBarWidget(tester);
 
-        Redux.store.dispatch(SolveButtonPressedAction());
+        Redux.store.dispatch(SolveSudokuAction());
         await tester.pump(debounceTime);
 
         expect(find.text('AI thinking...'), findsOneWidget);
@@ -87,7 +87,7 @@ void main() {
         await createNumberBarWidget(tester);
 
         await tester.runAsync(() async {
-          Redux.store.dispatch(SolveButtonPressedAction());
+          Redux.store.dispatch(SolveSudokuAction());
 
           // Give it enough time to solve the sudoku
           await Future.delayed(Duration(milliseconds: 1000));

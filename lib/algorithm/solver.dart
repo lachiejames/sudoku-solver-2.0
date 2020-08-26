@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
+import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
 bool backtracking(Sudoku sudoku) {
@@ -33,5 +35,13 @@ Sudoku _solveSudoku(Sudoku sudoku) {
 
 Future<Sudoku> solveSudokuAsync(Sudoku sudoku) async {
   Sudoku solvedSudoku = await compute(_solveSudoku, sudoku);
+
+  assert(solvedSudoku.tileStateMap.length == 81);
+  assert(solvedSudoku.isFull());
+  assert(solvedSudoku.allConstraintsSatisfied());
+  Redux.store.dispatch(
+    SudokuSolvedAction(solvedSudoku),
+  );
+
   return solvedSudoku;
 }

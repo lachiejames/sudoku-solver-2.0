@@ -10,7 +10,7 @@ final Reducer<TopTextState> topTextStateReducer = combineReducers<TopTextState>(
   TypedReducer<TopTextState, TileDeselectedAction>(_setTopTextToPickATile),
   TypedReducer<TopTextState, NumberPressedAction>(_setTopTextToPickATile2),
   TypedReducer<TopTextState, RestartAction>(_setTopTextToPickATile3),
-  TypedReducer<TopTextState, SolveButtonPressedAction>(_setTopTextToAiThinking),
+  TypedReducer<TopTextState, SolveSudokuAction>(_setTopTextToAiThinking),
   TypedReducer<TopTextState, SudokuSolvedAction>(_setTopTextToSolved),
   TypedReducer<TopTextState, GameSolvedAction>(_setTopTextToSolved2),
   TypedReducer<TopTextState, ChangeScreenAction>(_setTopTextAlignWithCamera),
@@ -35,7 +35,7 @@ TopTextState _setTopTextToPickANumberOrTapToRemove(TopTextState topTextState, Ti
   );
 }
 
-TopTextState _setTopTextToAiThinking(TopTextState topTextState, SolveButtonPressedAction action) {
+TopTextState _setTopTextToAiThinking(TopTextState topTextState, SolveSudokuAction action) {
   return topTextState.copyWith(text: MyStrings.topTextWhenSolving, color: MyColors.white);
 }
 

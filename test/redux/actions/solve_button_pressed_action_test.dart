@@ -19,17 +19,17 @@ void main() {
     state = Redux.store.state;
   });
 
-  group('SolveButtonPressedAction ->', () {
+  group('SolveSudokuAction ->', () {
     group('before solved ->', () {
       test('sets gameState to isSolving', () {
         expect(state.gameState, GameState.Default);
-        dispatchActionAndUpdateState(SolveButtonPressedAction());
+        dispatchActionAndUpdateState(SolveSudokuAction());
         expect(state.gameState, GameState.IsSolving);
       });
 
       test('sets topText to "AI thinking..." in white', () {
         expect(state.topTextState.text, MyStrings.topTextNoTileSelected);
-        dispatchActionAndUpdateState(SolveButtonPressedAction());
+        dispatchActionAndUpdateState(SolveSudokuAction());
         expect(state.topTextState.text, MyStrings.topTextWhenSolving);
         expect(state.topTextState.color, MyColors.white);
       });
@@ -37,7 +37,7 @@ void main() {
 
     group('after solved ->', () {
       test('sets gameState to Solved', () async {
-        dispatchActionAndUpdateState(SolveButtonPressedAction());
+        dispatchActionAndUpdateState(SolveSudokuAction());
 
         // Takes a second to solve.  Gotta update the state too
         await Future.delayed(Duration(milliseconds: 1000));
@@ -47,7 +47,7 @@ void main() {
       });
 
       test('sets topText to "SOLVED" in green', () async {
-        dispatchActionAndUpdateState(SolveButtonPressedAction());
+        dispatchActionAndUpdateState(SolveSudokuAction());
 
         // Takes a second to solve.  Gotta update the state too
         await Future.delayed(Duration(milliseconds: 1000));

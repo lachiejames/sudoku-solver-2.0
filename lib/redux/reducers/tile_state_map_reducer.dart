@@ -140,7 +140,7 @@ HashMap<TileKey, TileState> _checkForInvalidTilesReducer(HashMap<TileKey, TileSt
       newTileStateMap[tileKey] = tileState.copyWith(isInvalid: isInvalid);
     });
 
-    Redux.store.dispatch(InvalidTilesPresentAction());
+    // Redux.store.dispatch(InvalidTilesPresentAction());
 
     return newTileStateMap;
   }
