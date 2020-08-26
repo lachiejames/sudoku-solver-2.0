@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
@@ -57,7 +58,9 @@ class VerifyPhotoCreatedSudokuAction {
   final Sudoku constructedSudoku;
   VerifyPhotoCreatedSudokuAction(this.constructedSudoku);
 }
-
+class TakePhotoAction {
+  TakePhotoAction();
+}
 
 class PhotoProcessedAction {
   Sudoku sudoku;
@@ -74,4 +77,8 @@ class CheckForInvalidTilesAction {
 
 class InvalidTilesPresentAction {
   InvalidTilesPresentAction();
+}
+class ProcessPhotoAction {
+  final CameraController cameraController;
+  ProcessPhotoAction(this.cameraController);
 }

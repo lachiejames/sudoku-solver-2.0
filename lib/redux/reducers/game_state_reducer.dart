@@ -11,6 +11,7 @@ final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
   TypedReducer<GameState, NumberPressedAction>(_setToSolvedIfAllTilesFilled),
   TypedReducer<GameState, GameSolvedAction>(_setToSolved),
   TypedReducer<GameState, RestartAction>(_setToDefault),
+  TypedReducer<GameState, TakePhotoAction>(_takePhotoReducer),
   TypedReducer<GameState, PhotoProcessedAction>(_photoProcessedReducer),
   TypedReducer<GameState, RetakePhotoAction>(_retakePhotoReducer),
   TypedReducer<GameState, InvalidTilesPresentAction>(_invalidTilesPresentReducer),
@@ -49,6 +50,10 @@ GameState _setToSolved(GameState gameState, GameSolvedAction action) {
 
 GameState _setToDefault(GameState gameState, RestartAction action) {
   return GameState.Default;
+}
+
+GameState _takePhotoReducer(GameState gameState, TakePhotoAction action) {
+  return GameState.ProcessingPhoto;
 }
 
 GameState _photoProcessedReducer(GameState gameState, PhotoProcessedAction action) {

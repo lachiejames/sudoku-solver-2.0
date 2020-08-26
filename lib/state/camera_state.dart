@@ -7,15 +7,22 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
+import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
 class CameraState {
   int croppedImageWidth;
 
-  CameraState();
-
-  Future<File> _getImageFileFromAssets(String path) async {
-    final byteData = await rootBundle.load('assets/$path');
+  Future<File> getImageFileFromAssets(String path) async {
+    ByteData byteData;
+    try {
+      byteData = await rootBundle.load('assets/$path');
+    } catch (e) {
+      print('ERROR: no file found at assets/$path');
+      print(e);
+      return null;
+    }
     final file = File('${(await getTemporaryDirectory()).path}/$path');
     await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
 
@@ -24,20 +31,17 @@ class CameraState {
 
   Future<File> takePicture(CameraController cameraController) async {
     File _pickedImageFile;
-    if (MyValues.runningIntegrationTests) {
-      _pickedImageFile = await _getImageFileFromAssets('mock_sudoku.jpg');
-      return _pickedImageFile;
-    } else {
-      try {
-        // Filename must be unique, or else an error is thrown
-        final String imagePath = join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
-        await cameraController.takePicture(imagePath);
-        _pickedImageFile = File(imagePath);
-      } catch (e) {
-        print(e);
-      }
+
+    final String imagePath = join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
+    print(await getTemporaryDirectory());
+    try {
+      await cameraController.takePicture(imagePath);
+      _pickedImageFile = File(imagePath);
+      assert(_pickedImageFile != null);
+    } catch (e) {
+      print('ERROR: could not create file at $imagePath');
+      print(e);
     }
-    assert(_pickedImageFile != null);
 
     return _pickedImageFile;
   }
@@ -65,21 +69,29 @@ class CameraState {
     );
 
     final String croppedImagePath = join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
-    File _croppedImageFile = await File(croppedImagePath).create();
-    _croppedImageFile.writeAsBytesSync(encodePng(croppedImage));
+    File _croppedImageFile;
+    try {
+      _croppedImageFile = await File(croppedImagePath).create();
+      _croppedImageFile.writeAsBytesSync(encodePng(croppedImage));
+    } catch (e) {
+      print('ERROR: cropped image file could not be created at $croppedImagePath');
+      print(e);
+    }
     return _croppedImageFile;
   }
 
-  Future<Sudoku> getSudokuFromImage(File pickedImageFile) async {
-    File _croppedImageFile = await cropPictureToSudokuSize(pickedImageFile);
+  Future<void> getSudokuFromCamera(CameraController cameraController) async {
+    File pickedImageFile = await takePicture(cameraController);
+    File croppedImageFile = await cropPictureToSudokuSize(pickedImageFile);
 
-    final FirebaseVisionImage _firebaseVisionImage = FirebaseVisionImage.fromFile(_croppedImageFile);
+    final FirebaseVisionImage _firebaseVisionImage = FirebaseVisionImage.fromFile(croppedImageFile);
     final TextRecognizer _textRecognizer = FirebaseVision.instance.textRecognizer();
     final VisionText _visionText = await _textRecognizer.processImage(_firebaseVisionImage);
 
     final List<TextElement> textElements = getTextElementsFromVisionText(_visionText);
     final Sudoku sudoku = constructSudokuFromTextElements(textElements);
-    return sudoku;
+
+    Redux.store.dispatch(PhotoProcessedAction(sudoku));
   }
 
   List<TextElement> getTextElementsFromVisionText(VisionText visionText) {

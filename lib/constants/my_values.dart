@@ -22,7 +22,4 @@ class MyValues {
 
   // Solving will time out after this time has elapsed
   static final int maxSolveTime = 30000;
-
-  // Turns on mocks
-  static final bool runningIntegrationTests = true;
 }

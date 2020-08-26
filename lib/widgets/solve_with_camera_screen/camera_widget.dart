@@ -2,9 +2,11 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
+import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
-import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
+import 'package:sudoku_solver_2/state/game_state.dart';
 
 class CameraWidget extends StatefulWidget {
   CameraWidget({Key key}) : super(key: key);
@@ -18,13 +20,11 @@ class _CameraWidgetState extends State<CameraWidget> {
   CameraController _cameraController;
 
   Future<void> _initCamera() async {
-    print('_initCamera');
     try {
       _cameraDescription = (await availableCameras())[0];
     } catch (e) {
       print(e);
     }
-    print('_cameraController');
 
     _cameraController = CameraController(_cameraDescription, ResolutionPreset.max);
 
@@ -33,7 +33,6 @@ class _CameraWidgetState extends State<CameraWidget> {
     } catch (e) {
       print(e);
     }
-    print('initialize');
   }
 
   Widget makeCameraPreview(BuildContext context) {
@@ -57,10 +56,13 @@ class _CameraWidgetState extends State<CameraWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, CameraState>(
+    return StoreConnector<AppState, GameState>(
       distinct: true,
-      converter: (store) => store.state.cameraState,
-      builder: (context, cameraState) {
+      converter: (store) => store.state.gameState,
+      builder: (context, gameState) {
+        if (gameState==GameState.ProcessingPhoto) {
+          Redux.store.dispatch(ProcessPhotoAction(_cameraController));
+        }
         return Stack(
           children: <Widget>[
             makeCameraPreview(context),
