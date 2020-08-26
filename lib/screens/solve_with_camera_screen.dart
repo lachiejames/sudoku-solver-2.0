@@ -65,14 +65,14 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           TopTextWidget(),
-                          // Container(
-                          //   decoration: BoxDecoration(
-                          //     border: Border(
-                          //       top: BorderSide(width: MyValues.verticalPadding, color: MyColors.transparent),
-                          //       bottom: BorderSide(width: MyValues.verticalPadding, color: MyColors.transparent),
-                          //     ),
-                          //   ),
-                          // ),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                top: BorderSide(width: MyValues.verticalPadding, color: MyColors.transparent),
+                                bottom: BorderSide(width: MyValues.verticalPadding, color: MyColors.transparent),
+                              ),
+                            ),
+                          ),
                           TakePhotoButtonWidget(),
                         ],
                       ),

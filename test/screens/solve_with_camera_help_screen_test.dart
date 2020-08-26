@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/solve_with_camera_help_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -23,7 +24,8 @@ void main() {
     }
 
     setUp(() async {
-      Redux.init();
+      SharedPreferences.setMockInitialValues({});
+      await Redux.init();
     });
 
     group('initial state -', () {

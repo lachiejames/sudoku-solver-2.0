@@ -14,6 +14,47 @@ class CameraWidget extends StatefulWidget {
 }
 
 class _CameraWidgetState extends State<CameraWidget> {
+  CameraDescription _cameraDescription;
+  CameraController _cameraController;
+
+  Future<void> _initCamera() async {
+    print('_initCamera');
+    try {
+      _cameraDescription = (await availableCameras())[0];
+    } catch (e) {
+      print(e);
+    }
+    print('_cameraController');
+
+    _cameraController = CameraController(_cameraDescription, ResolutionPreset.max);
+
+    try {
+      await _cameraController.initialize();
+    } catch (e) {
+      print(e);
+    }
+    print('initialize');
+  }
+
+  Widget makeCameraPreview(BuildContext context) {
+    return FutureBuilder<void>(
+      future: _initCamera(),
+      builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: CameraPreview(_cameraController),
+          );
+        } else if (snapshot.hasError) {
+          return Center(child: Text('snapshot.hasError'));
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, CameraState>(
@@ -22,7 +63,7 @@ class _CameraWidgetState extends State<CameraWidget> {
       builder: (context, cameraState) {
         return Stack(
           children: <Widget>[
-            (cameraState.cameraController != null) ? CameraPreview(cameraState.cameraController) : CircularProgressIndicator(),
+            makeCameraPreview(context),
             Container(
               decoration: BoxDecoration(
                 border: Border(

@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/algorithm/solver.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/constants/my_games.dart';
@@ -11,8 +12,9 @@ void main() {
     Sudoku sudoku;
 
     group('backtracking() algorithm ->', () {
-      setUp(() {
-        Redux.init();
+      setUp(() async {
+        SharedPreferences.setMockInitialValues({});
+        await Redux.init();
         sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
         sudoku.applyExampleValues(MyGames.games[0]);
       });

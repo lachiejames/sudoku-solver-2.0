@@ -19,7 +19,6 @@ import 'package:sudoku_solver_2/state/screen_state.dart';
 class Redux {
   static Store<AppState> _store;
   static SharedPreferences sharedPreferences;
-  static CameraState cameraState;
 
   static Store<AppState> get store {
     if (_store == null) {
@@ -29,7 +28,10 @@ class Redux {
     }
   }
 
-  static void init() {
+  static Future<void> init() async {
+    
+    sharedPreferences = await SharedPreferences.getInstance();
+
     _store = Store<AppState>(
       appReducer,
       middleware: [thunkMiddleware],
@@ -40,7 +42,7 @@ class Redux {
         gameNumber: (sharedPreferences != null) ? _getGameNumber() : 0,
         screenState: ScreenState.HomeScreen,
         gameState: GameState.Default,
-        cameraState: cameraState,
+        cameraState: CameraState(),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
@@ -12,8 +13,9 @@ import 'package:sudoku_solver_2/state/top_text_state.dart';
 void main() {
   AppState state;
 
-  setUp(() {
-    Redux.init();
+  setUp(() async {
+    SharedPreferences.setMockInitialValues({});
+    await Redux.init();
     state = Redux.store.state;
   });
 

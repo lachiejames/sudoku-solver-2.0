@@ -1,24 +1,18 @@
 import 'dart:io';
+import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart';
 import 'package:path/path.dart';
-import 'package:camera/camera.dart';
-import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
 class CameraState {
-  final CameraDescription cameraDescription;
-  final CameraController cameraController;
   int croppedImageWidth;
 
-  CameraState({
-    @required this.cameraDescription,
-    @required this.cameraController,
-  });
+  CameraState();
 
   Future<File> _getImageFileFromAssets(String path) async {
     final byteData = await rootBundle.load('assets/$path');
@@ -28,7 +22,7 @@ class CameraState {
     return file;
   }
 
-  Future<File> takePicture() async {
+  Future<File> takePicture(CameraController cameraController) async {
     File _pickedImageFile;
     if (MyValues.runningIntegrationTests) {
       _pickedImageFile = await _getImageFileFromAssets('mock_sudoku.jpg');
@@ -37,7 +31,7 @@ class CameraState {
       try {
         // Filename must be unique, or else an error is thrown
         final String imagePath = join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
-        await this.cameraController.takePicture(imagePath);
+        await cameraController.takePicture(imagePath);
         _pickedImageFile = File(imagePath);
       } catch (e) {
         print(e);
@@ -127,30 +121,7 @@ class CameraState {
     return double.tryParse(s) != null;
   }
 
-  CameraState copyWith({
-    CameraDescription cameraDescription,
-    CameraController cameraController,
-  }) {
-    return CameraState(
-      cameraDescription: cameraDescription ?? this.cameraDescription,
-      cameraController: cameraController ?? this.cameraController,
-    );
-  }
-
-  static Future<CameraState> initCamera() async {
-    CameraDescription cameraDescription;
-    CameraController cameraController;
-    try {
-      cameraDescription = (await availableCameras())[0];
-      cameraController = CameraController(cameraDescription, ResolutionPreset.max);
-      await cameraController.initialize();
-    } catch (e) {
-      print(e);
-    }
-    
-    return CameraState(
-      cameraDescription: cameraDescription,
-      cameraController: cameraController,
-    );
+  CameraState copyWith() {
+    return CameraState();
   }
 }

@@ -18,7 +18,8 @@ void main() {
     // }
 
   //   setUp(() async {
-  //     Redux.init();
+  //     SharedPreferences.setMockInitialValues({});
+        // await Redux.init();
   //   });
 
   //   group('initial state -', () {

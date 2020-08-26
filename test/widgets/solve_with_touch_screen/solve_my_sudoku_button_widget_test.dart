@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -28,8 +29,9 @@ void main() {
       return ((tester.firstWidget(find.byType(RaisedButton)) as RaisedButton)).color;
     }
 
-    setUp(() {
-      Redux.init();
+    setUp(() async {
+      SharedPreferences.setMockInitialValues({});
+      await Redux.init();
     });
 
     group('initial state -', () {

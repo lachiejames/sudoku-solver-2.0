@@ -30,8 +30,7 @@ void main() {
 
     setUp(() async {
       SharedPreferences.setMockInitialValues({});
-      Redux.sharedPreferences = await SharedPreferences.getInstance();
-      Redux.init();
+      await Redux.init();
     });
 
     group('initial state -', () {

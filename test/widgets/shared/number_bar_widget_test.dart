@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/number_bar_widget.dart';
@@ -19,8 +20,9 @@ void main() {
       );
     }
 
-    setUp(() {
-      Redux.init();
+    setUp(() async {
+      SharedPreferences.setMockInitialValues({});
+      await Redux.init();
     });
 
     group('initial state -', () {

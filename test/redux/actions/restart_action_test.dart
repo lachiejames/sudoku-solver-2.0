@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
@@ -16,8 +17,9 @@ void main() {
     state = Redux.store.state;
   }
 
-  setUp(() {
-    Redux.init();
+  setUp(() async {
+    SharedPreferences.setMockInitialValues({});
+    await Redux.init();
     state = Redux.store.state;
   });
 

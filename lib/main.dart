@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/home_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
-import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:flutter_driver/driver_extension.dart';
 
 Future<void> main() async {
@@ -26,9 +24,8 @@ Future<void> main() async {
 Future<void> runThatShit() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  Redux.sharedPreferences = await SharedPreferences.getInstance();
-  Redux.cameraState = await CameraState.initCamera();
-  Redux.init();
+  await Redux.init();
+
   runApp(
     MyApp(
       key: UniqueKey(),
