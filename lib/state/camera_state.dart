@@ -30,6 +30,8 @@ class CameraState {
   }
 
   Future<File> takePicture(CameraController cameraController) async {
+    print(MyValues.cameraWidth);
+    print(MyValues.screenWidth);
     File _pickedImageFile;
 
     final String imagePath = join((await getApplicationDocumentsDirectory()).path, '_pickedImageFile${DateTime.now().millisecondsSinceEpoch}.png');

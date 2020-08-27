@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:image/image.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,6 +16,10 @@ void main() {
       }
       return null;
     });
+  }
+
+  Image getImageFromFile(File file) {
+    return decodeImage(file.readAsBytesSync());
   }
 
   group('CameraState ->', () {
@@ -43,23 +48,109 @@ void main() {
       expect(cameraState == cloneCameraState, false);
     });
 
-    test('getImageFileFromAssets() returns a file when a valid path is used', () async {
-      File imageFileThatExists = await cameraState.getImageFileFromAssets('mock_sudoku.jpg');
-      expect(imageFileThatExists, isNotNull);
+    group('getImageFileFromAssets()', () {
+      test('returns a file when a valid path is used', () async {
+        File imageFileThatExists = await cameraState.getImageFileFromAssets('mock_sudoku.png');
+        expect(imageFileThatExists, isNotNull);
+      });
+
+      test('returns null when an invalid path is used', () async {
+        File imageFileThatDoesNotExist = await cameraState.getImageFileFromAssets('path_to_nowhere.png');
+        expect(imageFileThatDoesNotExist, null);
+      });
+
+      test('works for smaller images', () async {
+        File smallImageFile = await cameraState.getImageFileFromAssets('mock_sudoku_smaller.png');
+        expect(smallImageFile, isNotNull);
+      });
+
+      test('works for lower resolution images', () async {
+        File lowResImageFile = await cameraState.getImageFileFromAssets('mock_sudoku_low_res.png');
+        expect(lowResImageFile, isNotNull);
+      });
+
+      test('works for .jpg images', () async {
+        File jpgImageFile = await cameraState.getImageFileFromAssets('mock_sudoku.jpg');
+        expect(jpgImageFile, isNotNull);
+      });
+
+      test('when converted to an image, it has the expected dimensions', () async {
+        File largeImageFile = await cameraState.getImageFileFromAssets('mock_sudoku.png');
+        Image largeImage = getImageFromFile(largeImageFile);
+
+        expect(largeImage.width, 1080);
+        expect(largeImage.height, 2168);
+      });
     });
 
-    test('getImageFileFromAssets() returns null when an invalid path is used', () async {
-      File imageFileThatDoesNotExist = await cameraState.getImageFileFromAssets('path_to_nowhere.jpg');
-      expect(imageFileThatDoesNotExist, null);
-    });
+    group('cropPictureToSudokuSize()', () {
+      File largeImageFile;
 
-    test('cropPictureToSudokuSize() returns a cropped version of the input file', () async {
-      File largeImageFile = await cameraState.getImageFileFromAssets('mock_sudoku.jpg');
-      MyValues.screenWidth = 460;
-      MyValues.cameraWidth = 400;
+      setUp(() async {
+        largeImageFile = await cameraState.getImageFileFromAssets('mock_sudoku.png');
+        MyValues.screenWidth = 411;
+        MyValues.cameraWidth = 347;
+      });
 
-      File smallImageFile = await cameraState.cropPictureToSudokuSize(largeImageFile);
-      expect(smallImageFile, isNotNull);
+      test('cropped image file is not null', () async {
+        File smallImageFile = await cameraState.cropPictureToSudokuSize(largeImageFile);
+        expect(smallImageFile, isNotNull);
+      });
+
+      test('cropped image file is at a different location to the full image file', () async {
+        File smallImageFile = await cameraState.cropPictureToSudokuSize(largeImageFile);
+        expect(largeImageFile.path != smallImageFile.path, true);
+      });
+
+      test('cropped image file is smaller than the full image file', () async {
+        File smallImageFile = await cameraState.cropPictureToSudokuSize(largeImageFile);
+        int largeImageFileLength = await largeImageFile.length();
+        int smallImageFileLength = await smallImageFile.length();
+
+        expect(largeImageFileLength > smallImageFileLength, true);
+      });
+
+      test('when converted to an image, the cropped image is smaller', () async {
+        File smallImageFile = await cameraState.cropPictureToSudokuSize(largeImageFile);
+        Image largeImage = getImageFromFile(largeImageFile);
+        Image smallImage = getImageFromFile(smallImageFile);
+
+        expect(largeImage.width > smallImage.width, true);
+        expect(largeImage.height > smallImage.height, true);
+      });
+
+      test('when converted to an image, height and width are the same', () async {
+        File smallImageFile = await cameraState.cropPictureToSudokuSize(largeImageFile);
+        Image smallImage = getImageFromFile(smallImageFile);
+
+        expect(smallImage.height, smallImage.height);
+      });
+
+      group('when converted to an image, height and width are the same', () {
+        test('works for smaller images', () async {
+          File smallImageFile = await cameraState.cropPictureToSudokuSize(largeImageFile);
+          Image largeImage = getImageFromFile(largeImageFile);
+          Image smallImage = getImageFromFile(smallImageFile);
+
+          expect(largeImage.width, 1080);
+          expect(largeImage.height, 2168);
+
+          expect(smallImage.width, 912);
+          expect(smallImage.height, 912);
+        });
+
+        test('when converted to an image, it has the expected dimensions', () async {
+          File smallImageFile = await cameraState.cropPictureToSudokuSize(largeImageFile);
+          Image largeImage = getImageFromFile(largeImageFile);
+          Image smallImage = getImageFromFile(smallImageFile);
+
+          expect(largeImage.width, 1080);
+          expect(largeImage.height, 2168);
+
+          expect(smallImage.width, 912);
+          expect(smallImage.height, 912);
+        });
+      });
     });
   });
 }
