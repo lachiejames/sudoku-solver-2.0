@@ -38,7 +38,7 @@ setup_emulator() {
 
 run_integration_tests() {
     echo "Running Integration Tests"
-    dart test_driver/single_test.dart
+    flutter drive --target=test_driver/app.dart
 }
 
 "$@"
