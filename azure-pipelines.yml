@@ -10,8 +10,8 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: flutter install
+  displayName: 'Install'
 
 - script: flutter test
   displayName: 'Run unit tests'

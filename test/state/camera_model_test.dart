@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:image/image.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:flutter/services.dart';
@@ -16,10 +17,24 @@ void main() {
       }
       return null;
     });
+
+    const MethodChannel('plugins.flutter.io/firebase_ml_vision').setMockMethodCallHandler((MethodCall methodCall) async {
+      print('xxx - ${methodCall.method}');
+      if (methodCall.method == 'TextRecognizer#processImage') {
+        return {};
+      }
+      return null;
+    });
   }
 
   Image getImageFromFile(File file) {
     return decodeImage(file.readAsBytesSync());
+  }
+
+  Future<Image> getCroppedImageFromFilePath(String path) async {
+    File imageFile = await cameraState.getImageFileFromAssets(path);
+    File imageFileCropped = await cameraState.cropPictureToSudokuSize(imageFile);
+    return getImageFromFile(imageFileCropped);
   }
 
   group('CameraState ->', () {
@@ -126,31 +141,46 @@ void main() {
         expect(smallImage.height, smallImage.height);
       });
 
-      group('when converted to an image, height and width are the same', () {
-        test('works for smaller images', () async {
-          File smallImageFile = await cameraState.cropPictureToSudokuSize(largeImageFile);
-          Image largeImage = getImageFromFile(largeImageFile);
-          Image smallImage = getImageFromFile(smallImageFile);
+      group('when converted to an image, it has the expected dimensions', () {
+        test('for a standard image', () async {
+          Image largeImageCropped = await getCroppedImageFromFilePath('mock_sudoku.png');
 
-          expect(largeImage.width, 1080);
-          expect(largeImage.height, 2168);
-
-          expect(smallImage.width, 912);
-          expect(smallImage.height, 912);
+          expect(largeImageCropped.width, 912);
+          expect(largeImageCropped.height, 912);
         });
 
-        test('when converted to an image, it has the expected dimensions', () async {
-          File smallImageFile = await cameraState.cropPictureToSudokuSize(largeImageFile);
-          Image largeImage = getImageFromFile(largeImageFile);
-          Image smallImage = getImageFromFile(smallImageFile);
+        test('for a smaller image', () async {
+          Image smallImageCropped = await getCroppedImageFromFilePath('mock_sudoku_smaller.png');
 
-          expect(largeImage.width, 1080);
-          expect(largeImage.height, 2168);
+          expect(smallImageCropped.width, 422);
+          expect(smallImageCropped.height, 422);
+        });
 
-          expect(smallImage.width, 912);
-          expect(smallImage.height, 912);
+        test('for a low res image', () async {
+          Image lowResImageCropped = await getCroppedImageFromFilePath('mock_sudoku_low_res.png');
+
+          expect(lowResImageCropped.width, 912);
+          expect(lowResImageCropped.height, 912);
+        });
+
+        test('for a jpg image', () async {
+          Image jpgImageCropped = await getCroppedImageFromFilePath('mock_sudoku.jpg');
+
+          expect(jpgImageCropped.width, 912);
+          expect(jpgImageCropped.height, 912);
         });
       });
     });
+
+    // group('getImageFileFromAssets()', () {
+    //   test('for a jpg image', () async {
+    //     File imageFileThatExists = await cameraState.getImageFileFromAssets('mock_sudoku.png');
+
+    //     final FirebaseVisionImage _firebaseVisionImage = FirebaseVisionImage.fromFile(imageFileThatExists);
+    //     final TextRecognizer _textRecognizer = FirebaseVision.instance.textRecognizer();
+    //     final VisionText _visionText = await _textRecognizer.processImage(_firebaseVisionImage);
+    //     cameraState.getTextElementsFromVisionText(_visionText);
+    //   });
+    // });
   });
 }
