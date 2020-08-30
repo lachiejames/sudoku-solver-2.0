@@ -1,4 +1,4 @@
-name: $(Rev:r)
+name: $(Rev:r):
 
 trigger:
   - master
