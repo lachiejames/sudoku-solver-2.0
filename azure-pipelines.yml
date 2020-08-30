@@ -16,6 +16,8 @@ jobs:
         displayName: Install Flutter
       - script: azure/pipelines/scripts.sh flutter_test
         displayName: Test app
+      - script: azure/pipelines/scripts.sh test_in_other_shell
+        displayName: Test in other shell
       - script: ../azure/pipelines/scripts.sh pull_video
         displayName: Pull screen video record
         condition: always()

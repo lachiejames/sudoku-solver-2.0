@@ -46,6 +46,9 @@ flutter_test() {
   launch_avd
   start_recording &
   flutter run --observatory-port 8888 --disable-service-auth-codes lib/main.dart
+}
+
+test_in_other_shell() {
   dart test_driver/single_test.dart
   pkill -f screenrecord || true
 }

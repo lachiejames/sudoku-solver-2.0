@@ -20,10 +20,11 @@ void main() {
       await driver.tap(find.text(MyStrings.solveWithCameraButtonText));
       await driver.getText(find.text(MyStrings.topTextTakingPhoto));
     });
-    // test('pressing "TAKE PHOTO" replaces the CameraWidget with a SudokuWidget', () async {
-    //   await driver.waitFor(find.byType('CameraWidget'));
-    //   await driver.tap(find.text(MyStrings.takePhotoButtonText));
-    //   await driver.waitFor(find.byType('SudokuWidget'));
-    // });
+    test('pressing "TAKE PHOTO" replaces the CameraWidget with a SudokuWidget', () async {
+      // await driver.waitFor(find.byType('CameraWidget'));
+      // await driver.tap(find.text(MyStrings.takePhotoButtonText));
+      // await driver.waitFor(find.byType('SudokuWidget'));
+      print('running my test');
+    });
   });
 }
