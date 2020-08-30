@@ -18,8 +18,6 @@ jobs:
         displayName: Run Unit Tests
       - script: azure/pipelines/scripts.sh setup_emulator
         displayName: Setup Emulator
-      - script: azure/pipelines/scripts.sh start_app
-        displayName: Start App
       - script: azure/pipelines/scripts.sh run_integration_tests
         displayName: Run Integration Tests
       - script: echo SUCCESS

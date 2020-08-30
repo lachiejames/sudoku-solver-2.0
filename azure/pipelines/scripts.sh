@@ -36,11 +36,6 @@ setup_emulator() {
     echo "Emulator started"
 }
 
-start_app() {
-    echo "Stating App"
-    flutter run --observatory-port 8888 --disable-service-auth-codes lib/main.dart
-}
-
 run_integration_tests() {
     echo "Running Integration Tests"
     dart test_driver/single_test.dart
