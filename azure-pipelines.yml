@@ -11,19 +11,17 @@ jobs:
 
     steps:
       - script: sudo chmod +x azure/pipelines/scripts.sh
-        displayName: Grant permissions
+        displayName: Grant Shell Permissions
       - script: azure/pipelines/scripts.sh install_flutter
         displayName: Install Flutter
-      - script: azure/pipelines/scripts.sh flutter_test
-        displayName: Test app
-      - script: azure/pipelines/scripts.sh test_in_other_shell
-        displayName: Test in other shell
-      - script: ../azure/pipelines/scripts.sh pull_video
-        displayName: Pull screen video record
-        condition: always()
-      - task: PublishBuildArtifacts@1
-        displayName: Publish screenshots
-        condition: always()
-        inputs:
-          pathtoPublish: "$(System.DefaultWorkingDirectory)/screenshots/"
-          artifactName: screenshots
+      - script: azure/pipelines/scripts.sh run_unit_tests
+        displayName: Run Unit Tests
+      - script: azure/pipelines/scripts.sh setup_emulator
+        displayName: Setup Emulator
+      - script: azure/pipelines/scripts.sh start_app
+        displayName: Start App
+      - script: azure/pipelines/scripts.sh run_integration_tests
+        displayName: Run Integration Tests
+      - script: echo SUCCESS
+        displayName: Verify
+
