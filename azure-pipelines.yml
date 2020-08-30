@@ -1,6 +1,11 @@
-name: $(Rev:.r)
+name: $(Rev:r)
+
 trigger:
 - master
+
+variables:
+  projectDirectory: sudoku_solver_2
+
 jobs:
   - job: Android
     pool:
@@ -14,4 +19,12 @@ jobs:
     - task: FlutterBuild@0
       inputs:
         target: apk
-        projectDirectory: 'sudoku_solver_2'
+        projectDirectory: $(projectDirectory)
+    - task: FlutterTest@0
+      inputs:
+        projectDirectory: $(projectDirectory)
+    - task: CopyFiles@2
+      inputs:
+        contents: '**/*.apk'
+        targetFolder: '$(build.artifactStagingDirectory)'
+    - task: PublishBuildArtifacts@1
