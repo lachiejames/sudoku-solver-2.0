@@ -10,11 +10,11 @@ jobs:
       vmImage: "macOS-latest"
 
     steps:
-      - script: pipelines/scripts.sh install_flutter
+      - script: azure/pipelines/scripts.sh install_flutter
         displayName: Install Flutter
-      - script: pipelines/scripts.sh flutter_test
+      - script: azure/pipelines/scripts.sh flutter_test
         displayName: Test app
-      - script: ../pipelines/scripts.sh pull_video
+      - script: ../azure/pipelines/scripts.sh pull_video
         displayName: Pull screen video record
         condition: always()
       - task: PublishBuildArtifacts@1
