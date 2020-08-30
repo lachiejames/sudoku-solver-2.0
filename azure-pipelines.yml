@@ -1,5 +1,4 @@
 name: $(Rev:.r)
-
 trigger:
 - master
 jobs:
