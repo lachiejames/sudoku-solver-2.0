@@ -1,4 +1,4 @@
-name: $(TeamProject)_$(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+name: $(Rev:.r)
 
 trigger:
 - master
@@ -15,3 +15,4 @@ jobs:
     - task: FlutterBuild@0
       inputs:
         target: apk
+        projectDirectory: 'sudoku_solver_2'
