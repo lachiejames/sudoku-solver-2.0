@@ -10,7 +10,7 @@ jobs:
       vmImage: "macOS-latest"
 
     steps:
-      - script: sudo chmod o+w azure/pipelines/scripts
+      - script: sudo chmod o+w azure/pipelines/scripts.sh
         displayName: Grant permissions
       - script: azure/pipelines/scripts.sh install_flutter
         displayName: Install Flutter
