@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:image/image.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:flutter/services.dart';
@@ -171,16 +170,5 @@ void main() {
         });
       });
     });
-
-    // group('getImageFileFromAssets()', () {
-    //   test('for a jpg image', () async {
-    //     File imageFileThatExists = await cameraState.getImageFileFromAssets('mock_sudoku.png');
-
-    //     final FirebaseVisionImage _firebaseVisionImage = FirebaseVisionImage.fromFile(imageFileThatExists);
-    //     final TextRecognizer _textRecognizer = FirebaseVision.instance.textRecognizer();
-    //     final VisionText _visionText = await _textRecognizer.processImage(_firebaseVisionImage);
-    //     cameraState.getTextElementsFromVisionText(_visionText);
-    //   });
-    // });
   });
 }

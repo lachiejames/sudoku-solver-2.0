@@ -50,5 +50,4 @@ class MyStrings {
   static final String tip5JustPlayScreen = 'To remove the number from a tile, tap it twice';
 
   static final String hotRestart = 'restart';
-  static final String dartVMServiceURL = 'http://127.0.0.1:8888/';
 }
