@@ -4,7 +4,7 @@ trigger:
 - master
 
 variables:
-  projectDirectory: sudoku_solver_2
+  projectDirectory: .
 
 jobs:
   - job: Android
