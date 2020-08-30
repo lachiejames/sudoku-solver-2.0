@@ -29,6 +29,12 @@ jobs:
         inputs:
           projectDirectory: $(projectDirectory)
 
+      - task: CmdLine@2
+        displayName: 'Run Integration Tests'
+        inputs:
+          script: '$(FlutterToolPath)/cache/dart-sdk/bin/dart program.dart arg1 arg2'
+          workingDirectory: 'src'
+
       - task: CopyFiles@2
         displayName: "Copy Build Files"
         inputs:
