@@ -3,43 +3,23 @@ name: $(Rev:r:)
 trigger:
   - master
 
-variables:
-  projectDirectory: .
-
 jobs:
-  - job: Android
+  - job: Test
+    timeoutInMinutes: 20
     pool:
       vmImage: "macOS-latest"
 
     steps:
-      - task: FlutterInstall@0
-        displayName: "Install"
-        inputs:
-          channel: "stable"
-          version: "latest"
-
-      # - task: FlutterBuild@0
-      #   displayName: "Build"
-      #   inputs:
-      #     target: apk
-      #     projectDirectory: $(projectDirectory)
-
-      - task: FlutterTest@0
-        displayName: "Run Unit Tests"
-        inputs:
-          projectDirectory: $(projectDirectory)
-
-      - task: CmdLine@2
-        displayName: "Run Integration Tests"
-        inputs:
-          script: "$(FlutterToolPath)/cache/dart-sdk/bin/dart program.dart arg1 arg2"
-          workingDirectory: "src"
-
-      - task: CopyFiles@2
-        displayName: "Copy Build Files"
-        inputs:
-          contents: "**/*.apk"
-          targetFolder: "$(build.artifactStagingDirectory)"
-
+      - script: pipelines/scripts.sh install_flutter
+        displayName: Install Flutter
+      - script: pipelines/scripts.sh flutter_test
+        displayName: Test app
+      - script: ../pipelines/scripts.sh pull_video
+        displayName: Pull screen video record
+        condition: always()
       - task: PublishBuildArtifacts@1
-        displayName: "Publish Build Files"
+        displayName: Publish screenshots
+        condition: always()
+        inputs:
+          pathtoPublish: "$(System.DefaultWorkingDirectory)/screenshots/"
+          artifactName: screenshots
