@@ -40,7 +40,6 @@ start_recording() {
 
 flutter_test() {
   flutter packages get
-  flutter packages pub run build
   
   flutter test
 
