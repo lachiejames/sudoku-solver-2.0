@@ -2,7 +2,7 @@ name: $(Rev:r:)
 
 jobs:
   - job: Test
-    timeoutInMinutes: 20
+    timeoutInMinutes: 30
     pool:
       vmImage: "macOS-latest"
 
@@ -11,12 +11,56 @@ jobs:
         displayName: Grant Shell Permissions
       - script: azure/pipelines/scripts.sh install_flutter
         displayName: Install Flutter
-      - script: azure/pipelines/scripts.sh run_unit_tests
-        displayName: Run Unit Tests
-      - script: azure/pipelines/scripts.sh setup_emulator
-        displayName: Setup Emulator
-      - script: azure/pipelines/scripts.sh run_integration_tests
-        displayName: Run Integration Tests
+      # - script: azure/pipelines/scripts.sh run_unit_tests
+      #   displayName: Run Unit Tests
+      # - script: azure/pipelines/scripts.sh setup_emulator
+      #   displayName: Setup Emulator
+      # - script: azure/pipelines/scripts.sh run_integration_tests
+      #   displayName: Run Integration Tests
+
+
+      - task: SonarQubePrepare@4
+        displayName: Setup sonar
+        inputs:
+          SonarQube: 'SonarQube Service Connection'
+          scannerMode: 'CLI'
+          configMode: 'file'
+
+      - task: PowerShell@2
+        displayName: Setup environment
+        inputs:
+          targetType: 'inline'
+          script: |
+            Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
+            Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
+            Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
+            Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
+  
+      - task: CmdLine@2
+        displayName: Run install
+        inputs:
+          script: 'flutter pub get'
+
+      - task: CmdLine@2
+        displayName: Run test
+        inputs:
+          script: 'flutter test --machine > tests.output'
+
+      - task: CmdLine@2
+        displayName: Run coverage
+        inputs:
+          script: 'flutter test --coverage'
+
+      - task: SonarQubeAnalyze@4
+        displayName: Run analyze
+
+      - task: SonarQubePublish@4
+        displayName: Run publish
+        inputs:
+          pollingTimeoutSec: '300'
+
+
+
       - script: echo SUCCESS
         displayName: Verify
 
