@@ -18,7 +18,6 @@ void main() {
     });
 
     const MethodChannel('plugins.flutter.io/firebase_ml_vision').setMockMethodCallHandler((MethodCall methodCall) async {
-      print('xxx - ${methodCall.method}');
       if (methodCall.method == 'TextRecognizer#processImage') {
         return {};
       }

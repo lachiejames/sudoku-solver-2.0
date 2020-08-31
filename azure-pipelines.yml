@@ -1,8 +1,5 @@
 name: $(Rev:r:)
 
-trigger:
-  - master
-
 jobs:
   - job: Test
     timeoutInMinutes: 20
