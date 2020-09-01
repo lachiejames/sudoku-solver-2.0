@@ -7,10 +7,18 @@ jobs:
       vmImage: "macOS-latest"
 
     steps:
+      - task: FlutterInstall@0
+        displayName: Setup Flutter
+        inputs:
+          channel: 'stable'
+          version: 'latest'
+
       - task: SonarQubePrepare@4
+        displayName: Setup SonarQube
         inputs:
           SonarQube: 'sonarqube'
-          scannerMode: 'MSBuild'
+          scannerMode: 'CLI'
+          configMode: 'file'
           projectKey: 'sudoku-solver-2'
           projectName: 'sudoku-solver-2'
           extraProperties: |
@@ -18,7 +26,7 @@ jobs:
             sonar.projectName=sudoku-solver-2
             sonar.projectVersion=1.0
             sonar.sourceEncoding=UTF-8
-            
+
             # source files
             sonar.source=lib
             # unit test files
@@ -27,79 +35,28 @@ jobs:
             # folders to exclude in scan
             sonar.exclusions= android/**, ios/**
 
-          - task: SonarQubeAnalyze@4
-          
-          - task: SonarQubePublish@4
-            inputs:
-              pollingTimeoutSec: '300'
+      - task: PowerShell@2
+        displayName: Setup Environment
+        inputs:
+          targetType: 'inline'
+          script: |
+            Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
+            Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
+            Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
+            Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
 
+      - task: CmdLine@2
+        displayName: Run Unit Tests
+        inputs:
+          script: |
+          'flutter pub get'
+          'flutter test --machine > tests.output'
+          'flutter test --coverage'
 
+      - task: SonarQubeAnalyze@4
+        displayName: Run Quality Scan
 
-
-
-
-
-
-
-
-
-#     trigger:
-#   branches:
-#     include:
-#       - master
-# pr: none
-
-# variables:
-#   FlutterChannel: 'stable'
-#   FlutterVersion: 'latest'
-
-# jobs:
-#   - job: Test
-#     pool:
-#       vmImage: 'macOS-latest'
-#     steps:
-#       - task: FlutterInstall@0
-#         displayName: Setup flutter
-#         inputs:
-#           channel: '$(FlutterChannel)'
-#           version: '$(FlutterVersion)'
-
-#       - task: SonarQubePrepare@4
-#         displayName: Setup sonar
-#         inputs:
-#           SonarQube: 'sonarqube'
-#           scannerMode: 'CLI'
-#           configMode: 'file'
-
-#       - task: PowerShell@2
-#         displayName: Setup environment
-#         inputs:
-#           targetType: 'inline'
-#           script: |
-#             Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
-#             Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
-#             Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
-#             Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
-  
-#       - task: CmdLine@2
-#         displayName: Run install
-#         inputs:
-#           script: 'flutter pub get'
-
-#       - task: CmdLine@2
-#         displayName: Run test
-#         inputs:
-#           script: 'flutter test --machine > tests.output'
-
-#       - task: CmdLine@2
-#         displayName: Run coverage
-#         inputs:
-#           script: 'flutter test --coverage'
-
-#       - task: SonarQubeAnalyze@4
-#         displayName: Run analyze
-
-#       - task: SonarQubePublish@4
-#         displayName: Run publish
-#         inputs:
-#           pollingTimeoutSec: '300'
+      - task: SonarQubePublish@4
+        displayName: Publish Scan Results
+        inputs:
+          pollingTimeoutSec: '300'
