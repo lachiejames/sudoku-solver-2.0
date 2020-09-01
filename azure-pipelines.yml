@@ -31,23 +31,24 @@ jobs:
             # Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
             # #install flutter sonarqube plugin
 
-
-            # $x = $Env:Path
-            # Write-Host $x
-            cd ..
-            cd ..
-            cd ..
-            cd ..
-            cd ..
-            cd ..
-
-            $x = gci -Recurse -Filter "sonarqube" -Directory -ErrorAction SilentlyContinue -Path "."
+            cd /Users/runner/work/_tasks/SonarQubePrepare_15b84ca1-b62f-4a2a-a403-89b77a063157/4.11.0/common
+            $x = ls
             Write-Host $x
-            $x = gci -Recurse -Filter "SonarQube" -Directory -ErrorAction SilentlyContinue -Path "."
+
+            cd sonarqube
+            $x = ls
+            Write-Host $x
+
+            cd extensions
+            $x = ls
+            Write-Host $x
+
+            cd plugins
+            $x = ls
             Write-Host $x
 
             $url = "https://github.com/insideapp-oss/sonar-flutter/releases/download/0.3.1/sonar-flutter-plugin-0.3.1.jar"
-            $output = "extensions/plugins/flutter-sonarqube-plugin.jar"
+            $output = "/Users/runner/work/_tasks/SonarQubePrepare_15b84ca1-b62f-4a2a-a403-89b77a063157/4.11.0/common/sonarqube/extensions/plugins/flutter-sonarqube-plugin.jar"
             Invoke-WebRequest -Uri $url -OutFile $output
 
       # - task: CmdLine@2
