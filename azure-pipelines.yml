@@ -33,10 +33,13 @@ jobs:
 
             $x = pwd
             Write-Host $x
+            $z = ls
+            Write-Host $z
             cd ~
             $y = pwd
             Write-Host $y
-
+            $a = ls
+            Write-Host $a
 
 
             $url = "https://github.com/insideapp-oss/sonar-flutter/releases/download/0.3.1/sonar-flutter-plugin-0.3.1.jar"
