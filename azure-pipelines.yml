@@ -35,13 +35,30 @@ jobs:
             Write-Host $x
             $z = ls
             Write-Host $z
-            cd ~
-            $y = pwd
-            Write-Host $y
+            cd ..
             $a = ls
             Write-Host $a
-
-
+            cd ..
+            $a = ls
+            Write-Host $a
+            cd ..
+            $a = ls
+            Write-Host $a
+            cd ..
+            $a = ls
+            Write-Host $a
+            cd ..
+            $a = ls
+            Write-Host $a
+            cd ..
+            $a = ls
+            Write-Host $a
+            cd ..
+            $a = ls
+            Write-Host $a
+            cd ..
+            $a = ls
+            Write-Host $a
             $url = "https://github.com/insideapp-oss/sonar-flutter/releases/download/0.3.1/sonar-flutter-plugin-0.3.1.jar"
             $output = "extensions/plugins/flutter-sonarqube-plugin.jar"
             Invoke-WebRequest -Uri $url -OutFile $output
