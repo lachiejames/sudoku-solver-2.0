@@ -32,9 +32,19 @@ jobs:
             # #install flutter sonarqube plugin
 
 
-            $x = $Env:Path
-            Write-Host $x
+            # $x = $Env:Path
+            # Write-Host $x
+            cd ..
+            cd ..
+            cd ..
+            cd ..
+            cd ..
+            cd ..
 
+            $x = gci -Recurse -Filter "sonarqube" -Directory -ErrorAction SilentlyContinue -Path "."
+            Write-Host $x
+            $x = gci -Recurse -Filter "SonarQube" -Directory -ErrorAction SilentlyContinue -Path "."
+            Write-Host $x
 
             $url = "https://github.com/insideapp-oss/sonar-flutter/releases/download/0.3.1/sonar-flutter-plugin-0.3.1.jar"
             $output = "extensions/plugins/flutter-sonarqube-plugin.jar"
