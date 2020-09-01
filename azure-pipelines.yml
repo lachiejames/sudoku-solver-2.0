@@ -33,7 +33,7 @@ jobs:
 
             pwd
             cd ~
-            Write-Output pwd
+            pwd
 
 
 
