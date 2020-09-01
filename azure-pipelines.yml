@@ -1,28 +1,28 @@
-name: $(Rev:r:)
+trigger:
+  branches:
+    include:
+      - master
+pr: none
+
+variables:
+  FlutterChannel: 'stable'
+  FlutterVersion: 'latest'
 
 jobs:
   - job: Test
-    timeoutInMinutes: 30
     pool:
-      vmImage: "macOS-latest"
-
+      vmImage: 'macOS-latest'
     steps:
-      - script: sudo chmod +x azure/pipelines/scripts.sh
-        displayName: Grant Shell Permissions
-      - script: azure/pipelines/scripts.sh install_flutter
-        displayName: Install Flutter
-      # - script: azure/pipelines/scripts.sh run_unit_tests
-      #   displayName: Run Unit Tests
-      # - script: azure/pipelines/scripts.sh setup_emulator
-      #   displayName: Setup Emulator
-      # - script: azure/pipelines/scripts.sh run_integration_tests
-      #   displayName: Run Integration Tests
-
+      - task: FlutterInstall@0
+        displayName: Setup flutter
+        inputs:
+          channel: '$(FlutterChannel)'
+          version: '$(FlutterVersion)'
 
       - task: SonarQubePrepare@4
         displayName: Setup sonar
         inputs:
-          SonarQube: 'sonarqube'
+          SonarQube: 'SonarQube Service Connection'
           scannerMode: 'CLI'
           configMode: 'file'
 
@@ -58,9 +58,3 @@ jobs:
         displayName: Run publish
         inputs:
           pollingTimeoutSec: '300'
-
-
-
-      - script: echo SUCCESS
-        displayName: Verify
-
