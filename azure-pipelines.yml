@@ -1,60 +1,105 @@
-trigger:
-  branches:
-    include:
-      - master
-pr: none
-
-variables:
-  FlutterChannel: 'stable'
-  FlutterVersion: 'latest'
+name: $(Rev:r:)
 
 jobs:
-  - job: Test
+  - job: sudoku-solver-2
+    timeoutInMinutes: 30
     pool:
-      vmImage: 'macOS-latest'
-    steps:
-      - task: FlutterInstall@0
-        displayName: Setup flutter
-        inputs:
-          channel: '$(FlutterChannel)'
-          version: '$(FlutterVersion)'
+      vmImage: "macOS-latest"
 
+    steps:
       - task: SonarQubePrepare@4
-        displayName: Setup sonar
         inputs:
           SonarQube: 'sonarqube'
-          scannerMode: 'CLI'
-          configMode: 'file'
+          scannerMode: 'MSBuild'
+          projectKey: 'sudoku-solver-2'
+          projectName: 'sudoku-solver-2'
+          extraProperties: |
+            sonar.projectKey=sudoku-solver-2
+            sonar.projectName=sudoku-solver-2
+            sonar.projectVersion=1.0
+            sonar.sourceEncoding=UTF-8
+            
+            # source files
+            sonar.source=lib
+            # unit test files
+            sonar.test=test
+            
+            # folders to exclude in scan
+            sonar.exclusions= android/**, ios/**
 
-      - task: PowerShell@2
-        displayName: Setup environment
-        inputs:
-          targetType: 'inline'
-          script: |
-            Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
-            Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
-            Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
-            Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
+          - task: SonarQubeAnalyze@4
+          
+          - task: SonarQubePublish@4
+            inputs:
+              pollingTimeoutSec: '300'
+
+
+
+
+
+
+
+
+
+
+
+#     trigger:
+#   branches:
+#     include:
+#       - master
+# pr: none
+
+# variables:
+#   FlutterChannel: 'stable'
+#   FlutterVersion: 'latest'
+
+# jobs:
+#   - job: Test
+#     pool:
+#       vmImage: 'macOS-latest'
+#     steps:
+#       - task: FlutterInstall@0
+#         displayName: Setup flutter
+#         inputs:
+#           channel: '$(FlutterChannel)'
+#           version: '$(FlutterVersion)'
+
+#       - task: SonarQubePrepare@4
+#         displayName: Setup sonar
+#         inputs:
+#           SonarQube: 'sonarqube'
+#           scannerMode: 'CLI'
+#           configMode: 'file'
+
+#       - task: PowerShell@2
+#         displayName: Setup environment
+#         inputs:
+#           targetType: 'inline'
+#           script: |
+#             Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
+#             Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
+#             Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
+#             Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
   
-      - task: CmdLine@2
-        displayName: Run install
-        inputs:
-          script: 'flutter pub get'
+#       - task: CmdLine@2
+#         displayName: Run install
+#         inputs:
+#           script: 'flutter pub get'
 
-      - task: CmdLine@2
-        displayName: Run test
-        inputs:
-          script: 'flutter test --machine > tests.output'
+#       - task: CmdLine@2
+#         displayName: Run test
+#         inputs:
+#           script: 'flutter test --machine > tests.output'
 
-      - task: CmdLine@2
-        displayName: Run coverage
-        inputs:
-          script: 'flutter test --coverage'
+#       - task: CmdLine@2
+#         displayName: Run coverage
+#         inputs:
+#           script: 'flutter test --coverage'
 
-      - task: SonarQubeAnalyze@4
-        displayName: Run analyze
+#       - task: SonarQubeAnalyze@4
+#         displayName: Run analyze
 
-      - task: SonarQubePublish@4
-        displayName: Run publish
-        inputs:
-          pollingTimeoutSec: '300'
+#       - task: SonarQubePublish@4
+#         displayName: Run publish
+#         inputs:
+#           pollingTimeoutSec: '300'
