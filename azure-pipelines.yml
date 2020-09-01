@@ -1,7 +1,7 @@
 name: $(Rev:r:)
 
 jobs:
-  - job: Sudoku Solver 2
+  - job: sudoku_solver_2
     timeoutInMinutes: 30
     pool:
       vmImage: "macOS-latest"
