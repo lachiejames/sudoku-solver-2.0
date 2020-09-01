@@ -22,7 +22,7 @@ jobs:
       - task: SonarQubePrepare@4
         displayName: Setup sonar
         inputs:
-          SonarQube: 'SonarQube Service Connection'
+          SonarQube: 'sonarqube'
           scannerMode: 'CLI'
           configMode: 'file'
 
