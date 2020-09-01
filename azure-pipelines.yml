@@ -1,7 +1,7 @@
 name: $(Rev:r:)
 
 jobs:
-  - job: sudoku-solver-2
+  - job: Sudoku Solver 2
     timeoutInMinutes: 30
     pool:
       vmImage: "macOS-latest"
@@ -19,21 +19,7 @@ jobs:
           SonarQube: 'sonarqube'
           scannerMode: 'CLI'
           configMode: 'file'
-          projectKey: 'sudoku-solver-2'
-          projectName: 'sudoku-solver-2'
-          extraProperties: |
-            sonar.projectKey=sudoku-solver-2
-            sonar.projectName=sudoku-solver-2
-            sonar.projectVersion=1.0
-            sonar.sourceEncoding=UTF-8
 
-            # source files
-            sonar.source=lib
-            # unit test files
-            sonar.test=test
-            
-            # folders to exclude in scan
-            sonar.exclusions= android/**, ios/**
 
       - task: PowerShell@2
         displayName: Setup Environment
@@ -46,12 +32,11 @@ jobs:
             Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
 
       - task: CmdLine@2
-        displayName: Run Unit Tests
         inputs:
           script: |
-          'flutter pub get'
-          'flutter test --machine > tests.output'
-          'flutter test --coverage'
+            flutter pub get
+            flutter test --machine > tests.output
+            flutter test --coverage
 
       - task: SonarQubeAnalyze@4
         displayName: Run Quality Scan
