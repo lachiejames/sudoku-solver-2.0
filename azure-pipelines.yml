@@ -29,6 +29,8 @@ jobs:
             Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
             Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
             Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
+            #install flutter sonarqube plugin
+            wget  -O $SONARQUBE_HOME/extensions/plugins "https://github.com/insideapp-oss/sonar-flutter/releases/download/0.3.1/sonar-flutter-plugin-0.3.1.jar"
 
       - task: CmdLine@2
         displayName: Run Unit Tests
