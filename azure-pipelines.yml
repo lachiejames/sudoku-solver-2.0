@@ -7,11 +7,11 @@ jobs:
       vmImage: "macOS-latest"
 
     steps:
-      - task: FlutterInstall@0
-        displayName: Setup Flutter
-        inputs:
-          channel: "stable"
-          version: "latest"
+      # - task: FlutterInstall@0
+      #   displayName: Setup Flutter
+      #   inputs:
+      #     channel: "stable"
+      #     version: "latest"
 
       - task: SonarQubePrepare@4
         displayName: Setup SonarQube
@@ -25,22 +25,33 @@ jobs:
         inputs:
           targetType: "inline"
           script: |
-            Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
-            Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
-            Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
-            Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
-            #install flutter sonarqube plugin
-            wget -O /opt/sonarqube/extensions/plugins/flutter-sonarqube-plugin.jar "https://github.com/insideapp-oss/sonar-flutter/releases/download/0.3.1/sonar-flutter-plugin-0.3.1.jar"
+            # Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
+            # Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
+            # Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
+            # Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
+            # #install flutter sonarqube plugin
+            pwd
+            cd ~
+            pwd
+            cd /opt
+            pwd
+            cd /opt/sonarqube
+            pwd
+            cd /opt/sonarqube/extensions
+            pwd
+            cd /opt/sonarqube/extensions/plugins
+            pwd
+            # wget -O /opt/sonarqube/extensions/plugins/flutter-sonarqube-plugin.jar "https://github.com/insideapp-oss/sonar-flutter/releases/download/0.3.1/sonar-flutter-plugin-0.3.1.jar"
 
-      - task: CmdLine@2
-        displayName: Run Unit Tests
-        inputs:
-          script: |
-            # Download dependencies
-            flutter pub get
-            # Run tests
-            flutter test --machine > tests.output
-            # Compute coverage (--machine and --coverage cannot be run at once...)
-            flutter test --coverage
-            # Run the analysis and publish to the SonarQube server
-            sonar-scanner
+      # - task: CmdLine@2
+      #   displayName: Run Unit Tests
+      #   inputs:
+      #     script: |
+      #       # Download dependencies
+      #       flutter pub get
+      #       # Run tests
+      #       flutter test --machine > tests.output
+      #       # Compute coverage (--machine and --coverage cannot be run at once...)
+      #       flutter test --coverage
+      #       # Run the analysis and publish to the SonarQube server
+      #       sonar-scanner
