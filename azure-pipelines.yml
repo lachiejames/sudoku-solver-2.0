@@ -31,7 +31,7 @@ jobs:
             # Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
             # #install flutter sonarqube plugin
 
-            Write-Output pwd
+            pwd
             cd ~
             Write-Output pwd
 
