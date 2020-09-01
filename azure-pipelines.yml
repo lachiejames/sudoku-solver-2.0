@@ -44,11 +44,3 @@ jobs:
             flutter test --coverage
             # Run the analysis and publish to the SonarQube server
             sonar-scanner
-
-      - task: SonarQubeAnalyze@4
-        displayName: Run Quality Scan
-
-      - task: SonarQubePublish@4
-        displayName: Publish Scan Results
-        inputs:
-          pollingTimeoutSec: "300"
