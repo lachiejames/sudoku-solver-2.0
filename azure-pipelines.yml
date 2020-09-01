@@ -10,21 +10,20 @@ jobs:
       - task: FlutterInstall@0
         displayName: Setup Flutter
         inputs:
-          channel: 'stable'
-          version: 'latest'
+          channel: "stable"
+          version: "latest"
 
       - task: SonarQubePrepare@4
         displayName: Setup SonarQube
         inputs:
-          SonarQube: 'sonarqube'
-          scannerMode: 'CLI'
-          configMode: 'file'
-
+          SonarQube: "sonarqube"
+          scannerMode: "CLI"
+          configMode: "file"
 
       - task: PowerShell@2
         displayName: Setup Environment
         inputs:
-          targetType: 'inline'
+          targetType: "inline"
           script: |
             Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
             Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
@@ -45,4 +44,4 @@ jobs:
       - task: SonarQubePublish@4
         displayName: Publish Scan Results
         inputs:
-          pollingTimeoutSec: '300'
+          pollingTimeoutSec: "300"
