@@ -32,7 +32,10 @@ jobs:
             # #install flutter sonarqube plugin
 
             cd ..
-
+            cd ..
+            cd ..
+            cd ..
+            
             $x = Get-ChildItem -Path . -Recurse
             Write-Host $x
 
