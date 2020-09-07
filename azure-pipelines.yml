@@ -4,10 +4,9 @@ jobs:
   - job: sudoku_solver_2
     timeoutInMinutes: 30
     pool:
-        vmImage: "ubuntu:18.04"
+      vmImage: "ubuntu:18.04"
 
-container: lachie.azurecr.io/flutter-container:latest
-
+    container: lachie.azurecr.io/flutter-container:latest
 
     steps:
       - task: PowerShell@2
