@@ -7,59 +7,10 @@ jobs:
       vmImage: "macOS-latest"
 
     steps:
-      # - task: FlutterInstall@0
-      #   displayName: Setup Flutter
-      #   inputs:
-      #     channel: "stable"
-      #     version: "latest"
-
-      - task: SonarQubePrepare@4
-        displayName: Setup SonarQube
-        inputs:
-          SonarQube: "sonarqube"
-          scannerMode: "CLI"
-          configMode: "file"
-
       - task: PowerShell@2
-        displayName: Setup Environment
+        displayName: Pull Container
         inputs:
           targetType: "inline"
           script: |
-            # Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
-            # Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
-            # Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
-            # Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
-            # #install flutter sonarqube plugin
-
-            cd /Users/runner/work/_tasks/SonarQubePrepare_15b84ca1-b62f-4a2a-a403-89b77a063157/4.11.0/common
-            $x = ls
-            Write-Host $x
-
-            cd sonarqube
-            $x = ls
-            Write-Host $x
-
-            cd extensions
-            $x = ls
-            Write-Host $x
-
-            cd plugins
-            $x = ls
-            Write-Host $x
-
-            $url = "https://github.com/insideapp-oss/sonar-flutter/releases/download/0.3.1/sonar-flutter-plugin-0.3.1.jar"
-            $output = "/Users/runner/work/_tasks/SonarQubePrepare_15b84ca1-b62f-4a2a-a403-89b77a063157/4.11.0/common/sonarqube/extensions/plugins/flutter-sonarqube-plugin.jar"
-            Invoke-WebRequest -Uri $url -OutFile $output
-
-      # - task: CmdLine@2
-      #   displayName: Run Unit Tests
-      #   inputs:
-      #     script: |
-      #       # Download dependencies
-      #       flutter pub get
-      #       # Run tests
-      #       flutter test --machine > tests.output
-      #       # Compute coverage (--machine and --coverage cannot be run at once...)
-      #       flutter test --coverage
-      #       # Run the analysis and publish to the SonarQube server
-      #       sonar-scanner
+          docker pull lachie.azurecr.io/flutter-container:latest
+          Write-Host "Container was pulled"
