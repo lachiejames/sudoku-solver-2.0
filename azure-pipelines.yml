@@ -6,7 +6,7 @@ jobs:
     pool:
       vmImage: "ubuntu-16.04"
 
-    container: lachie.azurecr.io/flutter-container:latest
+    container: flutter-container.eastus.azurecontainer.io
 
     steps:
       - task: PowerShell@2
