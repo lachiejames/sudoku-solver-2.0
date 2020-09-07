@@ -10,8 +10,9 @@ jobs:
 
     steps:
       - task: PowerShell@2
-        displayName: Pull Container
+        displayName: Integration Tests
         inputs:
           targetType: "inline"
           script: |
-            Write-Host "Container was pulled"
+            echo "Running Integration Tests"
+            flutter drive --target=test_driver/run_app.dart
