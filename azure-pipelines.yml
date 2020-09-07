@@ -12,5 +12,5 @@ jobs:
         inputs:
           targetType: "inline"
           script: |
-          docker pull lachie.azurecr.io/flutter-container:latest
-          Write-Host "Container was pulled"
+            docker pull lachie.azurecr.io/flutter-container:latest
+            Write-Host "Container was pulled"
