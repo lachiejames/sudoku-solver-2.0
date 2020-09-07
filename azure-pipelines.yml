@@ -4,7 +4,10 @@ jobs:
   - job: sudoku_solver_2
     timeoutInMinutes: 30
     pool:
-      vmImage: "macOS-latest"
+        vmImage: "ubuntu:18.04"
+
+container: lachie.azurecr.io/flutter-container:latest
+
 
     steps:
       - task: PowerShell@2
@@ -12,5 +15,4 @@ jobs:
         inputs:
           targetType: "inline"
           script: |
-            docker pull lachie.azurecr.io/flutter-container:latest
             Write-Host "Container was pulled"
