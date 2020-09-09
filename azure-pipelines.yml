@@ -1,60 +1,55 @@
-trigger:
-    branches:
-      include:
-        - master
-  pr: none
+
+variables:
+  FlutterChannel: 'stable'
+  FlutterVersion: 'latest'
+
+jobs:
+  - job: Test
+    pool:
+      vmImage: 'macOS-latest'
+    steps:
+      - task: FlutterInstall@0
+        displayName: Setup flutter
+        inputs:
+          channel: '$(FlutterChannel)'
+          version: '$(FlutterVersion)'
+
+      - task: SonarQubePrepare@4
+        displayName: Setup sonar
+        inputs:
+          SonarQube: 'SonarQube Service Connection'
+          scannerMode: 'CLI'
+          configMode: 'file'
+
+      - task: PowerShell@2
+        displayName: Setup environment
+        inputs:
+          targetType: 'inline'
+          script: |
+            Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
+            Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
+            Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
+            Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
   
-  variables:
-    FlutterChannel: 'stable'
-    FlutterVersion: 'latest'
-  
-  jobs:
-    - job: Test
-      pool:
-        vmImage: 'macOS-latest'
-      steps:
-        - task: FlutterInstall@0
-          displayName: Setup flutter
-          inputs:
-            channel: '$(FlutterChannel)'
-            version: '$(FlutterVersion)'
-  
-        - task: SonarQubePrepare@4
-          displayName: Setup sonar
-          inputs:
-            SonarQube: 'SonarQube Service Connection'
-            scannerMode: 'CLI'
-            configMode: 'file'
-  
-        - task: PowerShell@2
-          displayName: Setup environment
-          inputs:
-            targetType: 'inline'
-            script: |
-              Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
-              Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
-              Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
-              Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
-    
-        - task: CmdLine@2
-          displayName: Run install
-          inputs:
-            script: 'flutter pub get'
-  
-        - task: CmdLine@2
-          displayName: Run test
-          inputs:
-            script: 'flutter test --machine > tests.output'
-  
-        - task: CmdLine@2
-          displayName: Run coverage
-          inputs:
-            script: 'flutter test --coverage'
-  
-        - task: SonarQubeAnalyze@4
-          displayName: Run analyze
-  
-        - task: SonarQubePublish@4
-          displayName: Run publish
-          inputs:
-            pollingTimeoutSec: '300'
+      - task: CmdLine@2
+        displayName: Run install
+        inputs:
+          script: 'flutter pub get'
+
+      - task: CmdLine@2
+        displayName: Run test
+        inputs:
+          script: 'flutter test --machine > tests.output'
+
+      - task: CmdLine@2
+        displayName: Run coverage
+        inputs:
+          script: 'flutter test --coverage'
+
+      - task: SonarQubeAnalyze@4
+        displayName: Run analyze
+
+      - task: SonarQubePublish@4
+        displayName: Run publish
+        inputs:
+          pollingTimeoutSec: '300'
