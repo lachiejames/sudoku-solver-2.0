@@ -16,7 +16,7 @@ jobs:
       - task: SonarQubePrepare@4
         displayName: Setup sonar
         inputs:
-          SonarQube: "SonarQube Service Connection"
+          SonarQube: "sonarqube-flutter"
           scannerMode: "CLI"
           configMode: "file"
 
