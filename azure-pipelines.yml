@@ -3,6 +3,9 @@ name: $(Rev:r:)
 trigger:
   - master
 
+variables:
+  GRADLE_USER_HOME: $(Pipeline.Workspace)/.gradle
+
 jobs:
   - job: Test
     timeoutInMinutes: 20
@@ -22,3 +25,13 @@ jobs:
         displayName: Run Integration Tests
       - script: echo SUCCESS
         displayName: Verify
+
+      - task: Cache@2
+        displayName: cache everything
+        inputs:
+          key: 'everything | "$(Agent.OS)"'
+          restoreKeys: everything
+          path: $(Pipeline.Workspace)
+
+    #   - script: azure/pipelines/scripts.sh cache_build
+    #     displayName: Build
