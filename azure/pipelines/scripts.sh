@@ -7,7 +7,7 @@ export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin:$BUILD_SOURCESDIRECTORY/flutter/
 
 install_flutter() {
     echo "Installing Flutter SDK"
-    git -C ~/flutter clone -b stable https://github.com/flutter/flutter.git
+    git -C ~ clone -b stable https://github.com/flutter/flutter.git
 
     echo "Verifying Flutter Installation"
     flutter precache
