@@ -1,8 +1,5 @@
 name: $(Rev:r:)
 
-variables:
-  FLUTTER_CACHE_FOLDER: $BUILD_SOURCESDIRECTORY/flutter
-
 jobs:
   - job: build_and_test
     timeoutInMinutes: 30
@@ -10,40 +7,21 @@ jobs:
       vmImage: "macOS-latest"
 
     steps:
-      - script: |
-          sudo chmod +x azure/pipelines/scripts.sh
-          set -e
-          export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin:$BUILD_SOURCESDIRECTORY/flutter/bin/cache/dart-sdk/bin:$PATH
+      - script: sudo chmod +x azure/pipelines/scripts.sh
         displayName: Grant Shell Permissions
 
       - task: Cache@2
         inputs:
-          key: flutterKeysdfsdf
-          restoreKeys: flutterKeysdfsdf
-          path: FLUTTER_CACHE_FOLDER
+          key: flutterKey
+          restoreKeys: flutterKey
+          path: /Users/runner/work/1/s/flutter
           cacheHitVar: FLUTTER_CACHE_RESTORED
 
-      - script: |
-          echo "Installing Flutter SDK"
-
-          git clone -b stable https://github.com/flutter/flutter.git
-
-          echo "Verifying Flutter Installation"
-          flutter precache
-          yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
-          flutter doctor
-
-          echo "Downloading Packages"
-          flutter packages get
+      - script: azure/pipelines/scripts.sh install_flutter
         displayName: Install Flutter
-        # condition: ne(variables.FLUTTER_CACHE_RESTORED, 'true')
+        condition: ne(variables.FLUTTER_CACHE_RESTORED, 'true')
 
-      - script: |
-          echo $PATH
-          ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/' 
-
-          echo "Running Unit Tests"
-          flutter test
+      - script: azure/pipelines/scripts.sh run_unit_tests
         displayName: Run Unit Tests
 
     #   - task: Cache@2
@@ -53,11 +31,9 @@ jobs:
     #       path: $ANDROID_HOME
     #       cacheHitVar: EMULATOR_CACHE_RESTORED
 
-
     #   - script: azure/pipelines/scripts.sh setup_emulator
     #     displayName: Setup Emulator
     #     condition: ne(variables.EMULATOR_CACHE_RESTORED, 'true')
-
 
     #   - script: azure/pipelines/scripts.sh run_integration_tests
     #     displayName: Run Integration Tests
