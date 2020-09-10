@@ -1,45 +1,45 @@
-#!/bin/sh
+# #!/bin/sh
 
-set -e
-export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin:$BUILD_SOURCESDIRECTORY/flutter/bin/cache/dart-sdk/bin:$PATH
+# set -e
+# export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin:$BUILD_SOURCESDIRECTORY/flutter/bin/cache/dart-sdk/bin:$PATH
 
-# All scripts will be placed here
+# # All scripts will be placed here
 
-install_flutter() {
-    echo $BUILD_SOURCESDIRECTORY
-    echo "Installing Flutter SDK"
-    git -C $BUILD_SOURCESDIRECTORY clone -b stable https://github.com/flutter/flutter.git
+# install_flutter() {
+#     echo $BUILD_SOURCESDIRECTORY
+#     echo "Installing Flutter SDK"
+#     git -C $BUILD_SOURCESDIRECTORY clone -b stable https://github.com/flutter/flutter.git
 
-    echo "Verifying Flutter Installation"
-    flutter precache
-    yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
-    flutter doctor
+#     echo "Verifying Flutter Installation"
+#     flutter precache
+#     yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
+#     flutter doctor
 
-    echo "Downloading Packages"
-    flutter packages get
-}
+#     echo "Downloading Packages"
+#     flutter packages get
+# }
 
-run_unit_tests() {
-    echo "Running Unit Tests"
-    flutter test
-}
+# run_unit_tests() {
+#     echo "Running Unit Tests"
+#     flutter test
+# }
 
-setup_emulator() {
-    echo "Installing Emulator SDK"
-    $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-28;default;x86'
+# setup_emulator() {
+#     echo "Installing Emulator SDK"
+#     $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-28;default;x86'
 
-    echo "Creating Emulator"
-    $ANDROID_HOME/tools/bin/avdmanager create avd -n "pixel" --device "pixel" -k "system-images;android-28;default;x86"
+#     echo "Creating Emulator"
+#     $ANDROID_HOME/tools/bin/avdmanager create avd -n "pixel" --device "pixel" -k "system-images;android-28;default;x86"
 
-    echo "Starting Emulator"
-    $ANDROID_HOME/emulator/emulator -avd "pixel" -no-snapshot &
-    $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
-    echo "Emulator started"
-}
+#     echo "Starting Emulator"
+#     $ANDROID_HOME/emulator/emulator -avd "pixel" -no-snapshot &
+#     $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+#     echo "Emulator started"
+# }
 
-run_integration_tests() {
-    echo "Running Integration Tests"
-    flutter drive --target=test_driver/run_app.dart
-}
+# run_integration_tests() {
+#     echo "Running Integration Tests"
+#     flutter drive --target=test_driver/run_app.dart
+# }
 
-"$@"
+# "$@"

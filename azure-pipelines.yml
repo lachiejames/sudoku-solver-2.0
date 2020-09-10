@@ -1,5 +1,8 @@
 name: $(Rev:r:)
 
+variables:
+  FLUTTER_CACHE_FOLDER: $(Pipeline.Workspace)/flutter
+
 jobs:
   - job: build_and_test
     timeoutInMinutes: 30
@@ -7,21 +10,36 @@ jobs:
       vmImage: "macOS-latest"
 
     steps:
-      - script: sudo chmod +x azure/pipelines/scripts.sh
+      - script: |
+          sudo chmod +x azure/pipelines/scripts.sh
+          set -e
+          export PATH=$FLUTTER_CACHE_FOLDER/bin:$FLUTTER_CACHE_FOLDER/bin/cache/dart-sdk/bin:$PATH
         displayName: Grant Shell Permissions
 
       - task: Cache@2
         inputs:
           key: flutterKey
           restoreKeys: flutterKey
-          path: /Users/runner/work/1/s/flutter
+          path: FLUTTER_CACHE_FOLDER
           cacheHitVar: FLUTTER_CACHE_RESTORED
 
-      - script: azure/pipelines/scripts.sh install_flutter
+      - script: |
+          echo "Installing Flutter SDK"
+          git clone -b stable https://github.com/flutter/flutter.git
+
+          echo "Verifying Flutter Installation"
+          flutter precache
+          yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
+          flutter doctor
+
+          echo "Downloading Packages"
+          flutter packages get
         displayName: Install Flutter
         condition: ne(variables.FLUTTER_CACHE_RESTORED, 'true')
 
-      - script: azure/pipelines/scripts.sh run_unit_tests
+      - script: |
+          echo "Running Unit Tests"
+          flutter test
         displayName: Run Unit Tests
 
     #   - task: Cache@2
@@ -31,9 +49,11 @@ jobs:
     #       path: $ANDROID_HOME
     #       cacheHitVar: EMULATOR_CACHE_RESTORED
 
+
     #   - script: azure/pipelines/scripts.sh setup_emulator
     #     displayName: Setup Emulator
     #     condition: ne(variables.EMULATOR_CACHE_RESTORED, 'true')
+
 
     #   - script: azure/pipelines/scripts.sh run_integration_tests
     #     displayName: Run Integration Tests
