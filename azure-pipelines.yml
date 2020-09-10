@@ -36,7 +36,7 @@ jobs:
           echo "Downloading Packages"
           flutter packages get
         displayName: Install Flutter
-        condition: ne(variables.FLUTTER_CACHE_RESTORED, 'true')
+        # condition: ne(variables.FLUTTER_CACHE_RESTORED, 'true')
 
       - script: |
           echo $PATH
