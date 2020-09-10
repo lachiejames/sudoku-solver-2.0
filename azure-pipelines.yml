@@ -37,10 +37,3 @@ jobs:
 
       - script: azure/pipelines/scripts.sh run_integration_tests
         displayName: Run Integration Tests
-
-    #   - task: Cache@2
-    #     displayName: cache everything
-    #     inputs:
-    #       key: 'everything | "$(Agent.OS)"'
-    #       restoreKeys: everything
-    #       path: $(Pipeline.Workspace)
