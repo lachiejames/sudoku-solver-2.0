@@ -31,8 +31,8 @@ jobs:
           script: |
             Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
             Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
-            Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
-            Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
+            Write-Host "##vso[task.prependpath]$(FlutterPath)"
+            Write-Host "##vso[task.prependpath]$(FlutterPath)/cache/dart-sdk/bin"
 
       - task: CmdLine@2
         displayName: Run install
@@ -62,4 +62,4 @@ jobs:
   #   - script: azure/pipelines/scripts.sh run_integration_tests
   #     displayName: Run Integration Tests
 
-  
+
