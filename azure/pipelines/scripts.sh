@@ -5,6 +5,11 @@ export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin:$BUILD_SOURCESDIRECTORY/flutter/
 
 # All scripts will be placed here
 setup_emulator() {
+    flutter precache
+    yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
+    flutter doctor
+
+
     echo "Installing Emulator SDK"
     $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;default;x86'
 
