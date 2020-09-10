@@ -14,7 +14,7 @@ jobs:
         inputs:
           key: flutterKey
           restoreKeys: flutterKey
-          path: $(Pipeline.Workspace)/flutter
+          path: ~/flutter
           cacheHitVar: FLUTTER_CACHE_RESTORED
 
       - script: azure/pipelines/scripts.sh install_flutter
