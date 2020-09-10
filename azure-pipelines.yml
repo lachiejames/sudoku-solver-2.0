@@ -13,11 +13,14 @@ jobs:
       - script: sudo chmod +x azure/pipelines/scripts.sh
         displayName: Grant Shell Permissions
 
-      - task: FlutterInstall@0
+      #   - task: FlutterInstall@0
+      #     displayName: Setup flutter
+      #     inputs:
+      #       channel: "$(FlutterChannel)"
+      #       version: "$(FlutterVersion)"
+
+      - script: azure/pipelines/scripts.sh install_flutter
         displayName: Setup flutter
-        inputs:
-          channel: "$(FlutterChannel)"
-          version: "$(FlutterVersion)"
 
       - task: SonarQubePrepare@4
         displayName: Setup sonar

@@ -4,12 +4,20 @@ set -e
 export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin:$BUILD_SOURCESDIRECTORY/flutter/bin/cache/dart-sdk/bin:$PATH
 
 # All scripts will be placed here
-setup_emulator() {
+install_flutter() {
+    echo "Installing Flutter SDK"
+    git clone -b stable https://github.com/flutter/flutter.git
+
+    echo "Verifying Flutter Installation"
     flutter precache
     yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
     flutter doctor
 
+    echo "Downloading Packages"
+    flutter packages get
+}
 
+setup_emulator() {
     echo "Installing Emulator SDK"
     $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;default;x86'
 
