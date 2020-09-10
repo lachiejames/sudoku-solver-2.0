@@ -10,12 +10,12 @@ jobs:
       - script: sudo chmod +x azure/pipelines/scripts.sh
         displayName: Grant Shell Permissions
 
-      - task: Cache@2
-        inputs:
-          key: flutterKey
-          restoreKeys: flutterKey
-          path: /Users/runner/work/1/s/flutter
-          cacheHitVar: FLUTTER_CACHE_RESTORED
+    #   - task: Cache@2
+    #     inputs:
+    #       key: flutterKey
+    #       restoreKeys: flutterKey
+    #       path: /Users/runner/work/1/s/flutter
+    #       cacheHitVar: FLUTTER_CACHE_RESTORED
 
       - script: azure/pipelines/scripts.sh install_flutter
         displayName: Install Flutter
