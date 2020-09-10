@@ -1,14 +1,8 @@
 name: $(Rev:r:)
 
-trigger:
-  - master
-
-variables:
-  GRADLE_USER_HOME: $(Pipeline.Workspace)/.gradle
-
 jobs:
-  - job: Test
-    timeoutInMinutes: 20
+  - job: Build & Test
+    timeoutInMinutes: 30
     pool:
       vmImage: "macOS-latest"
 
