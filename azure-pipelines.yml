@@ -1,12 +1,18 @@
+name: $(Rev:r:)
+
 variables:
   FlutterChannel: "stable"
   FlutterVersion: "latest"
 
 jobs:
   - job: Test
+    timeoutInMinutes: 30
     pool:
       vmImage: "macOS-latest"
     steps:
+      - script: sudo chmod +x azure/pipelines/scripts.sh
+        displayName: Grant Shell Permissions
+
       - task: FlutterInstall@0
         displayName: Setup flutter
         inputs:
@@ -52,3 +58,9 @@ jobs:
         displayName: Run publish
         inputs:
           pollingTimeoutSec: "300"
+
+      - script: azure/pipelines/scripts.sh setup_emulator
+        displayName: Setup Emulator
+
+      - script: azure/pipelines/scripts.sh run_integration_tests
+        displayName: Run Integration Tests
