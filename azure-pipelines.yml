@@ -12,8 +12,8 @@ jobs:
     steps:
       - task: Cache@2
         inputs:
-          key: flutterKey
-          restoreKeys: flutterKey
+          key: myFlutterKey
+          restoreKeys: myFlutterKey
           path: "$(FlutterPath)"
           cacheHitVar: FLUTTER_CACHE_RESTORED
 
@@ -61,3 +61,4 @@ jobs:
 
   #   - script: azure/pipelines/scripts.sh run_integration_tests
   #     displayName: Run Integration Tests
+
