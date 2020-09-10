@@ -1,7 +1,7 @@
 name: $(Rev:r:)
 
 jobs:
-  - job: Build & Test
+  - job: build_and_test
     timeoutInMinutes: 30
     pool:
       vmImage: "macOS-latest"
