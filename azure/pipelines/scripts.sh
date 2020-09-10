@@ -6,6 +6,7 @@ export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin:$BUILD_SOURCESDIRECTORY/flutter/
 # All scripts will be placed here
 
 install_flutter() {
+    echo $BUILD_SOURCESDIRECTORY
     echo "Installing Flutter SDK"
     git -C $BUILD_SOURCESDIRECTORY clone -b stable https://github.com/flutter/flutter.git
 
