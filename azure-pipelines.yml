@@ -1,69 +1,24 @@
 name: $(Rev:r:)
 
-variables:
-  FlutterChannel: "stable"
-  FlutterVersion: "latest"
+trigger:
+  - master
 
 jobs:
   - job: Test
-    timeoutInMinutes: 30
+    timeoutInMinutes: 20
     pool:
       vmImage: "macOS-latest"
+
     steps:
       - script: sudo chmod +x azure/pipelines/scripts.sh
         displayName: Grant Shell Permissions
-
-      #   - task: FlutterInstall@0
-      #     displayName: Setup flutter
-      #     inputs:
-      #       channel: "$(FlutterChannel)"
-      #       version: "$(FlutterVersion)"
-
       - script: azure/pipelines/scripts.sh install_flutter
-        displayName: Setup flutter
-
-      - task: SonarQubePrepare@4
-        displayName: Setup sonar
-        inputs:
-          SonarQube: "sonarqube-flutter"
-          scannerMode: "CLI"
-          configMode: "file"
-
-      - task: PowerShell@2
-        displayName: Setup environment
-        inputs:
-          targetType: "inline"
-          script: |
-            Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
-            Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
-            Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
-            Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
-
-      - task: CmdLine@2
-        displayName: Run install
-        inputs:
-          script: "flutter pub get"
-
-      - task: CmdLine@2
-        displayName: Run test
-        inputs:
-          script: "flutter test --machine > tests.output"
-
-      - task: CmdLine@2
-        displayName: Run coverage
-        inputs:
-          script: "flutter test --coverage"
-
-      - task: SonarQubeAnalyze@4
-        displayName: Run analyze
-
-      - task: SonarQubePublish@4
-        displayName: Run publish
-        inputs:
-          pollingTimeoutSec: "300"
-
+        displayName: Install Flutter
+      - script: azure/pipelines/scripts.sh run_unit_tests
+        displayName: Run Unit Tests
       - script: azure/pipelines/scripts.sh setup_emulator
         displayName: Setup Emulator
-
       - script: azure/pipelines/scripts.sh run_integration_tests
         displayName: Run Integration Tests
+      - script: echo SUCCESS
+        displayName: Verify
