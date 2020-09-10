@@ -6,6 +6,8 @@ export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin:$BUILD_SOURCESDIRECTORY/flutter/
 # All scripts will be placed here
 
 install_flutter() {
+
+
     echo "Installing Flutter SDK"
     git clone -b stable https://github.com/flutter/flutter.git
 
@@ -25,10 +27,10 @@ run_unit_tests() {
 
 setup_emulator() {
     echo "Installing Emulator SDK"
-    $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;default;x86'
+    $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-28;default;x86'
 
     echo "Creating Emulator"
-    $ANDROID_HOME/tools/bin/avdmanager create avd -n "pixel" --device "pixel" -k "system-images;android-29;default;x86"
+    $ANDROID_HOME/tools/bin/avdmanager create avd -n "pixel" --device "pixel" -k "system-images;android-28;default;x86"
 
     echo "Starting Emulator"
     $ANDROID_HOME/emulator/emulator -avd "pixel" -no-snapshot &
