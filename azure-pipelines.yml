@@ -1,48 +1,49 @@
 name: $(Rev:r:)
 
+variables:
+  FlutterChannel: "stable"
+  FlutterVersion: "latest"
+
 jobs:
-  - job: build_and_test
-    timeoutInMinutes: 30
+  - job: Test
     pool:
       vmImage: "macOS-latest"
-
     steps:
-      - script: sudo chmod +x azure/pipelines/scripts.sh
-        displayName: Grant Shell Permissions
-
-      #   - task: Cache@2
-      #     inputs:
-      #       key: flutterKey
-      #       restoreKeys: flutterKey
-      #       path: /Users/runner/work/1/s/flutter
-      #       cacheHitVar: FLUTTER_CACHE_RESTORED
-
       - task: FlutterInstall@0
         displayName: Setup flutter
         inputs:
-          channel: stable
-          version: latest
+          channel: "$(FlutterChannel)"
+          version: "$(FlutterVersion)"
+
+      - task: PowerShell@2
+        displayName: Setup environment
+        inputs:
+          targetType: "inline"
+          script: |
+            Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
+            Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
+            Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
+            Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
+
+      - task: CmdLine@2
+        displayName: Run install
+        inputs:
+          script: "flutter pub get"
 
       - task: CmdLine@2
         displayName: Run test
         inputs:
-          script: "flutter test --machine > tests.output"
+          script: "flutter test"
+  #   - task: Cache@2
+  #     inputs:
+  #       key: emulatorKey
+  #       restoreKeys: emulatorKey
+  #       path: $ANDROID_HOME
+  #       cacheHitVar: EMULATOR_CACHE_RESTORED
 
-      - script: echo $PATH
-        displayName: do stuff
+  #   - script: azure/pipelines/scripts.sh setup_emulator
+  #     displayName: Setup Emulator
+  #     condition: ne(variables.EMULATOR_CACHE_RESTORED, 'true')
 
-    #   - task: Cache@2
-    #     inputs:
-    #       key: emulatorKey
-    #       restoreKeys: emulatorKey
-    #       path: $ANDROID_HOME
-    #       cacheHitVar: EMULATOR_CACHE_RESTORED
-
-
-    #   - script: azure/pipelines/scripts.sh setup_emulator
-    #     displayName: Setup Emulator
-    #     condition: ne(variables.EMULATOR_CACHE_RESTORED, 'true')
-
-
-    #   - script: azure/pipelines/scripts.sh run_integration_tests
-    #     displayName: Run Integration Tests
+  #   - script: azure/pipelines/scripts.sh run_integration_tests
+  #     displayName: Run Integration Tests
