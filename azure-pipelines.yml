@@ -3,17 +3,26 @@ name: $(Rev:r:)
 variables:
   FlutterChannel: "stable"
   FlutterVersion: "latest"
+  FlutterPath: /Users/runner/hostedtoolcache/Flutter/1.20.3-stable/macos/flutter
 
 jobs:
   - job: Test
     pool:
       vmImage: "macOS-latest"
     steps:
+      - task: Cache@2
+        inputs:
+          key: flutterKey
+          restoreKeys: flutterKey
+          path: "$(FlutterPath)"
+          cacheHitVar: FLUTTER_CACHE_RESTORED
+
       - task: FlutterInstall@0
         displayName: Setup flutter
         inputs:
           channel: "$(FlutterChannel)"
           version: "$(FlutterVersion)"
+        condition: ne(variables.FLUTTER_CACHE_RESTORED, 'true')
 
       - task: PowerShell@2
         displayName: Setup environment
