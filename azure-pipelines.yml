@@ -30,11 +30,19 @@ jobs:
       - script: azure/pipelines/scripts.sh run_unit_tests
         displayName: Run Unit Tests
 
-    #   - script: azure/pipelines/scripts.sh setup_emulator
-    #     displayName: Setup Emulator
+      - task: Cache@2
+        inputs:
+          key: emulatorKey
+          restoreKeys: emulatorKey
+          path: $ANDROID_HOME
+          cacheHitVar: EMULATOR_CACHE_RESTORED
 
-    #   - script: azure/pipelines/scripts.sh run_integration_tests
-    #     displayName: Run Integration Tests
+      - script: azure/pipelines/scripts.sh setup_emulator
+        displayName: Setup Emulator
+        condition: ne(variables.EMULATOR_CACHE_RESTORED, 'true')
+
+      - script: azure/pipelines/scripts.sh run_integration_tests
+        displayName: Run Integration Tests
 
     #   - task: Cache@2
     #     displayName: cache everything
