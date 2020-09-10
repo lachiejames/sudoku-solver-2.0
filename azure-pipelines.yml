@@ -15,23 +15,33 @@ jobs:
     steps:
       - script: sudo chmod +x azure/pipelines/scripts.sh
         displayName: Grant Shell Permissions
-      - script: azure/pipelines/scripts.sh install_flutter
-        displayName: Install Flutter
-      - script: azure/pipelines/scripts.sh run_unit_tests
-        displayName: Run Unit Tests
-      - script: azure/pipelines/scripts.sh setup_emulator
-        displayName: Setup Emulator
-      - script: azure/pipelines/scripts.sh run_integration_tests
-        displayName: Run Integration Tests
-      - script: echo SUCCESS
-        displayName: Verify
 
       - task: Cache@2
-        displayName: cache everything
         inputs:
-          key: 'everything | "$(Agent.OS)"'
-          restoreKeys: everything
-          path: $(Pipeline.Workspace)
+          key: flutterKey
+          restoreKeys: flutterKey
+          path: $(Pipeline.Workspace)/flutter
+          cacheHitVar: FLUTTER_CACHE_RESTORED
+
+      - script: azure/pipelines/scripts.sh install_flutter
+        displayName: Install Flutter
+        condition: ne(variables.FLUTTER_CACHE_RESTORED, 'true')
+
+      - script: azure/pipelines/scripts.sh run_unit_tests
+        displayName: Run Unit Tests
+
+    #   - script: azure/pipelines/scripts.sh setup_emulator
+    #     displayName: Setup Emulator
+
+    #   - script: azure/pipelines/scripts.sh run_integration_tests
+    #     displayName: Run Integration Tests
+
+    #   - task: Cache@2
+    #     displayName: cache everything
+    #     inputs:
+    #       key: 'everything | "$(Agent.OS)"'
+    #       restoreKeys: everything
+    #       path: $(Pipeline.Workspace)
 
     #   - script: azure/pipelines/scripts.sh cache_build
     #     displayName: Build
