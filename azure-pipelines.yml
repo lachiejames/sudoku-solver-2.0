@@ -42,6 +42,3 @@ jobs:
     #       key: 'everything | "$(Agent.OS)"'
     #       restoreKeys: everything
     #       path: $(Pipeline.Workspace)
-
-    #   - script: azure/pipelines/scripts.sh cache_build
-    #     displayName: Build
