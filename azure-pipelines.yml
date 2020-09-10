@@ -39,6 +39,7 @@ jobs:
         condition: ne(variables.FLUTTER_CACHE_RESTORED, 'true')
 
       - script: |
+          echo $PATH
           ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/' 
 
           echo "Running Unit Tests"
