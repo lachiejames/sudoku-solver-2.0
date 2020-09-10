@@ -19,7 +19,7 @@ jobs:
 
       - script: azure/pipelines/scripts.sh install_flutter
         displayName: Install Flutter
-        condition: ne(variables.FLUTTER_CACHE_RESTORED, 'true')
+        # condition: ne(variables.FLUTTER_CACHE_RESTORED, 'true')
 
       - script: azure/pipelines/scripts.sh run_unit_tests
         displayName: Run Unit Tests
