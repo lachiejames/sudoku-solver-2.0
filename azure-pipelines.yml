@@ -18,13 +18,14 @@ jobs:
 
       - task: Cache@2
         inputs:
-          key: flutterKey
-          restoreKeys: flutterKey
+          key: flutterKeysdfsdf
+          restoreKeys: flutterKeysdfsdf
           path: FLUTTER_CACHE_FOLDER
           cacheHitVar: FLUTTER_CACHE_RESTORED
 
       - script: |
           echo "Installing Flutter SDK"
+
           git clone -b stable https://github.com/flutter/flutter.git
 
           echo "Verifying Flutter Installation"
@@ -38,6 +39,8 @@ jobs:
         condition: ne(variables.FLUTTER_CACHE_RESTORED, 'true')
 
       - script: |
+          ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/' 
+
           echo "Running Unit Tests"
           flutter test
         displayName: Run Unit Tests
