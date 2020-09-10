@@ -41,10 +41,4 @@ run_integration_tests() {
     flutter drive --target=test_driver/run_app.dart
 }
 
-# cache_build() {
-#     ./gradlew --build-cache build
-#     # stop the Gradle daemon to ensure no files are left open (impacting the save cache operation later)
-#     ./gradlew --stop
-# }
-
 "$@"
