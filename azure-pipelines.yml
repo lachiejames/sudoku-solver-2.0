@@ -34,6 +34,11 @@ jobs:
         displayName: Run test
         inputs:
           script: "flutter test"
+
+      - task: CmdLine@2
+        displayName: do stuff
+        inputs:
+          script: "echo $PATH"
   #   - task: Cache@2
   #     inputs:
   #       key: emulatorKey
