@@ -5,28 +5,28 @@ export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin:$BUILD_SOURCESDIRECTORY/flutter/
 
 # All scripts will be placed here
 
-install_flutter() {
-    echo $BUILD_SOURCESDIRECTORY
-    echo "Installing Flutter SDK"
-    git -C $BUILD_SOURCESDIRECTORY clone -b stable https://github.com/flutter/flutter.git
+# install_flutter() {
+#     echo $BUILD_SOURCESDIRECTORY
+#     echo "Installing Flutter SDK"
+#     git clone -b stable https://github.com/flutter/flutter.git
 
-    echo "Verifying Flutter Installation"
-    flutter precache
-    yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
-    flutter doctor
+#     echo "Verifying Flutter Installation"
+#     flutter precache
+#     yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
+#     flutter doctor
 
-    echo "Downloading Packages"
-    flutter packages get
-}
+#     echo "Downloading Packages"
+#     flutter packages get
+# }
 
-run_unit_tests() {
-    echo $PATH
-    ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+# run_unit_tests() {
+#     echo $PATH
+#     ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 
 
-    echo "Running Unit Tests"
-    flutter test
-}
+#     echo "Running Unit Tests"
+#     flutter test
+# }
 
 setup_emulator() {
     echo "Installing Emulator SDK"

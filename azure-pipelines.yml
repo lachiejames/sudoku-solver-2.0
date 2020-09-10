@@ -10,19 +10,26 @@ jobs:
       - script: sudo chmod +x azure/pipelines/scripts.sh
         displayName: Grant Shell Permissions
 
-    #   - task: Cache@2
-    #     inputs:
-    #       key: flutterKey
-    #       restoreKeys: flutterKey
-    #       path: /Users/runner/work/1/s/flutter
-    #       cacheHitVar: FLUTTER_CACHE_RESTORED
+      #   - task: Cache@2
+      #     inputs:
+      #       key: flutterKey
+      #       restoreKeys: flutterKey
+      #       path: /Users/runner/work/1/s/flutter
+      #       cacheHitVar: FLUTTER_CACHE_RESTORED
 
-      - script: azure/pipelines/scripts.sh install_flutter
-        displayName: Install Flutter
-        # condition: ne(variables.FLUTTER_CACHE_RESTORED, 'true')
+      - task: FlutterInstall@0
+        displayName: Setup flutter
+        inputs:
+          channel: stable
+          version: latest
 
-      - script: azure/pipelines/scripts.sh run_unit_tests
-        displayName: Run Unit Tests
+      - task: CmdLine@2
+        displayName: Run test
+        inputs:
+          script: "flutter test --machine > tests.output"
+
+      - script: echo $PATH
+        displayName: do stuff
 
     #   - task: Cache@2
     #     inputs:
@@ -31,9 +38,11 @@ jobs:
     #       path: $ANDROID_HOME
     #       cacheHitVar: EMULATOR_CACHE_RESTORED
 
+
     #   - script: azure/pipelines/scripts.sh setup_emulator
     #     displayName: Setup Emulator
     #     condition: ne(variables.EMULATOR_CACHE_RESTORED, 'true')
+
 
     #   - script: azure/pipelines/scripts.sh run_integration_tests
     #     displayName: Run Integration Tests
