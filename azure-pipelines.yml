@@ -1,7 +1,7 @@
 name: $(Rev:r:)
 
 variables:
-  FLUTTER_CACHE_FOLDER: $(Pipeline.Workspace)/flutter
+  FLUTTER_CACHE_FOLDER: $BUILD_SOURCESDIRECTORY/flutter
 
 jobs:
   - job: build_and_test
@@ -13,7 +13,7 @@ jobs:
       - script: |
           sudo chmod +x azure/pipelines/scripts.sh
           set -e
-          export PATH=$FLUTTER_CACHE_FOLDER/bin:$FLUTTER_CACHE_FOLDER/bin/cache/dart-sdk/bin:$PATH
+          export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin:$BUILD_SOURCESDIRECTORY/flutter/bin/cache/dart-sdk/bin:$PATH
         displayName: Grant Shell Permissions
 
       - task: Cache@2
