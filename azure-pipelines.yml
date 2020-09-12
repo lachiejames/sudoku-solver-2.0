@@ -7,25 +7,25 @@ jobs:
       vmImage: macOS-latest
 
     steps:
-      - script: sudo chmod +x pipeline-scripts.sh
+      - script: sudo chmod +x pipelines/scripts.sh
         displayName: Grant Shell Permissions
 
-      - script: pipeline-scripts.sh install_flutter
+      - script: pipelines/scripts.sh install_flutter
         displayName: Install Flutter
 
-      - script: pipeline-scripts.sh run_unit_tests
+      - script: pipelines/scripts.sh run_unit_tests
         displayName: Run Unit Tests
 
-      - script: pipeline-scripts.sh install_emulator
+      - script: pipelines/scripts.sh install_emulator
         displayName: Install Emulator
 
-      - script: pipeline-scripts.sh run_emulator
+      - script: pipelines/scripts.sh run_emulator
         displayName: Run Emulator
 
-      - script: pipeline-scripts.sh run_integration_tests
+      - script: pipelines/scripts.sh run_integration_tests
         displayName: Run Integration Tests
 
-      - script: pipeline-scripts.sh calculate_test_coverage
+      - script: pipelines/scripts.sh calculate_test_coverage
         displayName: Calculate Test Coverage
 
       - task: SonarQubePrepare@4
