@@ -13,12 +13,20 @@ jobs:
           channel: stable
           version: latest
 
+      - task: PowerShell@2
+        displayName: Setup Task Environment
+        inputs:
+          targetType: inline
+          script: |
+            Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
+            Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
+            Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
+            Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
+
       - task: CmdLine@2
         displayName: Setup Flutter Environment
         inputs:
           script: |
-            export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin:$PATH
-            export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin/cache/dart-sdk/bin:$PATH
             flutter precache
             yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
             flutter doctor
@@ -29,16 +37,6 @@ jobs:
         inputs:
           script: |
             flutter test --machine > tests.output
-
-      - task: PowerShell@2
-        displayName: Setup Emulator Environment
-        inputs:
-          targetType: inline
-          script: |
-            Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
-            Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
-            Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
-            Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
 
       - task: CmdLine@2
         displayName: Run Emulator
