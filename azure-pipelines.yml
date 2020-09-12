@@ -7,53 +7,50 @@ jobs:
       vmImage: macOS-latest
 
     steps:
-      - task: FlutterInstall@0
+      - task: CmdLine@2
         displayName: Install Flutter
         inputs:
-          channel: stable
-          version: latest
-
-      - task: PowerShell@2
-        displayName: Setup Task Environment
-        inputs:
-          targetType: inline
           script: |
-            Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
-            Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
-            Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
-            Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
+            git clone -b stable https://github.com/flutter/flutter.git
 
-      - task: Bash@3
+      - task: CmdLine@2
         displayName: Setup Flutter Environment
         inputs:
           script: |
+            export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin:$PATH
+            export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin/cache/dart-sdk/bin:$PATH
             flutter precache
             yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
             flutter doctor
-            flutter pub get
+            flutter packages get
 
-      - task: Bash@3
+      - task: CmdLine@2
         displayName: Run Unit Tests
         inputs:
           script: |
             flutter test --machine > tests.output
 
-      - task: Bash@3
-        displayName: Run Emulator
+      - task: CmdLine@2
+        displayName: Install Emulator
         inputs:
           script: |
             $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;default;x86'
             $ANDROID_HOME/tools/bin/avdmanager create avd -n "pixel" --device "pixel" -k "system-images;android-29;default;x86"
+
+      - task: CmdLine@2
+        displayName: Run Emulator
+        inputs:
+          script: |
             $ANDROID_HOME/emulator/emulator -avd "pixel" -no-snapshot &
             $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
 
-      - task: Bash@3
+      - task: CmdLine@2
         displayName: Run Integration tests
         inputs:
           script: |
             flutter drive --target=test_driver/run_app.dart
 
-      - task: Bash@3
+      - task: CmdLine@2
         displayName: Calculate Test Coverage
         inputs:
           script: |
