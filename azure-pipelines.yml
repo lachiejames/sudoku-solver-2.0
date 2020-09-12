@@ -27,8 +27,6 @@ jobs:
         displayName: Setup Flutter Environment
         inputs:
           script: |
-            export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin:$PATH
-            export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin/cache/dart-sdk/bin:$PATH
             flutter precache
             yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
             flutter doctor
