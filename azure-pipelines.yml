@@ -1,8 +1,8 @@
 name: $(Rev:r:)
 
 jobs:
-  - job: Test
-    timeoutInMinutes: 30
+  - job: Install Flutter
+    timeoutInMinutes: 10
     pool:
       vmImage: "macOS-latest"
 
@@ -20,8 +20,8 @@ jobs:
           script: |
             Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
             Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
-            Write-Host "##vso[task.prependpath]$(FlutterPath)"
-            Write-Host "##vso[task.prependpath]$(FlutterPath)/cache/dart-sdk/bin"
+            Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
+            Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
 
       - task: CmdLine@2
         displayName: Install Dependencies
@@ -29,6 +29,11 @@ jobs:
           script: |
             flutter pub get
 
+  - job: Run Tests
+    timeoutInMinutes: 10
+    pool:
+      vmImage: "macOS-latest"
+    steps:
       - task: CmdLine@2
         displayName: Unit Tests
         inputs:
@@ -57,6 +62,11 @@ jobs:
             echo "Running Integration Tests"
             flutter drive --target=test_driver/run_app.dart
 
+  - job: Code Quality Analysis
+    timeoutInMinutes: 10
+    pool:
+      vmImage: "macOS-latest"
+    steps:
       - task: CmdLine@2
         displayName: Calculate Test Coverage
         inputs:
