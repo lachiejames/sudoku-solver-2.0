@@ -1,7 +1,7 @@
 name: $(Rev:r:)
 
 jobs:
-  - job: Install Flutter
+  - job: Install_Flutter
     timeoutInMinutes: 10
     pool:
       vmImage: "macOS-latest"
@@ -29,7 +29,7 @@ jobs:
           script: |
             flutter pub get
 
-  - job: Run Tests
+  - job: Run_Tests
     timeoutInMinutes: 10
     pool:
       vmImage: "macOS-latest"
@@ -62,7 +62,7 @@ jobs:
             echo "Running Integration Tests"
             flutter drive --target=test_driver/run_app.dart
 
-  - job: Code Quality Analysis
+  - job: Code_Quality_Analysis
     timeoutInMinutes: 10
     pool:
       vmImage: "macOS-latest"
