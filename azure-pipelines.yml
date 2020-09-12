@@ -7,6 +7,13 @@ jobs:
       vmImage: macOS-latest
 
     steps:
+      - task: SonarQubePrepare@4
+        displayName: Start SonarQube
+        inputs:
+          SonarQube: sonarqube-flutter
+          scannerMode: CLI
+          configMode: file
+
       - script: sudo chmod +x pipelines/scripts.sh
         displayName: Grant Shell Permissions
 
@@ -27,13 +34,6 @@ jobs:
 
       - script: pipelines/scripts.sh calculate_test_coverage
         displayName: Calculate Test Coverage
-
-      - task: SonarQubePrepare@4
-        displayName: Start SonarQube
-        inputs:
-          SonarQube: sonarqube-flutter
-          scannerMode: CLI
-          configMode: file
 
       - task: SonarQubeAnalyze@4
         displayName: Analyse SonarQube
