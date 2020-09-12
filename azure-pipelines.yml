@@ -1,31 +1,20 @@
 name: $(Rev:r:)
 
-variables:
-  FlutterChannel: "stable"
-  FlutterVersion: "latest"
-  FlutterPath: /Users/runner/hostedtoolcache/Flutter/1.20.3-stable/macos/flutter
-
 jobs:
   - job: Test
+    timeoutInMinutes: 30
     pool:
       vmImage: "macOS-latest"
-    steps:
-      - task: Cache@2
-        inputs:
-          key: myFlutterKey
-          restoreKeys: myFlutterKey
-          path: "$(FlutterPath)"
-          cacheHitVar: FLUTTER_CACHE_RESTORED
 
+    steps:
       - task: FlutterInstall@0
-        displayName: Setup flutter
+        displayName: Install Flutter
         inputs:
-          channel: "$(FlutterChannel)"
-          version: "$(FlutterVersion)"
-        condition: ne(variables.FLUTTER_CACHE_RESTORED, 'true')
+          channel: stable
+          version: latest
 
       - task: PowerShell@2
-        displayName: Setup environment
+        displayName: Setup Environment
         inputs:
           targetType: "inline"
           script: |
@@ -35,31 +24,56 @@ jobs:
             Write-Host "##vso[task.prependpath]$(FlutterPath)/cache/dart-sdk/bin"
 
       - task: CmdLine@2
-        displayName: Run install
+        displayName: Install Dependencies
         inputs:
-          script: "flutter pub get"
+          script: |
+            flutter pub get
 
       - task: CmdLine@2
-        displayName: Run test
+        displayName: Unit Tests
         inputs:
-          script: "flutter test"
+          script: |
+            flutter test --machine > tests.output
 
       - task: CmdLine@2
-        displayName: do stuff
+        displayName: Setup emulator
         inputs:
-          script: "echo $PATH"
-  #   - task: Cache@2
-  #     inputs:
-  #       key: emulatorKey
-  #       restoreKeys: emulatorKey
-  #       path: $ANDROID_HOME
-  #       cacheHitVar: EMULATOR_CACHE_RESTORED
+          script: |
+            echo "Installing Emulator SDK"
+            $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;default;x86'
 
-  #   - script: azure/pipelines/scripts.sh setup_emulator
-  #     displayName: Setup Emulator
-  #     condition: ne(variables.EMULATOR_CACHE_RESTORED, 'true')
+            echo "Creating Emulator"
+            $ANDROID_HOME/tools/bin/avdmanager create avd -n "pixel" --device "pixel" -k "system-images;android-29;default;x86"
 
-  #   - script: azure/pipelines/scripts.sh run_integration_tests
-  #     displayName: Run Integration Tests
+            echo "Starting Emulator"
+            $ANDROID_HOME/emulator/emulator -avd "pixel" -no-snapshot &
+            $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+            echo "Emulator started"
 
+      - task: CmdLine@2
+        displayName: Integration tests
+        inputs:
+          script: |
+            echo "Running Integration Tests"
+            flutter drive --target=test_driver/run_app.dart
 
+      - task: CmdLine@2
+        displayName: Calculate Test Coverage
+        inputs:
+          script: |
+            flutter test --coverage
+
+      - task: SonarQubePrepare@4
+        displayName: SonarQube Start
+        inputs:
+          SonarQube: "sonarqube-flutter"
+          scannerMode: "CLI"
+          configMode: "file"
+
+      - task: SonarQubeAnalyze@4
+        displayName: SonarQube Analysis
+
+      - task: SonarQubePublish@4
+        displayName: SonarQube Publish
+        inputs:
+          pollingTimeoutSec: "300"
