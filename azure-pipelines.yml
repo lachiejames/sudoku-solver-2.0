@@ -13,34 +13,33 @@ jobs:
           channel: stable
           version: latest
 
-      - task: PowerShell@2
-        displayName: Setup Environment
+      - task: CmdLine@2
+        displayName: Setup Flutter Environment
         inputs:
-          targetType: inline
           script: |
             flutter precache
             yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
             flutter doctor
-            
+            flutter pub get
+
+      - task: CmdLine@2
+        displayName: Run Unit Tests
+        inputs:
+          script: |
+            flutter test --machine > tests.output
+
+      - task: PowerShell@2
+        displayName: Setup Emulator Environment
+        inputs:
+          targetType: inline
+          script: |
             Write-Host "##vso[task.prependpath]$(JAVA_HOME_11_X64)"
             Write-Host "##vso[task.setvariable variable=JAVA_HOME;]$(JAVA_HOME_11_X64)"
             Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
             Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
 
       - task: CmdLine@2
-        displayName: Install Dependencies
-        inputs:
-          script: |
-            flutter pub get
-
-      - task: CmdLine@2
-        displayName: Unit Tests
-        inputs:
-          script: |
-            flutter test --machine > tests.output
-
-      - task: CmdLine@2
-        displayName: Setup emulator
+        displayName: Run Emulator
         inputs:
           script: |
             $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;default;x86'
@@ -49,7 +48,7 @@ jobs:
             $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
 
       - task: CmdLine@2
-        displayName: Integration tests
+        displayName: Run Integration tests
         inputs:
           script: |
             flutter drive --target=test_driver/run_app.dart
@@ -61,16 +60,16 @@ jobs:
             flutter test --coverage
 
       - task: SonarQubePrepare@4
-        displayName: SonarQube Start
+        displayName: Start SonarQube
         inputs:
           SonarQube: sonarqube-flutter
           scannerMode: CLI
           configMode: file
 
       - task: SonarQubeAnalyze@4
-        displayName: SonarQube Analysis
+        displayName: Analyse SonarQube
 
       - task: SonarQubePublish@4
-        displayName: SonarQube Publish
+        displayName: Publish SonarQube Results
         inputs:
           pollingTimeoutSec: 300
