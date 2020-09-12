@@ -23,22 +23,24 @@ jobs:
             Write-Host "##vso[task.prependpath]$(FlutterToolPath)"
             Write-Host "##vso[task.prependpath]$(FlutterToolPath)/cache/dart-sdk/bin"
 
-      - task: CmdLine@2
+      - task: Bash@3
         displayName: Setup Flutter Environment
         inputs:
           script: |
+            export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin:$PATH
+            export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin/cache/dart-sdk/bin:$PATH
             flutter precache
             yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
             flutter doctor
             flutter pub get
 
-      - task: CmdLine@2
+      - task: Bash@3
         displayName: Run Unit Tests
         inputs:
           script: |
             flutter test --machine > tests.output
 
-      - task: CmdLine@2
+      - task: Bash@3
         displayName: Run Emulator
         inputs:
           script: |
@@ -47,13 +49,13 @@ jobs:
             $ANDROID_HOME/emulator/emulator -avd "pixel" -no-snapshot &
             $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
 
-      - task: CmdLine@2
+      - task: Bash@3
         displayName: Run Integration tests
         inputs:
           script: |
             flutter drive --target=test_driver/run_app.dart
 
-      - task: CmdLine@2
+      - task: Bash@3
         displayName: Calculate Test Coverage
         inputs:
           script: |
