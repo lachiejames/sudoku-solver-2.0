@@ -1,7 +1,7 @@
 name: $(Rev:r:)
 
 jobs:
-  - job: Install_Flutter
+  - job: Run_My_Pipeline
     timeoutInMinutes: 10
     pool:
       vmImage: "macOS-latest"
@@ -29,11 +29,6 @@ jobs:
           script: |
             flutter pub get
 
-  - job: Run_Tests
-    timeoutInMinutes: 10
-    pool:
-      vmImage: "macOS-latest"
-    steps:
       - task: CmdLine@2
         displayName: Unit Tests
         inputs:
@@ -62,11 +57,6 @@ jobs:
             echo "Running Integration Tests"
             flutter drive --target=test_driver/run_app.dart
 
-  - job: Code_Quality_Analysis
-    timeoutInMinutes: 10
-    pool:
-      vmImage: "macOS-latest"
-    steps:
       - task: CmdLine@2
         displayName: Calculate Test Coverage
         inputs:
