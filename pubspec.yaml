@@ -26,6 +26,7 @@ dev_dependencies:
   flutter_driver:
     sdk: flutter
   mockito: ^4.1.1
+  pedantic: ^1.0.0
 
 flutter:
   uses-material-design: true
