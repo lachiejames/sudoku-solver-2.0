@@ -2,59 +2,31 @@ name: $(Rev:r:)
 
 jobs:
   - job: Run_My_Pipeline
-    timeoutInMinutes: 10
+    timeoutInMinutes: 30
     pool:
       vmImage: macOS-latest
 
     steps:
-      - task: CmdLine@2
+      - script: sudo chmod +x pipeline-scripts.sh
+        displayName: Grant Shell Permissions
+
+      - script: pipeline-scripts.sh install_flutter
         displayName: Install Flutter
-        inputs:
-          script: |
-            git clone -b stable https://github.com/flutter/flutter.git
 
-      - task: CmdLine@2
-        displayName: Setup Flutter Environment
-        inputs:
-          script: |
-            export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin:$PATH
-            export PATH=$BUILD_SOURCESDIRECTORY/flutter/bin/cache/dart-sdk/bin:$PATH
-            flutter precache
-            yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
-            flutter doctor
-            flutter packages get
-
-      - task: CmdLine@2
+      - script: pipeline-scripts.sh run_unit_tests
         displayName: Run Unit Tests
-        inputs:
-          script: |
-            flutter test --machine > tests.output
 
-      - task: CmdLine@2
+      - script: pipeline-scripts.sh install_emulator
         displayName: Install Emulator
-        inputs:
-          script: |
-            $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;default;x86'
-            $ANDROID_HOME/tools/bin/avdmanager create avd -n "pixel" --device "pixel" -k "system-images;android-29;default;x86"
 
-      - task: CmdLine@2
+      - script: pipeline-scripts.sh run_emulator
         displayName: Run Emulator
-        inputs:
-          script: |
-            $ANDROID_HOME/emulator/emulator -avd "pixel" -no-snapshot &
-            $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
 
-      - task: CmdLine@2
-        displayName: Run Integration tests
-        inputs:
-          script: |
-            flutter drive --target=test_driver/run_app.dart
+      - script: pipeline-scripts.sh run_integration_tests
+        displayName: Run Integration Tests
 
-      - task: CmdLine@2
+      - script: pipeline-scripts.sh calculate_test_coverage
         displayName: Calculate Test Coverage
-        inputs:
-          script: |
-            flutter test --coverage
 
       - task: SonarQubePrepare@4
         displayName: Start SonarQube
