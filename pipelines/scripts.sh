@@ -9,9 +9,11 @@ install_flutter() {
     echo "Installing Flutter SDK"
     git clone -b stable https://github.com/flutter/flutter.git
 
-    echo "Verifying Flutter Installation"
+    echo "Running flutter precache"
     flutter precache
+    echo "Accepting android licenses"
     yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
+    echo "Verifying Flutter installation"
     flutter doctor
 
     echo "Downloading Packages"
@@ -44,6 +46,7 @@ run_integration_tests() {
 }
 
 calculate_test_coverage() {
+    echo "Calculating test coverage"
     flutter test --coverage
 }
 
