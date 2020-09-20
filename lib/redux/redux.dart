@@ -22,7 +22,7 @@ class Redux {
 
   static Store<AppState> get store {
     if (_store == null) {
-      throw Exception("store is not initialized");
+      throw Exception('store is not initialized');
     } else {
       return _store;
     }

@@ -7,15 +7,19 @@ class TileKey {
 
   TileKey({this.row, this.col});
 
+  @override
   bool operator ==(o) => row == o.row && col == o.col;
+
+  @override
   int get hashCode => this.row * 11 + col * 89;
 
+  @override
   String toString() {
     return 'TileKey($row, $col)';
   }
 
   static List<TileKey> makeTileKeysFromRowsAndCols(List<int> rows, List<int> cols) {
-    List<TileKey> _tileKeys = List<TileKey>();
+    List<TileKey> _tileKeys = <TileKey>[];
     for (int row in rows) {
       for (int col in cols) {
         _tileKeys.add(TileKey(row: row, col: col));
@@ -25,7 +29,7 @@ class TileKey {
   }
 
   static List<TileKey> getTileKeysInSegment(int segment) {
-    List<TileKey> _tileKeys = List<TileKey>();
+    List<TileKey> _tileKeys = <TileKey>[];
 
     if (segment == 1) {
       _tileKeys.addAll(makeTileKeysFromRowsAndCols([1, 2, 3], [1, 2, 3]));

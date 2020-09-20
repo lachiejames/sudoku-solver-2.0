@@ -20,6 +20,7 @@ class TileState {
     this.isInvalid = false,
   });
 
+  @override
   String toString() {
     return 'TileState(row=$row, col=$col, value=${(value != null) ? value : 'null'}, isSelected=${this.isSelected})';
   }

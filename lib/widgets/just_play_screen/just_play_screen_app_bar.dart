@@ -42,5 +42,5 @@ class JustPlayScreenAppBar extends StatelessWidget implements PreferredSizeWidge
   }
 
   @override
-  Size get preferredSize => new Size.fromHeight(this.appBar.preferredSize.height);
+  Size get preferredSize => Size.fromHeight(this.appBar.preferredSize.height);
 }

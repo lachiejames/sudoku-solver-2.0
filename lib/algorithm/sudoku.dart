@@ -3,14 +3,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
+/// Used when solving the sudoku
+/// Mutable for more efficient caclulations
 class Sudoku {
+
+  /// Store TileKey and Tile pairs, for all 81 tiles on a Sudoku
   final HashMap<TileKey, TileState> tileStateMap;
+
+  /// Tracks how many tiles contain values
+  /// Mutable for more efficient caclulations
   int numValues = 0;
 
+  /// Initialises with the current number of values in the hashmap
   Sudoku({@required this.tileStateMap}) {
     this.numValues = initNumValues(this.tileStateMap.values.toList());
   }
 
+  /// Returns the amount of tiles that have a value
   int initNumValues(List<TileState> tileStates) {
     int _numValues = 0;
     for (TileState tileState in tileStates) {
@@ -21,6 +30,7 @@ class Sudoku {
     return _numValues;
   }
 
+  @override
   String toString() {
     String s = '-------------------------------------\n';
     for (int row = 1; row <= 9; row++) {
@@ -28,7 +38,7 @@ class Sudoku {
         if (this.getTileStateAt(row, col).value == null) {
           s += '|   ';
         } else {
-          s += '| ' + this.getTileStateAt(row, col).value.toString() + ' ';
+          s += '| ${this.getTileStateAt(row, col).value} ';
         }
       }
       s += '|\n-------------------------------------\n';
@@ -37,10 +47,12 @@ class Sudoku {
     return s;
   }
 
+  /// Returns the tile at the given row & column
   TileState getTileStateAt(int row, int col) {
     return this.tileStateMap[TileKey(row: row, col: col)];
   }
 
+  /// Applies the values specified in a hard-coded Sudoku
   void applyExampleValues(List<List<int>> exampleValues) {
     assert(exampleValues != null);
     for (int row = 1; row <= 9; row++) {
@@ -52,6 +64,7 @@ class Sudoku {
     }
   }
 
+  /// Assigns a given value to a given tile
   void addValueToTile(int value, TileState tileState) {
     // tile already has a value, that is not this value
     if ((tileState.value == null && value == null) || (tileState.value != null && value != null)) {
@@ -72,7 +85,7 @@ class Sudoku {
   }
 
   List<TileState> getTilesInRow(int row) {
-    List<TileState> _tilesInRow = List<TileState>();
+    List<TileState> _tilesInRow = <TileState>[];
     for (int col = 1; col <= 9; col++) {
       _tilesInRow.add(this.getTileStateAt(row, col));
     }
@@ -80,7 +93,7 @@ class Sudoku {
   }
 
   List<TileState> getTilesInCol(int col) {
-    List<TileState> _tilesInCol = List<TileState>();
+    List<TileState> _tilesInCol = <TileState>[];
     for (int row = 1; row <= 9; row++) {
       _tilesInCol.add(this.getTileStateAt(row, col));
     }
@@ -88,7 +101,7 @@ class Sudoku {
   }
 
   List<TileState> getTilesInSegment(int segment) {
-    List<TileState> _tilesInSegment = List<TileState>();
+    List<TileState> _tilesInSegment = <TileState>[];
     for (TileKey tileKey in TileKey.getTileKeysInSegment(segment)) {
       _tilesInSegment.add(this.tileStateMap[tileKey]);
     }
@@ -96,7 +109,7 @@ class Sudoku {
   }
 
   List<int> getValuesInRow(int row) {
-    List<int> _valuesInRow = List<int>();
+    List<int> _valuesInRow = <int>[];
     for (int col = 1; col <= 9; col++) {
       int value = this.getTileStateAt(row, col).value;
       if (value != null) {
@@ -107,7 +120,7 @@ class Sudoku {
   }
 
   List<int> getValuesInCol(int col) {
-    List<int> _valuesInCol = List<int>();
+    List<int> _valuesInCol = <int>[];
     for (int row = 1; row <= 9; row++) {
       int value = this.getTileStateAt(row, col).value;
       if (value != null) {
@@ -118,7 +131,7 @@ class Sudoku {
   }
 
   List<int> getValuesInSegment(int segment) {
-    List<int> _valuesInSegment = List<int>();
+    List<int> _valuesInSegment = <int>[];
     for (TileKey tileKey in TileKey.getTileKeysInSegment(segment)) {
       int value = this.tileStateMap[tileKey].value;
       if (value != null) {
@@ -133,7 +146,7 @@ class Sudoku {
       return [];
     }
     List<int> possibleValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    Set<int> invalidValues = Set<int>();
+    Set<int> invalidValues = <int>{};
     for (int invalidValue in getValuesInRow(tile.row)) {
       invalidValues.add(invalidValue);
     }
@@ -188,7 +201,7 @@ class Sudoku {
   }
 
   List<TileKey> getInvalidTileKeys() {
-    List<TileState> invalidTiles = List<TileState>();
+    List<TileState> invalidTiles = <TileState>[];
     for (int i = 1; i <= 9; i++) {
       List<int> valuesInRow = getValuesInRow(i);
       List<int> valuesInCol = getValuesInCol(i);
@@ -230,7 +243,7 @@ class Sudoku {
     }
     invalidTiles = invalidTiles.toSet().toList();
 
-    List<TileKey> invalidTileKeys = List<TileKey>();
+    List<TileKey> invalidTileKeys = <TileKey>[];
     invalidTiles.forEach((tile) {
       invalidTileKeys.add(TileKey(row: tile.row, col: tile.col));
     });

@@ -98,7 +98,7 @@ class CameraState {
   }
 
   List<TextElement> getTextElementsFromVisionText(VisionText visionText) {
-    final List<TextElement> textElements = List();
+    final List<TextElement> textElements = [];
     for (TextBlock textBlock in visionText.blocks) {
       for (TextLine textLine in textBlock.lines) {
         for (TextElement textElement in textLine.elements) {

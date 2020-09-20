@@ -1,1 +1,8 @@
-include: package:pedantic/analysis_options.yaml
+include: package:effective_dart/analysis_options.yaml
+
+linter:
+    rules:
+      prefer_relative_imports: false
+      omit_local_variable_types: false
+      unnecessary_this: false
+      lines_longer_than_80_chars: true

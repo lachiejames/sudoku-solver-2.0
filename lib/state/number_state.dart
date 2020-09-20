@@ -8,6 +8,7 @@ class NumberState {
 
   NumberState({@required this.number, this.isActive = false});
 
+  @override
   String toString() {
     return 'NumberState($number)';
   }
@@ -23,7 +24,7 @@ class NumberState {
   }
 
   static List<NumberState> initNumberStateList() {
-    List<NumberState> _numberStateList = List<NumberState>();
+    List<NumberState> _numberStateList = <NumberState>[];
     for (int n = 1; n <= 9; n++) {
       _numberStateList.add(NumberState(number: n));
     }

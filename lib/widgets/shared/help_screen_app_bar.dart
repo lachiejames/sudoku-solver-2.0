@@ -30,5 +30,5 @@ class HelpScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => new Size.fromHeight(this.appBar.preferredSize.height);
+  Size get preferredSize => Size.fromHeight(this.appBar.preferredSize.height);
 }

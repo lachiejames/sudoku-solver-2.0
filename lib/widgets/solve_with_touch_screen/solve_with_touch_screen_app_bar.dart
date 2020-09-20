@@ -42,5 +42,5 @@ class SolveWithTouchScreenAppBar extends StatelessWidget implements PreferredSiz
   }
 
   @override
-  Size get preferredSize => new Size.fromHeight(this.appBar.preferredSize.height);
+  Size get preferredSize => Size.fromHeight(this.appBar.preferredSize.height);
 }

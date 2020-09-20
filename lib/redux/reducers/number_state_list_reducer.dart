@@ -12,7 +12,7 @@ final Reducer<List<NumberState>> numberStateListReducer = combineReducers<List<N
 ]);
 
 List<NumberState> _makeNumberActive(List<NumberState> numberStateList, TileSelectedAction action) {
-  final List<NumberState> newNumberStateList = List<NumberState>();
+  final List<NumberState> newNumberStateList = <NumberState>[];
   numberStateList.forEach((numberState) {
     newNumberStateList.add(numberState.copyWith(isActive: true));
   });
@@ -21,7 +21,7 @@ List<NumberState> _makeNumberActive(List<NumberState> numberStateList, TileSelec
 }
 
 List<NumberState> _makeNumberInactive(List<NumberState> numberStateList, TileDeselectedAction action) {
-  final List<NumberState> newNumberStateList = List<NumberState>();
+  final List<NumberState> newNumberStateList = <NumberState>[];
   numberStateList.forEach((numberState) {
     newNumberStateList.add(numberState.copyWith(isActive: false));
   });
@@ -30,7 +30,7 @@ List<NumberState> _makeNumberInactive(List<NumberState> numberStateList, TileDes
 }
 
 List<NumberState> _makeNumberInactive2(List<NumberState> numberStateList, NumberPressedAction action) {
-  final List<NumberState> newNumberStateList = List<NumberState>();
+  final List<NumberState> newNumberStateList = <NumberState>[];
   numberStateList.forEach((numberState) {
     newNumberStateList.add(numberState.copyWith(isActive: false));
   });
@@ -39,7 +39,7 @@ List<NumberState> _makeNumberInactive2(List<NumberState> numberStateList, Number
 }
 
 List<NumberState> _makeNumberInactive3(List<NumberState> numberStateList, RestartAction action) {
-  final List<NumberState> newNumberStateList = List<NumberState>();
+  final List<NumberState> newNumberStateList = <NumberState>[];
   numberStateList.forEach((numberState) {
     newNumberStateList.add(numberState.copyWith(isActive: false));
   });
@@ -53,7 +53,7 @@ List<NumberState> _clearNumberStateListReducer(List<NumberState> numberStateList
     return numberStateList;
   }
   
-  final List<NumberState> newNumberStateList = List<NumberState>();
+  final List<NumberState> newNumberStateList = <NumberState>[];
   numberStateList.forEach((numberState) {
     newNumberStateList.add(numberState.copyWith(isActive: false));
   });
