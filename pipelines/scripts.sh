@@ -22,7 +22,7 @@ install_flutter() {
 
 run_unit_tests() {
     echo "Running Unit Tests"
-    flutter test --machine > tests.output
+    flutter test --machine >tests.output
 }
 
 install_emulator() {

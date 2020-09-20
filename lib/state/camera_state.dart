@@ -23,8 +23,10 @@ class CameraState {
       print(e);
       return null;
     }
-    final file = File('${(await getApplicationDocumentsDirectory()).path}/$path');
-    await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+    final file =
+        File('${(await getApplicationDocumentsDirectory()).path}/$path');
+    await file.writeAsBytes(byteData.buffer
+        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
 
     return file;
   }
@@ -34,7 +36,9 @@ class CameraState {
     print(MyValues.screenWidth);
     File _pickedImageFile;
 
-    final String imagePath = join((await getApplicationDocumentsDirectory()).path, '_pickedImageFile${DateTime.now().millisecondsSinceEpoch}.png');
+    final String imagePath = join(
+        (await getApplicationDocumentsDirectory()).path,
+        '_pickedImageFile${DateTime.now().millisecondsSinceEpoch}.png');
 
     try {
       await cameraController.takePicture(imagePath);
@@ -57,9 +61,11 @@ class CameraState {
 
     int imageWidth = pickedImage.width;
     int imageHeight = pickedImage.height;
-    this.croppedImageWidth = (imageWidth * MyValues.cameraWidth / MyValues.screenWidth).round();
+    this.croppedImageWidth =
+        (imageWidth * MyValues.cameraWidth / MyValues.screenWidth).round();
     int croppedImageHeight = this.croppedImageWidth;
-    int horizontalStartPixel = ((imageWidth - this.croppedImageWidth) / 2).round();
+    int horizontalStartPixel =
+        ((imageWidth - this.croppedImageWidth) / 2).round();
     int verticalStartPixel = ((imageHeight - croppedImageHeight) / 2).round();
 
     Image croppedImage = copyCrop(
@@ -70,14 +76,17 @@ class CameraState {
       croppedImageHeight,
     );
 
-    final String croppedImagePath = join((await getApplicationDocumentsDirectory()).path, '_croppedImageFile${DateTime.now().millisecondsSinceEpoch}.png');
+    final String croppedImagePath = join(
+        (await getApplicationDocumentsDirectory()).path,
+        '_croppedImageFile${DateTime.now().millisecondsSinceEpoch}.png');
     File _croppedImageFile;
     try {
       _croppedImageFile = await File(croppedImagePath).create();
-      assert(_croppedImageFile!=null);
+      assert(_croppedImageFile != null);
       _croppedImageFile.writeAsBytesSync(encodePng(croppedImage));
     } catch (e) {
-      print('ERROR: cropped image file could not be created at $croppedImagePath');
+      print(
+          'ERROR: cropped image file could not be created at $croppedImagePath');
       print(e);
     }
     return _croppedImageFile;
@@ -87,11 +96,15 @@ class CameraState {
     File pickedImageFile = await takePicture(cameraController);
     File croppedImageFile = await cropPictureToSudokuSize(pickedImageFile);
 
-    final FirebaseVisionImage _firebaseVisionImage = FirebaseVisionImage.fromFile(croppedImageFile);
-    final TextRecognizer _textRecognizer = FirebaseVision.instance.textRecognizer();
-    final VisionText _visionText = await _textRecognizer.processImage(_firebaseVisionImage);
+    final FirebaseVisionImage _firebaseVisionImage =
+        FirebaseVisionImage.fromFile(croppedImageFile);
+    final TextRecognizer _textRecognizer =
+        FirebaseVision.instance.textRecognizer();
+    final VisionText _visionText =
+        await _textRecognizer.processImage(_firebaseVisionImage);
 
-    final List<TextElement> textElements = getTextElementsFromVisionText(_visionText);
+    final List<TextElement> textElements =
+        getTextElementsFromVisionText(_visionText);
     final Sudoku sudoku = constructSudokuFromTextElements(textElements);
 
     Redux.store.dispatch(PhotoProcessedAction(sudoku));
@@ -102,7 +115,8 @@ class CameraState {
     for (TextBlock textBlock in visionText.blocks) {
       for (TextLine textLine in textBlock.lines) {
         for (TextElement textElement in textLine.elements) {
-          if (this.isNumeric(textElement.text) && textElement.text.length == 1) {
+          if (this.isNumeric(textElement.text) &&
+              textElement.text.length == 1) {
             textElements.add(textElement);
           }
         }
@@ -120,8 +134,10 @@ class CameraState {
       int value = int.parse(textElement.text);
       for (int row = 0; row < 9; row++) {
         for (int col = 0; col < 9; col++) {
-          if ((row * factor < tileImgY && tileImgY < (row + 1) * factor) && (col * factor < tileImgX && tileImgX < (col + 1) * factor)) {
-            sudoku.addValueToTile(value, sudoku.getTileStateAt(row + 1, col + 1));
+          if ((row * factor < tileImgY && tileImgY < (row + 1) * factor) &&
+              (col * factor < tileImgX && tileImgX < (col + 1) * factor)) {
+            sudoku.addValueToTile(
+                value, sudoku.getTileStateAt(row + 1, col + 1));
           }
         }
       }

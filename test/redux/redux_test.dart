@@ -34,7 +34,8 @@ void main() {
       HashMap<TileKey, TileState> tileStateMap = state.tileStateMap;
       expect(tileStateMap.length, 81);
       expect(tileStateMap.containsKey(TileKey(row: 6, col: 9)), true);
-      expect(tileStateMap[TileKey(row: 6, col: 9)].toString(), 'TileState(row=6, col=9, value=null, isSelected=false)');
+      expect(tileStateMap[TileKey(row: 6, col: 9)].toString(),
+          'TileState(row=6, col=9, value=null, isSelected=false)');
     });
 
     test('AppState.numberStateMap correctly initialised', () {

@@ -26,7 +26,8 @@ void main() {
     }
 
     Color getSolveMySudokuButtonWidgetColor(WidgetTester tester) {
-      return ((tester.firstWidget(find.byType(RaisedButton)) as RaisedButton)).color;
+      return ((tester.firstWidget(find.byType(RaisedButton)) as RaisedButton))
+          .color;
     }
 
     setUp(() async {
@@ -41,7 +42,8 @@ void main() {
         expect(solveMySudokuButtonWidget, isNotNull);
       });
 
-      testWidgets('should display "SOLVE MY SUDOKU"', (WidgetTester tester) async {
+      testWidgets('should display "SOLVE MY SUDOKU"',
+          (WidgetTester tester) async {
         await createSolveMySudokuButtonWidget(tester);
 
         expect(find.text('SOLVE MY SUDOKU'), findsOneWidget);
@@ -64,7 +66,8 @@ void main() {
         expect(getSolveMySudokuButtonWidgetColor(tester), MyColors.grey);
       });
 
-      testWidgets('should start solving the sudoku', (WidgetTester tester) async {
+      testWidgets('should start solving the sudoku',
+          (WidgetTester tester) async {
         await createSolveMySudokuButtonWidget(tester);
 
         await tester.tap(find.byWidget(solveMySudokuButtonWidget));
@@ -95,7 +98,8 @@ void main() {
         });
       });
 
-      testWidgets('should have stopped solving the sudoku', (WidgetTester tester) async {
+      testWidgets('should have stopped solving the sudoku',
+          (WidgetTester tester) async {
         await createSolveMySudokuButtonWidget(tester);
 
         // Uses real a real async instead of fakeAsync like other tests

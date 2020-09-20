@@ -14,7 +14,8 @@ final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
   TypedReducer<GameState, TakePhotoAction>(_takePhotoReducer),
   TypedReducer<GameState, PhotoProcessedAction>(_photoProcessedReducer),
   TypedReducer<GameState, RetakePhotoAction>(_retakePhotoReducer),
-  TypedReducer<GameState, InvalidTilesPresentAction>(_invalidTilesPresentReducer),
+  TypedReducer<GameState, InvalidTilesPresentAction>(
+      _invalidTilesPresentReducer),
 ]);
 
 GameState _solveSudokuReducer(GameState gameState, SolveSudokuAction action) {
@@ -30,7 +31,8 @@ GameState _sudokuSolvedReducer(GameState gameState, SudokuSolvedAction action) {
   return GameState.Solved;
 }
 
-GameState _setToSolvedIfAllTilesFilled(GameState gameState, NumberPressedAction action) {
+GameState _setToSolvedIfAllTilesFilled(
+    GameState gameState, NumberPressedAction action) {
   int numValues = 0;
   Redux.store.state.tileStateMap.forEach((tileKey, tileState) {
     if (tileState.value != null) {
@@ -56,7 +58,8 @@ GameState _takePhotoReducer(GameState gameState, TakePhotoAction action) {
   return GameState.ProcessingPhoto;
 }
 
-GameState _photoProcessedReducer(GameState gameState, PhotoProcessedAction action) {
+GameState _photoProcessedReducer(
+    GameState gameState, PhotoProcessedAction action) {
   return GameState.PhotoProcessed;
 }
 
@@ -64,6 +67,7 @@ GameState _retakePhotoReducer(GameState gameState, RetakePhotoAction action) {
   return GameState.TakingPhoto;
 }
 
-GameState _invalidTilesPresentReducer(GameState gameState, InvalidTilesPresentAction action) {
+GameState _invalidTilesPresentReducer(
+    GameState gameState, InvalidTilesPresentAction action) {
   return GameState.InvalidTilesPresent;
 }

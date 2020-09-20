@@ -9,7 +9,8 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/solve_with_camera_screen_drop_down_menu_widget.dart';
 
-class SolveWithCameraScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
+class SolveWithCameraScreenAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
   // Required so I can return preferredSize
   final AppBar appBar;
   SolveWithCameraScreenAppBar(this.appBar, {Key key}) : super(key: key);
@@ -36,7 +37,9 @@ class SolveWithCameraScreenAppBar extends StatelessWidget implements PreferredSi
           Redux.store.dispatch(ChangeScreenAction(ScreenState.HomeScreen));
           Navigator.pop(context);
         },
-        icon: (Platform.isAndroid) ? const Icon(Icons.arrow_back) : const Icon(Icons.arrow_back_ios),
+        icon: (Platform.isAndroid)
+            ? const Icon(Icons.arrow_back)
+            : const Icon(Icons.arrow_back_ios),
       ),
     );
   }

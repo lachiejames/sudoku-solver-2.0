@@ -58,6 +58,7 @@ class VerifyPhotoCreatedSudokuAction {
   final Sudoku constructedSudoku;
   VerifyPhotoCreatedSudokuAction(this.constructedSudoku);
 }
+
 class TakePhotoAction {
   TakePhotoAction();
 }
@@ -78,6 +79,7 @@ class CheckForInvalidTilesAction {
 class InvalidTilesPresentAction {
   InvalidTilesPresentAction();
 }
+
 class ProcessPhotoAction {
   final CameraController cameraController;
   ProcessPhotoAction(this.cameraController);

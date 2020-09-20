@@ -38,7 +38,8 @@ class _SolveItButtonWidgetState extends State<SolveItButtonWidget> {
                 MyStrings.solveItButtonText,
                 style: MyStyles.buttonTextStyle,
               ),
-              onPressed: (gameState == GameState.IsSolving || gameState == GameState.InvalidTilesPresent)
+              onPressed: (gameState == GameState.IsSolving ||
+                      gameState == GameState.InvalidTilesPresent)
                   ? null
                   : () async {
                       Redux.store.dispatch(SolveSudokuAction());

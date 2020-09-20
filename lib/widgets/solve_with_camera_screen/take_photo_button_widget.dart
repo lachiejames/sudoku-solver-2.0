@@ -30,7 +30,9 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
             child: RaisedButton(
               shape: MyStyles.buttonShape,
               padding: MyStyles.buttonPadding,
-              color: (gameState != GameState.TakingPhoto) ? MyColors.grey : MyColors.blue,
+              color: (gameState != GameState.TakingPhoto)
+                  ? MyColors.grey
+                  : MyColors.blue,
               child: Text(
                 MyStrings.takePhotoButtonText,
                 style: MyStyles.buttonTextStyle,

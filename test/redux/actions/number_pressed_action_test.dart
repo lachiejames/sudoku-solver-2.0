@@ -27,7 +27,8 @@ void main() {
 
     setUp(() {
       // Need a tile to be selected before add a number
-      dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(
+          TileSelectedAction(state.tileStateMap[tileKey]));
       pressedNumber = state.numberStateList[6];
     });
 
@@ -39,13 +40,16 @@ void main() {
       expect(state.tileStateMap[tileKey].value, 7);
     });
 
-    test('sets tile.value to selected number, even if tile.value was not null before', () {
+    test(
+        'sets tile.value to selected number, even if tile.value was not null before',
+        () {
       expect(state.tileStateMap[tileKey].value, null);
 
       dispatchActionAndUpdateState(NumberPressedAction(pressedNumber));
       expect(state.tileStateMap[tileKey].value, 7);
 
-      dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(
+          TileSelectedAction(state.tileStateMap[tileKey]));
       pressedNumber = state.numberStateList[1];
       dispatchActionAndUpdateState(NumberPressedAction(pressedNumber));
       expect(state.tileStateMap[tileKey].value, 2);
@@ -81,7 +85,9 @@ void main() {
     });
 
     // TODO: implement this
-    test('if pressing that number solved the game, topText displays "SOLVED" in green', () {
+    test(
+        'if pressing that number solved the game, topText displays "SOLVED" in green',
+        () {
       // dispatchActionAndUpdateState(NumberPressedAction(pressedNumber));
 
       // expect(state.topTextState.text, 'SOLVED');
@@ -89,7 +95,8 @@ void main() {
     });
 
     // TODO: implement this
-    test('if pressing that number solved the game, gameState should be SOLVED', () {
+    test('if pressing that number solved the game, gameState should be SOLVED',
+        () {
       // dispatchActionAndUpdateState(NumberPressedAction(pressedNumber));
 
       // expect(state.topTextState.text, 'SOLVED');

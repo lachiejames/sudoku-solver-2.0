@@ -29,7 +29,6 @@ class Redux {
   }
 
   static Future<void> init() async {
-    
     sharedPreferences = await SharedPreferences.getInstance();
 
     _store = Store<AppState>(

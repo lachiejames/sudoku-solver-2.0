@@ -6,7 +6,8 @@ final Reducer<CameraState> cameraStateReducer = combineReducers<CameraState>([
   TypedReducer<CameraState, ProcessPhotoAction>(_processPhotoReducer),
 ]);
 
-CameraState _processPhotoReducer(CameraState cameraState, ProcessPhotoAction action) {
-cameraState.getSudokuFromCamera(action.cameraController);
+CameraState _processPhotoReducer(
+    CameraState cameraState, ProcessPhotoAction action) {
+  cameraState.getSudokuFromCamera(action.cameraController);
   return cameraState;
 }

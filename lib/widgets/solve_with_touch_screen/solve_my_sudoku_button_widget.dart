@@ -12,7 +12,8 @@ class SolveMySudokuButtonWidget extends StatefulWidget {
   SolveMySudokuButtonWidget({Key key}) : super(key: key);
 
   @override
-  _SolveMySudokuButtonWidgetState createState() => _SolveMySudokuButtonWidgetState();
+  _SolveMySudokuButtonWidgetState createState() =>
+      _SolveMySudokuButtonWidgetState();
 }
 
 class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
@@ -30,13 +31,16 @@ class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
             child: RaisedButton(
               shape: MyStyles.buttonShape,
               padding: MyStyles.buttonPadding,
-              color: (gameState == GameState.IsSolving) ? MyColors.grey : MyColors.blue,
+              color: (gameState == GameState.IsSolving)
+                  ? MyColors.grey
+                  : MyColors.blue,
               child: Text(
                 MyStrings.solveMySudokuButtonText,
                 style: MyStyles.buttonTextStyle,
               ),
               // Should be disabled while solving
-              onPressed: (gameState == GameState.IsSolving || gameState==GameState.InvalidTilesPresent)
+              onPressed: (gameState == GameState.IsSolving ||
+                      gameState == GameState.InvalidTilesPresent)
                   ? null
                   : () {
                       Redux.store.dispatch(SolveSudokuAction());

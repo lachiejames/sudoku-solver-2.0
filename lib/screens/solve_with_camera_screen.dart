@@ -43,7 +43,9 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
           appBar: SolveWithCameraScreenAppBar(AppBar()),
           backgroundColor: MyColors.pink,
           body: SingleChildScrollView(
-            child: (gameState == GameState.PhotoProcessed || gameState == GameState.IsSolving || gameState == GameState.Solved)
+            child: (gameState == GameState.PhotoProcessed ||
+                    gameState == GameState.IsSolving ||
+                    gameState == GameState.Solved)
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -68,8 +70,12 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
                           Container(
                             decoration: BoxDecoration(
                               border: Border(
-                                top: BorderSide(width: MyValues.verticalPadding, color: MyColors.transparent),
-                                bottom: BorderSide(width: MyValues.verticalPadding, color: MyColors.transparent),
+                                top: BorderSide(
+                                    width: MyValues.verticalPadding,
+                                    color: MyColors.transparent),
+                                bottom: BorderSide(
+                                    width: MyValues.verticalPadding,
+                                    color: MyColors.transparent),
                               ),
                             ),
                           ),

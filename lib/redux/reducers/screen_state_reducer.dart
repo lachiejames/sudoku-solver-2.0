@@ -7,6 +7,7 @@ final Reducer<ScreenState> screenStateReducer = combineReducers<ScreenState>([
   TypedReducer<ScreenState, ChangeScreenAction>(_changeScreenReducer),
 ]);
 
-ScreenState _changeScreenReducer(ScreenState screenState, ChangeScreenAction action) {
+ScreenState _changeScreenReducer(
+    ScreenState screenState, ChangeScreenAction action) {
   return action.screenState;
 }

@@ -58,6 +58,7 @@ class MyApp extends StatelessWidget {
     // Remove status bar and system navigation bar
     SystemChrome.setEnabledSystemUIOverlays([]);
     // Prevent screen rotation
-    SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp]);
+    SystemChrome.setPreferredOrientations(
+        <DeviceOrientation>[DeviceOrientation.portraitUp]);
   }
 }

@@ -32,7 +32,9 @@ class _SudokuWidgetState extends State<SudokuWidget> {
               ),
               child: this.makeTable(),
             ),
-            (gameState == GameState.IsSolving) ? MyWidgets.makeProgressIndicator() : MyWidgets.getEmptyWidget(),
+            (gameState == GameState.IsSolving)
+                ? MyWidgets.makeProgressIndicator()
+                : MyWidgets.getEmptyWidget(),
           ],
         );
       },

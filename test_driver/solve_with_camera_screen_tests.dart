@@ -21,7 +21,7 @@ void main() async {
       await driver.tap(find.text(MyStrings.solveWithCameraButtonText));
       await driver.getText(find.text(MyStrings.topTextTakingPhoto));
     });
-    test('pressing "TAKE PHOTO" replaces the CameraWidget with a SudokuWidget', () async {
-    });
+    test('pressing "TAKE PHOTO" replaces the CameraWidget with a SudokuWidget',
+        () async {});
   });
 }

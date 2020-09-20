@@ -24,19 +24,27 @@ void main() {
   group('ChangeScreenAction ->', () {
     test('updates ScreenState to the provided Screen', () {
       expect(state.screenState, ScreenState.HomeScreen);
-      dispatchActionAndUpdateState(ChangeScreenAction(ScreenState.SolveWithCameraScreen));
+      dispatchActionAndUpdateState(
+          ChangeScreenAction(ScreenState.SolveWithCameraScreen));
       expect(state.screenState, ScreenState.SolveWithCameraScreen);
     });
 
-    test('if updating to SolveWithCameraScreen, should set topText to "Align with camera" in white', () {
-      dispatchActionAndUpdateState(ChangeScreenAction(ScreenState.SolveWithCameraScreen));
+    test(
+        'if updating to SolveWithCameraScreen, should set topText to "Align with camera" in white',
+        () {
+      dispatchActionAndUpdateState(
+          ChangeScreenAction(ScreenState.SolveWithCameraScreen));
       expect(state.topTextState.text, MyStrings.topTextTakingPhoto);
       expect(state.topTextState.color, MyColors.white);
     });
 
-    test('if updating to any other screen after, should set topText back to "Pick a tile" in white', () {
-      dispatchActionAndUpdateState(ChangeScreenAction(ScreenState.SolveWithCameraScreen));
-      dispatchActionAndUpdateState(ChangeScreenAction(ScreenState.SolveWithTouchScreen));
+    test(
+        'if updating to any other screen after, should set topText back to "Pick a tile" in white',
+        () {
+      dispatchActionAndUpdateState(
+          ChangeScreenAction(ScreenState.SolveWithCameraScreen));
+      dispatchActionAndUpdateState(
+          ChangeScreenAction(ScreenState.SolveWithTouchScreen));
       expect(state.topTextState.text, MyStrings.topTextNoTileSelected);
       expect(state.topTextState.color, MyColors.white);
     });

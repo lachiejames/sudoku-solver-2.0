@@ -42,7 +42,8 @@ void main() {
       });
     });
     group('while solving -', () {
-      testWidgets('should display a progress indicator', (WidgetTester tester) async {
+      testWidgets('should display a progress indicator',
+          (WidgetTester tester) async {
         await createSudokuWidget(tester);
 
         Redux.store.dispatch(SolveSudokuAction());
@@ -53,7 +54,8 @@ void main() {
     });
 
     group('after solving -', () {
-      testWidgets('should NOT display a progress indicator', (WidgetTester tester) async {
+      testWidgets('should NOT display a progress indicator',
+          (WidgetTester tester) async {
         await createSudokuWidget(tester);
 
         await tester.runAsync(() async {

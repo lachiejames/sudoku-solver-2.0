@@ -6,7 +6,6 @@ import 'package:sudoku_solver_2/state/tile_state.dart';
 /// Used when solving the sudoku
 /// Mutable for more efficient caclulations
 class Sudoku {
-
   /// Store TileKey and Tile pairs, for all 81 tiles on a Sudoku
   final HashMap<TileKey, TileState> tileStateMap;
 
@@ -67,7 +66,8 @@ class Sudoku {
   /// Assigns a given value to a given tile
   void addValueToTile(int value, TileState tileState) {
     // tile already has a value, that is not this value
-    if ((tileState.value == null && value == null) || (tileState.value != null && value != null)) {
+    if ((tileState.value == null && value == null) ||
+        (tileState.value != null && value != null)) {
       tileState.value = value;
       return;
     }

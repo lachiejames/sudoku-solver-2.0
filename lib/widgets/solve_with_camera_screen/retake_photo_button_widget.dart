@@ -12,7 +12,8 @@ class RetakePhotoButtonWidget extends StatefulWidget {
   RetakePhotoButtonWidget({Key key}) : super(key: key);
 
   @override
-  _RetakePhotoButtonWidgetState createState() => _RetakePhotoButtonWidgetState();
+  _RetakePhotoButtonWidgetState createState() =>
+      _RetakePhotoButtonWidgetState();
 }
 
 class _RetakePhotoButtonWidgetState extends State<RetakePhotoButtonWidget> {
@@ -30,7 +31,9 @@ class _RetakePhotoButtonWidgetState extends State<RetakePhotoButtonWidget> {
             child: RaisedButton(
               shape: MyStyles.buttonShape,
               padding: MyStyles.buttonPadding,
-              color: (gameState != GameState.TakingPhoto) ? MyColors.grey : MyColors.blue,
+              color: (gameState != GameState.TakingPhoto)
+                  ? MyColors.grey
+                  : MyColors.blue,
               child: Text(
                 MyStrings.retakePhotoButtonText,
                 style: MyStyles.buttonTextStyle,

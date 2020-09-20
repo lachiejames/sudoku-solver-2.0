@@ -18,7 +18,8 @@ class TileKey {
     return 'TileKey($row, $col)';
   }
 
-  static List<TileKey> makeTileKeysFromRowsAndCols(List<int> rows, List<int> cols) {
+  static List<TileKey> makeTileKeysFromRowsAndCols(
+      List<int> rows, List<int> cols) {
     List<TileKey> _tileKeys = <TileKey>[];
     for (int row in rows) {
       for (int col in cols) {

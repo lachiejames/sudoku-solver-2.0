@@ -60,7 +60,8 @@ void main() {
     });
 
     test('sets topText to "Pick a tile"', () {
-      dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(
+          TileSelectedAction(state.tileStateMap[tileKey]));
       expect(state.topTextState.text, MyStrings.topTextTileSelected);
 
       dispatchActionAndUpdateState(RestartAction());
@@ -69,7 +70,8 @@ void main() {
     });
 
     test('makes all numberStates inactive', () {
-      dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(
+          TileSelectedAction(state.tileStateMap[tileKey]));
 
       state.numberStateList.forEach((numberState) {
         expect(numberState.isActive, true);

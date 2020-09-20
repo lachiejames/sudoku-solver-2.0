@@ -36,8 +36,12 @@ class _TileWidgetState extends State<TileWidget> {
             decoration: BoxDecoration(
               color: _determineTileColor(tileState),
               border: Border(
-                bottom: BorderSide(width: (tileState.row == 3 || tileState.row == 6) ? 3 : 0, color: MyColors.black),
-                right: BorderSide(width: (tileState.col == 3 || tileState.col == 6) ? 3 : 0, color: MyColors.black),
+                bottom: BorderSide(
+                    width: (tileState.row == 3 || tileState.row == 6) ? 3 : 0,
+                    color: MyColors.black),
+                right: BorderSide(
+                    width: (tileState.col == 3 || tileState.col == 6) ? 3 : 0,
+                    color: MyColors.black),
               ),
             ),
             child: Stack(
@@ -51,7 +55,8 @@ class _TileWidgetState extends State<TileWidget> {
                       fontSize: MyValues.tileFontSize,
                       fontFamily: MyStyles.fontStyleNumber,
                       fontWeight: FontWeight.w400,
-                      color: (tileState.isInvalid) ? MyColors.red : MyColors.black,
+                      color:
+                          (tileState.isInvalid) ? MyColors.red : MyColors.black,
                     ),
                     textDirection: TextDirection.ltr,
                   ),

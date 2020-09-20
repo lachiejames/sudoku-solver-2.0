@@ -12,7 +12,8 @@ class SolveWithCameraHelpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Redux.store.dispatch(ChangeScreenAction(ScreenState.SolveWithCameraHelpScreen));
+    Redux.store
+        .dispatch(ChangeScreenAction(ScreenState.SolveWithCameraHelpScreen));
 
     return Scaffold(
       backgroundColor: MyColors.pink,

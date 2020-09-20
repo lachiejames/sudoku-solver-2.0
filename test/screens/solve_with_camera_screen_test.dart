@@ -17,16 +17,16 @@ void main() {
     //   );
     // }
 
-  //   setUp(() async {
-  //     SharedPreferences.setMockInitialValues({});
-        // await Redux.init();
-  //   });
+    //   setUp(() async {
+    //     SharedPreferences.setMockInitialValues({});
+    // await Redux.init();
+    //   });
 
-  //   group('initial state -', () {
-  //     testWidgets('should be defined', (WidgetTester tester) async {
-  //       await createJustPlayHelpScreen(tester);
-  //       expect(solveWithCameraScreen, isNotNull);
-  //     });
-  //   });
+    //   group('initial state -', () {
+    //     testWidgets('should be defined', (WidgetTester tester) async {
+    //       await createJustPlayHelpScreen(tester);
+    //       expect(solveWithCameraScreen, isNotNull);
+    //     });
+    //   });
   });
 }

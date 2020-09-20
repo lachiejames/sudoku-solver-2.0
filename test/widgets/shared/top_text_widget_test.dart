@@ -44,31 +44,39 @@ void main() {
     });
 
     group('after tile is pressed -', () {
-      testWidgets('should display "Pick a number", if tile has no value', (WidgetTester tester) async {
+      testWidgets('should display "Pick a number", if tile has no value',
+          (WidgetTester tester) async {
         await createNumberBarWidget(tester);
 
-        Redux.store.dispatch(TileSelectedAction(Redux.store.state.tileStateMap[tileKey]));
+        Redux.store.dispatch(
+            TileSelectedAction(Redux.store.state.tileStateMap[tileKey]));
         await tester.pump(debounceTime);
 
         expect(find.text('Pick a number'), findsOneWidget);
       });
 
-      testWidgets('should display "Tap to remove", if tile has a value', (WidgetTester tester) async {
+      testWidgets('should display "Tap to remove", if tile has a value',
+          (WidgetTester tester) async {
         await createNumberBarWidget(tester);
 
-        Redux.store.state.tileStateMap[tileKey] = Redux.store.state.tileStateMap[tileKey].copyWith(value: 1);
-        Redux.store.dispatch(TileSelectedAction(Redux.store.state.tileStateMap[tileKey]));
+        Redux.store.state.tileStateMap[tileKey] =
+            Redux.store.state.tileStateMap[tileKey].copyWith(value: 1);
+        Redux.store.dispatch(
+            TileSelectedAction(Redux.store.state.tileStateMap[tileKey]));
         await tester.pump(debounceTime);
 
         expect(find.text('Tap to remove'), findsOneWidget);
       });
 
-      testWidgets('should display "Pick a tile", if tile is pressed again', (WidgetTester tester) async {
+      testWidgets('should display "Pick a tile", if tile is pressed again',
+          (WidgetTester tester) async {
         await createNumberBarWidget(tester);
 
-        Redux.store.dispatch(TileSelectedAction(Redux.store.state.tileStateMap[tileKey]));
+        Redux.store.dispatch(
+            TileSelectedAction(Redux.store.state.tileStateMap[tileKey]));
         await tester.pump(debounceTime);
-        Redux.store.dispatch(TileDeselectedAction(Redux.store.state.tileStateMap[tileKey]));
+        Redux.store.dispatch(
+            TileDeselectedAction(Redux.store.state.tileStateMap[tileKey]));
         await tester.pump(debounceTime);
 
         expect(find.text('Pick a tile'), findsOneWidget);
@@ -76,7 +84,8 @@ void main() {
     });
 
     group('while solving -', () {
-      testWidgets('should display "AI thinking..."', (WidgetTester tester) async {
+      testWidgets('should display "AI thinking..."',
+          (WidgetTester tester) async {
         await createNumberBarWidget(tester);
 
         Redux.store.dispatch(SolveSudokuAction());
@@ -85,7 +94,8 @@ void main() {
         expect(find.text('AI thinking...'), findsOneWidget);
       });
 
-      testWidgets('should display "SOLVED" after solving', (WidgetTester tester) async {
+      testWidgets('should display "SOLVED" after solving',
+          (WidgetTester tester) async {
         await createNumberBarWidget(tester);
 
         await tester.runAsync(() async {

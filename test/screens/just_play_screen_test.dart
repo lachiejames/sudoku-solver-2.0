@@ -38,7 +38,8 @@ void main() {
         expect(justPlayScreen, isNotNull);
       });
 
-      testWidgets('should contain the expected widgets', (WidgetTester tester) async {
+      testWidgets('should contain the expected widgets',
+          (WidgetTester tester) async {
         await createJustPlayScreen(tester);
         expect(find.byType(TopTextWidget), findsOneWidget);
         expect(find.byType(NumberBarWidget), findsOneWidget);
@@ -46,7 +47,8 @@ void main() {
         expect(find.byType(NewGameButtonWidget), findsOneWidget);
       });
 
-      testWidgets('top text should be "Pick a tile", in white', (WidgetTester tester) async {
+      testWidgets('top text should be "Pick a tile", in white',
+          (WidgetTester tester) async {
         await createJustPlayScreen(tester);
         expect(find.text('Pick a tile'), findsOneWidget);
       });

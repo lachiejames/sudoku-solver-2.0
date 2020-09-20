@@ -26,7 +26,8 @@ class _CameraWidgetState extends State<CameraWidget> {
       print(e);
     }
 
-    _cameraController = CameraController(_cameraDescription, ResolutionPreset.max);
+    _cameraController =
+        CameraController(_cameraDescription, ResolutionPreset.max);
 
     try {
       await _cameraController.initialize();
@@ -60,7 +61,7 @@ class _CameraWidgetState extends State<CameraWidget> {
       distinct: true,
       converter: (store) => store.state.gameState,
       builder: (context, gameState) {
-        if (gameState==GameState.ProcessingPhoto) {
+        if (gameState == GameState.ProcessingPhoto) {
           Redux.store.dispatch(ProcessPhotoAction(_cameraController));
         }
         return Stack(
@@ -69,10 +70,14 @@ class _CameraWidgetState extends State<CameraWidget> {
             Container(
               decoration: BoxDecoration(
                 border: Border(
-                  top: BorderSide(width: MyValues.verticalPadding, color: MyColors.pink),
-                  bottom: BorderSide(width: MyValues.verticalPadding, color: MyColors.pink),
-                  left: BorderSide(width: MyValues.horizontalPadding, color: MyColors.pink),
-                  right: BorderSide(width: MyValues.horizontalPadding, color: MyColors.pink),
+                  top: BorderSide(
+                      width: MyValues.verticalPadding, color: MyColors.pink),
+                  bottom: BorderSide(
+                      width: MyValues.verticalPadding, color: MyColors.pink),
+                  left: BorderSide(
+                      width: MyValues.horizontalPadding, color: MyColors.pink),
+                  right: BorderSide(
+                      width: MyValues.horizontalPadding, color: MyColors.pink),
                 ),
               ),
             ),
