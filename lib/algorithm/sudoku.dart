@@ -65,7 +65,7 @@ class Sudoku {
 
   /// Assigns a given value to a given tile
   void addValueToTile(int value, TileState tileState) {
-    // tile already has a value, that is not this value
+    // if tile already has a value, that is not this value
     if ((tileState.value == null && value == null) ||
         (tileState.value != null && value != null)) {
       tileState.value = value;
@@ -84,6 +84,7 @@ class Sudoku {
     tileState.value = value;
   }
 
+  /// Returns all tiles in the given row
   List<TileState> getTilesInRow(int row) {
     List<TileState> _tilesInRow = <TileState>[];
     for (int col = 1; col <= 9; col++) {
@@ -92,6 +93,7 @@ class Sudoku {
     return _tilesInRow;
   }
 
+  /// Returns all tiles in the given column
   List<TileState> getTilesInCol(int col) {
     List<TileState> _tilesInCol = <TileState>[];
     for (int row = 1; row <= 9; row++) {
@@ -100,6 +102,7 @@ class Sudoku {
     return _tilesInCol;
   }
 
+  /// Returns all tiles in the given segment
   List<TileState> getTilesInSegment(int segment) {
     List<TileState> _tilesInSegment = <TileState>[];
     for (TileKey tileKey in TileKey.getTileKeysInSegment(segment)) {
@@ -108,6 +111,7 @@ class Sudoku {
     return _tilesInSegment;
   }
 
+  /// Returns all values on the tiles in the given row
   List<int> getValuesInRow(int row) {
     List<int> _valuesInRow = <int>[];
     for (int col = 1; col <= 9; col++) {
@@ -119,6 +123,7 @@ class Sudoku {
     return _valuesInRow;
   }
 
+  /// Returns all values on the tiles in the given column
   List<int> getValuesInCol(int col) {
     List<int> _valuesInCol = <int>[];
     for (int row = 1; row <= 9; row++) {
@@ -130,6 +135,7 @@ class Sudoku {
     return _valuesInCol;
   }
 
+  /// Returns all values on the tiles in the given segment
   List<int> getValuesInSegment(int segment) {
     List<int> _valuesInSegment = <int>[];
     for (TileKey tileKey in TileKey.getTileKeysInSegment(segment)) {
@@ -141,6 +147,8 @@ class Sudoku {
     return _valuesInSegment;
   }
 
+  /// Returns all list of values that could be added to the given tile without
+  /// violating constraints
   List<int> getPossibleValuesAtTile(TileState tile) {
     if (tile.value != null) {
       return [];
@@ -164,6 +172,7 @@ class Sudoku {
     return possibleValues;
   }
 
+  /// Contains only unique values in all rows, columns, and segments
   bool allConstraintsSatisfied() {
     for (int i = 1; i <= 9; i++) {
       List<int> valuesInRow = getValuesInRow(i);
@@ -179,11 +188,13 @@ class Sudoku {
     return true;
   }
 
+  /// Every tile has a value
   bool isFull() {
     assert(0 <= this.numValues && this.numValues <= 81);
     return this.numValues == 81;
   }
 
+  /// Returns a tile without a value if one exists
   TileState getNextTileWithoutValue() {
     if (this.isFull()) {
       return null;
@@ -200,6 +211,7 @@ class Sudoku {
     return null;
   }
 
+  /// Returns tile positions where the tile is violating a constaint
   List<TileKey> getInvalidTileKeys() {
     List<TileState> invalidTiles = <TileState>[];
     for (int i = 1; i <= 9; i++) {
@@ -244,9 +256,9 @@ class Sudoku {
     invalidTiles = invalidTiles.toSet().toList();
 
     List<TileKey> invalidTileKeys = <TileKey>[];
-    invalidTiles.forEach((tile) {
+    for (TileState tile in invalidTiles) {
       invalidTileKeys.add(TileKey(row: tile.row, col: tile.col));
-    });
+    }
 
     // Make it unique
     return invalidTileKeys;
