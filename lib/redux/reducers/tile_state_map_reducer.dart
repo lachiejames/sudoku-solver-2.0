@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'package:redux/redux.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
-import 'package:sudoku_solver_2/constants/my_games.dart';
+import 'package:sudoku_solver_2/constants/my_games.dart' as my_games;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
@@ -59,7 +59,7 @@ HashMap<TileKey, TileState> _tileDeselectedReducer(
 
 HashMap<TileKey, TileState> _loadExampleValues(
     HashMap<TileKey, TileState> tileStateMap, LoadPlayScreenWithSudokuAction action) {
-  final List<List<int>> exampleValues = MyGames.games[action.gameNumber];
+  final List<List<int>> exampleValues = my_games.games[action.gameNumber];
 
   final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
   tileStateMap.forEach((tileKey, tileState) {

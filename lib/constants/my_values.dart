@@ -1,26 +1,27 @@
 /// Stores some numbers used within the app
-class MyValues {
-  // Set when app initialises
-  static double screenHeight;
-  static double screenWidth;
-  static double cameraHeight;
-  static double cameraWidth;
 
-  // Used for positioning CameraWidget
-  static final double pad = 32;
-  static double verticalPadding = (screenHeight - cameraHeight) / 2 - pad;
-  static double horizontalPadding = pad;
+library my_values;
 
-  // UI stuff
-  static final double topTextFontSize = 40;
-  static final double appBarFontSize = 30;
-  static final double howToTextFontSize = 40;
-  static final double buttonTextFontSize = 40;
-  static final double dropDownMenuFontSize = 40;
-  static final double toastFontSize = 15;
-  static final double tileFontSize = 15;
-  static final double numberFontSize = 15;
+// Set when app initialises
+double screenHeight;
+double screenWidth;
+double cameraHeight;
+double cameraWidth;
 
-  // Solving will time out after this time has elapsed
-  static final int maxSolveTime = 30000;
-}
+// Used for positioning CameraWidget
+final double pad = 32;
+double verticalPadding = (screenHeight - cameraHeight) / 2 - pad;
+double horizontalPadding = pad;
+
+// UI stuff
+final double topTextFontSize = 40;
+final double appBarFontSize = 30;
+final double howToTextFontSize = 40;
+final double buttonTextFontSize = 40;
+final double dropDownMenuFontSize = 40;
+final double toastFontSize = 15;
+final double tileFontSize = 15;
+final double numberFontSize = 15;
+
+// Solving will time out after this time has elapsed
+final int maxSolveTime = 30000;

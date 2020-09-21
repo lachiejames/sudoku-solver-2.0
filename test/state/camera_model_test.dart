@@ -3,7 +3,7 @@ import 'package:image/image.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart';
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 
 void main() {
   CameraState cameraState;
@@ -104,8 +104,8 @@ void main() {
 
       setUp(() async {
         largeImageFile = await cameraState.getImageFileFromAssets('mock_sudoku.png');
-        MyValues.screenWidth = 411;
-        MyValues.cameraWidth = 347;
+        my_values.screenWidth = 411;
+        my_values.cameraWidth = 347;
       });
 
       test('cropped image file is not null', () async {

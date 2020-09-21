@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
-import 'package:sudoku_solver_2/constants/my_styles.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
@@ -38,10 +38,10 @@ class _TileWidgetState extends State<TileWidget> {
               border: Border(
                 bottom: BorderSide(
                     width: (tileState.row == 3 || tileState.row == 6) ? 3 : 0,
-                    color: MyColors.black),
+                    color: my_colors.black),
                 right: BorderSide(
                     width: (tileState.col == 3 || tileState.col == 6) ? 3 : 0,
-                    color: MyColors.black),
+                    color: my_colors.black),
               ),
             ),
             child: Stack(
@@ -52,10 +52,10 @@ class _TileWidgetState extends State<TileWidget> {
                   child: Text(
                     (tileState.value == null) ? '' : '${tileState.value}',
                     style: TextStyle(
-                      fontSize: MyValues.tileFontSize,
-                      fontFamily: MyStyles.fontStyleNumber,
+                      fontSize: my_values.tileFontSize,
+                      fontFamily: my_styles.fontStyleNumber,
                       fontWeight: FontWeight.w400,
-                      color: (tileState.isInvalid) ? MyColors.red : MyColors.black,
+                      color: (tileState.isInvalid) ? my_colors.red : my_colors.black,
                     ),
                     textDirection: TextDirection.ltr,
                   ),
@@ -65,7 +65,7 @@ class _TileWidgetState extends State<TileWidget> {
                 (tileState.isSelected && tileState.value != null)
                     ? Text(
                         'X',
-                        style: MyStyles.tileWithRemovableValueTextStyle,
+                        style: my_styles.tileWithRemovableValueTextStyle,
                         textDirection: TextDirection.ltr,
                       )
                     : Container(),
@@ -91,11 +91,11 @@ class _TileWidgetState extends State<TileWidget> {
 
   Color _determineTileColor(TileState tileState) {
     if (tileState.isOriginalTile) {
-      return MyColors.grey;
+      return my_colors.grey;
     } else if (tileState.isSelected) {
-      return MyColors.green;
+      return my_colors.green;
     } else {
-      return MyColors.white;
+      return my_colors.white;
     }
   }
 }

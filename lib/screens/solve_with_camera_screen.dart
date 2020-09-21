@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -26,10 +26,10 @@ class SolveWithCameraScreen extends StatefulWidget {
 class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
   void initScreenSizeProperties(BuildContext context) {
     // Set values required for SolveWithCameraScreen
-    MyValues.screenHeight = MediaQuery.of(context).size.height;
-    MyValues.screenWidth = MediaQuery.of(context).size.width;
-    MyValues.cameraWidth = MyValues.screenWidth - 2 * MyValues.pad;
-    MyValues.cameraHeight = MyValues.cameraWidth;
+    my_values.screenHeight = MediaQuery.of(context).size.height;
+    my_values.screenWidth = MediaQuery.of(context).size.width;
+    my_values.cameraWidth = my_values.screenWidth - 2 * my_values.pad;
+    my_values.cameraHeight = my_values.cameraWidth;
   }
 
   @override
@@ -42,7 +42,7 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
       builder: (context, gameState) {
         return Scaffold(
           appBar: SolveWithCameraScreenAppBar(AppBar()),
-          backgroundColor: MyColors.pink,
+          backgroundColor: my_colors.pink,
           body: SingleChildScrollView(
             child: (gameState == GameState.photoProcessed ||
                     gameState == GameState.isSolving ||
@@ -72,9 +72,9 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
                             decoration: BoxDecoration(
                               border: Border(
                                 top: BorderSide(
-                                    width: MyValues.verticalPadding, color: MyColors.transparent),
+                                    width: my_values.verticalPadding, color: my_colors.transparent),
                                 bottom: BorderSide(
-                                    width: MyValues.verticalPadding, color: MyColors.transparent),
+                                    width: my_values.verticalPadding, color: my_colors.transparent),
                               ),
                             ),
                           ),

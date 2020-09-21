@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
-import 'package:sudoku_solver_2/constants/my_strings.dart';
-import 'package:sudoku_solver_2/constants/my_styles.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
+import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
 import 'package:sudoku_solver_2/widgets/just_play_screen/just_play_screen_drop_down_menu_widget.dart';
 
 /// AppBar shown on the help screens
@@ -13,10 +13,10 @@ class HelpScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      iconTheme: IconThemeData(color: MyColors.white),
+      iconTheme: IconThemeData(color: my_colors.white),
       title: Text(
-        MyStrings.helpScreenName,
-        style: MyStyles.appBarTextStyle,
+        my_strings.helpScreenName,
+        style: my_styles.appBarTextStyle,
         textDirection: TextDirection.ltr,
       ),
       actions: <Widget>[

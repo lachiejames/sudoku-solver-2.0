@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
-import 'package:sudoku_solver_2/constants/my_strings.dart';
-import 'package:sudoku_solver_2/constants/my_styles.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
+import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/solve_with_camera_help_screen.dart';
@@ -15,9 +15,9 @@ class SolveWithCameraScreenDropDownMenuWidget extends StatelessWidget {
     return DropdownButton<String>(
       icon: Icon(
         Icons.more_vert,
-        color: MyColors.white,
+        color: my_colors.white,
       ),
-      style: MyStyles.dropDownMenuTextStyle,
+      style: my_styles.dropDownMenuTextStyle,
       items: _createDropdownMenuItems(),
       onChanged: (value) {
         this._performAction(value, context);
@@ -27,8 +27,8 @@ class SolveWithCameraScreenDropDownMenuWidget extends StatelessWidget {
 
   List<DropdownMenuItem<String>> _createDropdownMenuItems() {
     return <String>[
-      MyStrings.dropDownMenuOption1,
-      MyStrings.dropDownMenuOption2,
+      my_strings.dropDownMenuOption1,
+      my_strings.dropDownMenuOption2,
     ].map(
       (String value) {
         return this._createDropdownMenuItem(value);
@@ -47,9 +47,9 @@ class SolveWithCameraScreenDropDownMenuWidget extends StatelessWidget {
   }
 
   void _performAction(String value, BuildContext context) {
-    if (value == MyStrings.dropDownMenuOption1) {
+    if (value == my_strings.dropDownMenuOption1) {
       _restart();
-    } else if (value == MyStrings.dropDownMenuOption2) {
+    } else if (value == my_strings.dropDownMenuOption2) {
       _navigateToSolveWithTouchHelpScreen(context);
     }
   }

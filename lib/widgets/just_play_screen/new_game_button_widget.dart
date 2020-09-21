@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
-import 'package:sudoku_solver_2/constants/my_strings.dart';
-import 'package:sudoku_solver_2/constants/my_styles.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
+import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -28,16 +28,16 @@ class _NewGameButtonWidgetState extends State<NewGameButtonWidget> {
           opacity: (gameState == GameState.solved) ? 1.0 : 0.0,
           child: Container(
             alignment: Alignment.center,
-            margin: MyStyles.buttonMargins,
+            margin: my_styles.buttonMargins,
             child: Directionality(
               textDirection: TextDirection.ltr,
               child: RaisedButton(
-                shape: MyStyles.buttonShape,
-                padding: MyStyles.buttonPadding,
-                color: MyColors.blue,
+                shape: my_styles.buttonShape,
+                padding: my_styles.buttonPadding,
+                color: my_colors.blue,
                 child: Text(
-                  MyStrings.newGameButtonText,
-                  style: MyStyles.buttonTextStyle,
+                  my_strings.newGameButtonText,
+                  style: my_styles.buttonTextStyle,
                 ),
                 onPressed: () {
                   if (gameState == GameState.solved) {

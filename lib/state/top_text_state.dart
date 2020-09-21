@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
-import 'package:sudoku_solver_2/constants/my_strings.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 
 /// All state relating to the TopTextWidgets
 class TopTextState {
@@ -14,7 +14,7 @@ class TopTextState {
   });
 
   static TopTextState initialState() {
-    return TopTextState(text: MyStrings.topTextNoTileSelected, color: MyColors.white);
+    return TopTextState(text: my_strings.topTextNoTileSelected, color: my_colors.white);
   }
 
   TopTextState copyWith({

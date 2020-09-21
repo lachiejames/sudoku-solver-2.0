@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
-import 'package:sudoku_solver_2/constants/my_strings.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/home_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -11,7 +11,7 @@ import 'package:flutter_driver/driver_extension.dart';
 Future<void> main() async {
   // Allows us to run integration tests
   enableFlutterDriverExtension(handler: (command) async {
-    if (command == MyStrings.hotRestart) {
+    if (command == my_strings.hotRestart) {
       await runThatShit();
       return 'ok';
     }
@@ -47,8 +47,8 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: MyColors.blue,
-          backgroundColor: MyColors.pink,
+          primaryColor: my_colors.blue,
+          backgroundColor: my_colors.pink,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: HomeScreen(),

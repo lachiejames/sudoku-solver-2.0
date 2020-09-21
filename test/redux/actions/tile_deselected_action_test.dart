@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -55,7 +55,7 @@ void main() {
       dispatchActionAndUpdateState(TileDeselectedAction(state.tileStateMap[tileKey]));
 
       expect(state.topTextState.text, 'Pick a tile');
-      expect(state.topTextState.color, MyColors.white);
+      expect(state.topTextState.color, my_colors.white);
     });
   });
 }

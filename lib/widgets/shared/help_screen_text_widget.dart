@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/my_styles.dart';
+import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
 
 /// Contains text shown on the help screens
 class HelpScreenTextWidget extends StatefulWidget {
@@ -14,11 +14,11 @@ class _HelpScreenTextWidgetState extends State<HelpScreenTextWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: MyStyles.topTextMargins,
+      margin: my_styles.topTextMargins,
       child: Text(
         widget.text,
         textAlign: TextAlign.left,
-        style: MyStyles.howToTextStyle,
+        style: my_styles.howToTextStyle,
         textDirection: TextDirection.ltr,
       ),
     );

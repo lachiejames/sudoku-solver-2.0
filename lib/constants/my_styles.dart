@@ -1,77 +1,78 @@
-import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart';
-
 /// Stores some styles used within the app
-class MyStyles {
-  static final String fontStyle = 'Roboto';
-  static final String fontStyleSplashScreen = 'Pacifico';
-  static final String fontStyleNumber = 'Segoe UI';
 
-  static final TextStyle buttonTextStyle = TextStyle(
-    fontFamily: fontStyle,
-    fontSize: 20,
-    color: MyColors.white,
-    fontWeight: FontWeight.bold,
-  );
+library my_styles;
 
-  static final EdgeInsetsGeometry buttonMargins = EdgeInsets.only(
-    top: 32,
-    bottom: 16,
-    left: 32,
-    right: 32,
-  );
+import 'package:flutter/material.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 
-  static final EdgeInsetsGeometry buttonPadding = EdgeInsets.only(
-    top: 16,
-    bottom: 16,
-    left: 32,
-    right: 32,
-  );
+final String fontStyle = 'Roboto';
+final String fontStyleSplashScreen = 'Pacifico';
+final String fontStyleNumber = 'Segoe UI';
 
-  static final EdgeInsetsGeometry topTextMargins = EdgeInsets.only(
-    top: 32,
-    bottom: 32,
-    left: 32,
-    right: 32,
-  );
+final TextStyle buttonTextStyle = TextStyle(
+  fontFamily: fontStyle,
+  fontSize: 20,
+  color: my_colors.white,
+  fontWeight: FontWeight.bold,
+);
 
-  static final RoundedRectangleBorder buttonShape = RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(10.0),
-  );
+final EdgeInsetsGeometry buttonMargins = EdgeInsets.only(
+  top: 32,
+  bottom: 16,
+  left: 32,
+  right: 32,
+);
 
-  static final TextStyle appBarTextStyle = TextStyle(
-    fontFamily: fontStyle,
-    fontWeight: FontWeight.normal,
-    fontSize: MyValues.appBarFontSize,
-    color: MyColors.white,
-  );
+final EdgeInsetsGeometry buttonPadding = EdgeInsets.only(
+  top: 16,
+  bottom: 16,
+  left: 32,
+  right: 32,
+);
 
-  static final TextStyle splashScreenTextStyle = TextStyle(
-    fontFamily: fontStyleSplashScreen,
-    fontWeight: FontWeight.w500,
-    fontSize: MyValues.appBarFontSize,
-    color: MyColors.pink,
-  );
+final EdgeInsetsGeometry topTextMargins = EdgeInsets.only(
+  top: 32,
+  bottom: 32,
+  left: 32,
+  right: 32,
+);
 
-  static final TextStyle howToTextStyle = TextStyle(
-    fontSize: MyValues.howToTextFontSize,
-    color: MyColors.white,
-  );
+final RoundedRectangleBorder buttonShape = RoundedRectangleBorder(
+  borderRadius: BorderRadius.circular(10.0),
+);
 
-  static final TextStyle dropDownMenuTextStyle = TextStyle(
-    fontWeight: FontWeight.w500,
-    color: MyColors.black,
-  );
+final TextStyle appBarTextStyle = TextStyle(
+  fontFamily: fontStyle,
+  fontWeight: FontWeight.normal,
+  fontSize: my_values.appBarFontSize,
+  color: my_colors.white,
+);
 
-  static final TextStyle tileTextStyle = TextStyle(
-    fontSize: MyValues.tileFontSize,
-    fontFamily: MyStyles.fontStyleNumber,
-    fontWeight: FontWeight.w400,
-  );
+final TextStyle splashScreenTextStyle = TextStyle(
+  fontFamily: fontStyleSplashScreen,
+  fontWeight: FontWeight.w500,
+  fontSize: my_values.appBarFontSize,
+  color: my_colors.pink,
+);
 
-  static final TextStyle tileWithRemovableValueTextStyle = TextStyle(
-    fontSize: MyValues.tileFontSize,
-    color: MyColors.red,
-  );
-}
+final TextStyle howToTextStyle = TextStyle(
+  fontSize: my_values.howToTextFontSize,
+  color: my_colors.white,
+);
+
+final TextStyle dropDownMenuTextStyle = TextStyle(
+  fontWeight: FontWeight.w500,
+  color: my_colors.black,
+);
+
+final TextStyle tileTextStyle = TextStyle(
+  fontSize: my_values.tileFontSize,
+  fontFamily: fontStyleNumber,
+  fontWeight: FontWeight.w400,
+);
+
+final TextStyle tileWithRemovableValueTextStyle = TextStyle(
+  fontSize: my_values.tileFontSize,
+  color: my_colors.red,
+);

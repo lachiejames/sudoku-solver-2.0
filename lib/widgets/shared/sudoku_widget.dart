@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
@@ -25,7 +25,7 @@ class _SudokuWidgetState extends State<SudokuWidget> {
           textDirection: TextDirection.ltr,
           children: <Widget>[
             Container(
-              color: MyColors.white,
+              color: my_colors.white,
               margin: EdgeInsets.only(
                 left: 27,
                 right: 27,
@@ -35,7 +35,7 @@ class _SudokuWidgetState extends State<SudokuWidget> {
             (gameState == GameState.isSolving)
                 ? Center(
                     child: CircularProgressIndicator(
-                      backgroundColor: MyColors.green,
+                      backgroundColor: my_colors.green,
                     ),
                   )
                 : Container(),

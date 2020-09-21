@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
@@ -24,7 +24,7 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
 
     return Scaffold(
       appBar: SolveWithTouchScreenAppBar(AppBar()),
-      backgroundColor: MyColors.pink,
+      backgroundColor: my_colors.pink,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

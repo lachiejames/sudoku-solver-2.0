@@ -1,5 +1,5 @@
-import 'package:sudoku_solver_2/constants/my_colors.dart';
-import 'package:sudoku_solver_2/constants/my_strings.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
@@ -18,45 +18,45 @@ final Reducer<TopTextState> topTextStateReducer = combineReducers<TopTextState>(
 ]);
 
 TopTextState _setTopTextToPickATile(TopTextState topTextState, TileDeselectedAction action) {
-  return topTextState.copyWith(text: MyStrings.topTextNoTileSelected, color: MyColors.white);
+  return topTextState.copyWith(text: my_strings.topTextNoTileSelected, color: my_colors.white);
 }
 
 TopTextState _setTopTextToPickATile2(TopTextState topTextState, NumberPressedAction action) {
-  return topTextState.copyWith(text: MyStrings.topTextNoTileSelected, color: MyColors.white);
+  return topTextState.copyWith(text: my_strings.topTextNoTileSelected, color: my_colors.white);
 }
 
 TopTextState _setTopTextToPickATile3(TopTextState topTextState, RestartAction action) {
-  return topTextState.copyWith(text: MyStrings.topTextNoTileSelected, color: MyColors.white);
+  return topTextState.copyWith(text: my_strings.topTextNoTileSelected, color: my_colors.white);
 }
 
 TopTextState _setTopTextToPickANumberOrTapToRemove(
     TopTextState topTextState, TileSelectedAction action) {
   return topTextState.copyWith(
     text: (action.selectedTile.value != null)
-        ? MyStrings.topTextTileWithValueSelected
-        : MyStrings.topTextTileSelected,
-    color: MyColors.white,
+        ? my_strings.topTextTileWithValueSelected
+        : my_strings.topTextTileSelected,
+    color: my_colors.white,
   );
 }
 
 TopTextState _setTopTextToAiThinking(TopTextState topTextState, SolveSudokuAction action) {
-  return topTextState.copyWith(text: MyStrings.topTextWhenSolving, color: MyColors.white);
+  return topTextState.copyWith(text: my_strings.topTextWhenSolving, color: my_colors.white);
 }
 
 TopTextState _setTopTextToSolved(TopTextState topTextState, SudokuSolvedAction action) {
-  return topTextState.copyWith(text: MyStrings.topTextSolved, color: MyColors.green);
+  return topTextState.copyWith(text: my_strings.topTextSolved, color: my_colors.green);
 }
 
 TopTextState _setTopTextToSolved2(TopTextState topTextState, GameSolvedAction action) {
-  return topTextState.copyWith(text: MyStrings.topTextSolved, color: MyColors.green);
+  return topTextState.copyWith(text: my_strings.topTextSolved, color: my_colors.green);
 }
 
 TopTextState _setTopTextAlignWithCamera(TopTextState topTextState, ChangeScreenAction action) {
   if (action.screenState == ScreenState.solveWithCameraScreen) {
-    return topTextState.copyWith(text: MyStrings.topTextTakingPhoto, color: MyColors.white);
+    return topTextState.copyWith(text: my_strings.topTextTakingPhoto, color: my_colors.white);
   } else if (action.screenState == ScreenState.homeScreen) {
-    return topTextState.copyWith(text: MyStrings.topTextHome, color: MyColors.white);
+    return topTextState.copyWith(text: my_strings.topTextHome, color: my_colors.white);
   } else {
-    return topTextState.copyWith(text: MyStrings.topTextNoTileSelected, color: MyColors.white);
+    return topTextState.copyWith(text: my_strings.topTextNoTileSelected, color: my_colors.white);
   }
 }

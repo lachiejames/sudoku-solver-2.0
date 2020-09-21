@@ -1,18 +1,7 @@
-import 'my_solved_games.dart';
+import 'my_solved_games.dart' as my_solved_games;
 
 class TestConstants {
-  static final List<String> solvedGames = [
-    MySolvedGames.game0ValuesStringSolved,
-    MySolvedGames.game1ValuesStringSolved,
-    MySolvedGames.game2ValuesStringSolved,
-    MySolvedGames.game3ValuesStringSolved,
-    MySolvedGames.game4ValuesStringSolved,
-    MySolvedGames.game5ValuesStringSolved,
-    MySolvedGames.game6ValuesStringSolved,
-    MySolvedGames.game7ValuesStringSolved,
-    MySolvedGames.game8ValuesStringSolved,
-    MySolvedGames.game9ValuesStringSolved,
-  ];
+  static final List<String> solvedGames = my_solved_games.solvedGames;
 
   static final String emptySudokuString = '''
 -------------------------------------

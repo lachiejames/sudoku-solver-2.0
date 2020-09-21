@@ -6,7 +6,7 @@ import 'package:image/image.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart';
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
@@ -32,8 +32,8 @@ class CameraState {
   }
 
   Future<File> takePicture(CameraController cameraController) async {
-    print(MyValues.cameraWidth);
-    print(MyValues.screenWidth);
+    print(my_values.cameraWidth);
+    print(my_values.screenWidth);
     File _pickedImageFile;
 
     final String imagePath = join((await getApplicationDocumentsDirectory()).path,
@@ -59,7 +59,7 @@ class CameraState {
 
     int imageWidth = pickedImage.width;
     int imageHeight = pickedImage.height;
-    this.croppedImageWidth = (imageWidth * MyValues.cameraWidth / MyValues.screenWidth).round();
+    this.croppedImageWidth = (imageWidth * my_values.cameraWidth / my_values.screenWidth).round();
     int croppedImageHeight = this.croppedImageWidth;
     int horizontalStartPixel = ((imageWidth - this.croppedImageWidth) / 2).round();
     int verticalStartPixel = ((imageHeight - croppedImageHeight) / 2).round();

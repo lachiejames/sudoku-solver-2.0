@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
-import 'package:sudoku_solver_2/constants/my_strings.dart';
-import 'package:sudoku_solver_2/constants/my_styles.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
+import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
@@ -18,10 +18,10 @@ class SolveWithCameraScreenAppBar extends StatelessWidget implements PreferredSi
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      iconTheme: IconThemeData(color: MyColors.white),
+      iconTheme: IconThemeData(color: my_colors.white),
       title: Text(
-        MyStrings.solveWithCameraScreenName,
-        style: MyStyles.appBarTextStyle,
+        my_strings.solveWithCameraScreenName,
+        style: my_styles.appBarTextStyle,
         textDirection: TextDirection.ltr,
       ),
       actions: <Widget>[

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
-import 'package:sudoku_solver_2/constants/my_strings.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -30,10 +30,10 @@ void main() {
       });
 
       test('sets topText to "AI thinking..." in white', () {
-        expect(state.topTextState.text, MyStrings.topTextNoTileSelected);
+        expect(state.topTextState.text, my_strings.topTextNoTileSelected);
         dispatchActionAndUpdateState(SolveSudokuAction());
-        expect(state.topTextState.text, MyStrings.topTextWhenSolving);
-        expect(state.topTextState.color, MyColors.white);
+        expect(state.topTextState.text, my_strings.topTextWhenSolving);
+        expect(state.topTextState.color, my_colors.white);
       });
     });
 
@@ -55,8 +55,8 @@ void main() {
         await Future.delayed(Duration(milliseconds: 1000));
         state = Redux.store.state;
 
-        expect(state.topTextState.text, MyStrings.topTextSolved);
-        expect(state.topTextState.color, MyColors.green);
+        expect(state.topTextState.text, my_strings.topTextSolved);
+        expect(state.topTextState.color, my_colors.green);
       });
     });
   });

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     Redux.store.dispatch(ChangeScreenAction(ScreenState.homeScreen));
     return Scaffold(
-      backgroundColor: MyColors.blue,
+      backgroundColor: my_colors.blue,
       body: SingleChildScrollView(
         child: Center(
           child: Column(

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -27,8 +27,7 @@ void main() {
 
     setUp(() {
       // Need a tile to be selected before add a number
-      dispatchActionAndUpdateState(
-          TileSelectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
       pressedNumber = state.numberStateList[6];
     });
 
@@ -40,16 +39,13 @@ void main() {
       expect(state.tileStateMap[tileKey].value, 7);
     });
 
-    test(
-        'sets tile.value to selected number, even if tile.value was not null before',
-        () {
+    test('sets tile.value to selected number, even if tile.value was not null before', () {
       expect(state.tileStateMap[tileKey].value, null);
 
       dispatchActionAndUpdateState(NumberPressedAction(pressedNumber));
       expect(state.tileStateMap[tileKey].value, 7);
 
-      dispatchActionAndUpdateState(
-          TileSelectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
       pressedNumber = state.numberStateList[1];
       dispatchActionAndUpdateState(NumberPressedAction(pressedNumber));
       expect(state.tileStateMap[tileKey].value, 2);
@@ -81,26 +77,23 @@ void main() {
       dispatchActionAndUpdateState(NumberPressedAction(pressedNumber));
 
       expect(state.topTextState.text, 'Pick a tile');
-      expect(state.topTextState.color, MyColors.white);
+      expect(state.topTextState.color, my_colors.white);
     });
 
     // TODO: implement this
-    test(
-        'if pressing that number solved the game, topText displays "SOLVED" in green',
-        () {
+    test('if pressing that number solved the game, topText displays "SOLVED" in green', () {
       // dispatchActionAndUpdateState(NumberPressedAction(pressedNumber));
 
       // expect(state.topTextState.text, 'SOLVED');
-      // expect(state.topTextState.color, MyColors.green);
+      // expect(state.topTextState.color, my_colors.green);
     });
 
     // TODO: implement this
-    test('if pressing that number solved the game, gameState should be SOLVED',
-        () {
+    test('if pressing that number solved the game, gameState should be SOLVED', () {
       // dispatchActionAndUpdateState(NumberPressedAction(pressedNumber));
 
       // expect(state.topTextState.text, 'SOLVED');
-      // expect(state.topTextState.color, MyColors.green);
+      // expect(state.topTextState.color, my_colors.green);
     });
   });
 }

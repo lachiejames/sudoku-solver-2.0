@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
-import 'package:sudoku_solver_2/constants/my_strings.dart';
-import 'package:sudoku_solver_2/constants/my_styles.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
+import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
 import 'package:sudoku_solver_2/screens/just_play_screen.dart';
 
 /// Lives on the HomeScreen, navigating users to the JustPlayScreen
@@ -12,21 +12,21 @@ class JustPlayButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      margin: MyStyles.buttonMargins,
+      margin: my_styles.buttonMargins,
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: RaisedButton(
-          shape: MyStyles.buttonShape,
+          shape: my_styles.buttonShape,
           padding: EdgeInsets.only(
             top: 16,
             bottom: 16,
             left: 50,
             right: 50,
           ),
-          color: MyColors.pink,
+          color: my_colors.pink,
           child: Text(
-            MyStrings.justPlayButtonText,
-            style: MyStyles.buttonTextStyle,
+            my_strings.justPlayButtonText,
+            style: my_styles.buttonTextStyle,
           ),
           onPressed: () {
             _navigateToJustPlayScreen(context);

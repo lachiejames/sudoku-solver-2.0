@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -56,13 +56,13 @@ void main() {
 
       testWidgets('if its NOT an original tile, it should be white', (WidgetTester tester) async {
         await createTileWidget(tester);
-        expect(getTileWidgetColor(tester), MyColors.white);
+        expect(getTileWidgetColor(tester), my_colors.white);
       });
 
       testWidgets('if its an original tile, it should be grey', (WidgetTester tester) async {
         setIsOriginalTile();
         await createTileWidget(tester);
-        expect(getTileWidgetColor(tester), MyColors.grey);
+        expect(getTileWidgetColor(tester), my_colors.grey);
       });
     });
 
@@ -71,7 +71,7 @@ void main() {
         await createTileWidget(tester);
         await tester.tap(find.byWidget(tileWidget));
         await tester.pump(debounceTime);
-        expect(getTileWidgetColor(tester), MyColors.green);
+        expect(getTileWidgetColor(tester), my_colors.green);
       });
 
       testWidgets('should display a value when NumberPressedAction dispatched',
@@ -112,7 +112,7 @@ void main() {
         await tester.pump(debounceTime);
         await tester.tap(find.byWidget(tileWidget));
         await tester.pump(debounceTime);
-        expect(getTileWidgetColor(tester), MyColors.white);
+        expect(getTileWidgetColor(tester), my_colors.white);
       });
 
       testWidgets('should have value removed, if applicable', (WidgetTester tester) async {

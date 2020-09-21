@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart';
+import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -54,7 +54,7 @@ void main() {
 
       testWidgets('should be white', (WidgetTester tester) async {
         await createNumberWidget(tester, 1);
-        expect(getNumberWidgetColor(tester), MyColors.white);
+        expect(getNumberWidgetColor(tester), my_colors.white);
       });
 
       testWidgets('not tappable', (WidgetTester tester) async {
@@ -62,7 +62,7 @@ void main() {
 
         await tapNumberWidget(tester);
 
-        expect(getNumberWidgetColor(tester), MyColors.white);
+        expect(getNumberWidgetColor(tester), my_colors.white);
       });
     });
 
@@ -72,7 +72,7 @@ void main() {
 
         await tapTileWidget(tester);
 
-        expect(getNumberWidgetColor(tester), MyColors.green);
+        expect(getNumberWidgetColor(tester), my_colors.green);
       });
 
       testWidgets('tapping this numberWidget sets color back to white',
@@ -81,7 +81,7 @@ void main() {
 
         await tapNumberWidget(tester);
 
-        expect(getNumberWidgetColor(tester), MyColors.white);
+        expect(getNumberWidgetColor(tester), my_colors.white);
       });
 
       testWidgets('tapping this numberWidget caused tile to display this number',
