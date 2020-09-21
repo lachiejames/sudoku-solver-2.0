@@ -24,7 +24,7 @@ class _NewGameButtonWidgetState extends State<NewGameButtonWidget> {
       builder: (context, gameState) {
         // Should only be visible when solved
         return Opacity(
-          opacity: (gameState == GameState.Solved) ? 1.0 : 0.0,
+          opacity: (gameState == GameState.solved) ? 1.0 : 0.0,
           child: Container(
             alignment: Alignment.center,
             margin: MyStyles.buttonMargins,
@@ -39,7 +39,7 @@ class _NewGameButtonWidgetState extends State<NewGameButtonWidget> {
                   style: MyStyles.buttonTextStyle,
                 ),
                 onPressed: () {
-                  if (gameState == GameState.Solved) {
+                  if (gameState == GameState.solved) {
                     Redux.store.dispatch(NewGameButtonPressedAction());
                   }
                 },

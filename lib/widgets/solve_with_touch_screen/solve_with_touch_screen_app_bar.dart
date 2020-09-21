@@ -9,8 +9,7 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_touch_screen/solve_with_touch_screen_drop_down_menu_widget.dart';
 
-class SolveWithTouchScreenAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
+class SolveWithTouchScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   // Required so I can return preferredSize
   final AppBar appBar;
   SolveWithTouchScreenAppBar(this.appBar, {Key key}) : super(key: key);
@@ -34,12 +33,11 @@ class SolveWithTouchScreenAppBar extends StatelessWidget
       ],
       leading: IconButton(
         onPressed: () {
-          Redux.store.dispatch(ChangeScreenAction(ScreenState.HomeScreen));
+          Redux.store.dispatch(ChangeScreenAction(ScreenState.homeScreen));
           Navigator.pop(context);
         },
-        icon: (Platform.isAndroid)
-            ? const Icon(Icons.arrow_back)
-            : const Icon(Icons.arrow_back_ios),
+        icon:
+            (Platform.isAndroid) ? const Icon(Icons.arrow_back) : const Icon(Icons.arrow_back_ios),
       ),
     );
   }

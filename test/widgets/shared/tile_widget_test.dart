@@ -28,13 +28,11 @@ void main() {
     }
 
     Color getTileWidgetColor(WidgetTester tester) {
-      return ((tester.firstWidget(find.byType(Container)) as Container)
-              .decoration as BoxDecoration)
+      return ((tester.firstWidget(find.byType(Container)) as Container).decoration as BoxDecoration)
           .color;
     }
 
-    Future<void> addValueToSelectedTileWidget(
-        WidgetTester tester, int value) async {
+    Future<void> addValueToSelectedTileWidget(WidgetTester tester, int value) async {
       var number = Redux.store.state.numberStateList[value - 1];
       Redux.store.dispatch(NumberPressedAction(number));
       await tester.pump(debounceTime);
@@ -42,8 +40,7 @@ void main() {
 
     void setIsOriginalTile() {
       TileState tileState = Redux.store.state.tileStateMap[tileKey];
-      Redux.store.state.tileStateMap[tileKey] =
-          tileState.copyWith(isOriginalTile: true);
+      Redux.store.state.tileStateMap[tileKey] = tileState.copyWith(isOriginalTile: true);
     }
 
     setUp(() async {
@@ -57,14 +54,12 @@ void main() {
         expect(find.text(''), findsOneWidget);
       });
 
-      testWidgets('if its NOT an original tile, it should be white',
-          (WidgetTester tester) async {
+      testWidgets('if its NOT an original tile, it should be white', (WidgetTester tester) async {
         await createTileWidget(tester);
         expect(getTileWidgetColor(tester), MyColors.white);
       });
 
-      testWidgets('if its an original tile, it should be grey',
-          (WidgetTester tester) async {
+      testWidgets('if its an original tile, it should be grey', (WidgetTester tester) async {
         setIsOriginalTile();
         await createTileWidget(tester);
         expect(getTileWidgetColor(tester), MyColors.grey);
@@ -87,8 +82,7 @@ void main() {
         expect(find.text('1'), findsOneWidget);
       });
 
-      testWidgets('should NOT display an "X" too, if it has no value',
-          (WidgetTester tester) async {
+      testWidgets('should NOT display an "X" too, if it has no value', (WidgetTester tester) async {
         await createTileWidget(tester);
 
         await tester.tap(find.byWidget(tileWidget));
@@ -121,8 +115,7 @@ void main() {
         expect(getTileWidgetColor(tester), MyColors.white);
       });
 
-      testWidgets('should have value removed, if applicable',
-          (WidgetTester tester) async {
+      testWidgets('should have value removed, if applicable', (WidgetTester tester) async {
         await createTileWidget(tester);
 
         // add value to tile

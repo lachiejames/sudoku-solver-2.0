@@ -18,8 +18,7 @@ void main() {
     });
 
     test('toString() returns expected string', () {
-      expect(tileState.toString(),
-          'TileState(row=6, col=9, value=null, isSelected=false)');
+      expect(tileState.toString(), 'TileState(row=6, col=9, value=null, isSelected=false)');
     });
 
     test('getSegment() returns correct segment', () {

@@ -12,7 +12,7 @@ class JustPlayHelpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Redux.store.dispatch(ChangeScreenAction(ScreenState.JustPlayHelpScreen));
+    Redux.store.dispatch(ChangeScreenAction(ScreenState.justPlayHelpScreen));
 
     return Scaffold(
       backgroundColor: MyColors.pink,

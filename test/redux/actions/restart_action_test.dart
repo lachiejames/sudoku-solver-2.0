@@ -6,6 +6,7 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
+import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 
 void main() {
@@ -51,17 +52,16 @@ void main() {
 
     test('sets gameState to default', () async {
       dispatchActionAndUpdateState(SolveSudokuAction());
-      expect(state.gameState, GameState.IsSolving);
+      expect(state.gameState, GameState.isSolving);
 
       await Future.delayed(Duration(milliseconds: 1000));
 
       dispatchActionAndUpdateState(RestartAction());
-      expect(state.gameState, GameState.Default);
+      expect(state.gameState, GameState.normal);
     });
 
     test('sets topText to "Pick a tile"', () {
-      dispatchActionAndUpdateState(
-          TileSelectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
       expect(state.topTextState.text, MyStrings.topTextTileSelected);
 
       dispatchActionAndUpdateState(RestartAction());
@@ -70,17 +70,17 @@ void main() {
     });
 
     test('makes all numberStates inactive', () {
-      dispatchActionAndUpdateState(
-          TileSelectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
 
-      state.numberStateList.forEach((numberState) {
+      for (NumberState numberState in state.numberStateList) {
         expect(numberState.isActive, true);
-      });
+      }
+
       dispatchActionAndUpdateState(RestartAction());
 
-      state.numberStateList.forEach((numberState) {
+      for (NumberState numberState in state.numberStateList) {
         expect(numberState.isActive, false);
-      });
+      }
     });
   });
 }

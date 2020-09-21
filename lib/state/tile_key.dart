@@ -8,7 +8,7 @@ class TileKey {
   TileKey({this.row, this.col});
 
   @override
-  bool operator ==(o) => row == o.row && col == o.col;
+  bool operator ==(dynamic o) => row == o.row && col == o.col;
 
   @override
   int get hashCode => this.row * 11 + col * 89;
@@ -18,8 +18,7 @@ class TileKey {
     return 'TileKey($row, $col)';
   }
 
-  static List<TileKey> makeTileKeysFromRowsAndCols(
-      List<int> rows, List<int> cols) {
+  static List<TileKey> makeTileKeysFromRowsAndCols(List<int> rows, List<int> cols) {
     List<TileKey> _tileKeys = <TileKey>[];
     for (int row in rows) {
       for (int col in cols) {

@@ -26,8 +26,7 @@ void main() {
     }
 
     Future<void> tapTileWidget(WidgetTester tester) async {
-      Redux.store.dispatch(
-          TileSelectedAction(Redux.store.state.tileStateMap[tileKey]));
+      Redux.store.dispatch(TileSelectedAction(Redux.store.state.tileStateMap[tileKey]));
       await tester.pump(debounceTime);
     }
 
@@ -37,8 +36,8 @@ void main() {
     }
 
     Color getNumberWidgetColor(WidgetTester tester) {
-      return ((tester.firstWidget(find.byType(Container)) as Container)
-              .decoration as ShapeDecoration)
+      return ((tester.firstWidget(find.byType(Container)) as Container).decoration
+              as ShapeDecoration)
           .color;
     }
 
@@ -85,8 +84,7 @@ void main() {
         expect(getNumberWidgetColor(tester), MyColors.white);
       });
 
-      testWidgets(
-          'tapping this numberWidget caused tile to display this number',
+      testWidgets('tapping this numberWidget caused tile to display this number',
           (WidgetTester tester) async {
         await createNumberWidget(tester, 1);
 

@@ -39,8 +39,8 @@ class Redux {
         numberStateList: NumberState.initNumberStateList(),
         topTextState: TopTextState.initialState(),
         gameNumber: (sharedPreferences != null) ? _getGameNumber() : 0,
-        screenState: ScreenState.HomeScreen,
-        gameState: GameState.Default,
+        screenState: ScreenState.homeScreen,
+        gameState: GameState.normal,
         cameraState: CameraState(),
       ),
     );

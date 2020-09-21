@@ -33,30 +33,23 @@ class MyStrings {
   static final String invalidSudokuToast = 'Invalid Sudoku';
 
   // Help screen text
-  static final String tip1SolveWithCameraScreen =
-      '1. Align your sudoku with the camera';
+  static final String tip1SolveWithCameraScreen = '1. Align your sudoku with the camera';
   static final String tip2SolveWithCameraScreen = '2. Press TAKE PHOTO';
-  static final String tip3SolveWithCameraScreen =
-      '3. Verify whether the generated sudoku matches the sudoku you are trying to solve';
-  static final String tip4SolveWithCameraScreen =
-      '4. If it matches, press SOLVE MY SUDOKU';
+  static final String tip3SolveWithCameraScreen = '''3. Verify whether the generated sudoku 
+  matches the sudoku you are trying to solve''';
+  static final String tip4SolveWithCameraScreen = '4. If it matches, press SOLVE MY SUDOKU';
   static final String tip1SolveWithTouchScreen = '1. Touch a tile to select it';
-  static final String tip2SolveWithTouchScreen =
-      '2. Touch the number you want to add to the tile';
-  static final String tip3SolveWithTouchScreen =
-      '3. Continue until the sudoku matches the sudoku you want to solve';
+  static final String tip2SolveWithTouchScreen = '2. Touch the number you want to add to the tile';
+  static final String tip3SolveWithTouchScreen = '''3. Continue until the sudoku matches the 
+  sudoku you want to solve''';
   static final String tip4SolveWithTouchScreen = '4. Press SOLVE MY SUDOKU';
-  static final String tip5SolveWithTouchScreen =
-      'To remove the number from a tile, tap it twice';
-  static final String tip1JustPlayScreen =
-      'To win, add numbers to all tiles in the sudoku such each number from 1-9 occurs exactly once in each row, column, and segment';
+  static final String tip5SolveWithTouchScreen = 'To remove the number from a tile, tap it twice';
+  static final String tip1JustPlayScreen = '''To win, add numbers to all tiles in the sudoku such 
+  each number from 1-9 occurs exactly once in each row, column, and segment''';
   static final String tip2JustPlayScreen = '1. Touch a tile to select it';
-  static final String tip3JustPlayScreen =
-      '2. Touch the number you want to add to the tile';
-  static final String tip4JustPlayScreen =
-      '3. Continue until the sudoku is solved';
-  static final String tip5JustPlayScreen =
-      'To remove the number from a tile, tap it twice';
+  static final String tip3JustPlayScreen = '2. Touch the number you want to add to the tile';
+  static final String tip4JustPlayScreen = '3. Continue until the sudoku is solved';
+  static final String tip5JustPlayScreen = 'To remove the number from a tile, tap it twice';
 
   static final String hotRestart = 'restart';
 }

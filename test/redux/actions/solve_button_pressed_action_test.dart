@@ -24,9 +24,9 @@ void main() {
   group('SolveSudokuAction ->', () {
     group('before solved ->', () {
       test('sets gameState to isSolving', () {
-        expect(state.gameState, GameState.Default);
+        expect(state.gameState, GameState.normal);
         dispatchActionAndUpdateState(SolveSudokuAction());
-        expect(state.gameState, GameState.IsSolving);
+        expect(state.gameState, GameState.isSolving);
       });
 
       test('sets topText to "AI thinking..." in white', () {
@@ -38,14 +38,14 @@ void main() {
     });
 
     group('after solved ->', () {
-      test('sets gameState to Solved', () async {
+      test('sets gameState to solved', () async {
         dispatchActionAndUpdateState(SolveSudokuAction());
 
         // Takes a second to solve.  Gotta update the state too
         await Future.delayed(Duration(milliseconds: 1000));
         state = Redux.store.state;
 
-        expect(state.gameState, GameState.Solved);
+        expect(state.gameState, GameState.solved);
       });
 
       test('sets topText to "SOLVED" in green', () async {

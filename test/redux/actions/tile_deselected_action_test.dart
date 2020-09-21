@@ -26,15 +26,13 @@ void main() {
 
     setUp(() {
       // Need a tile to be selected before we deselect it
-      dispatchActionAndUpdateState(
-          TileSelectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
     });
 
     test('sets tile.isSelected to false', () {
       expect(state.tileStateMap[tileKey].isSelected, true);
 
-      dispatchActionAndUpdateState(
-          TileDeselectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(TileDeselectedAction(state.tileStateMap[tileKey]));
 
       expect(state.tileStateMap[tileKey].isSelected, false);
     });
@@ -45,8 +43,7 @@ void main() {
         expect(numberState.isActive, true);
       }
 
-      dispatchActionAndUpdateState(
-          TileDeselectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(TileDeselectedAction(state.tileStateMap[tileKey]));
 
       List<NumberState> nextNumberStateList = state.numberStateList;
       for (NumberState numberState in nextNumberStateList) {
@@ -55,8 +52,7 @@ void main() {
     });
 
     test('topText displays "Pick a tile" in white', () {
-      dispatchActionAndUpdateState(
-          TileDeselectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(TileDeselectedAction(state.tileStateMap[tileKey]));
 
       expect(state.topTextState.text, 'Pick a tile');
       expect(state.topTextState.color, MyColors.white);

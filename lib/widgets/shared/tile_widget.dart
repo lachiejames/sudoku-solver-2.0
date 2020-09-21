@@ -55,8 +55,7 @@ class _TileWidgetState extends State<TileWidget> {
                       fontSize: MyValues.tileFontSize,
                       fontFamily: MyStyles.fontStyleNumber,
                       fontWeight: FontWeight.w400,
-                      color:
-                          (tileState.isInvalid) ? MyColors.red : MyColors.black,
+                      color: (tileState.isInvalid) ? MyColors.red : MyColors.black,
                     ),
                     textDirection: TextDirection.ltr,
                   ),

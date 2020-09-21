@@ -1,9 +1,9 @@
 enum ScreenState {
-  HomeScreen,
-  SolveWithCameraScreen,
-  SolveWithTouchScreen,
-  JustPlayScreen,
-  SolveWithCameraHelpScreen,
-  SolveWithTouchHelpScreen,
-  JustPlayHelpScreen,
+  homeScreen,
+  solveWithCameraScreen,
+  solveWithTouchScreen,
+  justPlayScreen,
+  solveWithCameraHelpScreen,
+  solveWithTouchHelpScreen,
+  justPlayHelpScreen,
 }

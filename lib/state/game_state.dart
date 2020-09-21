@@ -1,10 +1,10 @@
 enum GameState {
-  Default,
-  InvalidTilesPresent,
-  IsSolving,
-  Solved,
-  NoSolution,
-  TakingPhoto,
-  ProcessingPhoto,
-  PhotoProcessed,
+  normal,
+  invalidTilesPresent,
+  isSolving,
+  solved,
+  noSolution,
+  takingPhoto,
+  processingPhoto,
+  photoProcessed,
 }

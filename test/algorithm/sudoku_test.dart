@@ -44,8 +44,7 @@ void main() {
             'TileState(row=9, col=1, value=2, isSelected=false)');
       });
 
-      test('applyExampleValues() updates the state with the given values list',
-          () {
+      test('applyExampleValues() updates the state with the given values list', () {
         expect(sudoku.toString(), TestConstants.game1ValuesListString);
       });
 
@@ -55,17 +54,13 @@ void main() {
             'TileState(row=6, col=9, value=7, isSelected=false)');
       });
 
-      test(
-          'addValueToTile() increases numValue, if replacing value with a different value',
-          () {
+      test('addValueToTile() increases numValue, if replacing value with a different value', () {
         expect(sudoku.numValues, 22);
         sudoku.addValueToTile(7, sudoku.getTileStateAt(1, 4));
         expect(sudoku.numValues, 22);
       });
 
-      test(
-          'addValueToTile() decreases numValue, if removing a value from a tile',
-          () {
+      test('addValueToTile() decreases numValue, if removing a value from a tile', () {
         expect(sudoku.numValues, 22);
         sudoku.addValueToTile(null, sudoku.getTileStateAt(1, 4));
         expect(sudoku.numValues, 21);
@@ -83,12 +78,10 @@ void main() {
         expect(tilesInCol.toString(), TestConstants.game1TilesInCol3String);
       });
 
-      test('getTilesInSegment() returns a list of tiles in the given column',
-          () {
+      test('getTilesInSegment() returns a list of tiles in the given column', () {
         List<TileState> tilesInSegment = sudoku.getTilesInSegment(2);
         expect(tilesInSegment.length, 9);
-        expect(tilesInSegment.toString(),
-            TestConstants.game1TilesInSegment2String);
+        expect(tilesInSegment.toString(), TestConstants.game1TilesInSegment2String);
       });
 
       test('getValuesInRow() returns a list of values in the given row', () {
@@ -103,45 +96,38 @@ void main() {
         expect(sudoku.getValuesInCol(9), [6, 4]);
       });
 
-      test('getValuesInSegment() returns a list of values in the given segment',
-          () {
+      test('getValuesInSegment() returns a list of values in the given segment', () {
         expect(sudoku.getValuesInSegment(1), [7]);
         expect(sudoku.getValuesInSegment(5), [9, 8, 4]);
         expect(sudoku.getValuesInSegment(9), [4, 2, 7]);
       });
 
-      test('getPossibleValuesAtTile() an empty list if the tile has a value',
-          () {
+      test('getPossibleValuesAtTile() an empty list if the tile has a value', () {
         TileState tileState = sudoku.getTileStateAt(3, 4);
         expect(tileState.value, 6);
         expect(sudoku.getPossibleValuesAtTile(tileState), []);
       });
 
-      test('getPossibleValuesAtTile() returns correct values allowed at a tile',
-          () {
+      test('getPossibleValuesAtTile() returns correct values allowed at a tile', () {
         TileState tileState = sudoku.getTileStateAt(1, 1);
         expect(tileState.value, null);
         expect(sudoku.getPossibleValuesAtTile(tileState), [1, 6, 8]);
       });
 
-      test(
-          'allConstraintsSatisfied() returns false when identical values occupy the same row',
-          () {
+      test('allConstraintsSatisfied() returns false when identical values occupy the same row', () {
         sudoku.addValueToTile(1, sudoku.getTileStateAt(1, 1));
         sudoku.addValueToTile(1, sudoku.getTileStateAt(1, 3));
         expect(sudoku.allConstraintsSatisfied(), false);
       });
 
-      test(
-          'allConstraintsSatisfied() returns false when identical values occupy the same column',
+      test('allConstraintsSatisfied() returns false when identical values occupy the same column',
           () {
         sudoku.addValueToTile(1, sudoku.getTileStateAt(1, 1));
         sudoku.addValueToTile(1, sudoku.getTileStateAt(3, 1));
         expect(sudoku.allConstraintsSatisfied(), false);
       });
 
-      test(
-          'allConstraintsSatisfied() returns false when identical values occupy the same segment',
+      test('allConstraintsSatisfied() returns false when identical values occupy the same segment',
           () {
         sudoku.addValueToTile(1, sudoku.getTileStateAt(1, 1));
         sudoku.addValueToTile(1, sudoku.getTileStateAt(3, 3));
@@ -160,15 +146,12 @@ void main() {
         expect(sudoku.isFull(), true);
       });
 
-      test(
-          'getNextUnassignedTile() returns a tile without a value, if possible',
-          () {
+      test('getNextUnassignedTile() returns a tile without a value, if possible', () {
         expect(sudoku.getNextTileWithoutValue().toString(),
             'TileState(row=1, col=1, value=null, isSelected=false)');
       });
 
-      test('getNextUnassignedTile() returns null if the sudoku is complete',
-          () {
+      test('getNextUnassignedTile() returns null if the sudoku is complete', () {
         sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
         sudoku.applyExampleValues(TestConstants.game2ValuesListSolved);
         expect(sudoku.getNextTileWithoutValue(), null);

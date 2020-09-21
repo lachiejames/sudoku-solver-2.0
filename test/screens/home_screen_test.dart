@@ -38,8 +38,7 @@ void main() {
         expect(homeScreen, isNotNull);
       });
 
-      testWidgets('should contain the expected widgets',
-          (WidgetTester tester) async {
+      testWidgets('should contain the expected widgets', (WidgetTester tester) async {
         await createHomeScreen(tester);
         expect(find.byType(TopTextWidget), findsOneWidget);
         expect(find.byType(SolveWithCameraButtonWidget), findsOneWidget);
@@ -50,8 +49,7 @@ void main() {
       testWidgets('top text should be "How would you like it to be solved?" ',
           (WidgetTester tester) async {
         await createHomeScreen(tester);
-        expect(
-            find.text('How would you like it to be solved?'), findsOneWidget);
+        expect(find.text('How would you like it to be solved?'), findsOneWidget);
       });
     });
   });

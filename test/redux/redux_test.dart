@@ -56,12 +56,12 @@ void main() {
 
     test('AppState.gameState correctly initialised', () {
       GameState gameState = state.gameState;
-      expect(gameState, GameState.Default);
+      expect(gameState, GameState.normal);
     });
 
     test('AppState.screenState correctly initialised', () {
       ScreenState screenState = state.screenState;
-      expect(screenState, ScreenState.HomeScreen);
+      expect(screenState, ScreenState.homeScreen);
     });
   });
 }

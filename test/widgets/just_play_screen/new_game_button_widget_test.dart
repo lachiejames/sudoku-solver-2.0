@@ -25,8 +25,7 @@ void main() {
     }
 
     Color newGameButtonWidgetColor(WidgetTester tester) {
-      return ((tester.firstWidget(find.byType(RaisedButton)) as RaisedButton))
-          .color;
+      return ((tester.firstWidget(find.byType(RaisedButton)) as RaisedButton)).color;
     }
 
     setUp(() async {
@@ -66,8 +65,7 @@ void main() {
     });
 
     group('after game is solved -', () {
-      testWidgets('tapping should increment the gameNumber',
-          (WidgetTester tester) async {
+      testWidgets('tapping should increment the gameNumber', (WidgetTester tester) async {
         Redux.store.dispatch(GameSolvedAction());
 
         await createNewGameButtonWidget(tester);

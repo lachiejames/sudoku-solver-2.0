@@ -19,7 +19,7 @@ class SolveWithTouchScreen extends StatefulWidget {
 class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
   @override
   Widget build(BuildContext context) {
-    Redux.store.dispatch(ChangeScreenAction(ScreenState.SolveWithTouchScreen));
+    Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithTouchScreen));
 
     return Scaffold(
       appBar: SolveWithTouchScreenAppBar(AppBar()),

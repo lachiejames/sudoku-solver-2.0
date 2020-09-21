@@ -79,8 +79,7 @@ class TileState {
     HashMap<TileKey, TileState> _tileStateMap = HashMap<TileKey, TileState>();
     for (int row = 1; row <= 9; row++) {
       for (int col = 1; col <= 9; col++) {
-        _tileStateMap[TileKey(row: row, col: col)] =
-            TileState(row: row, col: col);
+        _tileStateMap[TileKey(row: row, col: col)] = TileState(row: row, col: col);
       }
     }
     return _tileStateMap;

@@ -14,8 +14,7 @@ final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
   TypedReducer<GameState, TakePhotoAction>(_takePhotoReducer),
   TypedReducer<GameState, PhotoProcessedAction>(_photoProcessedReducer),
   TypedReducer<GameState, RetakePhotoAction>(_retakePhotoReducer),
-  TypedReducer<GameState, InvalidTilesPresentAction>(
-      _invalidTilesPresentReducer),
+  TypedReducer<GameState, InvalidTilesPresentAction>(_invalidTilesPresentReducer),
 ]);
 
 GameState _solveSudokuReducer(GameState gameState, SolveSudokuAction action) {
@@ -24,50 +23,47 @@ GameState _solveSudokuReducer(GameState gameState, SolveSudokuAction action) {
 
   solveSudokuAsync(sudoku);
 
-  return GameState.IsSolving;
+  return GameState.isSolving;
 }
 
 GameState _sudokuSolvedReducer(GameState gameState, SudokuSolvedAction action) {
-  return GameState.Solved;
+  return GameState.solved;
 }
 
-GameState _setToSolvedIfAllTilesFilled(
-    GameState gameState, NumberPressedAction action) {
+GameState _setToSolvedIfAllTilesFilled(GameState gameState, NumberPressedAction action) {
   int numValues = 0;
   Redux.store.state.tileStateMap.forEach((tileKey, tileState) {
     if (tileState.value != null) {
       numValues++;
     }
   });
-  GameState newGameState = (numValues == 81) ? GameState.Solved : gameState;
-  if (newGameState == GameState.Solved) {
+  GameState newGameState = (numValues == 81) ? GameState.solved : gameState;
+  if (newGameState == GameState.solved) {
     // Redux.store.dispatch(GameSolvedAction());
   }
   return newGameState;
 }
 
 GameState _setToSolved(GameState gameState, GameSolvedAction action) {
-  return GameState.Solved;
+  return GameState.solved;
 }
 
 GameState _setToDefault(GameState gameState, RestartAction action) {
-  return GameState.Default;
+  return GameState.normal;
 }
 
 GameState _takePhotoReducer(GameState gameState, TakePhotoAction action) {
-  return GameState.ProcessingPhoto;
+  return GameState.processingPhoto;
 }
 
-GameState _photoProcessedReducer(
-    GameState gameState, PhotoProcessedAction action) {
-  return GameState.PhotoProcessed;
+GameState _photoProcessedReducer(GameState gameState, PhotoProcessedAction action) {
+  return GameState.photoProcessed;
 }
 
 GameState _retakePhotoReducer(GameState gameState, RetakePhotoAction action) {
-  return GameState.TakingPhoto;
+  return GameState.takingPhoto;
 }
 
-GameState _invalidTilesPresentReducer(
-    GameState gameState, InvalidTilesPresentAction action) {
-  return GameState.InvalidTilesPresent;
+GameState _invalidTilesPresentReducer(GameState gameState, InvalidTilesPresentAction action) {
+  return GameState.invalidTilesPresent;
 }

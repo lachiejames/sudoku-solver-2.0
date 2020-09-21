@@ -12,8 +12,7 @@ class SolveWithTouchHelpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Redux.store
-        .dispatch(ChangeScreenAction(ScreenState.SolveWithTouchHelpScreen));
+    Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithTouchHelpScreen));
 
     return Scaffold(
       backgroundColor: MyColors.pink,

@@ -48,8 +48,7 @@ void main() {
           (WidgetTester tester) async {
         await createNumberBarWidget(tester);
 
-        Redux.store.dispatch(
-            TileSelectedAction(Redux.store.state.tileStateMap[tileKey]));
+        Redux.store.dispatch(TileSelectedAction(Redux.store.state.tileStateMap[tileKey]));
         await tester.pump(debounceTime);
 
         expect(find.text('Pick a number'), findsOneWidget);
@@ -61,8 +60,7 @@ void main() {
 
         Redux.store.state.tileStateMap[tileKey] =
             Redux.store.state.tileStateMap[tileKey].copyWith(value: 1);
-        Redux.store.dispatch(
-            TileSelectedAction(Redux.store.state.tileStateMap[tileKey]));
+        Redux.store.dispatch(TileSelectedAction(Redux.store.state.tileStateMap[tileKey]));
         await tester.pump(debounceTime);
 
         expect(find.text('Tap to remove'), findsOneWidget);
@@ -72,11 +70,9 @@ void main() {
           (WidgetTester tester) async {
         await createNumberBarWidget(tester);
 
-        Redux.store.dispatch(
-            TileSelectedAction(Redux.store.state.tileStateMap[tileKey]));
+        Redux.store.dispatch(TileSelectedAction(Redux.store.state.tileStateMap[tileKey]));
         await tester.pump(debounceTime);
-        Redux.store.dispatch(
-            TileDeselectedAction(Redux.store.state.tileStateMap[tileKey]));
+        Redux.store.dispatch(TileDeselectedAction(Redux.store.state.tileStateMap[tileKey]));
         await tester.pump(debounceTime);
 
         expect(find.text('Pick a tile'), findsOneWidget);
@@ -84,8 +80,7 @@ void main() {
     });
 
     group('while solving -', () {
-      testWidgets('should display "AI thinking..."',
-          (WidgetTester tester) async {
+      testWidgets('should display "AI thinking..."', (WidgetTester tester) async {
         await createNumberBarWidget(tester);
 
         Redux.store.dispatch(SolveSudokuAction());
@@ -94,8 +89,7 @@ void main() {
         expect(find.text('AI thinking...'), findsOneWidget);
       });
 
-      testWidgets('should display "SOLVED" after solving',
-          (WidgetTester tester) async {
+      testWidgets('should display "SOLVED" after solving', (WidgetTester tester) async {
         await createNumberBarWidget(tester);
 
         await tester.runAsync(() async {

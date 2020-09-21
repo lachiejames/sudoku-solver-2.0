@@ -27,8 +27,7 @@ void main() {
     test('sets tile.isSelected to true', () {
       expect(state.tileStateMap[tileKey].isSelected, false);
 
-      dispatchActionAndUpdateState(
-          TileSelectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
 
       expect(state.tileStateMap[tileKey].isSelected, true);
     });
@@ -39,8 +38,7 @@ void main() {
         expect(numberState.isActive, false);
       }
 
-      dispatchActionAndUpdateState(
-          TileSelectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
 
       List<NumberState> nextNumberStateList = state.numberStateList;
       for (NumberState numberState in nextNumberStateList) {
@@ -50,20 +48,17 @@ void main() {
 
     test('tapping another tile will deselect previous tile', () {
       expect(state.tileStateMap[tileKey].isSelected, false);
-      dispatchActionAndUpdateState(
-          TileSelectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
       expect(state.tileStateMap[tileKey].isSelected, true);
 
       TileKey newTileKey = TileKey(row: 3, col: 4);
-      dispatchActionAndUpdateState(
-          TileSelectedAction(state.tileStateMap[newTileKey]));
+      dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[newTileKey]));
       expect(state.tileStateMap[newTileKey].isSelected, true);
       expect(state.tileStateMap[tileKey].isSelected, false);
     });
 
     test('topText displays "Pick a number" in white', () {
-      dispatchActionAndUpdateState(
-          TileSelectedAction(state.tileStateMap[tileKey]));
+      dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
 
       expect(state.topTextState.text, 'Pick a number');
       expect(state.topTextState.color, MyColors.white);

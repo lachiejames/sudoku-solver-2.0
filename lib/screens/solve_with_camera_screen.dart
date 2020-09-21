@@ -34,7 +34,7 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
   @override
   Widget build(BuildContext context) {
     this.initScreenSizeProperties(context);
-    Redux.store.dispatch(ChangeScreenAction(ScreenState.SolveWithCameraScreen));
+    Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
     return StoreConnector<AppState, GameState>(
       distinct: true,
       converter: (store) => store.state.gameState,
@@ -43,9 +43,9 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
           appBar: SolveWithCameraScreenAppBar(AppBar()),
           backgroundColor: MyColors.pink,
           body: SingleChildScrollView(
-            child: (gameState == GameState.PhotoProcessed ||
-                    gameState == GameState.IsSolving ||
-                    gameState == GameState.Solved)
+            child: (gameState == GameState.photoProcessed ||
+                    gameState == GameState.isSolving ||
+                    gameState == GameState.solved)
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,11 +71,9 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
                             decoration: BoxDecoration(
                               border: Border(
                                 top: BorderSide(
-                                    width: MyValues.verticalPadding,
-                                    color: MyColors.transparent),
+                                    width: MyValues.verticalPadding, color: MyColors.transparent),
                                 bottom: BorderSide(
-                                    width: MyValues.verticalPadding,
-                                    color: MyColors.transparent),
+                                    width: MyValues.verticalPadding, color: MyColors.transparent),
                               ),
                             ),
                           ),
