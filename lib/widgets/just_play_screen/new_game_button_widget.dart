@@ -8,6 +8,7 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 
+/// Shown when a game is completed on the JustPlayScreen
 class NewGameButtonWidget extends StatefulWidget {
   NewGameButtonWidget({Key key}) : super(key: key);
 

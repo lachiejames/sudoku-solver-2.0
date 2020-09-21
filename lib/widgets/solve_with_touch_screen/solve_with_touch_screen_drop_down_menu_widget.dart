@@ -6,6 +6,7 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/solve_with_touch_help_screen.dart';
 
+/// drop ddown menu on the SolveWithTouchScreen
 class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
   SolveWithTouchScreenDropDownMenuWidget({Key key}) : super(key: key);
 

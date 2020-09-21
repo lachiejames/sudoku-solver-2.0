@@ -3,13 +3,13 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
-import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 
+/// 1 of the 81 tiles that makes up a Sudoku
 class TileWidget extends StatefulWidget {
   final TileKey tileKey;
   TileWidget({@required this.tileKey, Key key}) : super(key: key);
@@ -68,7 +68,7 @@ class _TileWidgetState extends State<TileWidget> {
                         style: MyStyles.tileWithRemovableValueTextStyle,
                         textDirection: TextDirection.ltr,
                       )
-                    : MyWidgets.getEmptyWidget(),
+                    : Container(),
               ],
             ),
           ),

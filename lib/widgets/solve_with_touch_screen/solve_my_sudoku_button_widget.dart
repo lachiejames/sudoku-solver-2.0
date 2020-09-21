@@ -8,6 +8,7 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 
+/// Applies the solving algorithm to the Sudoku the user has entered
 class SolveMySudokuButtonWidget extends StatefulWidget {
   SolveMySudokuButtonWidget({Key key}) : super(key: key);
 

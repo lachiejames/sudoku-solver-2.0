@@ -5,6 +5,7 @@ import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
 
+/// Contains text which provides tips for the user when the game changes state
 class TopTextWidget extends StatefulWidget {
   TopTextWidget({Key key}) : super(key: key);
 

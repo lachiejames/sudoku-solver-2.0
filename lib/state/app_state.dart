@@ -9,6 +9,7 @@ import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 
+/// Combines all state into a single class, to be used in Redux
 @immutable
 class AppState {
   final HashMap<TileKey, TileState> tileStateMap;

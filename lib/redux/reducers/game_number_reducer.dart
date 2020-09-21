@@ -3,6 +3,7 @@ import 'package:sudoku_solver_2/constants/my_games.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 
+/// Contains all state reducers used by GameNumber
 final Reducer<int> gameNumberReducer = combineReducers<int>([
   TypedReducer<int, NewGameButtonPressedAction>(_newGameReducer),
 ]);

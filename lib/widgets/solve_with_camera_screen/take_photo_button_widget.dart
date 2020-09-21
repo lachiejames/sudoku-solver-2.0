@@ -8,6 +8,7 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 
+/// Shown when the SolveWithCameraScreen is loaded
 class TakePhotoButtonWidget extends StatefulWidget {
   TakePhotoButtonWidget({Key key}) : super(key: key);
 

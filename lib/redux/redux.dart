@@ -16,6 +16,7 @@ import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 
+/// Core component for state management
 class Redux {
   static Store<AppState> _store;
   static SharedPreferences sharedPreferences;

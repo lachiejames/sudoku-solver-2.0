@@ -9,6 +9,7 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_touch_screen/solve_with_touch_screen_drop_down_menu_widget.dart';
 
+/// AppBar on the SolveWithTouchScreen
 class SolveWithTouchScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   // Required so I can return preferredSize
   final AppBar appBar;

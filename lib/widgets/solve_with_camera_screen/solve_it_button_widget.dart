@@ -8,6 +8,7 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 
+/// Shown when the user has taken a photo, and wants to solve the corresponding Sudoku
 class SolveItButtonWidget extends StatefulWidget {
   SolveItButtonWidget({Key key}) : super(key: key);
 

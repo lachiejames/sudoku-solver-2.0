@@ -7,6 +7,7 @@ import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
+/// Contains all state reducers used by the <TileKey, TileState> map
 final Reducer<HashMap<TileKey, TileState>> tileStateMapReducer =
     combineReducers<HashMap<TileKey, TileState>>([
   TypedReducer<HashMap<TileKey, TileState>, TileSelectedAction>(_tileSelectedReducer),

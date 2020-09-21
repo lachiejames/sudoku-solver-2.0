@@ -1,3 +1,4 @@
+/// Stores 2d array representation of sudokus, used on JustPlayScreen
 class MyGames {
   static final List<List<int>> game0ValuesList = [
     [5, 3, null, null, 7, null, null, null, null],

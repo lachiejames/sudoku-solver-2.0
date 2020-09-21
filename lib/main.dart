@@ -21,6 +21,7 @@ Future<void> main() async {
   await runThatShit();
 }
 
+/// Builds/rebuilds the app
 Future<void> runThatShit() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -33,6 +34,7 @@ Future<void> runThatShit() async {
   );
 }
 
+/// Base widget for the app
 class MyApp extends StatelessWidget {
   MyApp({Key key}) : super(key: key);
 
@@ -54,6 +56,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
+  /// Gets default clutter off of the screen
   void setScreenProperties(BuildContext context) {
     // Remove status bar and system navigation bar
     SystemChrome.setEnabledSystemUIOverlays([]);

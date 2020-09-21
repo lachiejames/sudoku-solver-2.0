@@ -8,6 +8,7 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
 
+/// Contains a number from 1-9 for the user to select
 class NumberWidget extends StatefulWidget {
   final int number;
   NumberWidget({this.number, Key key}) : super(key: key);

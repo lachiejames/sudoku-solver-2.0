@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart';
 
+/// Stores some styles used within the app
 class MyStyles {
   static final String fontStyle = 'Roboto';
   static final String fontStyleSplashScreen = 'Pacifico';

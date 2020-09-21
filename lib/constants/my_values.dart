@@ -1,3 +1,4 @@
+/// Stores some numbers used within the app
 class MyValues {
   // Set when app initialises
   static double screenHeight;

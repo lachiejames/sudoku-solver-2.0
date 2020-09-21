@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
-import 'package:sudoku_solver_2/constants/my_widgets.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/widgets/shared/tile_widget.dart';
 
+/// the 81 tiles that makes up a Sudoku
 class SudokuWidget extends StatefulWidget {
   SudokuWidget({Key key}) : super(key: key);
 
@@ -33,8 +33,12 @@ class _SudokuWidgetState extends State<SudokuWidget> {
               child: this.makeTable(),
             ),
             (gameState == GameState.isSolving)
-                ? MyWidgets.makeProgressIndicator()
-                : MyWidgets.getEmptyWidget(),
+                ? Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: MyColors.green,
+                    ),
+                  )
+                : Container(),
           ],
         );
       },

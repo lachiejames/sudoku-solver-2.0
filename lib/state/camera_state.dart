@@ -11,6 +11,7 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
+/// All state relating to the Camera
 class CameraState {
   int croppedImageWidth;
 

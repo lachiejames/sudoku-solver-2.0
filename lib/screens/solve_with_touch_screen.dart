@@ -9,6 +9,7 @@ import 'package:sudoku_solver_2/widgets/solve_with_touch_screen/solve_with_touch
 import 'package:sudoku_solver_2/widgets/shared/sudoku_widget.dart';
 import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 
+/// Shown when 'touch' is selected from the HomeScreen
 class SolveWithTouchScreen extends StatefulWidget {
   SolveWithTouchScreen({Key key}) : super(key: key);
 

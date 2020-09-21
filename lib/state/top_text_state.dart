@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart';
 
+/// All state relating to the TopTextWidgets
 class TopTextState {
   final String text;
   final Color color;

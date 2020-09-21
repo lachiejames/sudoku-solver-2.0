@@ -3,6 +3,7 @@ import 'package:redux/redux.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 
+/// Contains all state reducers used by the NumberState List
 final Reducer<List<NumberState>> numberStateListReducer = combineReducers<List<NumberState>>([
   TypedReducer<List<NumberState>, TileSelectedAction>(_makeNumberActive),
   TypedReducer<List<NumberState>, TileDeselectedAction>(_makeNumberInactive),

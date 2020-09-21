@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+/// All state relating to the NumberWidgets
 @immutable
 class NumberState {
   final int number;

@@ -5,6 +5,7 @@ import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
 import 'package:redux/redux.dart';
 
+/// Contains all state reducers used by the TopTextState
 final Reducer<TopTextState> topTextStateReducer = combineReducers<TopTextState>([
   TypedReducer<TopTextState, TileSelectedAction>(_setTopTextToPickANumberOrTapToRemove),
   TypedReducer<TopTextState, TileDeselectedAction>(_setTopTextToPickATile),

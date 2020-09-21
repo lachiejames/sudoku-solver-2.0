@@ -6,6 +6,7 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/just_play_help_screen.dart';
 
+/// Drop down menu on the JustPlayScreen
 class JustPlayScreenDropDownMenuWidget extends StatelessWidget {
   JustPlayScreenDropDownMenuWidget({Key key}) : super(key: key);
 

@@ -4,6 +4,7 @@ import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/screens/solve_with_touch_screen.dart';
 
+/// Lives on the HomeScreen, navigating users to the SolveWithTouchButtonWidget
 class SolveWithTouchButtonWidget extends StatelessWidget {
   SolveWithTouchButtonWidget({Key key}) : super(key: key);
 

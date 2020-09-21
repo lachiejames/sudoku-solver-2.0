@@ -8,6 +8,7 @@ import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 
+/// Provides a live view of the front camera
 class CameraWidget extends StatefulWidget {
   CameraWidget({Key key}) : super(key: key);
 

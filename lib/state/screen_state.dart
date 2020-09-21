@@ -1,3 +1,4 @@
+/// Screen that is currently active
 enum ScreenState {
   homeScreen,
   solveWithCameraScreen,

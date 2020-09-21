@@ -4,6 +4,7 @@ import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/screens/just_play_screen.dart';
 
+/// Lives on the HomeScreen, navigating users to the JustPlayScreen
 class JustPlayButtonWidget extends StatelessWidget {
   JustPlayButtonWidget({Key key}) : super(key: key);
 

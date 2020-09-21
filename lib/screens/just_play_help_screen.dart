@@ -7,6 +7,7 @@ import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/help_screen_app_bar.dart';
 import 'package:sudoku_solver_2/widgets/shared/help_screen_text_widget.dart';
 
+/// Shown when 'help' is selected from the drop down menu on JustPlayScreen
 class JustPlayHelpScreen extends StatelessWidget {
   JustPlayHelpScreen({Key key}) : super(key: key);
 

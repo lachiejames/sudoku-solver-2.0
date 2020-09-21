@@ -9,6 +9,7 @@ import 'package:sudoku_solver_2/widgets/shared/number_bar_widget.dart';
 import 'package:sudoku_solver_2/widgets/shared/sudoku_widget.dart';
 import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 
+/// Shown when 'just play' is selected from the HomeScreen
 class JustPlayScreen extends StatefulWidget {
   JustPlayScreen({Key key}) : super(key: key);
 

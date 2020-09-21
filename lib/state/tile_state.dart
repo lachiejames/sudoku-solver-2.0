@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:sudoku_solver_2/state/tile_key.dart';
 
+/// All state relating to the TileWidgets
 class TileState {
   final int row;
   final int col;

@@ -8,6 +8,7 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 
+/// Shown when the user has taken a photo, but wants to take another
 class RetakePhotoButtonWidget extends StatefulWidget {
   RetakePhotoButtonWidget({Key key}) : super(key: key);
 

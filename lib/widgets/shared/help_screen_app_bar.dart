@@ -4,6 +4,7 @@ import 'package:sudoku_solver_2/constants/my_strings.dart';
 import 'package:sudoku_solver_2/constants/my_styles.dart';
 import 'package:sudoku_solver_2/widgets/just_play_screen/just_play_screen_drop_down_menu_widget.dart';
 
+/// AppBar shown on the help screens
 class HelpScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   // Required so I can return preferredSize
   final AppBar appBar;

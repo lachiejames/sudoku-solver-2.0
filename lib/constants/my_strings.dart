@@ -1,3 +1,4 @@
+/// Stores some strings used within the app
 class MyStrings {
   // Screen names
   static final String solveWithCameraScreenName = 'Solve With Camera';

@@ -1,3 +1,4 @@
+/// Represents what is currently happening within the app
 enum GameState {
   normal,
   invalidTilesPresent,

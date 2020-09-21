@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Stores all custom colors used within the app
 class MyColors {
   static final Color blue = Color.fromARGB(255, 176, 230, 216);
   static final Color pink = Color.fromARGB(255, 245, 205, 216);

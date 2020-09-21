@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+/// Allows us to get a tile by its row/column in O(1) time, using Map<TileKey, TileState>
 @immutable
 class TileKey {
   final int row;

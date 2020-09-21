@@ -6,6 +6,7 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/solve_with_camera_help_screen.dart';
 
+/// Drop down menu shown on the SolveWithCameraScreen
 class SolveWithCameraScreenDropDownMenuWidget extends StatelessWidget {
   SolveWithCameraScreenDropDownMenuWidget({Key key}) : super(key: key);
 

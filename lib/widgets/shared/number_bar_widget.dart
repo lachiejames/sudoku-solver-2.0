@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/widgets/shared/number_widget.dart';
 
+/// Contains numbers 1-9, which can be added to a tile
 class NumberBarWidget extends StatefulWidget {
   NumberBarWidget({Key key}) : super(key: key);
 
