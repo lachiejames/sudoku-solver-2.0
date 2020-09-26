@@ -25,6 +25,7 @@ class _TileWidgetState extends State<TileWidget> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, TileState>(
+      key: Key(this.tileKey.toString()),
       distinct: true,
       converter: (store) => store.state.tileStateMap[this.tileKey],
       builder: (context, tileState) {
@@ -58,6 +59,7 @@ class _TileWidgetState extends State<TileWidget> {
                       color: (tileState.isInvalid) ? my_colors.red : my_colors.black,
                     ),
                     textDirection: TextDirection.ltr,
+                    key: Key('${this.tileKey.toString()}_text'),
                   ),
                 ),
 

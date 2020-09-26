@@ -25,6 +25,7 @@ class _NumberWidgetState extends State<NumberWidget> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, NumberState>(
+      key: Key('Number(${this.number})'),
       distinct: true,
       converter: (store) => store.state.numberStateList[this.number - 1],
       builder: (context, numberState) {
