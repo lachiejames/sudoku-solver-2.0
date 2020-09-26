@@ -8,7 +8,7 @@ void main() async {
 
   setUpAll(() async {
     await grantAppPermissions();
-    driver = await FlutterDriver.connect();
+    driver = await FlutterDriver.connect(dartVmServiceUrl: 'http://127.0.0.1:8888/');
   });
 
   tearDownAll(() async {
