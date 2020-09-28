@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/redux/redux.dart';
@@ -12,20 +13,22 @@ Future<void> main() async {
   // Allows us to run integration tests
   enableFlutterDriverExtension(handler: (command) async {
     if (command == my_strings.hotRestart) {
-      await runThatShit();
+      await restartApp();
       return 'ok';
     }
     throw Exception('Unknown command');
   });
 
-  await runThatShit();
+  await restartApp();
 }
 
 /// Builds/rebuilds the app
-Future<void> runThatShit() async {
+Future<void> restartApp() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Redux.init();
+  SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+  sharedPrefs.setInt('sudoku_solver_game_number', 0);
 
   runApp(
     MyApp(

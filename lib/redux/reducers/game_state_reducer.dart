@@ -4,12 +4,13 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:redux/redux.dart';
+import 'package:sudoku_solver_2/state/tile_state.dart';
 
 /// Contains all state reducers used by GameState
 final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
   TypedReducer<GameState, SolveSudokuAction>(_solveSudokuReducer),
   TypedReducer<GameState, SudokuSolvedAction>(_sudokuSolvedReducer),
-  TypedReducer<GameState, NumberPressedAction>(_setToSolvedIfAllTilesFilled),
+  TypedReducer<GameState, CheckIfSolvedAction>(_checkIfSolvedReducer),
   TypedReducer<GameState, GameSolvedAction>(_setToSolved),
   TypedReducer<GameState, RestartAction>(_setToDefault),
   TypedReducer<GameState, TakePhotoAction>(_takePhotoReducer),
@@ -31,18 +32,16 @@ GameState _sudokuSolvedReducer(GameState gameState, SudokuSolvedAction action) {
   return GameState.solved;
 }
 
-GameState _setToSolvedIfAllTilesFilled(GameState gameState, NumberPressedAction action) {
+GameState _checkIfSolvedReducer(GameState gameState, CheckIfSolvedAction action) {
   int numValues = 0;
-  Redux.store.state.tileStateMap.forEach((tileKey, tileState) {
+
+  for (TileState tileState in action.tileStateMap.values) {
     if (tileState.value != null) {
       numValues++;
     }
-  });
-  GameState newGameState = (numValues == 81) ? GameState.solved : gameState;
-  if (newGameState == GameState.solved) {
-    // Redux.store.dispatch(GameSolvedAction());
   }
-  return newGameState;
+
+  return (numValues == 81) ? GameState.solved : gameState;
 }
 
 GameState _setToSolved(GameState gameState, GameSolvedAction action) {

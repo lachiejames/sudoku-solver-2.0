@@ -2,6 +2,7 @@ import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
+import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
 import 'package:redux/redux.dart';
 
@@ -15,6 +16,8 @@ final Reducer<TopTextState> topTextStateReducer = combineReducers<TopTextState>(
   TypedReducer<TopTextState, SudokuSolvedAction>(_setTopTextToSolved),
   TypedReducer<TopTextState, GameSolvedAction>(_setTopTextToSolved2),
   TypedReducer<TopTextState, ChangeScreenAction>(_setTopTextAlignWithCamera),
+  TypedReducer<TopTextState, CheckIfSolvedAction>(_checkIfSolvedReducer),
+  TypedReducer<TopTextState, NewGameButtonPressedAction>(_setTopTextToPickATile4),
 ]);
 
 TopTextState _setTopTextToPickATile(TopTextState topTextState, TileDeselectedAction action) {
@@ -26,6 +29,10 @@ TopTextState _setTopTextToPickATile2(TopTextState topTextState, NumberPressedAct
 }
 
 TopTextState _setTopTextToPickATile3(TopTextState topTextState, RestartAction action) {
+  return topTextState.copyWith(text: my_strings.topTextNoTileSelected, color: my_colors.white);
+}
+
+TopTextState _setTopTextToPickATile4(TopTextState topTextState, NewGameButtonPressedAction action) {
   return topTextState.copyWith(text: my_strings.topTextNoTileSelected, color: my_colors.white);
 }
 
@@ -59,4 +66,18 @@ TopTextState _setTopTextAlignWithCamera(TopTextState topTextState, ChangeScreenA
   } else {
     return topTextState.copyWith(text: my_strings.topTextNoTileSelected, color: my_colors.white);
   }
+}
+
+TopTextState _checkIfSolvedReducer(TopTextState topTextState, CheckIfSolvedAction action) {
+  int numValues = 0;
+
+  for (TileState tileState in action.tileStateMap.values) {
+    if (tileState.value != null) {
+      numValues++;
+    }
+  }
+
+  return (numValues == 81)
+      ? topTextState.copyWith(text: my_strings.topTextSolved, color: my_colors.green)
+      : topTextState;
 }

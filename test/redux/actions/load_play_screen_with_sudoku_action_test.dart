@@ -23,13 +23,13 @@ void main() {
 
   group('LoadPlayScreenWithSudokuAction ->', () {
     test('fills tileStateMap with values', () {
-      dispatchActionAndUpdateState(LoadPlayScreenWithSudokuAction(0));
+      dispatchActionAndUpdateState(LoadSudokuGameAction(0));
       expect(state.tileStateMap[tileKey1].value, 5);
       expect(state.tileStateMap[tileKey2].value, null);
     });
 
     test('each value loaded becomes an originalTile in tileStateMap', () {
-      dispatchActionAndUpdateState(LoadPlayScreenWithSudokuAction(0));
+      dispatchActionAndUpdateState(LoadSudokuGameAction(0));
       expect(state.tileStateMap[tileKey1].isOriginalTile, true);
       expect(state.tileStateMap[tileKey2].isOriginalTile, false);
     });

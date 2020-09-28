@@ -79,21 +79,5 @@ void main() {
       expect(state.topTextState.text, 'Pick a tile');
       expect(state.topTextState.color, my_colors.white);
     });
-
-    // TODO: implement this
-    test('if pressing that number solved the game, topText displays "SOLVED" in green', () {
-      // dispatchActionAndUpdateState(NumberPressedAction(pressedNumber));
-
-      // expect(state.topTextState.text, 'SOLVED');
-      // expect(state.topTextState.color, my_colors.green);
-    });
-
-    // TODO: implement this
-    test('if pressing that number solved the game, gameState should be SOLVED', () {
-      // dispatchActionAndUpdateState(NumberPressedAction(pressedNumber));
-
-      // expect(state.topTextState.text, 'SOLVED');
-      // expect(state.topTextState.color, my_colors.green);
-    });
   });
 }

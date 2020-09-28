@@ -1,3 +1,5 @@
+@Skip('play-all-games integration test')
+
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:sudoku_solver_2/constants/my_games.dart' as my_games;
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
@@ -21,7 +23,7 @@ void main() async {
     if (driver != null) await driver.close();
   });
 
-  group('JustPlayScreen tests ->', () {
+  group('JustPlayScreenAllGames tests ->', () {
     void navigateToJustPlayScreen() async {
       await driver.tap(find.text(my_strings.justPlayButtonText));
       await driver.waitUntilNoTransientCallbacks();
@@ -31,11 +33,6 @@ void main() async {
     void tapTile(TileKey tileKey) async {
       await driver.tap(find.byValueKey('${tileKey.toString()}'));
       await driver.waitUntilNoTransientCallbacks();
-    }
-
-    void doubleTapTile(TileKey tileKey) async {
-      await tapTile(tileKey);
-      await tapTile(tileKey);
     }
 
     void tapNumber(int number) async {
@@ -74,42 +71,10 @@ void main() async {
       await navigateToJustPlayScreen();
     });
 
-    group('for regular tiles ->', () {
-      test('pressing a tile, then a number, should add that number to the tile', () async {
-        await expectNumberOnTileToBe(null, TileKey(row: 2, col: 2));
-
-        await addNumberToTile(7, TileKey(row: 2, col: 2));
-        await expectNumberOnTileToBe(7, TileKey(row: 2, col: 2));
-      });
-
-      test('double tapping the tile should remove its value', () async {
-        await addNumberToTile(7, TileKey(row: 2, col: 2));
-        await expectNumberOnTileToBe(7, TileKey(row: 2, col: 2));
-
-        await doubleTapTile(TileKey(row: 2, col: 2));
-        await expectNumberOnTileToBe(null, TileKey(row: 2, col: 2));
-      });
-    });
-
-    group('for original tiles ->', () {
-      test('pressing a tile, then a number, should NOT add that number to the tile', () async {
-        await expectNumberOnTileToBe(5, TileKey(row: 1, col: 1));
-        await addNumberToTile(7, TileKey(row: 1, col: 1));
-        await expectNumberOnTileToBe(5, TileKey(row: 1, col: 1));
-      });
-
-      test('double tapping the tile should NOT remove its value', () async {
-        await expectNumberOnTileToBe(5, TileKey(row: 1, col: 1));
-        await doubleTapTile(TileKey(row: 1, col: 1));
-        await expectNumberOnTileToBe(5, TileKey(row: 1, col: 1));
-      });
-    });
-
     group('playing a game ->', () {
       Future<void> verifyInitialGameTiles(List<List<int>> game) async {
         for (int row = 1; row <= 9; row++) {
           for (int col = 1; col <= 9; col++) {
-            print('($row, $col) -> ${game[row - 1][col - 1]}');
             await expectNumberOnTileToBe(game[row - 1][col - 1], TileKey(row: row, col: col));
           }
         }
@@ -126,34 +91,47 @@ void main() async {
         }
       }
 
-      test('initial values on the board should be the values in game0', () async {
-        await verifyInitialGameTiles(my_games.games[0]);
-      });
-
-      test('adding correct values to all blank tiles will finish the game', () async {
-        await playGame(my_solved_games.solvedGamesList[0]);
-        await driver.getText(find.text('SOLVED'));
-        await tapNewGameButton();
-      });
-
-      test('pressing NEW GAME will load a new sudoku', () async {
-        await driver.getText(find.text('Pick a tile'));
-
+      test('can play all 10 games in a row', () async {
         await verifyInitialGameTiles(my_games.games[0]);
         await playGame(my_solved_games.solvedGamesList[0]);
         await tapNewGameButton();
 
-        await driver.getText(find.text('Pick a tile'));
         await verifyInitialGameTiles(my_games.games[1]);
-      });
-
-      test('can play 2 games in a row', () async {
-        await playGame(my_solved_games.solvedGamesList[0]);
-        await tapNewGameButton();
-
         await playGame(my_solved_games.solvedGamesList[1]);
         await tapNewGameButton();
-      }, timeout: Timeout(Duration(seconds: 60)));
+
+        await verifyInitialGameTiles(my_games.games[2]);
+        await playGame(my_solved_games.solvedGamesList[2]);
+        await tapNewGameButton();
+
+        await verifyInitialGameTiles(my_games.games[3]);
+        await playGame(my_solved_games.solvedGamesList[3]);
+        await tapNewGameButton();
+
+        await verifyInitialGameTiles(my_games.games[4]);
+        await playGame(my_solved_games.solvedGamesList[4]);
+        await tapNewGameButton();
+
+        await verifyInitialGameTiles(my_games.games[5]);
+        await playGame(my_solved_games.solvedGamesList[5]);
+        await tapNewGameButton();
+
+        await verifyInitialGameTiles(my_games.games[6]);
+        await playGame(my_solved_games.solvedGamesList[6]);
+        await tapNewGameButton();
+
+        await verifyInitialGameTiles(my_games.games[7]);
+        await playGame(my_solved_games.solvedGamesList[7]);
+        await tapNewGameButton();
+
+        await verifyInitialGameTiles(my_games.games[8]);
+        await playGame(my_solved_games.solvedGamesList[8]);
+        await tapNewGameButton();
+
+        await verifyInitialGameTiles(my_games.games[9]);
+        await playGame(my_solved_games.solvedGamesList[9]);
+        await tapNewGameButton();
+      }, timeout: Timeout(Duration(seconds: 300)));
     });
   });
 }

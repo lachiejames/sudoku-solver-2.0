@@ -12,7 +12,7 @@ final Reducer<HashMap<TileKey, TileState>> tileStateMapReducer =
     combineReducers<HashMap<TileKey, TileState>>([
   TypedReducer<HashMap<TileKey, TileState>, TileSelectedAction>(_tileSelectedReducer),
   TypedReducer<HashMap<TileKey, TileState>, TileDeselectedAction>(_tileDeselectedReducer),
-  TypedReducer<HashMap<TileKey, TileState>, LoadPlayScreenWithSudokuAction>(_loadExampleValues),
+  TypedReducer<HashMap<TileKey, TileState>, LoadSudokuGameAction>(_loadExampleValues),
   TypedReducer<HashMap<TileKey, TileState>, NumberPressedAction>(_addPressedNumberToTile),
   TypedReducer<HashMap<TileKey, TileState>, SudokuSolvedAction>(
       _updateTileMapWithSolvedSudokuReducer),
@@ -58,14 +58,27 @@ HashMap<TileKey, TileState> _tileDeselectedReducer(
 }
 
 HashMap<TileKey, TileState> _loadExampleValues(
-    HashMap<TileKey, TileState> tileStateMap, LoadPlayScreenWithSudokuAction action) {
+    HashMap<TileKey, TileState> tileStateMap, LoadSudokuGameAction action) {
   final List<List<int>> exampleValues = my_games.games[action.gameNumber];
 
   final HashMap<TileKey, TileState> newTileStateMap = HashMap<TileKey, TileState>();
+
+  // clear all values first and originalTiles
   tileStateMap.forEach((tileKey, tileState) {
+    newTileStateMap[tileKey] = tileState.copyWith(
+      value: -1,
+      isOriginalTile: false,
+      isInvalid: false,
+    );
+  });
+
+  newTileStateMap.forEach((tileKey, tileState) {
     int value = exampleValues[tileKey.row - 1][tileKey.col - 1];
     bool isOriginalTile = (value != null);
-    newTileStateMap[tileKey] = tileState.copyWith(value: value, isOriginalTile: isOriginalTile);
+    newTileStateMap[tileKey] = tileState.copyWith(
+      value: value,
+      isOriginalTile: isOriginalTile,
+    );
   });
 
   assert(newTileStateMap.length == 81);
@@ -155,8 +168,6 @@ HashMap<TileKey, TileState> _checkForInvalidTilesReducer(
       bool isInvalid = invalidTileKeys.contains(tileKey);
       newTileStateMap[tileKey] = tileState.copyWith(isInvalid: isInvalid);
     });
-
-    // Redux.store.dispatch(InvalidTilesPresentAction());
 
     return newTileStateMap;
   }

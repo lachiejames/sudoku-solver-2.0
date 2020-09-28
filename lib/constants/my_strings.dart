@@ -35,3 +35,6 @@ final String newGameButtonText = 'NEW GAME';
 final String invalidSudokuToast = 'Invalid Sudoku';
 
 final String hotRestart = 'restart';
+
+// Set to null when running all tests
+final String dartVMServiceUrl = 'http://127.0.0.1:8888/';

@@ -1,7 +1,9 @@
+import 'dart:collection';
 import 'package:camera/camera.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
+import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
 /// Fired when a not-currently-pressed tile is pressed
@@ -39,9 +41,9 @@ class RestartAction {
 }
 
 /// Fired when the JustPlayScreen is loaded
-class LoadPlayScreenWithSudokuAction {
+class LoadSudokuGameAction {
   final int gameNumber;
-  LoadPlayScreenWithSudokuAction(this.gameNumber);
+  LoadSudokuGameAction(this.gameNumber);
 }
 
 /// Fired when the 'new game' button is pressed on the JustPlayScreen
@@ -96,4 +98,9 @@ class InvalidTilesPresentAction {
 class ProcessPhotoAction {
   final CameraController cameraController;
   ProcessPhotoAction(this.cameraController);
+}
+
+class CheckIfSolvedAction {
+  final HashMap<TileKey, TileState> tileStateMap;
+  CheckIfSolvedAction(this.tileStateMap);
 }

@@ -42,6 +42,7 @@ class _NewGameButtonWidgetState extends State<NewGameButtonWidget> {
                 onPressed: () {
                   if (gameState == GameState.solved) {
                     Redux.store.dispatch(NewGameButtonPressedAction());
+                    Redux.store.dispatch(LoadSudokuGameAction(Redux.store.state.gameNumber));
                   }
                 },
               ),

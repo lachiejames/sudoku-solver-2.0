@@ -21,7 +21,8 @@ class _JustPlayScreenState extends State<JustPlayScreen> {
   @override
   Widget build(BuildContext context) {
     Redux.store.dispatch(ChangeScreenAction(ScreenState.justPlayScreen));
-    Redux.store.dispatch(LoadPlayScreenWithSudokuAction(Redux.store.state.gameNumber));
+    Redux.store.dispatch(LoadSudokuGameAction(Redux.store.state.gameNumber));
+
     return Scaffold(
       appBar: JustPlayScreenAppBar(AppBar()),
       backgroundColor: my_colors.pink,

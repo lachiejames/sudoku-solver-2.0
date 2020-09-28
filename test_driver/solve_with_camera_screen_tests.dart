@@ -8,7 +8,7 @@ void main() async {
 
   setUpAll(() async {
     await grantAppPermissions();
-    driver = await FlutterDriver.connect(dartVmServiceUrl: 'http://127.0.0.1:8888/');
+    driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
   });
 
   tearDownAll(() async {
@@ -18,7 +18,11 @@ void main() async {
   group('SolveWithCameraScreen tests -', () {
     setUp(() async {
       await driver.requestData(my_strings.hotRestart);
+      await driver.waitUntilNoTransientCallbacks();
+
       await driver.tap(find.text(my_strings.solveWithCameraButtonText));
+      await driver.waitUntilNoTransientCallbacks();
+
       await driver.getText(find.text(my_strings.topTextTakingPhoto));
     });
     test('pressing "TAKE PHOTO" replaces the CameraWidget with a SudokuWidget', () async {});
