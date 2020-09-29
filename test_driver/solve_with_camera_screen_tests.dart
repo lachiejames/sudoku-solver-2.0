@@ -3,27 +3,28 @@ import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:test/test.dart';
 import 'shared.dart';
 
-void main() async {
+void main() {
   FlutterDriver driver;
 
-  setUpAll(() async {
-    await grantAppPermissions();
-    driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
-  });
+  void navigateToSolveWithCameraScreen() async {
+    await waitForThenTap(driver, find.text(my_strings.solveWithCameraButtonText));
+    await driver.getText(find.text(my_strings.solveWithCameraScreenName));
+  }
 
-  tearDownAll(() async {
-    if (driver != null) await driver.close();
-  });
+  group('SolveWithCameraScreen tests ->', () {
+    setUpAll(() async {
+      await grantAppPermissions();
+      driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
+      await hotRestart(driver);
+    });
 
-  group('SolveWithCameraScreen tests -', () {
+    tearDownAll(() async {
+      if (driver != null) await driver.close();
+    });
+
     setUp(() async {
-      await driver.requestData(my_strings.hotRestart);
-      await driver.waitUntilNoTransientCallbacks();
-
-      await driver.tap(find.text(my_strings.solveWithCameraButtonText));
-      await driver.waitUntilNoTransientCallbacks();
-
-      await driver.getText(find.text(my_strings.topTextTakingPhoto));
+      await hotRestart(driver);
+      await navigateToSolveWithCameraScreen();
     });
     test('pressing "TAKE PHOTO" replaces the CameraWidget with a SudokuWidget', () async {});
   });

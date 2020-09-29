@@ -1,7 +1,6 @@
 @Skip('play-all-games integration test')
 
 import 'package:flutter_driver/flutter_driver.dart';
-import 'package:sudoku_solver_2/constants/my_games.dart' as my_games;
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:test/test.dart';
@@ -9,129 +8,74 @@ import 'package:test/test.dart';
 import 'my_solved_games.dart' as my_solved_games;
 import 'shared.dart';
 
-void main() async {
+void main() {
   FlutterDriver driver;
 
-  setUpAll(() async {
-    await grantAppPermissions();
-    driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
+  void navigateToJustPlayScreen() async {
+    await waitForThenTap(driver, find.text(my_strings.justPlayButtonText));
+    await driver.getText(find.text(my_strings.topTextNoTileSelected));
+  }
 
-    await driver.requestData(my_strings.hotRestart);
-  });
+  void tapTile(TileKey tileKey) async {
+    await waitForThenTap(driver, find.byValueKey('${tileKey.toString()}'));
+  }
 
-  tearDownAll(() async {
-    if (driver != null) await driver.close();
-  });
+  void tapNumber(int number) async {
+    await waitForThenTap(driver, find.byValueKey('Number($number)'));
+  }
 
-  group('JustPlayScreenAllGames tests ->', () {
-    void navigateToJustPlayScreen() async {
-      await driver.tap(find.text(my_strings.justPlayButtonText));
-      await driver.waitUntilNoTransientCallbacks();
-      await driver.getText(find.text(my_strings.topTextNoTileSelected));
+  void addNumberToTile(int number, TileKey tileKey) async {
+    await tapTile(tileKey);
+    await tapNumber(number);
+  }
+
+  void tapNewGameButton() async {
+    await waitForThenTap(driver, find.text('NEW GAME'));
+  }
+
+  Future<int> getNumberOnTile(TileKey tileKey) async {
+    await driver.waitUntilNoTransientCallbacks();
+    String tileText = await driver.getText(await find.byValueKey('${tileKey.toString()}_text'));
+
+    if (tileText == "") {
+      return null;
+    } else {
+      return int.parse(tileText);
     }
+  }
 
-    void tapTile(TileKey tileKey) async {
-      await driver.tap(find.byValueKey('${tileKey.toString()}'));
-      await driver.waitUntilNoTransientCallbacks();
-    }
-
-    void tapNumber(int number) async {
-      await driver.tap(find.byValueKey('Number($number)'));
-      await driver.waitUntilNoTransientCallbacks();
-    }
-
-    void addNumberToTile(int number, TileKey tileKey) async {
-      await tapTile(tileKey);
-      await tapNumber(number);
-    }
-
-    void tapNewGameButton() async {
-      await driver.tap(find.text('NEW GAME'));
-      await driver.waitUntilNoTransientCallbacks();
-    }
-
-    Future<int> getNumberOnTile(TileKey tileKey) async {
-      String tileText = await driver.getText(await find.byValueKey('${tileKey.toString()}_text'));
-
-      if (tileText == "") {
-        return null;
-      } else {
-        return int.parse(tileText);
+  Future<void> playGame(List<List<int>> game) async {
+    for (int row = 1; row <= 9; row++) {
+      for (int col = 1; col <= 9; col++) {
+        int numberOnTile = await getNumberOnTile(TileKey(row: row, col: col));
+        if (numberOnTile == null) {
+          await addNumberToTile(game[row - 1][col - 1], TileKey(row: row, col: col));
+        }
       }
     }
+  }
 
-    void expectNumberOnTileToBe(int number, TileKey tileKey) async {
-      int numberOnTile = await getNumberOnTile(tileKey);
-      expect(numberOnTile == number, true);
-    }
+  group('JustPlayScreenAllGames tests ->', () {
+    setUpAll(() async {
+      await grantAppPermissions();
+      driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
+      await hotRestart(driver);
+    });
 
-    // Restart app at beginning of each test
+    tearDownAll(() async {
+      if (driver != null) await driver.close();
+    });
+
     setUp(() async {
-      await driver.requestData(my_strings.hotRestart);
+      await hotRestart(driver);
       await navigateToJustPlayScreen();
     });
 
-    group('playing a game ->', () {
-      Future<void> verifyInitialGameTiles(List<List<int>> game) async {
-        for (int row = 1; row <= 9; row++) {
-          for (int col = 1; col <= 9; col++) {
-            await expectNumberOnTileToBe(game[row - 1][col - 1], TileKey(row: row, col: col));
-          }
-        }
+    test('can play all 10 games in a row', () async {
+      for (int i = 0; i < my_solved_games.solvedGamesList.length; i++) {
+        await playGame(my_solved_games.solvedGamesList[i]);
+        await tapNewGameButton();
       }
-
-      Future<void> playGame(List<List<int>> game) async {
-        for (int row = 1; row <= 9; row++) {
-          for (int col = 1; col <= 9; col++) {
-            if (await getNumberOnTile(TileKey(row: row, col: col)) == null) {
-              await addNumberToTile(game[row - 1][col - 1], TileKey(row: row, col: col));
-              await driver.waitUntilNoTransientCallbacks();
-            }
-          }
-        }
-      }
-
-      test('can play all 10 games in a row', () async {
-        await verifyInitialGameTiles(my_games.games[0]);
-        await playGame(my_solved_games.solvedGamesList[0]);
-        await tapNewGameButton();
-
-        await verifyInitialGameTiles(my_games.games[1]);
-        await playGame(my_solved_games.solvedGamesList[1]);
-        await tapNewGameButton();
-
-        await verifyInitialGameTiles(my_games.games[2]);
-        await playGame(my_solved_games.solvedGamesList[2]);
-        await tapNewGameButton();
-
-        await verifyInitialGameTiles(my_games.games[3]);
-        await playGame(my_solved_games.solvedGamesList[3]);
-        await tapNewGameButton();
-
-        await verifyInitialGameTiles(my_games.games[4]);
-        await playGame(my_solved_games.solvedGamesList[4]);
-        await tapNewGameButton();
-
-        await verifyInitialGameTiles(my_games.games[5]);
-        await playGame(my_solved_games.solvedGamesList[5]);
-        await tapNewGameButton();
-
-        await verifyInitialGameTiles(my_games.games[6]);
-        await playGame(my_solved_games.solvedGamesList[6]);
-        await tapNewGameButton();
-
-        await verifyInitialGameTiles(my_games.games[7]);
-        await playGame(my_solved_games.solvedGamesList[7]);
-        await tapNewGameButton();
-
-        await verifyInitialGameTiles(my_games.games[8]);
-        await playGame(my_solved_games.solvedGamesList[8]);
-        await tapNewGameButton();
-
-        await verifyInitialGameTiles(my_games.games[9]);
-        await playGame(my_solved_games.solvedGamesList[9]);
-        await tapNewGameButton();
-      }, timeout: Timeout(Duration(seconds: 300)));
-    });
+    }, timeout: Timeout(Duration(seconds: 300)));
   });
 }

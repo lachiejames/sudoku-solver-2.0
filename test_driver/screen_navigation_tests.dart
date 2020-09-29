@@ -4,70 +4,60 @@ import 'package:test/test.dart';
 
 import 'shared.dart';
 
-void main() async {
+void main() {
   FlutterDriver driver;
 
-  setUpAll(() async {
-    await grantAppPermissions();
-    driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
-    await driver.waitUntilNoTransientCallbacks();
-  });
+  void pressSolveWithCameraButton() async {
+    await waitForThenTap(driver, find.text(my_strings.solveWithCameraButtonText));
+  }
 
-  tearDownAll(() async {
-    if (driver != null) await driver.close();
-  });
+  void pressSolveWithTouchButton() async {
+    await waitForThenTap(driver, find.text(my_strings.solveWithTouchButtonText));
+  }
 
-  group('Screen navigation tests -', () {
-    void pressSolveWithCameraButton() async {
-      await driver.tap(find.text(my_strings.solveWithCameraButtonText));
-      await driver.waitUntilNoTransientCallbacks();
-    }
+  void pressJustPlayButton() async {
+    await waitForThenTap(driver, find.text(my_strings.justPlayButtonText));
+  }
 
-    void pressSolveWithTouchButton() async {
-      await driver.tap(find.text(my_strings.solveWithTouchButtonText));
-      await driver.waitUntilNoTransientCallbacks();
-    }
+  void pressHelpOnDropDownMenu(String dropDownMenuType) async {
+    await waitForThenTap(driver, find.byType(dropDownMenuType));
+    await waitForThenTap(driver, find.text(my_strings.dropDownMenuOption2));
+  }
 
-    void pressJustPlayButton() async {
-      await driver.tap(find.text(my_strings.justPlayButtonText));
-      await driver.waitUntilNoTransientCallbacks();
-    }
+  group('Screen navigation tests ->', () {
+    setUpAll(() async {
+      await grantAppPermissions();
+      driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
+      await hotRestart(driver);
+    });
 
-    void pressHelpOnDropDownMenu(String dropDownMenuType) async {
-      await driver.tap(find.byType(dropDownMenuType));
-      await driver.waitUntilNoTransientCallbacks();
+    tearDownAll(() async {
+      if (driver != null) await driver.close();
+    });
 
-      await driver.tap(find.text(my_strings.dropDownMenuOption2));
-      await driver.waitUntilNoTransientCallbacks();
-    }
-
-    // Restart app at beginning of each test
     setUp(() async {
-      await driver.requestData(my_strings.hotRestart);
-      await driver.waitUntilNoTransientCallbacks();
+      await hotRestart(driver);
     });
     test('we start on the HomeScreen', () async {
       await driver.getText(find.text(my_strings.topTextHome));
     });
 
-    test('pressing "SOLVE WITH CAMERA" button on HomeScreen brings us to the SolveWithCameraScreen',
-        () async {
+    test('pressing "SOLVE WITH CAMERA" button brings us to the SolveWithCameraScreen', () async {
       await pressSolveWithCameraButton();
 
-      await driver.getText(find.text(my_strings.topTextTakingPhoto));
+      await driver.getText(find.text(my_strings.solveWithCameraScreenName));
     });
 
-    test('pressing "SOLVE WITH TOUCH" button on HomeScreen brings us to the SolveWithTouchScreen',
-        () async {
+    test('pressing "SOLVE WITH TOUCH" button brings us to the SolveWithTouchScreen', () async {
       await pressSolveWithTouchButton();
 
-      await driver.getText(find.text(my_strings.topTextNoTileSelected));
+      await driver.getText(find.text(my_strings.solveWithTouchScreenName));
     });
 
-    test('pressing "JUST PLAY" button on HomeScreen brings us to the JustPlayScreen', () async {
+    test('pressing "JUST PLAY" button brings us to the JustPlayScreen', () async {
       await pressJustPlayButton();
 
-      await driver.getText(find.text(my_strings.topTextNoTileSelected));
+      await driver.getText(find.text(my_strings.justPlayScreenName));
     });
 
     test('pressing "Help" on SolveWithCameraScreen takes you to SolveWithCameraHelpScreen',

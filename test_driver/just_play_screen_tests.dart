@@ -7,74 +7,89 @@ import 'package:test/test.dart';
 import 'my_solved_games.dart' as my_solved_games;
 import 'shared.dart';
 
-void main() async {
+void main() {
   FlutterDriver driver;
 
-  setUpAll(() async {
-    await grantAppPermissions();
-    driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
+  void navigateToJustPlayScreen() async {
+    await waitForThenTap(driver, find.text(my_strings.justPlayButtonText));
+    await driver.getText(find.text(my_strings.topTextNoTileSelected));
+  }
 
-    await driver.requestData(my_strings.hotRestart);
-  });
+  void tapTile(TileKey tileKey) async {
+    await waitForThenTap(driver, find.byValueKey('${tileKey.toString()}'));
+  }
 
-  tearDownAll(() async {
-    if (driver != null) await driver.close();
-  });
+  void doubleTapTile(TileKey tileKey) async {
+    await tapTile(tileKey);
+    await tapTile(tileKey);
+  }
 
-  group('JustPlayScreen tests ->', () {
-    void navigateToJustPlayScreen() async {
-      await driver.tap(find.text(my_strings.justPlayButtonText));
-      await driver.waitUntilNoTransientCallbacks();
-      await driver.getText(find.text(my_strings.topTextNoTileSelected));
+  void tapNumber(int number) async {
+    await waitForThenTap(driver, find.byValueKey('Number($number)'));
+  }
+
+  void addNumberToTile(int number, TileKey tileKey) async {
+    await tapTile(tileKey);
+    await tapNumber(number);
+  }
+
+  void tapNewGameButton() async {
+    await waitForThenTap(driver, find.text('NEW GAME'));
+  }
+
+  Future<int> getNumberOnTile(TileKey tileKey) async {
+    await driver.waitUntilNoTransientCallbacks();
+    String tileText = await driver.getText(find.byValueKey('${tileKey.toString()}_text'));
+
+    if (tileText == "") {
+      return null;
+    } else {
+      return int.parse(tileText);
     }
+  }
 
-    void tapTile(TileKey tileKey) async {
-      await driver.tap(find.byValueKey('${tileKey.toString()}'));
-      await driver.waitUntilNoTransientCallbacks();
-    }
+  void expectNumberOnTileToBe(int number, TileKey tileKey) async {
+    int numberOnTile = await getNumberOnTile(tileKey);
+    expect(numberOnTile == number, true);
+  }
 
-    void doubleTapTile(TileKey tileKey) async {
-      await tapTile(tileKey);
-      await tapTile(tileKey);
-    }
-
-    void tapNumber(int number) async {
-      await driver.tap(find.byValueKey('Number($number)'));
-      await driver.waitUntilNoTransientCallbacks();
-    }
-
-    void addNumberToTile(int number, TileKey tileKey) async {
-      await tapTile(tileKey);
-      await tapNumber(number);
-    }
-
-    void tapNewGameButton() async {
-      await driver.tap(find.text('NEW GAME'));
-      await driver.waitUntilNoTransientCallbacks();
-    }
-
-    Future<int> getNumberOnTile(TileKey tileKey) async {
-      String tileText = await driver.getText(await find.byValueKey('${tileKey.toString()}_text'));
-
-      if (tileText == "") {
-        return null;
-      } else {
-        return int.parse(tileText);
+  Future<void> verifyInitialGameTiles(List<List<int>> game) async {
+    for (int row = 1; row <= 9; row++) {
+      for (int col = 1; col <= 9; col++) {
+        await expectNumberOnTileToBe(game[row - 1][col - 1], TileKey(row: row, col: col));
       }
     }
+  }
 
-    void expectNumberOnTileToBe(int number, TileKey tileKey) async {
-      int numberOnTile = await getNumberOnTile(tileKey);
-      expect(numberOnTile == number, true);
+  Future<void> playGame(List<List<int>> game) async {
+    for (int row = 1; row <= 9; row++) {
+      for (int col = 1; col <= 9; col++) {
+        int numberOnTile = await getNumberOnTile(TileKey(row: row, col: col));
+        if (numberOnTile == null) {
+          await addNumberToTile(game[row - 1][col - 1], TileKey(row: row, col: col));
+        }
+      }
     }
+  }
 
-    // Restart app at beginning of each test
-    setUp(() async {
-      await driver.requestData(my_strings.hotRestart);
-      await navigateToJustPlayScreen();
+  group('JustPlayScreen tests ->', () {
+    setUpAll(() async {
+      await grantAppPermissions();
+      driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
+      await hotRestart(driver);
     });
 
+    tearDownAll(() async {
+      if (driver != null) await driver.close();
+    });
+
+    setUp(() async {
+      await hotRestart(driver);
+      await navigateToJustPlayScreen();
+    });
     group('for regular tiles ->', () {
+      // Restart app at beginning of each test
+
       test('pressing a tile, then a number, should add that number to the tile', () async {
         await expectNumberOnTileToBe(null, TileKey(row: 2, col: 2));
 
@@ -106,26 +121,6 @@ void main() async {
     });
 
     group('playing a game ->', () {
-      Future<void> verifyInitialGameTiles(List<List<int>> game) async {
-        for (int row = 1; row <= 9; row++) {
-          for (int col = 1; col <= 9; col++) {
-            print('($row, $col) -> ${game[row - 1][col - 1]}');
-            await expectNumberOnTileToBe(game[row - 1][col - 1], TileKey(row: row, col: col));
-          }
-        }
-      }
-
-      Future<void> playGame(List<List<int>> game) async {
-        for (int row = 1; row <= 9; row++) {
-          for (int col = 1; col <= 9; col++) {
-            if (await getNumberOnTile(TileKey(row: row, col: col)) == null) {
-              await addNumberToTile(game[row - 1][col - 1], TileKey(row: row, col: col));
-              await driver.waitUntilNoTransientCallbacks();
-            }
-          }
-        }
-      }
-
       test('initial values on the board should be the values in game0', () async {
         await verifyInitialGameTiles(my_games.games[0]);
       });
@@ -133,7 +128,7 @@ void main() async {
       test('adding correct values to all blank tiles will finish the game', () async {
         await playGame(my_solved_games.solvedGamesList[0]);
         await driver.getText(find.text('SOLVED'));
-        await tapNewGameButton();
+        await driver.getText(find.text('NEW GAME'));
       });
 
       test('pressing NEW GAME will load a new sudoku', () async {
