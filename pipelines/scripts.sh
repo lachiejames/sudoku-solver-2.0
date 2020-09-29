@@ -45,9 +45,4 @@ run_integration_tests() {
     flutter drive --target=test_driver/run_app.dart
 }
 
-calculate_test_coverage() {
-    echo "Calculating test coverage"
-    flutter test --coverage
-}
-
 "$@"
