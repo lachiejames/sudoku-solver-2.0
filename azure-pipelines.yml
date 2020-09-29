@@ -31,14 +31,3 @@ jobs:
 
       - script: pipelines/scripts.sh run_integration_tests
         displayName: Run Integration Tests
-
-      - script: pipelines/scripts.sh calculate_test_coverage
-        displayName: Calculate Test Coverage
-
-      - task: SonarQubeAnalyze@4
-        displayName: Analyse SonarQube
-
-      - task: SonarQubePublish@4
-        displayName: Publish SonarQube Results
-        inputs:
-          pollingTimeoutSec: 300
