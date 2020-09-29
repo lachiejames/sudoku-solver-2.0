@@ -22,6 +22,12 @@ class _NumberWidgetState extends State<NumberWidget> {
 
   _NumberWidgetState({@required this.number});
 
+  Key _createPropertyKey(NumberState numberState) {
+    String key = 'Number(${this.number})';
+    key += ' - color:${(numberState.isActive) ? 'green' : 'white'}';
+    return Key(key);
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, NumberState>(
@@ -32,6 +38,7 @@ class _NumberWidgetState extends State<NumberWidget> {
         assert(numberState.number != null);
         return GestureDetector(
           child: Container(
+            key: this._createPropertyKey(numberState),
             height: 36,
             width: 36,
             margin: EdgeInsets.only(

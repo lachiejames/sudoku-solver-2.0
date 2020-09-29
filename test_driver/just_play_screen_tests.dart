@@ -48,6 +48,14 @@ void main() {
     }
   }
 
+  Future<void> expectTilePropertiesToBe({TileKey tileKey, String color, String textColor}) async {
+    await driver.waitFor(find.byValueKey('$tileKey - color:$color - textColor:$textColor'));
+  }
+
+  Future<void> expectNumberPropertiesToBe({int number, String color}) async {
+    await driver.waitFor(find.byValueKey('Number($number) - color:$color'));
+  }
+
   void expectNumberOnTileToBe(int number, TileKey tileKey) async {
     int numberOnTile = await getNumberOnTile(tileKey);
     expect(numberOnTile == number, true);
@@ -89,6 +97,39 @@ void main() {
     });
     group('for regular tiles ->', () {
       // Restart app at beginning of each test
+      test('pressing a tile should make it green', () async {
+        await expectTilePropertiesToBe(
+          tileKey: TileKey(row: 2, col: 2),
+          color: 'white',
+          textColor: 'black',
+        );
+
+        await tapTile(TileKey(row: 2, col: 2));
+
+        await expectTilePropertiesToBe(
+          tileKey: TileKey(row: 2, col: 2),
+          color: 'green',
+          textColor: 'black',
+        );
+      });
+
+      test('pressing a tile should make all numbers green', () async {
+        for (int number = 1; number <= 9; number++) {
+          await expectNumberPropertiesToBe(
+            number: number,
+            color: 'white',
+          );
+        }
+
+        await tapTile(TileKey(row: 2, col: 2));
+
+        for (int number = 1; number <= 9; number++) {
+          await expectNumberPropertiesToBe(
+            number: number,
+            color: 'green',
+          );
+        }
+      });
 
       test('pressing a tile, then a number, should add that number to the tile', () async {
         await expectNumberOnTileToBe(null, TileKey(row: 2, col: 2));

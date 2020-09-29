@@ -22,6 +22,23 @@ class _TileWidgetState extends State<TileWidget> {
   final TileKey tileKey;
   _TileWidgetState({@required this.tileKey});
 
+  Key _createPropertyKey(TileState tileState) {
+    String key = '${this.tileKey.toString()}';
+    key += ' - color:${this._getTileColorString(tileState)}';
+    key += ' - textColor:${(tileState.isInvalid) ? 'red' : 'black'}';
+    return Key(key);
+  }
+
+  String _getTileColorString(TileState tileState) {
+    if (tileState.isOriginalTile) {
+      return 'grey';
+    } else if (tileState.isSelected) {
+      return 'green';
+    } else {
+      return 'white';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, TileState>(
@@ -32,6 +49,7 @@ class _TileWidgetState extends State<TileWidget> {
         assert(tileState != null);
         return GestureDetector(
           child: Container(
+            key: this._createPropertyKey(tileState),
             height: 32,
             width: 32,
             decoration: BoxDecoration(
