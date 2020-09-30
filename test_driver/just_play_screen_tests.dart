@@ -7,7 +7,6 @@ import 'my_solved_games.dart' as my_solved_games;
 import 'shared.dart';
 
 void main() {
-
   group('JustPlayScreen tests ->', () {
     setUpAll(() async {
       await initTests();
@@ -21,9 +20,9 @@ void main() {
       await hotRestart();
       await navigateToJustPlayScreen();
     });
-    group('for regular tiles ->', () {
-      // Restart app at beginning of each test
-      test('pressing a tile should make it green', () async {
+
+    group('regular tiles ->', () {
+      test('tapping a tile changes its color from white to green and shows X', () async {
         await expectTilePropertiesToBe(
           tileKey: TileKey(row: 2, col: 2),
           color: 'white',
@@ -38,7 +37,45 @@ void main() {
           textColor: 'black',
         );
       });
+      test('tapping a selected tile changes color from green to white and removes X', () async {});
 
+      test('tapping a tile changes all numbers from white to green', () async {});
+      test('tapping a selected tile changes all numbers from green to white', () async {});
+
+      test('double tapping a tile removes its value', () async {});
+
+      test('adding an invalid tile changes textColor from black to red', () async {});
+      test('removing an invalid tile changes textColor from red to black', () async {});
+
+      test('adding many invalid tiles changes textColor from black to red', () async {});
+      test('removing all invalid tiles changes textColor from red to black', () async {});
+
+      test('tapping a tile while another tile is selected will update tile colors', () async {});
+    });
+
+    group('original tiles ->', () {
+      test('tapping a tile changes no colors, and does not remove the value', () async {});
+    });
+
+    group('restart ->', () {
+      test('pressing RESTART deselects all tiles and numbers', () async {});
+      test('pressing RESTART makes new game button disappear', () async {});
+    });
+
+    group('help ->', () {
+      test('pressing HELP then navigating back will preserve board state', () async {});
+    });
+
+    group('new game ->', () {
+      test('NEW GAME button will not appear when invalid tiles are present', () async {});
+      test('NEW GAME button appears', () async {});
+      test('if a value is removed, NEW GAME button disappears', () async {});
+      test('if invalid tile is added, NEW GAME button disappears', () async {});
+      test('pressing NEW GAME loads new tiles with expected properties', () async {});
+      test('pressing NEW GAME dehighlights all tiles and numbers', () async {});
+    });
+
+    group('for regular tiles ->', () {
       test('pressing a tile should make all numbers green', () async {
         for (int number = 1; number <= 9; number++) {
           await expectNumberPropertiesToBe(

@@ -1,6 +1,7 @@
 @Skip('play-all-games integration test')
 
 import 'package:test/test.dart';
+import 'package:sudoku_solver_2/constants/my_games.dart' as my_games;
 import 'my_solved_games.dart' as my_solved_games;
 import 'shared.dart';
 
@@ -24,6 +25,9 @@ void main() {
         await playGame(my_solved_games.solvedGamesList[i]);
         await tapNewGameButton();
       }
+
+      // After all games are finished, it rounds back to the first game
+      await verifyInitialGameTiles(my_games.games[0]);
     }, timeout: Timeout(Duration(seconds: 300)));
   });
 }

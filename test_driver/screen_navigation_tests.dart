@@ -17,6 +17,11 @@ void main() {
     setUp(() async {
       await hotRestart();
     });
+
+    test('navigating to SolveWithCameraScreen then back will preserve this state', () async {});
+    test('navigating to SolveWithTouchScreen then back will preserve this state', () async {});
+    test('SolveWithTouchScreen should show a different state', () async {});
+
     test('we start on the HomeScreen', () async {
       await driver.getText(find.text(my_strings.topTextHome));
     });
