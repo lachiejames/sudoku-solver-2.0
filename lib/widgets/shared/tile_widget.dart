@@ -26,6 +26,7 @@ class _TileWidgetState extends State<TileWidget> {
     String key = '${this.tileKey.toString()}';
     key += ' - color:${this._getTileColorString(tileState)}';
     key += ' - textColor:${(tileState.isInvalid) ? 'red' : 'black'}';
+    key += ' - X:${tileState.isSelected && tileState.value != null}';
     return Key(key);
   }
 

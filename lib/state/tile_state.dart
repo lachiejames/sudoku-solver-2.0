@@ -73,6 +73,7 @@ class TileState {
     } else {
       valueToPass = valueProvided;
     }
+
     return valueToPass;
   }
 

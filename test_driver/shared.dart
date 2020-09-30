@@ -6,6 +6,8 @@ import 'package:path/path.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:test/test.dart';
+import 'package:meta/meta.dart';
+
 
 FlutterDriver driver;
 
@@ -111,8 +113,13 @@ Future<int> getNumberOnTile(TileKey tileKey) async {
   }
 }
 
-Future<void> expectTilePropertiesToBe({TileKey tileKey, String color, String textColor}) async {
-  await driver.waitFor(find.byValueKey('$tileKey - color:$color - textColor:$textColor'));
+Future<void> expectTilePropertiesToBe({
+  @required TileKey tileKey,
+  @required String color,
+  @required String textColor,
+  @required bool hasX,
+}) async {
+  await driver.waitFor(find.byValueKey('$tileKey - color:$color - textColor:$textColor - X:$hasX'));
 }
 
 Future<void> expectNumberPropertiesToBe({int number, String color}) async {

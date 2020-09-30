@@ -22,11 +22,12 @@ void main() {
     });
 
     group('regular tiles ->', () {
-      test('tapping a tile changes its color from white to green and shows X', () async {
+      test('tapping a tile changes its color from white to green', () async {
         await expectTilePropertiesToBe(
           tileKey: TileKey(row: 2, col: 2),
           color: 'white',
           textColor: 'black',
+          hasX: false,
         );
 
         await tapTile(TileKey(row: 2, col: 2));
@@ -35,9 +36,45 @@ void main() {
           tileKey: TileKey(row: 2, col: 2),
           color: 'green',
           textColor: 'black',
+          hasX: false,
         );
       });
-      test('tapping a selected tile changes color from green to white and removes X', () async {});
+
+      test('tapping a selected tile changes color from green to white and removes X', () async {
+        for (int number = 1; number <= 9; number++) {
+          await expectNumberPropertiesToBe(
+            number: number,
+            color: 'white',
+          );
+        }
+
+        await tapTile(TileKey(row: 2, col: 2));
+
+        for (int number = 1; number <= 9; number++) {
+          await expectNumberPropertiesToBe(
+            number: number,
+            color: 'green',
+          );
+        }
+      });
+
+      test('tapping a tile with a value adds an X', () async {
+        for (int number = 1; number <= 9; number++) {
+          await expectNumberPropertiesToBe(
+            number: number,
+            color: 'white',
+          );
+        }
+
+        await tapTile(TileKey(row: 2, col: 2));
+
+        for (int number = 1; number <= 9; number++) {
+          await expectNumberPropertiesToBe(
+            number: number,
+            color: 'green',
+          );
+        }
+      });
 
       test('tapping a tile changes all numbers from white to green', () async {});
       test('tapping a selected tile changes all numbers from green to white', () async {});
@@ -76,24 +113,6 @@ void main() {
     });
 
     group('for regular tiles ->', () {
-      test('pressing a tile should make all numbers green', () async {
-        for (int number = 1; number <= 9; number++) {
-          await expectNumberPropertiesToBe(
-            number: number,
-            color: 'white',
-          );
-        }
-
-        await tapTile(TileKey(row: 2, col: 2));
-
-        for (int number = 1; number <= 9; number++) {
-          await expectNumberPropertiesToBe(
-            number: number,
-            color: 'green',
-          );
-        }
-      });
-
       test('pressing a tile, then a number, should add that number to the tile', () async {
         await expectNumberOnTileToBe(null, TileKey(row: 2, col: 2));
 
