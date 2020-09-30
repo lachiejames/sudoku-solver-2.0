@@ -38,3 +38,5 @@ final String hotRestart = 'restart';
 
 // Set to null when running all tests
 final String dartVMServiceUrl = 'http://127.0.0.1:8888/';
+
+final String gameNumberSharedPrefsKey = 'sudoku_solver_game_number';

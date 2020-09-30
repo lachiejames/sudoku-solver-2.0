@@ -15,6 +15,7 @@ import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
+import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 
 /// Core component for state management
 class Redux {
@@ -49,11 +50,11 @@ class Redux {
 
   static int _getGameNumber() {
     assert(sharedPreferences != null);
-    int gameNumber = sharedPreferences.getInt('sudoku_solver_game_number');
+    int gameNumber = sharedPreferences.getInt(my_strings.gameNumberSharedPrefsKey);
 
     if (gameNumber == null) {
       gameNumber = 0;
-      sharedPreferences.setInt('sudoku_solver_game_number', gameNumber);
+      sharedPreferences.setInt(my_strings.gameNumberSharedPrefsKey, gameNumber);
     }
 
     return gameNumber;

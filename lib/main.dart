@@ -28,7 +28,7 @@ Future<void> restartApp() async {
 
   await Redux.init();
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
-  sharedPrefs.setInt('sudoku_solver_game_number', 0);
+  sharedPrefs.setInt(my_strings.gameNumberSharedPrefsKey, 0);
 
   runApp(
     MyApp(

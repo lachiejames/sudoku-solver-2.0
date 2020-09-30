@@ -1,7 +1,16 @@
+library shared;
+
 import 'dart:io';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:path/path.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
+import 'package:sudoku_solver_2/state/tile_key.dart';
+import 'package:test/test.dart';
+
+FlutterDriver sharedDriver;
+void setDriver(FlutterDriver flutterDriver) {
+  sharedDriver = flutterDriver;
+}
 
 Future<void> grantAppPermissions() async {
   final envVars = Platform.environment;
@@ -26,15 +35,107 @@ Future<void> grantAppPermissions() async {
   ]);
 }
 
-Future<void> hotRestart(FlutterDriver driver) async {
-  await driver.waitUntilNoTransientCallbacks();
-  await driver.requestData(my_strings.hotRestart);
-  await driver.waitUntilNoTransientCallbacks();
+Future<void> hotRestart() async {
+  await sharedDriver.waitUntilNoTransientCallbacks();
+  await sharedDriver.requestData(my_strings.hotRestart);
+  await sharedDriver.waitUntilNoTransientCallbacks();
 }
 
-Future<void> waitForThenTap(FlutterDriver driver, SerializableFinder finder) async {
-  await driver.waitUntilNoTransientCallbacks();
-  await driver.waitFor(finder);
-  await driver.tap(finder);
-  await driver.waitUntilNoTransientCallbacks();
+Future<void> waitForThenTap(SerializableFinder finder) async {
+  await sharedDriver.waitUntilNoTransientCallbacks();
+  await sharedDriver.waitFor(finder);
+  await sharedDriver.tap(finder);
+  await sharedDriver.waitUntilNoTransientCallbacks();
+}
+
+void navigateToSolveWithCameraScreen() async {
+  await waitForThenTap(find.text(my_strings.solveWithCameraButtonText));
+  await sharedDriver.getText(find.text(my_strings.solveWithCameraScreenName));
+}
+
+void navigateToJustPlayScreen() async {
+  await waitForThenTap(find.text(my_strings.justPlayButtonText));
+  await sharedDriver.getText(find.text(my_strings.topTextNoTileSelected));
+}
+
+void pressSolveWithCameraButton() async {
+  await waitForThenTap(find.text(my_strings.solveWithCameraButtonText));
+}
+
+void pressSolveWithTouchButton() async {
+  await waitForThenTap(find.text(my_strings.solveWithTouchButtonText));
+}
+
+void pressJustPlayButton() async {
+  await waitForThenTap(find.text(my_strings.justPlayButtonText));
+}
+
+void pressHelpOnDropDownMenu(String dropDownMenuType) async {
+  await waitForThenTap(find.byType(dropDownMenuType));
+  await waitForThenTap(find.text(my_strings.dropDownMenuOption2));
+}
+
+void tapTile(TileKey tileKey) async {
+  await waitForThenTap(find.byValueKey('${tileKey.toString()}'));
+}
+
+void doubleTapTile(TileKey tileKey) async {
+  await tapTile(tileKey);
+  await tapTile(tileKey);
+}
+
+void tapNumber(int number) async {
+  await waitForThenTap(find.byValueKey('Number($number)'));
+}
+
+void addNumberToTile(int number, TileKey tileKey) async {
+  await tapTile(tileKey);
+  await tapNumber(number);
+}
+
+void tapNewGameButton() async {
+  await waitForThenTap(find.text('NEW GAME'));
+}
+
+Future<int> getNumberOnTile(TileKey tileKey) async {
+  await sharedDriver.waitUntilNoTransientCallbacks();
+  String tileText = await sharedDriver.getText(find.byValueKey('${tileKey.toString()}_text'));
+
+  if (tileText == "") {
+    return null;
+  } else {
+    return int.parse(tileText);
+  }
+}
+
+Future<void> expectTilePropertiesToBe({TileKey tileKey, String color, String textColor}) async {
+  await sharedDriver.waitFor(find.byValueKey('$tileKey - color:$color - textColor:$textColor'));
+}
+
+Future<void> expectNumberPropertiesToBe({int number, String color}) async {
+  await sharedDriver.waitFor(find.byValueKey('Number($number) - color:$color'));
+}
+
+void expectNumberOnTileToBe(int number, TileKey tileKey) async {
+  int numberOnTile = await getNumberOnTile(tileKey);
+  expect(numberOnTile == number, true);
+}
+
+Future<void> verifyInitialGameTiles(List<List<int>> game) async {
+  for (int row = 1; row <= 9; row++) {
+    for (int col = 1; col <= 9; col++) {
+      await expectNumberOnTileToBe(game[row - 1][col - 1], TileKey(row: row, col: col));
+    }
+  }
+}
+
+Future<void> playGame(List<List<int>> game) async {
+  for (int row = 1; row <= 9; row++) {
+    for (int col = 1; col <= 9; col++) {
+      int numberOnTile = await getNumberOnTile(TileKey(row: row, col: col));
+      if (numberOnTile == null) {
+        await addNumberToTile(game[row - 1][col - 1], TileKey(row: row, col: col));
+      }
+    }
+  }
 }

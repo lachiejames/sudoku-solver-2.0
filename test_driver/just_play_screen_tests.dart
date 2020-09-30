@@ -10,81 +10,12 @@ import 'shared.dart';
 void main() {
   FlutterDriver driver;
 
-  void navigateToJustPlayScreen() async {
-    await waitForThenTap(driver, find.text(my_strings.justPlayButtonText));
-    await driver.getText(find.text(my_strings.topTextNoTileSelected));
-  }
-
-  void tapTile(TileKey tileKey) async {
-    await waitForThenTap(driver, find.byValueKey('${tileKey.toString()}'));
-  }
-
-  void doubleTapTile(TileKey tileKey) async {
-    await tapTile(tileKey);
-    await tapTile(tileKey);
-  }
-
-  void tapNumber(int number) async {
-    await waitForThenTap(driver, find.byValueKey('Number($number)'));
-  }
-
-  void addNumberToTile(int number, TileKey tileKey) async {
-    await tapTile(tileKey);
-    await tapNumber(number);
-  }
-
-  void tapNewGameButton() async {
-    await waitForThenTap(driver, find.text('NEW GAME'));
-  }
-
-  Future<int> getNumberOnTile(TileKey tileKey) async {
-    await driver.waitUntilNoTransientCallbacks();
-    String tileText = await driver.getText(find.byValueKey('${tileKey.toString()}_text'));
-
-    if (tileText == "") {
-      return null;
-    } else {
-      return int.parse(tileText);
-    }
-  }
-
-  Future<void> expectTilePropertiesToBe({TileKey tileKey, String color, String textColor}) async {
-    await driver.waitFor(find.byValueKey('$tileKey - color:$color - textColor:$textColor'));
-  }
-
-  Future<void> expectNumberPropertiesToBe({int number, String color}) async {
-    await driver.waitFor(find.byValueKey('Number($number) - color:$color'));
-  }
-
-  void expectNumberOnTileToBe(int number, TileKey tileKey) async {
-    int numberOnTile = await getNumberOnTile(tileKey);
-    expect(numberOnTile == number, true);
-  }
-
-  Future<void> verifyInitialGameTiles(List<List<int>> game) async {
-    for (int row = 1; row <= 9; row++) {
-      for (int col = 1; col <= 9; col++) {
-        await expectNumberOnTileToBe(game[row - 1][col - 1], TileKey(row: row, col: col));
-      }
-    }
-  }
-
-  Future<void> playGame(List<List<int>> game) async {
-    for (int row = 1; row <= 9; row++) {
-      for (int col = 1; col <= 9; col++) {
-        int numberOnTile = await getNumberOnTile(TileKey(row: row, col: col));
-        if (numberOnTile == null) {
-          await addNumberToTile(game[row - 1][col - 1], TileKey(row: row, col: col));
-        }
-      }
-    }
-  }
-
   group('JustPlayScreen tests ->', () {
     setUpAll(() async {
       await grantAppPermissions();
       driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
-      await hotRestart(driver);
+      setDriver(driver);
+      await hotRestart();
     });
 
     tearDownAll(() async {
@@ -92,7 +23,7 @@ void main() {
     });
 
     setUp(() async {
-      await hotRestart(driver);
+      await hotRestart();
       await navigateToJustPlayScreen();
     });
     group('for regular tiles ->', () {

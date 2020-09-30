@@ -7,28 +7,12 @@ import 'shared.dart';
 void main() {
   FlutterDriver driver;
 
-  void pressSolveWithCameraButton() async {
-    await waitForThenTap(driver, find.text(my_strings.solveWithCameraButtonText));
-  }
-
-  void pressSolveWithTouchButton() async {
-    await waitForThenTap(driver, find.text(my_strings.solveWithTouchButtonText));
-  }
-
-  void pressJustPlayButton() async {
-    await waitForThenTap(driver, find.text(my_strings.justPlayButtonText));
-  }
-
-  void pressHelpOnDropDownMenu(String dropDownMenuType) async {
-    await waitForThenTap(driver, find.byType(dropDownMenuType));
-    await waitForThenTap(driver, find.text(my_strings.dropDownMenuOption2));
-  }
-
   group('Screen navigation tests ->', () {
     setUpAll(() async {
       await grantAppPermissions();
       driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
-      await hotRestart(driver);
+      setDriver(driver);
+      await hotRestart();
     });
 
     tearDownAll(() async {
@@ -36,7 +20,7 @@ void main() {
     });
 
     setUp(() async {
-      await hotRestart(driver);
+      await hotRestart();
     });
     test('we start on the HomeScreen', () async {
       await driver.getText(find.text(my_strings.topTextHome));
