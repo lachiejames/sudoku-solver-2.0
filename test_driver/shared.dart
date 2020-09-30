@@ -7,9 +7,12 @@ import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:test/test.dart';
 
-FlutterDriver sharedDriver;
-void setDriver(FlutterDriver flutterDriver) {
-  sharedDriver = flutterDriver;
+FlutterDriver driver;
+
+Future<void> initTests() async {
+  await grantAppPermissions();
+  driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
+  await hotRestart();
 }
 
 Future<void> grantAppPermissions() async {
@@ -36,26 +39,26 @@ Future<void> grantAppPermissions() async {
 }
 
 Future<void> hotRestart() async {
-  await sharedDriver.waitUntilNoTransientCallbacks();
-  await sharedDriver.requestData(my_strings.hotRestart);
-  await sharedDriver.waitUntilNoTransientCallbacks();
+  await driver.waitUntilNoTransientCallbacks();
+  await driver.requestData(my_strings.hotRestart);
+  await driver.waitUntilNoTransientCallbacks();
 }
 
 Future<void> waitForThenTap(SerializableFinder finder) async {
-  await sharedDriver.waitUntilNoTransientCallbacks();
-  await sharedDriver.waitFor(finder);
-  await sharedDriver.tap(finder);
-  await sharedDriver.waitUntilNoTransientCallbacks();
+  await driver.waitUntilNoTransientCallbacks();
+  await driver.waitFor(finder);
+  await driver.tap(finder);
+  await driver.waitUntilNoTransientCallbacks();
 }
 
 void navigateToSolveWithCameraScreen() async {
   await waitForThenTap(find.text(my_strings.solveWithCameraButtonText));
-  await sharedDriver.getText(find.text(my_strings.solveWithCameraScreenName));
+  await driver.getText(find.text(my_strings.solveWithCameraScreenName));
 }
 
 void navigateToJustPlayScreen() async {
   await waitForThenTap(find.text(my_strings.justPlayButtonText));
-  await sharedDriver.getText(find.text(my_strings.topTextNoTileSelected));
+  await driver.getText(find.text(my_strings.topTextNoTileSelected));
 }
 
 void pressSolveWithCameraButton() async {
@@ -98,8 +101,8 @@ void tapNewGameButton() async {
 }
 
 Future<int> getNumberOnTile(TileKey tileKey) async {
-  await sharedDriver.waitUntilNoTransientCallbacks();
-  String tileText = await sharedDriver.getText(find.byValueKey('${tileKey.toString()}_text'));
+  await driver.waitUntilNoTransientCallbacks();
+  String tileText = await driver.getText(find.byValueKey('${tileKey.toString()}_text'));
 
   if (tileText == "") {
     return null;
@@ -109,11 +112,11 @@ Future<int> getNumberOnTile(TileKey tileKey) async {
 }
 
 Future<void> expectTilePropertiesToBe({TileKey tileKey, String color, String textColor}) async {
-  await sharedDriver.waitFor(find.byValueKey('$tileKey - color:$color - textColor:$textColor'));
+  await driver.waitFor(find.byValueKey('$tileKey - color:$color - textColor:$textColor'));
 }
 
 Future<void> expectNumberPropertiesToBe({int number, String color}) async {
-  await sharedDriver.waitFor(find.byValueKey('Number($number) - color:$color'));
+  await driver.waitFor(find.byValueKey('Number($number) - color:$color'));
 }
 
 void expectNumberOnTileToBe(int number, TileKey tileKey) async {

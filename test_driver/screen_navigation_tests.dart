@@ -5,14 +5,9 @@ import 'package:test/test.dart';
 import 'shared.dart';
 
 void main() {
-  FlutterDriver driver;
-
   group('Screen navigation tests ->', () {
     setUpAll(() async {
-      await grantAppPermissions();
-      driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
-      setDriver(driver);
-      await hotRestart();
+      await initTests();
     });
 
     tearDownAll(() async {

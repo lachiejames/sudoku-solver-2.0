@@ -1,6 +1,5 @@
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:sudoku_solver_2/constants/my_games.dart' as my_games;
-import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:test/test.dart';
 
@@ -8,14 +7,10 @@ import 'my_solved_games.dart' as my_solved_games;
 import 'shared.dart';
 
 void main() {
-  FlutterDriver driver;
 
   group('JustPlayScreen tests ->', () {
     setUpAll(() async {
-      await grantAppPermissions();
-      driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
-      setDriver(driver);
-      await hotRestart();
+      await initTests();
     });
 
     tearDownAll(() async {

@@ -1,20 +1,13 @@
 @Skip('play-all-games integration test')
 
-import 'package:flutter_driver/flutter_driver.dart';
-import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:test/test.dart';
 import 'my_solved_games.dart' as my_solved_games;
 import 'shared.dart';
 
 void main() {
-  FlutterDriver driver;
-
   group('JustPlayScreenAllGames tests ->', () {
     setUpAll(() async {
-      await grantAppPermissions();
-      driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
-      setDriver(driver);
-      await hotRestart();
+      await initTests();
     });
 
     tearDownAll(() async {
