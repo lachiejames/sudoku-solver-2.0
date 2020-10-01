@@ -2,7 +2,6 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:sudoku_solver_2/constants/my_games.dart' as my_games;
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:test/test.dart';
-
 import 'my_solved_games.dart' as my_solved_games;
 import 'shared.dart';
 
@@ -98,7 +97,7 @@ void main() {
           );
         }
       });
-      
+
       test('tapping a selected tile changes all numbers from green to white', () async {
         await tapTile(TileKey(row: 2, col: 2));
 
@@ -134,7 +133,15 @@ void main() {
         await expectNumberOnTileToBe(null, TileKey(row: 2, col: 2));
       });
 
-      test('adding an invalid tile changes textColor from black to red', () async {});
+      test('adding an invalid tile changes textColor from black to red', () async {
+        await addNumberToTile(5, TileKey(row: 2, col: 2));
+        await expectTilePropertiesToBe(
+          tileKey: TileKey(row: 2, col: 2),
+          color: 'white',
+          textColor: 'red',
+          hasX: false,
+        );
+      });
       test('removing an invalid tile changes textColor from red to black', () async {});
 
       test('adding many invalid tiles changes textColor from black to red', () async {});

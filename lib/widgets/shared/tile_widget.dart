@@ -100,10 +100,12 @@ class _TileWidgetState extends State<TileWidget> {
 
             if (tileState.isSelected) {
               Redux.store.dispatch(TileDeselectedAction(tileState));
+              Redux.store.dispatch(UpdateInvalidTilesAction());
+              Redux.store.dispatch(UpdateGameStateAction(Redux.store.state.tileStateMap));
+              Redux.store.dispatch(ApplyGameStateChangesAction(Redux.store.state.gameState));
             } else {
               Redux.store.dispatch(TileSelectedAction(tileState));
             }
-            Redux.store.dispatch(CheckForInvalidTilesAction());
           },
         );
       },

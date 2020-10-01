@@ -17,31 +17,31 @@ class SudokuWidget extends StatefulWidget {
 class _SudokuWidgetState extends State<SudokuWidget> {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, GameState>(
-      distinct: true,
-      converter: (store) => store.state.gameState,
-      builder: (context, gameState) {
-        return Stack(
-          textDirection: TextDirection.ltr,
-          children: <Widget>[
-            Container(
-              color: my_colors.white,
-              margin: EdgeInsets.only(
-                left: 27,
-                right: 27,
-              ),
-              child: this.makeTable(),
-            ),
-            (gameState == GameState.isSolving)
+    return Stack(
+      textDirection: TextDirection.ltr,
+      children: <Widget>[
+        Container(
+          color: my_colors.white,
+          margin: EdgeInsets.only(
+            left: 27,
+            right: 27,
+          ),
+          child: this.makeTable(),
+        ),
+        StoreConnector<AppState, GameState>(
+          distinct: true,
+          converter: (store) => store.state.gameState,
+          builder: (context, gameState) {
+            return (gameState == GameState.isSolving)
                 ? Center(
                     child: CircularProgressIndicator(
                       backgroundColor: my_colors.green,
                     ),
                   )
-                : Container(),
-          ],
-        );
-      },
+                : Container();
+          },
+        ),
+      ],
     );
   }
 

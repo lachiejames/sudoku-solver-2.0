@@ -23,7 +23,7 @@ class TileState {
 
   @override
   String toString() {
-    return 'TileState(row=$row, col=$col, value=${(value != null) ? value : 'null'}, isSelected=${this.isSelected})';
+    return 'TileState(row=$row, col=$col, value=${(value != null) ? value : 'null'}, isSelected=${this.isSelected}), isOriginalTile=${this.isOriginalTile}, isinvalid=${this.isInvalid}';
   }
 
   int getSegment() {

@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'package:camera/camera.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
+import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
@@ -85,22 +86,22 @@ class RetakePhotoAction {
 }
 
 /// Fired after a value is added to a tile
-class CheckForInvalidTilesAction {
-  CheckForInvalidTilesAction();
+class UpdateInvalidTilesAction {
+  UpdateInvalidTilesAction();
 }
 
-/// Fired when there are constraint-violating values on the Sudoku (e.g. same value twice in 1 row)
-class InvalidTilesPresentAction {
-  InvalidTilesPresentAction();
+class UpdateGameStateAction {
+  final HashMap<TileKey, TileState> tileStateMap;
+  UpdateGameStateAction(this.tileStateMap);
+}
+
+class ApplyGameStateChangesAction {
+  final GameState gameState;
+  ApplyGameStateChangesAction(this.gameState);
 }
 
 /// Fired when the user wants to solve the Sudoku created on the SolveWithCameraScreen
 class ProcessPhotoAction {
   final CameraController cameraController;
   ProcessPhotoAction(this.cameraController);
-}
-
-class CheckIfSolvedAction {
-  final HashMap<TileKey, TileState> tileStateMap;
-  CheckIfSolvedAction(this.tileStateMap);
 }

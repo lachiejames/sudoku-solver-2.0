@@ -66,7 +66,9 @@ class _NumberWidgetState extends State<NumberWidget> {
           onTap: () {
             if (numberState.isActive) {
               Redux.store.dispatch(NumberPressedAction(numberState));
-              Redux.store.dispatch(CheckIfSolvedAction(Redux.store.state.tileStateMap));
+              Redux.store.dispatch(UpdateInvalidTilesAction());
+              Redux.store.dispatch(UpdateGameStateAction(Redux.store.state.tileStateMap));
+              Redux.store.dispatch(ApplyGameStateChangesAction(Redux.store.state.gameState));
             }
           },
         );

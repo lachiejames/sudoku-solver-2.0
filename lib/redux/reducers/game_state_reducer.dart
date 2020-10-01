@@ -4,19 +4,16 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:redux/redux.dart';
-import 'package:sudoku_solver_2/state/tile_state.dart';
 
 /// Contains all state reducers used by GameState
 final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
   TypedReducer<GameState, SolveSudokuAction>(_solveSudokuReducer),
   TypedReducer<GameState, SudokuSolvedAction>(_sudokuSolvedReducer),
-  TypedReducer<GameState, CheckIfSolvedAction>(_checkIfSolvedReducer),
-  TypedReducer<GameState, GameSolvedAction>(_setToSolved),
   TypedReducer<GameState, RestartAction>(_setToDefault),
   TypedReducer<GameState, TakePhotoAction>(_takePhotoReducer),
   TypedReducer<GameState, PhotoProcessedAction>(_photoProcessedReducer),
   TypedReducer<GameState, RetakePhotoAction>(_retakePhotoReducer),
-  TypedReducer<GameState, InvalidTilesPresentAction>(_invalidTilesPresentReducer),
+  TypedReducer<GameState, UpdateGameStateAction>(_updateGameStateReducer),
 ]);
 
 GameState _solveSudokuReducer(GameState gameState, SolveSudokuAction action) {
@@ -29,22 +26,6 @@ GameState _solveSudokuReducer(GameState gameState, SolveSudokuAction action) {
 }
 
 GameState _sudokuSolvedReducer(GameState gameState, SudokuSolvedAction action) {
-  return GameState.solved;
-}
-
-GameState _checkIfSolvedReducer(GameState gameState, CheckIfSolvedAction action) {
-  int numValues = 0;
-
-  for (TileState tileState in action.tileStateMap.values) {
-    if (tileState.value != null) {
-      numValues++;
-    }
-  }
-
-  return (numValues == 81) ? GameState.solved : gameState;
-}
-
-GameState _setToSolved(GameState gameState, GameSolvedAction action) {
   return GameState.solved;
 }
 
@@ -64,6 +45,21 @@ GameState _retakePhotoReducer(GameState gameState, RetakePhotoAction action) {
   return GameState.takingPhoto;
 }
 
-GameState _invalidTilesPresentReducer(GameState gameState, InvalidTilesPresentAction action) {
-  return GameState.invalidTilesPresent;
+GameState _updateGameStateReducer(GameState gameState, UpdateGameStateAction action) {
+  // In case we just removed a tile, but havent reset the values yet
+  bool hasInvalidTiles = false;
+  action.tileStateMap.forEach((tileKey, tileState) {
+    if (tileState.isInvalid) {
+      hasInvalidTiles = true;
+    }
+  });
+  Sudoku sudoku = Sudoku(tileStateMap: action.tileStateMap);
+
+  if (hasInvalidTiles) {
+    return GameState.invalidTilesPresent;
+  } else if (sudoku.isFull() && sudoku.allConstraintsSatisfied()) {
+    return GameState.solved;
+  } else {
+    return gameState;
+  }
 }
