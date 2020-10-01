@@ -40,34 +40,23 @@ void main() {
         expect(newGameButtonWidget, isNotNull);
       });
 
-      testWidgets('should display "NEW GAME"', (WidgetTester tester) async {
+      testWidgets('should be invisible', (WidgetTester tester) async {
         await createNewGameButtonWidget(tester);
-
-        expect(find.text('NEW GAME'), findsOneWidget);
-      });
-
-      testWidgets('should be blue', (WidgetTester tester) async {
-        await createNewGameButtonWidget(tester);
-
-        expect(newGameButtonWidgetColor(tester), my_colors.blue);
-      });
-
-      testWidgets('should not be tappable', (WidgetTester tester) async {
-        await createNewGameButtonWidget(tester);
-
-        int oldGameNumber = Redux.store.state.gameNumber;
-        await tester.tap(find.byWidget(newGameButtonWidget));
-        int newGameNumber = Redux.store.state.gameNumber;
-
-        expect(oldGameNumber, 0);
-        expect(newGameNumber, 0);
+        expect(find.text('NEW GAME'), findsNothing);
       });
     });
 
     group('after game is solved -', () {
-      testWidgets('tapping should increment the gameNumber', (WidgetTester tester) async {
+      setUp(() {
         Redux.store.dispatch(GameSolvedAction());
+      });
 
+      testWidgets('should be blue', (WidgetTester tester) async {
+        await createNewGameButtonWidget(tester);
+        expect(newGameButtonWidgetColor(tester), my_colors.blue);
+      });
+
+      testWidgets('tapping should increment the gameNumber', (WidgetTester tester) async {
         await createNewGameButtonWidget(tester);
 
         int oldGameNumber = Redux.store.state.gameNumber;

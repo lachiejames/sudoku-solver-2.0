@@ -24,8 +24,8 @@ class _NewGameButtonWidgetState extends State<NewGameButtonWidget> {
       converter: (store) => store.state.gameState,
       builder: (context, gameState) {
         // Should only be visible when solved
-        return Opacity(
-          opacity: (gameState == GameState.solved) ? 1.0 : 0.0,
+        return Visibility(
+          visible: (gameState == GameState.solved),
           child: Container(
             alignment: Alignment.center,
             margin: my_styles.buttonMargins,
@@ -40,10 +40,8 @@ class _NewGameButtonWidgetState extends State<NewGameButtonWidget> {
                   style: my_styles.buttonTextStyle,
                 ),
                 onPressed: () {
-                  if (gameState == GameState.solved) {
-                    Redux.store.dispatch(NewGameButtonPressedAction());
-                    Redux.store.dispatch(LoadSudokuGameAction(Redux.store.state.gameNumber));
-                  }
+                  Redux.store.dispatch(NewGameButtonPressedAction());
+                  Redux.store.dispatch(LoadSudokuGameAction(Redux.store.state.gameNumber));
                 },
               ),
             ),

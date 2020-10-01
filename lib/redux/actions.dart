@@ -52,11 +52,6 @@ class NewGameButtonPressedAction {
   NewGameButtonPressedAction();
 }
 
-/// Fired when the game is solved on the JustPlayScreen
-class GameSolvedAction {
-  GameSolvedAction();
-}
-
 /// Fired when navigating from one screen to another
 class ChangeScreenAction {
   final ScreenState screenState;
@@ -104,4 +99,7 @@ class ApplyGameStateChangesAction {
 class ProcessPhotoAction {
   final CameraController cameraController;
   ProcessPhotoAction(this.cameraController);
+}
+class GameSolvedAction {
+  GameSolvedAction();
 }

@@ -8,7 +8,6 @@ import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:test/test.dart';
 import 'package:meta/meta.dart';
 
-
 FlutterDriver driver;
 
 Future<void> initTests() async {
@@ -145,6 +144,14 @@ Future<void> playGame(List<List<int>> game) async {
       int numberOnTile = await getNumberOnTile(TileKey(row: row, col: col));
       if (numberOnTile == null) {
         await addNumberToTile(game[row - 1][col - 1], TileKey(row: row, col: col));
+
+        // Ensures no tiles are invalid when they should not be
+        await expectTilePropertiesToBe(
+          tileKey: TileKey(row: row, col: col),
+          color: 'white',
+          textColor: 'black',
+          hasX: false,
+        );
       }
     }
   }

@@ -20,6 +20,7 @@ final Reducer<HashMap<TileKey, TileState>> tileStateMapReducer =
   TypedReducer<HashMap<TileKey, TileState>, ChangeScreenAction>(_clearTileStateMapReducer),
   TypedReducer<HashMap<TileKey, TileState>, PhotoProcessedAction>(_updateTileMapWithSudokuReducer),
   TypedReducer<HashMap<TileKey, TileState>, UpdateInvalidTilesAction>(_updateInvalidTilesReducer),
+  TypedReducer<HashMap<TileKey, TileState>, NewGameButtonPressedAction>(_newGamePressedReducer),
 ]);
 
 HashMap<TileKey, TileState> _tileSelectedReducer(
@@ -66,6 +67,7 @@ HashMap<TileKey, TileState> _tileDeselectedReducer(
 
 HashMap<TileKey, TileState> _loadExampleValues(
     HashMap<TileKey, TileState> tileStateMap, LoadSudokuGameAction action) {
+
   final List<List<int>> exampleValues = my_games.games[action.gameNumber];
 
   // clear all values first and originalTiles
@@ -162,6 +164,20 @@ HashMap<TileKey, TileState> _updateInvalidTilesReducer(
     } else if (tileState.isInvalid == true) {
       tileStateMap[tileKey] = tileState.copyWith(isInvalid: false);
     }
+  });
+
+  return tileStateMap;
+}
+
+HashMap<TileKey, TileState> _newGamePressedReducer(
+    HashMap<TileKey, TileState> tileStateMap, NewGameButtonPressedAction action) {
+  tileStateMap.forEach((tileKey, tileState) {
+    tileStateMap[tileKey] = tileState.copyWith(
+      value: -1,
+      isSelected: false,
+      isOriginalTile: false,
+      isInvalid: false,
+    );
   });
 
   return tileStateMap;

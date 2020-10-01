@@ -164,53 +164,52 @@ void main() {
       });
     });
 
-    group('restart ->', () {
-      test('pressing RESTART deselects all tiles and numbers', () async {});
-      test('pressing RESTART makes new game button disappear', () async {});
-    });
-
-    group('help ->', () {
-      test('pressing HELP then navigating back will preserve board state', () async {});
-    });
-
-    group('new game ->', () {
-      test('NEW GAME button will not appear when invalid tiles are present', () async {});
-      test('NEW GAME button appears', () async {});
-      test('if a value is removed, NEW GAME button disappears', () async {});
-      test('if invalid tile is added, NEW GAME button disappears', () async {});
-      test('pressing NEW GAME loads new tiles with expected properties', () async {});
-      test('pressing NEW GAME dehighlights all tiles and numbers', () async {});
-    });
-
-    // group('playing a game ->', () {
-    //   test('initial values on the board should be the values in game0', () async {
-    //     await verifyInitialGameTiles(my_games.games[0]);
-    //   });
-
-    //   test('adding correct values to all blank tiles will finish the game', () async {
-    //     await playGame(my_solved_games.solvedGamesList[0]);
-    //     await driver.getText(find.text('SOLVED'));
-    //     await driver.getText(find.text('NEW GAME'));
-    //   });
-
-    //   test('pressing NEW GAME will load a new sudoku', () async {
-    //     await driver.getText(find.text('Pick a tile'));
-
-    //     await verifyInitialGameTiles(my_games.games[0]);
-    //     await playGame(my_solved_games.solvedGamesList[0]);
-    //     await tapNewGameButton();
-
-    //     await driver.getText(find.text('Pick a tile'));
-    //     await verifyInitialGameTiles(my_games.games[1]);
-    //   });
-
-    //   test('can play 2 games in a row', () async {
-    //     await playGame(my_solved_games.solvedGamesList[0]);
-    //     await tapNewGameButton();
-
-    //     await playGame(my_solved_games.solvedGamesList[1]);
-    //     await tapNewGameButton();
-    //   }, timeout: Timeout(Duration(seconds: 60)));
+    // group('restart ->', () {
+    //   test('pressing RESTART deselects all tiles and numbers', () async {});
+    //   test('pressing RESTART makes new game button disappear', () async {});
     // });
+
+    // group('help ->', () {
+    //   test('pressing HELP then navigating back will preserve board state', () async {});
+    // });
+
+    // group('new game ->', () {
+    //   test('NEW GAME button will not appear when invalid tiles are present', () async {});
+    //   test('NEW GAME button appears', () async {});
+    //   test('if a value is removed, NEW GAME button disappears', () async {});
+    //   test('if invalid tile is added, NEW GAME button disappears', () async {});
+    //   test('pressing NEW GAME loads new tiles with expected properties', () async {});
+    //   test('pressing NEW GAME dehighlights all tiles and numbers', () async {});
+    // });
+
+    group('playing a game ->', () {
+      test('initial values on the board should be the values in game0', () async {
+        await verifyInitialGameTiles(my_games.games[0]);
+      });
+
+      test('adding correct values to all blank tiles will finish the game', () async {
+        await playGame(my_solved_games.solvedGamesList[0]);
+        await driver.getText(find.text('SOLVED'));
+        await driver.getText(find.text('NEW GAME'));
+      });
+
+      test('can play 2 games in a row', () async {
+        await verifyInitialGameTiles(my_games.games[0]);
+        await playGame(my_solved_games.solvedGamesList[0]);
+        await tapNewGameButton();
+        
+        await driver.waitForAbsent(find.text('NEW GAME'));
+        await driver.getText(find.text('Pick a tile'));
+        
+        await verifyInitialGameTiles(my_games.games[1]);
+        await playGame(my_solved_games.solvedGamesList[1]);
+        await tapNewGameButton();
+
+        await driver.getText(find.text('Pick a tile'));
+        await driver.waitForAbsent(find.text('NEW GAME'));
+
+        await verifyInitialGameTiles(my_games.games[2]);
+      }, timeout: Timeout(Duration(seconds: 60)));
+    });
   });
 }

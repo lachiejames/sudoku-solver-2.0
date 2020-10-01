@@ -39,9 +39,9 @@ void main() {
 
       test('getTileStateAt() returns correct tile', () {
         expect(sudoku.getTileStateAt(6, 9).toString(),
-            'TileState(row=6, col=9, value=null, isSelected=false)');
+            'TileState(row=6, col=9, value=null, isSelected=false, isOriginalTile=false, isinvalid=false)');
         expect(sudoku.getTileStateAt(9, 1).toString(),
-            'TileState(row=9, col=1, value=2, isSelected=false)');
+             'TileState(row=9, col=1, value=2, isSelected=false, isOriginalTile=false, isinvalid=false)');
       });
 
       test('applyExampleValues() updates the state with the given values list', () {
@@ -51,7 +51,7 @@ void main() {
       test('addValueToTile() adds the given value to the given tile', () {
         sudoku.addValueToTile(7, sudoku.getTileStateAt(6, 9));
         expect(sudoku.getTileStateAt(6, 9).toString(),
-            'TileState(row=6, col=9, value=7, isSelected=false)');
+            'TileState(row=6, col=9, value=7, isSelected=false, isOriginalTile=false, isinvalid=false)');
       });
 
       test('addValueToTile() increases numValue, if replacing value with a different value', () {
@@ -148,7 +148,7 @@ void main() {
 
       test('getNextUnassignedTile() returns a tile without a value, if possible', () {
         expect(sudoku.getNextTileWithoutValue().toString(),
-            'TileState(row=1, col=1, value=null, isSelected=false)');
+             'TileState(row=1, col=1, value=null, isSelected=false, isOriginalTile=false, isinvalid=false)');
       });
 
       test('getNextUnassignedTile() returns null if the sudoku is complete', () {
