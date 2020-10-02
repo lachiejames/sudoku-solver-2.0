@@ -40,16 +40,12 @@ Future<void> grantAppPermissions() async {
 }
 
 Future<void> hotRestart() async {
-  await driver.waitUntilNoTransientCallbacks();
   await driver.requestData(my_strings.hotRestart);
-  await driver.waitUntilNoTransientCallbacks();
 }
 
 Future<void> waitForThenTap(SerializableFinder finder) async {
-  await driver.waitUntilNoTransientCallbacks();
   await driver.waitFor(finder);
   await driver.tap(finder);
-  await driver.waitUntilNoTransientCallbacks();
 }
 
 void navigateToSolveWithCameraScreen() async {
@@ -79,6 +75,11 @@ void pressHelpOnDropDownMenu(String dropDownMenuType) async {
   await waitForThenTap(find.text(my_strings.dropDownMenuOption2));
 }
 
+void pressRestartOnDropDownMenu(String dropDownMenuType) async {
+  await waitForThenTap(find.byType(dropDownMenuType));
+  await waitForThenTap(find.text(my_strings.dropDownMenuOption1));
+}
+
 void tapTile(TileKey tileKey) async {
   await waitForThenTap(find.byValueKey('${tileKey.toString()}'));
 }
@@ -102,7 +103,6 @@ void tapNewGameButton() async {
 }
 
 Future<int> getNumberOnTile(TileKey tileKey) async {
-  await driver.waitUntilNoTransientCallbacks();
   String tileText = await driver.getText(find.byValueKey('${tileKey.toString()}_text'));
 
   if (tileText == "") {
@@ -144,14 +144,6 @@ Future<void> playGame(List<List<int>> game) async {
       int numberOnTile = await getNumberOnTile(TileKey(row: row, col: col));
       if (numberOnTile == null) {
         await addNumberToTile(game[row - 1][col - 1], TileKey(row: row, col: col));
-
-        // Ensures no tiles are invalid when they should not be
-        await expectTilePropertiesToBe(
-          tileKey: TileKey(row: row, col: col),
-          color: 'white',
-          textColor: 'black',
-          hasX: false,
-        );
       }
     }
   }
