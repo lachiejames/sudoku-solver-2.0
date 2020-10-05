@@ -58,12 +58,12 @@ Future<void> waitForThenTap(SerializableFinder finder) async {
 
 void navigateToSolveWithCameraScreen() async {
   await waitForThenTap(find.text(my_strings.solveWithCameraButtonText));
-  await driver.getText(find.text(my_strings.solveWithCameraScreenName));
+  await driver.waitFor(find.text(my_strings.solveWithCameraScreenName));
 }
 
 void navigateToJustPlayScreen() async {
   await waitForThenTap(find.text(my_strings.justPlayButtonText));
-  await driver.getText(find.text(my_strings.topTextNoTileSelected));
+  await driver.waitFor(find.text(my_strings.topTextNoTileSelected));
 }
 
 void pressSolveWithCameraButton() async {
@@ -111,6 +111,7 @@ void tapNewGameButton() async {
 }
 
 Future<int> getNumberOnTile(TileKey tileKey) async {
+  await driver.waitFor(find.byValueKey('${tileKey.toString()}_text'));
   String tileText = await driver.getText(find.byValueKey('${tileKey.toString()}_text'));
 
   if (tileText == "") {

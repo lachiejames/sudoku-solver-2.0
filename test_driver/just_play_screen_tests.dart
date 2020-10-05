@@ -220,7 +220,7 @@ void main() {
 
       test('pressing RESTART makes new game button disappear', () async {
         await playGame(my_solved_games.solvedGamesList[0]);
-        await driver.getText(find.text('NEW GAME'));
+        await driver.waitFor(find.text('NEW GAME'));
 
         await pressRestartOnDropDownMenu('JustPlayScreenDropDownMenuWidget');
         await driver.waitForAbsent(find.text('NEW GAME'));
@@ -238,7 +238,7 @@ void main() {
           await expectNumberPropertiesToBe(number: number, color: 'green');
         }
 
-        await pressHelpOnDropDownMenu('SolveWithTouchScreenDropDownMenuWidget');
+        await pressHelpOnDropDownMenu('JustPlayScreenDropDownMenuWidget');
         await pressBackButton();
 
         expectTilePropertiesToBe(
@@ -250,12 +250,34 @@ void main() {
     });
 
     group('new game ->', () {
-      test('NEW GAME button will not appear when invalid tiles are present', () async {});
-      test('NEW GAME button appears', () async {});
-      test('if a value is removed, NEW GAME button disappears', () async {});
-      test('if invalid tile is added, NEW GAME button disappears', () async {});
-      test('pressing NEW GAME loads new tiles with expected properties', () async {});
-      test('pressing NEW GAME dehighlights all tiles and numbers', () async {});
+      test('NEW GAME button will not appear when invalid tiles are present', () async {
+        await playGame(my_solved_games.solvedGamesList[0]);
+        await driver.waitFor(find.text('NEW GAME'));
+        await addNumberToTile(5, TileKey(row: 2, col: 2));
+        await driver.waitForAbsent(find.text('NEW GAME'));
+      });
+      test('NEW GAME button appears', () async {
+        await playGame(my_solved_games.solvedGamesList[0]);
+        await driver.waitFor(find.text('NEW GAME'));
+      });
+      test('if a value is removed, NEW GAME button disappears', () async {
+        await playGame(my_solved_games.solvedGamesList[0]);
+        await driver.waitFor(find.text('NEW GAME'));
+        await doubleTapTile(TileKey(row: 2, col: 2));
+        await driver.waitForAbsent(find.text('NEW GAME'));
+      });
+      test('pressing NEW GAME dehighlights all tiles and numbers', () async {
+        await playGame(my_solved_games.solvedGamesList[0]);
+        await tapTile(TileKey(row: 2, col: 2));
+
+        await expectTilePropertiesToBe(
+            tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'black', hasX: true);
+
+        await waitForThenTap(find.text('NEW GAME'));
+
+        await expectTilePropertiesToBe(
+            tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
+      });
     });
 
     group('playing a game ->', () {
@@ -265,8 +287,8 @@ void main() {
 
       test('adding correct values to all blank tiles will finish the game', () async {
         await playGame(my_solved_games.solvedGamesList[0]);
-        await driver.getText(find.text('SOLVED'));
-        await driver.getText(find.text('NEW GAME'));
+        await driver.waitFor(find.text('SOLVED'));
+        await driver.waitFor(find.text('NEW GAME'));
       });
 
       test('can play 2 games in a row', () async {
@@ -275,13 +297,13 @@ void main() {
         await tapNewGameButton();
 
         await driver.waitForAbsent(find.text('NEW GAME'));
-        await driver.getText(find.text('Pick a tile'));
+        await driver.waitFor(find.text('Pick a tile'));
 
         await verifyInitialGameTiles(my_games.games[1]);
         await playGame(my_solved_games.solvedGamesList[1]);
         await tapNewGameButton();
 
-        await driver.getText(find.text('Pick a tile'));
+        await driver.waitFor(find.text('Pick a tile'));
         await driver.waitForAbsent(find.text('NEW GAME'));
 
         await verifyInitialGameTiles(my_games.games[2]);

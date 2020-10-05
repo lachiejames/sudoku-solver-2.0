@@ -62,7 +62,7 @@ GameState _updateGameStateReducer(GameState gameState, UpdateGameStateAction act
   } else if (sudoku.isFull() && sudoku.allConstraintsSatisfied()) {
     return GameState.solved;
   } else {
-    return gameState;
+    return GameState.normal;
   }
 }
 
@@ -73,4 +73,3 @@ GameState _newGameButtonPressedReducer(GameState gameState, NewGameButtonPressed
 GameState _gameSolvedReducerReducer(GameState gameState, GameSolvedAction action) {
   return GameState.solved;
 }
-
