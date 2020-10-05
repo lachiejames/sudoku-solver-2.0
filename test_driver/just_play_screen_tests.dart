@@ -22,38 +22,24 @@ void main() {
 
     group('regular tiles ->', () {
       test('tapping a tile changes its color from white to green', () async {
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
-
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
         await tapTile(TileKey(row: 2, col: 2));
-
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'black', hasX: false);
       });
 
       test('tapping a selected tile changes color from green to white', () async {
         await tapTile(TileKey(row: 2, col: 2));
-
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'black', hasX: false);
-
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'black', hasX: false);
         await tapTile(TileKey(row: 2, col: 2));
-
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
       });
 
       test('tapping a tile with a value adds an X', () async {
         await addNumberToTile(7, TileKey(row: 2, col: 2));
         await tapTile(TileKey(row: 2, col: 2));
-
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'black', hasX: true);
-
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'black', hasX: true);
         await tapTile(TileKey(row: 2, col: 2));
-
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
       });
 
       test('tapping a tile changes all numbers from white to green', () async {
@@ -93,10 +79,8 @@ void main() {
         await tapTile(TileKey(row: 2, col: 2));
         await tapTile(TileKey(row: 2, col: 3));
 
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 3), color: 'green', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 3), color: 'green', textColor: 'black', hasX: false);
       });
 
       test('double tapping a tile removes its value', () async {
@@ -110,16 +94,14 @@ void main() {
       test('adding an invalid tile changes textColor from black to red', () async {
         await addNumberToTile(5, TileKey(row: 2, col: 2));
 
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'red', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'red', hasX: false);
       });
 
       test('removing an invalid tile changes textColor from red to black', () async {
         await addNumberToTile(5, TileKey(row: 2, col: 2));
         await doubleTapTile(TileKey(row: 2, col: 2));
 
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
       });
 
       test('adding many invalid tiles changes textColor from black to red', () async {
@@ -127,20 +109,13 @@ void main() {
         await addNumberToTile(5, TileKey(row: 1, col: 3));
         await addNumberToTile(9, TileKey(row: 2, col: 3));
 
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 1, col: 1), color: 'grey', textColor: 'red', hasX: false);
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 1, col: 3), color: 'white', textColor: 'red', hasX: false);
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'red', hasX: false);
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 3), color: 'white', textColor: 'red', hasX: false);
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 5), color: 'grey', textColor: 'red', hasX: false);
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 6), color: 'grey', textColor: 'red', hasX: false);
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'red', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 1, col: 1), color: 'grey', textColor: 'red', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 1, col: 3), color: 'white', textColor: 'red', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'red', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 3), color: 'white', textColor: 'red', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 5), color: 'grey', textColor: 'red', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 6), color: 'grey', textColor: 'red', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'red', hasX: false);
       });
 
       test('removing all invalid tiles changes textColor from red to black', () async {
@@ -151,39 +126,29 @@ void main() {
         await doubleTapTile(TileKey(row: 2, col: 2));
         await doubleTapTile(TileKey(row: 2, col: 3));
 
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 1, col: 1), color: 'grey', textColor: 'black', hasX: false);
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 1, col: 3), color: 'white', textColor: 'black', hasX: false);
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 3), color: 'white', textColor: 'black', hasX: false);
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 5), color: 'grey', textColor: 'black', hasX: false);
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 6), color: 'grey', textColor: 'black', hasX: false);
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 1, col: 1), color: 'grey', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 1, col: 3), color: 'white', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 3), color: 'white', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 5), color: 'grey', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 6), color: 'grey', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'black', hasX: false);
       });
     });
 
     group('original tiles ->', () {
       test('tapping a tile changes no colors, and does not remove the value', () async {
         await expectNumberOnTileToBe(5, TileKey(row: 1, col: 1));
-        expectTilePropertiesToBe(
-            tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'black', hasX: false);
+        expectTileIs(tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'black', hasX: false);
 
         await tapTile(TileKey(row: 1, col: 1));
 
-        expectTilePropertiesToBe(
-            tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'black', hasX: false);
+        expectTileIs(tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'black', hasX: false);
 
         await tapNumber(7);
 
         await expectNumberOnTileToBe(5, TileKey(row: 1, col: 1));
-        expectTilePropertiesToBe(
-            tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'black', hasX: false);
+        expectTileIs(tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'black', hasX: false);
       });
     });
 
@@ -192,8 +157,7 @@ void main() {
         await tapTile(TileKey(row: 2, col: 2));
         await pressRestartOnDropDownMenu('JustPlayScreenDropDownMenuWidget');
 
-        expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
+        expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
         for (int number = 1; number <= 9; number++) {
           await expectNumberPropertiesToBe(number: number, color: 'white');
         }
@@ -203,16 +167,14 @@ void main() {
         await addNumberToTile(5, TileKey(row: 2, col: 2));
         await tapTile(TileKey(row: 2, col: 2));
 
-        expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'red', hasX: true);
+        expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'red', hasX: true);
         for (int number = 1; number <= 9; number++) {
           await expectNumberPropertiesToBe(number: number, color: 'green');
         }
 
         await pressRestartOnDropDownMenu('JustPlayScreenDropDownMenuWidget');
 
-        expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
+        expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
         for (int number = 1; number <= 9; number++) {
           await expectNumberPropertiesToBe(number: number, color: 'white');
         }
@@ -232,8 +194,7 @@ void main() {
         await addNumberToTile(5, TileKey(row: 2, col: 2));
         await tapTile(TileKey(row: 2, col: 2));
 
-        expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'red', hasX: true);
+        expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'red', hasX: true);
         for (int number = 1; number <= 9; number++) {
           await expectNumberPropertiesToBe(number: number, color: 'green');
         }
@@ -241,8 +202,7 @@ void main() {
         await pressHelpOnDropDownMenu('JustPlayScreenDropDownMenuWidget');
         await pressBackButton();
 
-        expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'red', hasX: true);
+        expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'red', hasX: true);
         for (int number = 1; number <= 9; number++) {
           await expectNumberPropertiesToBe(number: number, color: 'green');
         }
@@ -270,13 +230,11 @@ void main() {
         await playGame(my_solved_games.solvedGamesList[0]);
         await tapTile(TileKey(row: 2, col: 2));
 
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'black', hasX: true);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'black', hasX: true);
 
         await waitForThenTap(find.text('NEW GAME'));
 
-        await expectTilePropertiesToBe(
-            tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
       });
     });
 

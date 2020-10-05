@@ -35,12 +35,10 @@ TopTextState _setTopTextToPickATile4(TopTextState topTextState, NewGameButtonPre
   return topTextState.copyWith(text: my_strings.topTextNoTileSelected, color: my_colors.white);
 }
 
-TopTextState _setTopTextToPickANumberOrTapToRemove(
-    TopTextState topTextState, TileSelectedAction action) {
+TopTextState _setTopTextToPickANumberOrTapToRemove(TopTextState topTextState, TileSelectedAction action) {
   return topTextState.copyWith(
-    text: (action.selectedTile.value != null)
-        ? my_strings.topTextTileWithValueSelected
-        : my_strings.topTextTileSelected,
+    text:
+        (action.selectedTile.value != null) ? my_strings.topTextTileWithValueSelected : my_strings.topTextTileSelected,
     color: my_colors.white,
   );
 }

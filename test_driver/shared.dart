@@ -23,20 +23,8 @@ Future<void> grantAppPermissions() async {
     'platform-tools',
     Platform.isWindows ? 'adb.exe' : 'adb',
   );
-  await Process.run(adbPath, [
-    'shell',
-    'pm',
-    'grant',
-    'com.lachie.sudoku_solver_2', // replace with your app id
-    'android.permission.CAMERA'
-  ]);
-  await Process.run(adbPath, [
-    'shell',
-    'pm',
-    'grant',
-    'com.lachie.sudoku_solver_2', // replace with your app id
-    'android.permission.RECORD_AUDIO'
-  ]);
+  await Process.run(adbPath, ['shell', 'pm', 'grant', 'com.lachie.sudoku_solver_2', 'android.permission.CAMERA']);
+  await Process.run(adbPath, ['shell', 'pm', 'grant', 'com.lachie.sudoku_solver_2', 'android.permission.RECORD_AUDIO']);
 }
 
 Future<void> pressBackButton() async {
@@ -121,7 +109,7 @@ Future<int> getNumberOnTile(TileKey tileKey) async {
   }
 }
 
-Future<void> expectTilePropertiesToBe({
+Future<void> expectTileIs({
   @required TileKey tileKey,
   @required String color,
   @required String textColor,

@@ -21,8 +21,7 @@ List<NumberState> _makeNumberActive(List<NumberState> numberStateList, TileSelec
   return newNumberStateList;
 }
 
-List<NumberState> _makeNumberInactive(
-    List<NumberState> numberStateList, TileDeselectedAction action) {
+List<NumberState> _makeNumberInactive(List<NumberState> numberStateList, TileDeselectedAction action) {
   final List<NumberState> newNumberStateList = <NumberState>[];
 
   for (NumberState numberState in numberStateList) {
@@ -32,8 +31,7 @@ List<NumberState> _makeNumberInactive(
   return newNumberStateList;
 }
 
-List<NumberState> _makeNumberInactive2(
-    List<NumberState> numberStateList, NumberPressedAction action) {
+List<NumberState> _makeNumberInactive2(List<NumberState> numberStateList, NumberPressedAction action) {
   final List<NumberState> newNumberStateList = <NumberState>[];
   for (NumberState numberState in numberStateList) {
     newNumberStateList.add(numberState.copyWith(isActive: false));
@@ -51,8 +49,7 @@ List<NumberState> _makeNumberInactive3(List<NumberState> numberStateList, Restar
   return newNumberStateList;
 }
 
-List<NumberState> _clearNumberStateListReducer(
-    List<NumberState> numberStateList, ChangeScreenAction action) {
+List<NumberState> _clearNumberStateListReducer(List<NumberState> numberStateList, ChangeScreenAction action) {
   // Shoudlnt clear if looking at help screen
   if (action.screenState != ScreenState.homeScreen) {
     return numberStateList;

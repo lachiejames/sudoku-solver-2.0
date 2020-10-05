@@ -8,14 +8,12 @@ import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
 /// Contains all state reducers used by the <TileKey, TileState> map
-final Reducer<HashMap<TileKey, TileState>> tileStateMapReducer =
-    combineReducers<HashMap<TileKey, TileState>>([
+final Reducer<HashMap<TileKey, TileState>> tileStateMapReducer = combineReducers<HashMap<TileKey, TileState>>([
   TypedReducer<HashMap<TileKey, TileState>, TileSelectedAction>(_tileSelectedReducer),
   TypedReducer<HashMap<TileKey, TileState>, TileDeselectedAction>(_tileDeselectedReducer),
   TypedReducer<HashMap<TileKey, TileState>, LoadSudokuGameAction>(_loadExampleValues),
   TypedReducer<HashMap<TileKey, TileState>, NumberPressedAction>(_addPressedNumberToTile),
-  TypedReducer<HashMap<TileKey, TileState>, SudokuSolvedAction>(
-      _updateTileMapWithSolvedSudokuReducer),
+  TypedReducer<HashMap<TileKey, TileState>, SudokuSolvedAction>(_updateTileMapWithSolvedSudokuReducer),
   TypedReducer<HashMap<TileKey, TileState>, RestartAction>(_clearAllValuesReducer),
   TypedReducer<HashMap<TileKey, TileState>, ChangeScreenAction>(_clearTileStateMapReducer),
   TypedReducer<HashMap<TileKey, TileState>, PhotoProcessedAction>(_updateTileMapWithSudokuReducer),
@@ -23,11 +21,9 @@ final Reducer<HashMap<TileKey, TileState>> tileStateMapReducer =
   TypedReducer<HashMap<TileKey, TileState>, NewGameButtonPressedAction>(_newGamePressedReducer),
 ]);
 
-HashMap<TileKey, TileState> _tileSelectedReducer(
-    HashMap<TileKey, TileState> tileStateMap, TileSelectedAction action) {
+HashMap<TileKey, TileState> _tileSelectedReducer(HashMap<TileKey, TileState> tileStateMap, TileSelectedAction action) {
   // Get tileKey of selected Tile
-  final TileKey nextSelectedTileKey =
-      TileKey(row: action.selectedTile.row, col: action.selectedTile.col);
+  final TileKey nextSelectedTileKey = TileKey(row: action.selectedTile.row, col: action.selectedTile.col);
 
   // Use tileKey to select the tile, in a new tilemap
   tileStateMap.forEach((tileKey, tileState) {
@@ -49,8 +45,7 @@ HashMap<TileKey, TileState> _tileDeselectedReducer(
   assert(action.deselectedTile.isSelected == true);
 
   // Get tileKey of selected Tile
-  final TileKey deselectedTileKey =
-      TileKey(row: action.deselectedTile.row, col: action.deselectedTile.col);
+  final TileKey deselectedTileKey = TileKey(row: action.deselectedTile.row, col: action.deselectedTile.col);
 
   // Use tileKey to deselect the tile, in a new tilemap
   tileStateMap.forEach((tileKey, tileState) {
@@ -65,9 +60,7 @@ HashMap<TileKey, TileState> _tileDeselectedReducer(
   return tileStateMap;
 }
 
-HashMap<TileKey, TileState> _loadExampleValues(
-    HashMap<TileKey, TileState> tileStateMap, LoadSudokuGameAction action) {
-
+HashMap<TileKey, TileState> _loadExampleValues(HashMap<TileKey, TileState> tileStateMap, LoadSudokuGameAction action) {
   final List<List<int>> exampleValues = my_games.games[action.gameNumber];
 
   // clear all values first and originalTiles
@@ -118,8 +111,7 @@ HashMap<TileKey, TileState> _updateTileMapWithSolvedSudokuReducer(
   return tileStateMap;
 }
 
-HashMap<TileKey, TileState> _clearAllValuesReducer(
-    HashMap<TileKey, TileState> tileStateMap, RestartAction action) {
+HashMap<TileKey, TileState> _clearAllValuesReducer(HashMap<TileKey, TileState> tileStateMap, RestartAction action) {
   tileStateMap.forEach((tileKey, tileState) {
     int value = (tileState.isOriginalTile) ? tileState.value : -1;
     tileStateMap[tileKey] = tileState.copyWith(value: value, isSelected: false, isInvalid: false);
@@ -137,8 +129,7 @@ HashMap<TileKey, TileState> _clearTileStateMapReducer(
   }
 
   tileStateMap.forEach((tileKey, tileState) {
-    tileStateMap[tileKey] =
-        tileState.copyWith(value: -1, isSelected: false, isOriginalTile: false, isInvalid: false);
+    tileStateMap[tileKey] = tileState.copyWith(value: -1, isSelected: false, isOriginalTile: false, isInvalid: false);
   });
 
   return tileStateMap;

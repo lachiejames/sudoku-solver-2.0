@@ -100,6 +100,7 @@ class ProcessPhotoAction {
   final CameraController cameraController;
   ProcessPhotoAction(this.cameraController);
 }
+
 class GameSolvedAction {
   GameSolvedAction();
 }
