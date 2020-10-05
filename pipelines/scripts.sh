@@ -42,7 +42,10 @@ run_emulator() {
 
 run_integration_tests() {
     echo "Running Integration Tests"
-    flutter drive --target=test_driver/run_app.dart
+    flutter drive --target=test_driver/screen_navigation_tests.dart; 
+    flutter drive --target=test_driver/solve_with_camera_screen_tests.dart; 
+    flutter drive --target=test_driver/just_play_screen_tests.dart; 
+    flutter drive --target=test_driver/play_all_games_tests.dart;
 }
 
 "$@"

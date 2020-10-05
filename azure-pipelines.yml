@@ -7,13 +7,6 @@ jobs:
       vmImage: macOS-latest
 
     steps:
-      - task: SonarQubePrepare@4
-        displayName: Start SonarQube
-        inputs:
-          SonarQube: sonarqube-flutter
-          scannerMode: CLI
-          configMode: file
-
       - script: sudo chmod +x pipelines/scripts.sh
         displayName: Grant Shell Permissions
 

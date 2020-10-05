@@ -39,6 +39,14 @@ Future<void> grantAppPermissions() async {
   ]);
 }
 
+Future<void> pressBackButton() async {
+  await Process.run(
+    'adb',
+    <String>['shell', 'input', 'keyevent', 'KEYCODE_BACK'],
+    runInShell: true,
+  );
+}
+
 Future<void> hotRestart() async {
   await driver.requestData(my_strings.hotRestart);
 }
