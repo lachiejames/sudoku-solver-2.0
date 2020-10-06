@@ -39,9 +39,10 @@ class _NewGameButtonWidgetState extends State<NewGameButtonWidget> {
                   my_strings.newGameButtonText,
                   style: my_styles.buttonTextStyle,
                 ),
-                onPressed: () {
+                onPressed: () async {
                   Redux.store.dispatch(NewGameButtonPressedAction());
-                  Redux.store.dispatch(LoadSudokuGameAction(Redux.store.state.gameNumber));
+                  int nextGameNumber = Redux.store.state.gameNumber;
+                  await Redux.sharedPreferences.setInt(my_strings.gameNumberSharedPrefsKey, nextGameNumber);
                 },
               ),
             ),

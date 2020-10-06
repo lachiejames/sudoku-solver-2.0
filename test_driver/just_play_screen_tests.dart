@@ -43,29 +43,21 @@ void main() {
       });
 
       test('tapping a tile changes all numbers from white to green', () async {
-        for (int number = 1; number <= 9; number++) {
-          await expectNumberPropertiesToBe(number: number, color: 'white');
-        }
+        await expectNumbersAre(color: 'white');
 
         await tapTile(TileKey(row: 2, col: 2));
 
-        for (int number = 1; number <= 9; number++) {
-          await expectNumberPropertiesToBe(number: number, color: 'green');
-        }
+        await expectNumbersAre(color: 'green');
       });
 
       test('tapping a selected tile changes all numbers from green to white', () async {
         await tapTile(TileKey(row: 2, col: 2));
 
-        for (int number = 1; number <= 9; number++) {
-          await expectNumberPropertiesToBe(number: number, color: 'green');
-        }
+        await expectNumbersAre(color: 'green');
 
         await tapTile(TileKey(row: 2, col: 2));
 
-        for (int number = 1; number <= 9; number++) {
-          await expectNumberPropertiesToBe(number: number, color: 'white');
-        }
+        await expectNumbersAre(color: 'white');
       });
 
       test('pressing a tile, then a number, should add that number to the tile', () async {
@@ -139,16 +131,16 @@ void main() {
     group('original tiles ->', () {
       test('tapping a tile changes no colors, and does not remove the value', () async {
         await expectNumberOnTileToBe(5, TileKey(row: 1, col: 1));
-        expectTileIs(tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'black', hasX: false);
 
         await tapTile(TileKey(row: 1, col: 1));
 
-        expectTileIs(tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'black', hasX: false);
 
         await tapNumber(7);
 
         await expectNumberOnTileToBe(5, TileKey(row: 1, col: 1));
-        expectTileIs(tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'black', hasX: false);
       });
     });
 
@@ -157,27 +149,21 @@ void main() {
         await tapTile(TileKey(row: 2, col: 2));
         await pressRestartOnDropDownMenu('JustPlayScreenDropDownMenuWidget');
 
-        expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
-        for (int number = 1; number <= 9; number++) {
-          await expectNumberPropertiesToBe(number: number, color: 'white');
-        }
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
+        await expectNumbersAre(color: 'white');
       });
 
       test('pressing RESTART resets invalid tiles', () async {
         await addNumberToTile(5, TileKey(row: 2, col: 2));
         await tapTile(TileKey(row: 2, col: 2));
 
-        expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'red', hasX: true);
-        for (int number = 1; number <= 9; number++) {
-          await expectNumberPropertiesToBe(number: number, color: 'green');
-        }
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'red', hasX: true);
+        await expectNumbersAre(color: 'green');
 
         await pressRestartOnDropDownMenu('JustPlayScreenDropDownMenuWidget');
 
-        expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
-        for (int number = 1; number <= 9; number++) {
-          await expectNumberPropertiesToBe(number: number, color: 'white');
-        }
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
+        await expectNumbersAre(color: 'white');
       });
 
       test('pressing RESTART makes new game button disappear', () async {
@@ -194,18 +180,14 @@ void main() {
         await addNumberToTile(5, TileKey(row: 2, col: 2));
         await tapTile(TileKey(row: 2, col: 2));
 
-        expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'red', hasX: true);
-        for (int number = 1; number <= 9; number++) {
-          await expectNumberPropertiesToBe(number: number, color: 'green');
-        }
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'red', hasX: true);
+        await expectNumbersAre(color: 'green');
 
         await pressHelpOnDropDownMenu('JustPlayScreenDropDownMenuWidget');
         await pressBackButton();
 
-        expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'red', hasX: true);
-        for (int number = 1; number <= 9; number++) {
-          await expectNumberPropertiesToBe(number: number, color: 'green');
-        }
+        await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'red', hasX: true);
+        await expectNumbersAre(color: 'green');
       });
     });
 

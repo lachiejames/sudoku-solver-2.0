@@ -28,7 +28,7 @@ Future<void> restartApp() async {
 
   await Redux.init();
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
-  sharedPrefs.setInt(my_strings.gameNumberSharedPrefsKey, 0);
+  await sharedPrefs.setInt(my_strings.gameNumberSharedPrefsKey, 0);
 
   runApp(
     MyApp(

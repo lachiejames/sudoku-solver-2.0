@@ -49,9 +49,21 @@ void navigateToSolveWithCameraScreen() async {
   await driver.waitFor(find.text(my_strings.solveWithCameraScreenName));
 }
 
+void navigateToSolveWithTouchScreen() async {
+  await waitForThenTap(find.text(my_strings.solveWithCameraButtonText));
+  await driver.waitFor(find.text(my_strings.solveWithCameraScreenName));
+}
+
 void navigateToJustPlayScreen() async {
   await waitForThenTap(find.text(my_strings.justPlayButtonText));
   await driver.waitFor(find.text(my_strings.topTextNoTileSelected));
+
+  // May load with the wrong sudoku when restarting, causing test failures
+  bool needsAnotherRestart = (await getNumberOnTile(TileKey(row:1,col:1)) != 5);
+  if (needsAnotherRestart) {
+    await hotRestart();
+    await navigateToJustPlayScreen();
+  }
 }
 
 void pressSolveWithCameraButton() async {
@@ -96,6 +108,12 @@ void addNumberToTile(int number, TileKey tileKey) async {
 
 void tapNewGameButton() async {
   await waitForThenTap(find.text('NEW GAME'));
+}
+
+Future<void> expectNumbersAre({String color}) async {
+  for (int number = 1; number <= 9; number++) {
+    await expectNumberPropertiesToBe(number: number, color: color);
+  }
 }
 
 Future<int> getNumberOnTile(TileKey tileKey) async {

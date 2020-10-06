@@ -40,7 +40,7 @@ class Redux {
         tileStateMap: TileState.initTileStateMap(),
         numberStateList: NumberState.initNumberStateList(),
         topTextState: TopTextState.initialState(),
-        gameNumber: (sharedPreferences != null) ? _getGameNumber() : 0,
+        gameNumber: (sharedPreferences != null) ? await _getGameNumber() : 0,
         screenState: ScreenState.homeScreen,
         gameState: GameState.normal,
         cameraState: CameraState(),
@@ -48,13 +48,13 @@ class Redux {
     );
   }
 
-  static int _getGameNumber() {
+  static Future<int> _getGameNumber() async {
     assert(sharedPreferences != null);
     int gameNumber = sharedPreferences.getInt(my_strings.gameNumberSharedPrefsKey);
 
     if (gameNumber == null) {
       gameNumber = 0;
-      sharedPreferences.setInt(my_strings.gameNumberSharedPrefsKey, gameNumber);
+      await sharedPreferences.setInt(my_strings.gameNumberSharedPrefsKey, gameNumber);
     }
 
     return gameNumber;
