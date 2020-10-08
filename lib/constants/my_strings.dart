@@ -29,6 +29,7 @@ final String takePhotoButtonText = 'TAKE PHOTO';
 final String retakePhotoButtonText = 'NO, RETAKE PHOTO';
 final String solveItButtonText = 'YES, SOLVE IT';
 final String solveMySudokuButtonText = 'SOLVE MY SUDOKU';
+final String stopSolvingButtonText = 'STOP SOLVING';
 final String newGameButtonText = 'NEW GAME';
 
 // Toast messages
@@ -37,6 +38,6 @@ final String invalidSudokuToast = 'Invalid Sudoku';
 final String hotRestart = 'restart';
 
 // Set to null when running all tests
-final String dartVMServiceUrl = null; //'http://127.0.0.1:8888/';
+final String dartVMServiceUrl = 'http://127.0.0.1:8888/';
 
 final String gameNumberSharedPrefsKey = 'sudoku_solver_game_number';

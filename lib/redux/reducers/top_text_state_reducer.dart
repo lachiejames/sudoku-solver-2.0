@@ -17,6 +17,7 @@ final Reducer<TopTextState> topTextStateReducer = combineReducers<TopTextState>(
   TypedReducer<TopTextState, ChangeScreenAction>(_setTopTextAlignWithCamera),
   TypedReducer<TopTextState, NewGameButtonPressedAction>(_setTopTextToPickATile4),
   TypedReducer<TopTextState, ApplyGameStateChangesAction>(_upateGameStateReducer),
+  TypedReducer<TopTextState, StopSolvingSudokuAction>(_stopSolvingSudokuReducer),
 ]);
 
 TopTextState _setTopTextToPickATile(TopTextState topTextState, TileDeselectedAction action) {
@@ -67,4 +68,8 @@ TopTextState _upateGameStateReducer(TopTextState topTextState, ApplyGameStateCha
   } else {
     return topTextState;
   }
+}
+
+TopTextState _stopSolvingSudokuReducer(TopTextState topTextState, StopSolvingSudokuAction action) {
+  return topTextState.copyWith(text: my_strings.topTextNoTileSelected, color: my_colors.white);
 }

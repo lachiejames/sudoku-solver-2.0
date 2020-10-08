@@ -16,6 +16,7 @@ final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
   TypedReducer<GameState, UpdateGameStateAction>(_updateGameStateReducer),
   TypedReducer<GameState, NewGameButtonPressedAction>(_newGameButtonPressedReducer),
   TypedReducer<GameState, GameSolvedAction>(_gameSolvedReducerReducer),
+  TypedReducer<GameState, StopSolvingSudokuAction>(_stopSolvingSudokuReducer),
 ]);
 
 GameState _solveSudokuReducer(GameState gameState, SolveSudokuAction action) {
@@ -25,6 +26,12 @@ GameState _solveSudokuReducer(GameState gameState, SolveSudokuAction action) {
   solveSudokuAsync(sudoku);
 
   return GameState.isSolving;
+}
+
+GameState _stopSolvingSudokuReducer(GameState gameState, StopSolvingSudokuAction action) {
+  stopSolvingSudoku();
+
+  return GameState.normal;
 }
 
 GameState _sudokuSolvedReducer(GameState gameState, SudokuSolvedAction action) {

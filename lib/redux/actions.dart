@@ -52,6 +52,10 @@ class NewGameButtonPressedAction {
   NewGameButtonPressedAction();
 }
 
+class StopSolvingSudokuAction {
+  StopSolvingSudokuAction();
+}
+
 /// Fired when navigating from one screen to another
 class ChangeScreenAction {
   final ScreenState screenState;

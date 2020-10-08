@@ -31,15 +31,17 @@ class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
             child: RaisedButton(
               shape: my_styles.buttonShape,
               padding: my_styles.buttonPadding,
-              color: (gameState == GameState.isSolving) ? my_colors.grey : my_colors.blue,
+              color: (gameState == GameState.isSolving) ? my_colors.red : my_colors.blue,
               child: Text(
-                my_strings.solveMySudokuButtonText,
+                (gameState == GameState.isSolving) ? my_strings.stopSolvingButtonText : my_strings.solveMySudokuButtonText,
                 style: my_styles.buttonTextStyle,
               ),
               // Should be disabled while solving
               onPressed:
                   (gameState == GameState.isSolving || gameState == GameState.invalidTilesPresent)
-                      ? null
+                      ? () {
+                        Redux.store.dispatch(StopSolvingSudokuAction());
+                      }
                       : () {
                           Redux.store.dispatch(SolveSudokuAction());
                         },

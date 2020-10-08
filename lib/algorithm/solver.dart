@@ -1,3 +1,4 @@
+import 'package:async/async.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
@@ -34,16 +35,26 @@ Sudoku _solveSudoku(Sudoku sudoku) {
   return sudoku;
 }
 
+// Stream<Sudoku> myStream;
+CancelableOperation _cancellableOperation;
+
 /// Solves the sudoku asynchronously with 'compute'
 Future<Sudoku> solveSudokuAsync(Sudoku sudoku) async {
-  Sudoku solvedSudoku = await compute(_solveSudoku, sudoku);
-
-  assert(solvedSudoku.tileStateMap.length == 81);
-  assert(solvedSudoku.isFull());
-  assert(solvedSudoku.allConstraintsSatisfied());
-  Redux.store.dispatch(
-    SudokuSolvedAction(solvedSudoku),
+  _cancellableOperation = CancelableOperation.fromFuture(
+    compute(_solveSudoku, sudoku),
   );
 
-  return solvedSudoku;
+  _cancellableOperation.asStream().listen(
+    (solvedSudoku) {
+      if (solvedSudoku.isFull() && solvedSudoku.allConstraintsSatisfied()) {
+        Redux.store.dispatch(SudokuSolvedAction(solvedSudoku));
+      }
+    },
+  );
+
+  return sudoku;
+}
+
+void stopSolvingSudoku() {
+  _cancellableOperation.cancel();
 }

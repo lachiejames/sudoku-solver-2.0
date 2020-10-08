@@ -50,8 +50,8 @@ void navigateToSolveWithCameraScreen() async {
 }
 
 void navigateToSolveWithTouchScreen() async {
-  await waitForThenTap(find.text(my_strings.solveWithCameraButtonText));
-  await driver.waitFor(find.text(my_strings.solveWithCameraScreenName));
+  await waitForThenTap(find.text(my_strings.solveWithTouchButtonText));
+  await driver.waitFor(find.text(my_strings.solveWithTouchScreenName));
 }
 
 void navigateToJustPlayScreen() async {
@@ -59,7 +59,7 @@ void navigateToJustPlayScreen() async {
   await driver.waitFor(find.text(my_strings.topTextNoTileSelected));
 
   // May load with the wrong sudoku when restarting, causing test failures
-  bool needsAnotherRestart = (await getNumberOnTile(TileKey(row:1,col:1)) != 5);
+  bool needsAnotherRestart = (await getNumberOnTile(TileKey(row: 1, col: 1)) != 5);
   if (needsAnotherRestart) {
     await hotRestart();
     await navigateToJustPlayScreen();
