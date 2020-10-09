@@ -17,6 +17,24 @@ class SolveMySudokuButtonWidget extends StatefulWidget {
 }
 
 class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
+  Key _createPropertyKey(GameState gameState) {
+    String key = 'text:${this._determineText(gameState)}';
+    key += ' - color:${this._determineColorString(gameState)}';
+    key += ' - tappable:${(gameState==GameState.invalidTilesPresent) ? 'false' : 'true'}';
+    return Key(key);
+  }
+
+  String _determineColorString(GameState gameState) {
+    switch (gameState) {
+      case GameState.isSolving:
+        return 'red';
+      case GameState.invalidTilesPresent:
+        return 'grey';
+      default:
+        return 'blue';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, GameState>(
@@ -24,6 +42,7 @@ class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
       converter: (store) => store.state.gameState,
       builder: (context, gameState) {
         return Container(
+          key: this._createPropertyKey(gameState),
           alignment: Alignment.center,
           margin: my_styles.buttonMargins,
           child: Directionality(
@@ -31,24 +50,55 @@ class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
             child: RaisedButton(
               shape: my_styles.buttonShape,
               padding: my_styles.buttonPadding,
-              color: (gameState == GameState.isSolving) ? my_colors.red : my_colors.blue,
+              color: _determineColor(gameState),
               child: Text(
-                (gameState == GameState.isSolving) ? my_strings.stopSolvingButtonText : my_strings.solveMySudokuButtonText,
+                _determineText(gameState),
                 style: my_styles.buttonTextStyle,
               ),
-              // Should be disabled while solving
-              onPressed:
-                  (gameState == GameState.isSolving || gameState == GameState.invalidTilesPresent)
-                      ? () {
-                        Redux.store.dispatch(StopSolvingSudokuAction());
-                      }
-                      : () {
-                          Redux.store.dispatch(SolveSudokuAction());
-                        },
+              onPressed: (gameState == GameState.invalidTilesPresent)
+                  ? null
+                  : () {
+                      _determineAction(gameState);
+                    },
             ),
           ),
         );
       },
     );
+  }
+
+  Color _determineColor(GameState gameState) {
+    switch (gameState) {
+      case GameState.isSolving:
+        return my_colors.red;
+      case GameState.invalidTilesPresent:
+        return my_colors.grey;
+      default:
+        return my_colors.blue;
+    }
+  }
+
+  String _determineText(GameState gameState) {
+    switch (gameState) {
+      case GameState.isSolving:
+        return my_strings.stopSolvingButtonText;
+      case GameState.solved:
+        return my_strings.restartButtonText;
+      default:
+        return my_strings.solveMySudokuButtonText;
+    }
+  }
+
+  void _determineAction(GameState gameState) {
+    switch (gameState) {
+      case GameState.isSolving:
+        Redux.store.dispatch(StopSolvingSudokuAction());
+        break;
+      case GameState.solved:
+        Redux.store.dispatch(RestartAction());
+        break;
+      default:
+        Redux.store.dispatch(SolveSudokuAction());
+    }
   }
 }

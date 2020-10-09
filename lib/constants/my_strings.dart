@@ -31,6 +31,7 @@ final String solveItButtonText = 'YES, SOLVE IT';
 final String solveMySudokuButtonText = 'SOLVE MY SUDOKU';
 final String stopSolvingButtonText = 'STOP SOLVING';
 final String newGameButtonText = 'NEW GAME';
+final String restartButtonText = 'RESTART';
 
 // Toast messages
 final String invalidSudokuToast = 'Invalid Sudoku';

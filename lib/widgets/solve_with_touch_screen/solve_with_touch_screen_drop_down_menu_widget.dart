@@ -5,6 +5,7 @@ import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/solve_with_touch_help_screen.dart';
+import 'package:sudoku_solver_2/state/game_state.dart';
 
 /// drop ddown menu on the SolveWithTouchScreen
 class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
@@ -55,6 +56,9 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
   }
 
   void _restart() {
+    if (Redux.store.state.gameState == GameState.isSolving) {
+      Redux.store.dispatch(StopSolvingSudokuAction());
+    }
     Redux.store.dispatch(RestartAction());
   }
 

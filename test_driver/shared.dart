@@ -163,3 +163,22 @@ Future<void> playGame(List<List<int>> game) async {
     }
   }
 }
+
+Future<void> addSudoku(List<List<int>> game) async {
+  for (int row = 1; row <= 9; row++) {
+    for (int col = 1; col <= 9; col++) {
+      int nextValue = game[row - 1][col - 1];
+      if (nextValue != null) {
+        await addNumberToTile(nextValue, TileKey(row: row, col: col));
+      }
+    }
+  }
+}
+
+Future<void> expectButtonPropertiesAre({
+  @required String text,
+  @required String color,
+  @required String tappable,
+}) async {
+  await driver.waitFor(find.byValueKey('text:$text - color:$color - tappable:$tappable'));
+}

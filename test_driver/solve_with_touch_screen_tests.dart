@@ -84,47 +84,45 @@ void main() {
       });
 
       test('adding an invalid tile changes textColor from black to red', () async {
+        await addNumberToTile(5, TileKey(row: 1, col: 1));
         await addNumberToTile(5, TileKey(row: 2, col: 2));
 
+        await expectTileIs(tileKey: TileKey(row: 1, col: 1), color: 'white', textColor: 'red', hasX: false);
         await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'red', hasX: false);
       });
 
       test('removing an invalid tile changes textColor from red to black', () async {
+        await addNumberToTile(5, TileKey(row: 1, col: 1));
         await addNumberToTile(5, TileKey(row: 2, col: 2));
+
         await doubleTapTile(TileKey(row: 2, col: 2));
 
+        await expectTileIs(tileKey: TileKey(row: 1, col: 1), color: 'white', textColor: 'black', hasX: false);
         await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
       });
 
       test('adding many invalid tiles changes textColor from black to red', () async {
+        await addNumberToTile(5, TileKey(row: 1, col: 1));
         await addNumberToTile(5, TileKey(row: 2, col: 2));
-        await addNumberToTile(5, TileKey(row: 1, col: 3));
-        await addNumberToTile(9, TileKey(row: 2, col: 3));
+        await addNumberToTile(5, TileKey(row: 1, col: 9));
 
-        await expectTileIs(tileKey: TileKey(row: 1, col: 1), color: 'grey', textColor: 'red', hasX: false);
-        await expectTileIs(tileKey: TileKey(row: 1, col: 3), color: 'white', textColor: 'red', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 1, col: 1), color: 'white', textColor: 'red', hasX: false);
         await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'red', hasX: false);
-        await expectTileIs(tileKey: TileKey(row: 2, col: 3), color: 'white', textColor: 'red', hasX: false);
-        await expectTileIs(tileKey: TileKey(row: 2, col: 5), color: 'grey', textColor: 'red', hasX: false);
-        await expectTileIs(tileKey: TileKey(row: 2, col: 6), color: 'grey', textColor: 'red', hasX: false);
-        await expectTileIs(tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'red', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 1, col: 9), color: 'white', textColor: 'red', hasX: false);
       });
 
       test('removing all invalid tiles changes textColor from red to black', () async {
-        await addNumberToTile(5, TileKey(row: 1, col: 3));
+        await addNumberToTile(5, TileKey(row: 1, col: 1));
         await addNumberToTile(5, TileKey(row: 2, col: 2));
-        await addNumberToTile(9, TileKey(row: 2, col: 3));
-        await doubleTapTile(TileKey(row: 1, col: 3));
-        await doubleTapTile(TileKey(row: 2, col: 2));
-        await doubleTapTile(TileKey(row: 2, col: 3));
+        await addNumberToTile(5, TileKey(row: 1, col: 9));
 
-        await expectTileIs(tileKey: TileKey(row: 1, col: 1), color: 'grey', textColor: 'black', hasX: false);
-        await expectTileIs(tileKey: TileKey(row: 1, col: 3), color: 'white', textColor: 'black', hasX: false);
+        await doubleTapTile(TileKey(row: 1, col: 1));
+        await doubleTapTile(TileKey(row: 2, col: 2));
+        await doubleTapTile(TileKey(row: 1, col: 9));
+
+        await expectTileIs(tileKey: TileKey(row: 1, col: 1), color: 'white', textColor: 'black', hasX: false);
         await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'white', textColor: 'black', hasX: false);
-        await expectTileIs(tileKey: TileKey(row: 2, col: 3), color: 'white', textColor: 'black', hasX: false);
-        await expectTileIs(tileKey: TileKey(row: 2, col: 5), color: 'grey', textColor: 'black', hasX: false);
-        await expectTileIs(tileKey: TileKey(row: 2, col: 6), color: 'grey', textColor: 'black', hasX: false);
-        await expectTileIs(tileKey: TileKey(row: 3, col: 2), color: 'grey', textColor: 'black', hasX: false);
+        await expectTileIs(tileKey: TileKey(row: 1, col: 9), color: 'white', textColor: 'black', hasX: false);
       });
     });
 
@@ -138,6 +136,7 @@ void main() {
       });
 
       test('pressing RESTART resets invalid tiles', () async {
+        await addNumberToTile(5, TileKey(row: 1, col: 1));
         await addNumberToTile(5, TileKey(row: 2, col: 2));
         await tapTile(TileKey(row: 2, col: 2));
 
@@ -150,24 +149,27 @@ void main() {
         await expectNumbersAre(color: 'white');
       });
 
-      test('pressing RESTART disable SOLVE MY SUDOKU button', () async {
-        await playGame(my_solved_games.solvedGamesList[0]);
-        await driver.waitFor(find.text('SOLVE MY SUDOKU'));
+      test('pressing RESTART stops solving the sudoku', () async {
+        await driver.runUnsynchronized(() async {
+          await waitForThenTap(find.text('SOLVE MY SUDOKU'));
+          await expectButtonPropertiesAre(text: 'STOP SOLVING', color: 'red', tappable: 'true');
 
-        await pressRestartOnDropDownMenu('SolveWithTouchScreenDropDownMenuWidget');
-        await driver.waitForAbsent(find.text('SOLVE MY SUDOKU'));
+          await pressRestartOnDropDownMenu('SolveWithTouchScreenDropDownMenuWidget');
+          await expectButtonPropertiesAre(text: 'SOLVE MY SUDOKU', color: 'blue', tappable: 'true');
+        });
       });
     });
 
     group('help ->', () {
       test('pressing HELP then navigating back will preserve board state', () async {
+        await addNumberToTile(5, TileKey(row: 1, col: 1));
         await addNumberToTile(5, TileKey(row: 2, col: 2));
         await tapTile(TileKey(row: 2, col: 2));
 
         await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'red', hasX: true);
         await expectNumbersAre(color: 'green');
 
-        await pressHelpOnDropDownMenu('JustPlayScreenDropDownMenuWidget');
+        await pressHelpOnDropDownMenu('SolveWithTouchScreenDropDownMenuWidget');
         await pressBackButton();
 
         await expectTileIs(tileKey: TileKey(row: 2, col: 2), color: 'green', textColor: 'red', hasX: true);
@@ -175,33 +177,52 @@ void main() {
       });
     });
 
-    group('solving a game ->', () {
-      test('initial values on the board should be the values in game0', () async {
-        await verifyInitialGameTiles(my_games.games[0]);
-      });
-
+    group('solving a sudoku ->', () {
       test('adding correct values to all blank tiles will finish the game', () async {
         await playGame(my_solved_games.solvedGamesList[0]);
         await driver.waitFor(find.text('SOLVED'));
-        await driver.waitFor(find.text('NEW GAME'));
+        await driver.waitFor(find.text('RESTART'));
       });
 
-      test('can play 2 games in a row', () async {
-        await verifyInitialGameTiles(my_games.games[0]);
-        await playGame(my_solved_games.solvedGamesList[0]);
-        await tapNewGameButton();
+      test('SOLVE MY SUDOKU button is disabled when invalid tiles are present', () async {
+        await addSudoku(my_games.games[0]);
+        await addNumberToTile(5, TileKey(row: 2, col: 2));
+        await expectButtonPropertiesAre(text: 'SOLVE MY SUDOKU', color: 'grey', tappable: 'false');
+      });
 
-        await driver.waitForAbsent(find.text('NEW GAME'));
+      test('a STOP SOLVING button will appear during the solve', () async {
+        await addSudoku(my_games.games[0]);
+
+        // Required because an animation occurs while solving
+        await driver.runUnsynchronized(() async {
+          await expectButtonPropertiesAre(text: 'SOLVE MY SUDOKU', color: 'blue', tappable: 'true');
+          await waitForThenTap(find.text('SOLVE MY SUDOKU'));
+          await expectButtonPropertiesAre(text: 'STOP SOLVING', color: 'red', tappable: 'true');
+          await waitForThenTap(find.text('STOP SOLVING'));
+        });
+      });
+
+      test('pressing STOP SOLVING will stop the solve', () async {
+        await addSudoku(my_games.games[0]);
+
+        // Required because an animation occurs while solving
+        await driver.runUnsynchronized(() async {
+          await waitForThenTap(find.text('SOLVE MY SUDOKU'));
+          await waitForThenTap(find.text('STOP SOLVING'));
+        });
+
         await driver.waitFor(find.text('Pick a tile'));
+        await driver.waitFor(find.text('SOLVE MY SUDOKU'));
+      });
 
-        await verifyInitialGameTiles(my_games.games[1]);
-        await playGame(my_solved_games.solvedGamesList[1]);
-        await tapNewGameButton();
+      test('can solve 2 games in a row', () async {
+        await addSudoku(my_games.games[0]);
+        await waitForThenTap(find.text('SOLVE MY SUDOKU'));
+        await waitForThenTap(find.text('RESTART'));
 
-        await driver.waitFor(find.text('Pick a tile'));
-        await driver.waitForAbsent(find.text('NEW GAME'));
-
-        await verifyInitialGameTiles(my_games.games[2]);
+        await addSudoku(my_games.games[2]);
+        await waitForThenTap(find.text('SOLVE MY SUDOKU'));
+        await waitForThenTap(find.text('RESTART'));
       }, timeout: Timeout(Duration(seconds: 60)));
     });
   });
