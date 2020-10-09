@@ -1,12 +1,11 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/state/game_state.dart';
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 
 /// Provides a live view of the front camera
 class CameraWidget extends StatefulWidget {
@@ -36,25 +35,6 @@ class _CameraWidgetState extends State<CameraWidget> {
     }
   }
 
-  Widget makeCameraPreview(BuildContext context) {
-    return FutureBuilder<void>(
-      future: _initCamera(),
-      builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          return Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: CameraPreview(_cameraController),
-          );
-        } else if (snapshot.hasError) {
-          return Center(child: Text('snapshot.hasError'));
-        } else {
-          return CircularProgressIndicator();
-        }
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, GameState>(
@@ -64,20 +44,24 @@ class _CameraWidgetState extends State<CameraWidget> {
         if (gameState == GameState.processingPhoto) {
           Redux.store.dispatch(ProcessPhotoAction(_cameraController));
         }
-        return Stack(
-          children: <Widget>[
-            makeCameraPreview(context),
-            Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(width: my_values.verticalPadding, color: my_colors.pink),
-                  bottom: BorderSide(width: my_values.verticalPadding, color: my_colors.pink),
-                  left: BorderSide(width: my_values.horizontalPadding, color: my_colors.pink),
-                  right: BorderSide(width: my_values.horizontalPadding, color: my_colors.pink),
-                ),
-              ),
-            ),
-          ],
+        return FutureBuilder<void>(
+          future: _initCamera(),
+          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              // Camera takes up the whole screen
+              return Container(
+                height: my_values.screenHeight,
+                width: my_values.screenWidth,
+                child: CameraPreview(_cameraController),
+              );
+            } else if (snapshot.hasError) {
+              // Dispatch CannotLoadCameraAction
+              return Center(child: Text('snapshot.hasError'));
+            } else {
+              // Shown while loading
+              return CircularProgressIndicator();
+            }
+          },
         );
       },
     );

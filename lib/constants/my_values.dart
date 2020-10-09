@@ -10,8 +10,8 @@ double cameraWidth;
 
 // Used for positioning CameraWidget
 final double pad = 32;
-double verticalPadding = (screenHeight - cameraHeight) / 2 - pad;
-double horizontalPadding = pad;
+double verticalPadding;
+double horizontalPadding;
 
 // UI stuff
 final double topTextFontSize = 40;
