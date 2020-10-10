@@ -64,7 +64,8 @@ class ChangeScreenAction {
 
 /// Fired when user takes a photo on the SolveWithCameraScreen
 class TakePhotoAction {
-  TakePhotoAction();
+  final CameraController cameraController;
+  TakePhotoAction(this.cameraController);
 }
 
 /// Fired when user is confirming the Sudoku based on their photo on the SolveWithCameraScreen
@@ -97,12 +98,6 @@ class UpdateGameStateAction {
 class ApplyGameStateChangesAction {
   final GameState gameState;
   ApplyGameStateChangesAction(this.gameState);
-}
-
-/// Fired when the user wants to solve the Sudoku created on the SolveWithCameraScreen
-class ProcessPhotoAction {
-  final CameraController cameraController;
-  ProcessPhotoAction(this.cameraController);
 }
 
 class GameSolvedAction {

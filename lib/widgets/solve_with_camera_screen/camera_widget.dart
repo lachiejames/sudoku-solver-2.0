@@ -1,8 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/redux/actions.dart';
-import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
@@ -41,12 +39,10 @@ class _CameraWidgetState extends State<CameraWidget> {
       distinct: true,
       converter: (store) => store.state.gameState,
       builder: (context, gameState) {
-        if (gameState == GameState.processingPhoto) {
-          Redux.store.dispatch(ProcessPhotoAction(_cameraController));
-        }
         return FutureBuilder<void>(
           future: _initCamera(),
           builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+            my_values.cameraController = _cameraController;
             if (snapshot.connectionState == ConnectionState.done) {
               // Camera takes up the whole screen
               return Container(

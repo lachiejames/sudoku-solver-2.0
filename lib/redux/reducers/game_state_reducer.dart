@@ -17,6 +17,7 @@ final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
   TypedReducer<GameState, NewGameButtonPressedAction>(_newGameButtonPressedReducer),
   TypedReducer<GameState, GameSolvedAction>(_gameSolvedReducerReducer),
   TypedReducer<GameState, StopSolvingSudokuAction>(_stopSolvingSudokuReducer),
+  TypedReducer<GameState, ChangeScreenAction>(_changeScreenReducer),
 ]);
 
 GameState _solveSudokuReducer(GameState gameState, SolveSudokuAction action) {
@@ -79,4 +80,8 @@ GameState _newGameButtonPressedReducer(GameState gameState, NewGameButtonPressed
 
 GameState _gameSolvedReducerReducer(GameState gameState, GameSolvedAction action) {
   return GameState.solved;
+}
+
+GameState _changeScreenReducer(GameState gameState, ChangeScreenAction action) {
+  return GameState.takingPhoto;
 }

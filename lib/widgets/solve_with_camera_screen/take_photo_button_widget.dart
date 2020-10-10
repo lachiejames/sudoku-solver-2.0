@@ -7,6 +7,8 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
+
 
 /// Shown when the SolveWithCameraScreen is loaded
 class TakePhotoButtonWidget extends StatefulWidget {
@@ -37,7 +39,7 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
                 style: my_styles.buttonTextStyle,
               ),
               onPressed: () async {
-                Redux.store.dispatch(TakePhotoAction());
+                Redux.store.dispatch(TakePhotoAction(my_values.cameraController));
               },
             ),
           ),

@@ -4,10 +4,10 @@ import 'package:sudoku_solver_2/state/camera_state.dart';
 
 /// Contains all state reducers used by CameraState
 final Reducer<CameraState> cameraStateReducer = combineReducers<CameraState>([
-  TypedReducer<CameraState, ProcessPhotoAction>(_processPhotoReducer),
+  TypedReducer<CameraState, TakePhotoAction>(_takePhotoReducer),
 ]);
 
-CameraState _processPhotoReducer(CameraState cameraState, ProcessPhotoAction action) {
+CameraState _takePhotoReducer(CameraState cameraState, TakePhotoAction action) {
   cameraState.getSudokuFromCamera(action.cameraController);
   return cameraState;
 }

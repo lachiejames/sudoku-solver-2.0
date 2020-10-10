@@ -94,6 +94,7 @@ class CameraState {
     final List<TextElement> textElements = getTextElementsFromVisionText(_visionText);
     final Sudoku sudoku = constructSudokuFromTextElements(textElements);
 
+    print('photo processed');
     Redux.store.dispatch(PhotoProcessedAction(sudoku));
   }
 

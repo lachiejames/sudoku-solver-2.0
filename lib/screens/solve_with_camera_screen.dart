@@ -96,11 +96,7 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
           appBar: SolveWithCameraScreenAppBar(AppBar()),
           backgroundColor: my_colors.pink,
           body: SingleChildScrollView(
-            child: (gameState == GameState.photoProcessed ||
-                    gameState == GameState.isSolving ||
-                    gameState == GameState.solved)
-                ? _makeVerifyPhotoScreen()
-                : _makeTakingPhotoScreen(),
+            child: (gameState == GameState.takingPhoto) ? _makeTakingPhotoScreen() : _makeVerifyPhotoScreen(),
           ),
         );
       },

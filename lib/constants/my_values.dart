@@ -2,11 +2,15 @@
 
 library my_values;
 
+import 'package:camera/camera.dart';
+
 // Set when app initialises
 double screenHeight;
 double screenWidth;
 double cameraHeight;
 double cameraWidth;
+
+CameraController cameraController;
 
 // Used for positioning CameraWidget
 final double pad = 32;
