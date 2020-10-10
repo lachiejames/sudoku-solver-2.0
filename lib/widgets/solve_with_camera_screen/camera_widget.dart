@@ -16,6 +16,13 @@ class CameraWidget extends StatefulWidget {
 class _CameraWidgetState extends State<CameraWidget> {
   CameraDescription _cameraDescription;
   CameraController _cameraController;
+  Future<void> _initCameraReference;
+
+  @override
+  void initState() {
+    super.initState();
+    _initCameraReference = _initCamera();
+  }
 
   Future<void> _initCamera() async {
     try {
@@ -35,30 +42,30 @@ class _CameraWidgetState extends State<CameraWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, GameState>(
-      distinct: true,
-      converter: (store) => store.state.gameState,
-      builder: (context, gameState) {
-        return FutureBuilder<void>(
-          future: _initCamera(),
-          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-            my_values.cameraController = _cameraController;
-            if (snapshot.connectionState == ConnectionState.done) {
-              // Camera takes up the whole screen
-              return Container(
-                height: my_values.screenHeight,
-                width: my_values.screenWidth,
-                child: CameraPreview(_cameraController),
-              );
-            } else if (snapshot.hasError) {
-              // Dispatch CannotLoadCameraAction
-              return Center(child: Text('snapshot.hasError'));
-            } else {
-              // Shown while loading
-              return CircularProgressIndicator();
-            }
-          },
-        );
+    return FutureBuilder<void>(
+      future: _initCameraReference,
+      builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+        my_values.cameraController = _cameraController;
+        if (snapshot.connectionState == ConnectionState.done) {
+          // Camera takes up the whole screen
+          return Container(
+            height: my_values.screenHeight,
+            width: my_values.screenWidth,
+            child: CameraPreview(_cameraController),
+          );
+        } else if (snapshot.hasError) {
+          // Dispatch CannotLoadCameraAction
+          return Center(child: Text('snapshot.hasError'));
+        } else {
+          // Shown while loading
+          return Container(
+            color: Colors.white,
+            height: my_values.screenHeight,
+            width: my_values.screenWidth,
+            alignment: Alignment.center,
+            child: CircularProgressIndicator(),
+          );
+        }
       },
     );
   }
