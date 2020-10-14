@@ -38,6 +38,14 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
   Widget _makeTakingPhotoScreen() {
     return Stack(
       children: <Widget>[
+        Container(
+          color: my_colors.white,
+          height: my_values.screenHeight,
+          width: my_values.screenWidth,
+          alignment: Alignment.center,
+          child: CircularProgressIndicator(),
+        ),
+
         // Camera
         CameraWidget(),
 

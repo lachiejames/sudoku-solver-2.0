@@ -59,11 +59,7 @@ class _CameraWidgetState extends State<CameraWidget> {
         } else {
           // Shown while loading
           return Container(
-            color: Colors.white,
-            height: my_values.screenHeight,
-            width: my_values.screenWidth,
-            alignment: Alignment.center,
-            child: CircularProgressIndicator(),
+            
           );
         }
       },
