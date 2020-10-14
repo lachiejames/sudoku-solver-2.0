@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
@@ -32,11 +33,12 @@ class _SudokuWidgetState extends State<SudokuWidget> {
           distinct: true,
           converter: (store) => store.state.gameState,
           builder: (context, gameState) {
-            return (gameState == GameState.isSolving)
-                ? Center(
-                    child: CircularProgressIndicator(
-                      backgroundColor: my_colors.green,
-                    ),
+            return (gameState == GameState.isSolving || gameState == GameState.processingPhoto)
+                ? Container(
+                    height: 290,
+                    width: my_values.screenWidth,
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(),
                   )
                 : Container();
           },

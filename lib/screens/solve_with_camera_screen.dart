@@ -35,7 +35,7 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
     my_values.horizontalPadding = my_values.pad;
   }
 
-  Widget _makeTakingPhotoScreen() {
+  Widget _makeTakingPhotoScreen(GameState gameState) {
     return Stack(
       children: <Widget>[
         Container(
@@ -79,7 +79,7 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
     );
   }
 
-  Widget _makeVerifyPhotoScreen() {
+  Widget _makeVerifyPhotoScreen(GameState gameState) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -104,7 +104,7 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
           appBar: SolveWithCameraScreenAppBar(AppBar()),
           backgroundColor: my_colors.pink,
           body: SingleChildScrollView(
-            child: (gameState == GameState.takingPhoto) ? _makeTakingPhotoScreen() : _makeVerifyPhotoScreen(),
+            child: (gameState == GameState.takingPhoto) ? _makeTakingPhotoScreen(gameState) : _makeVerifyPhotoScreen(gameState),
           ),
         );
       },
