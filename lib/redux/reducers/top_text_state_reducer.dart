@@ -1,6 +1,7 @@
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
@@ -18,6 +19,9 @@ final Reducer<TopTextState> topTextStateReducer = combineReducers<TopTextState>(
   TypedReducer<TopTextState, NewGameButtonPressedAction>(_setTopTextToPickATile4),
   TypedReducer<TopTextState, ApplyGameStateChangesAction>(_upateGameStateReducer),
   TypedReducer<TopTextState, StopSolvingSudokuAction>(_stopSolvingSudokuReducer),
+  TypedReducer<TopTextState, TakePhotoAction>(_takePhotoReducer),
+  TypedReducer<TopTextState, PhotoProcessedAction>(_photoProcessedReducer),
+  TypedReducer<TopTextState, RetakePhotoAction>(_retakePhotoReducer),
 ]);
 
 TopTextState _setTopTextToPickATile(TopTextState topTextState, TileDeselectedAction action) {
@@ -29,7 +33,12 @@ TopTextState _setTopTextToPickATile2(TopTextState topTextState, NumberPressedAct
 }
 
 TopTextState _setTopTextToPickATile3(TopTextState topTextState, RestartAction action) {
-  return topTextState.copyWith(text: my_strings.topTextNoTileSelected, color: my_colors.white);
+  return topTextState.copyWith(
+    text: (Redux.store.state.screenState == ScreenState.solveWithCameraScreen)
+        ? my_strings.topTextTakingPhoto
+        : my_strings.topTextNoTileSelected,
+    color: my_colors.white,
+  );
 }
 
 TopTextState _setTopTextToPickATile4(TopTextState topTextState, NewGameButtonPressedAction action) {
@@ -71,5 +80,22 @@ TopTextState _upateGameStateReducer(TopTextState topTextState, ApplyGameStateCha
 }
 
 TopTextState _stopSolvingSudokuReducer(TopTextState topTextState, StopSolvingSudokuAction action) {
-  return topTextState.copyWith(text: my_strings.topTextNoTileSelected, color: my_colors.white);
+  return topTextState.copyWith(
+    text: (Redux.store.state.screenState == ScreenState.solveWithCameraScreen)
+        ? my_strings.topTextTakingPhoto
+        : my_strings.topTextNoTileSelected,
+    color: my_colors.white,
+  );
+}
+
+TopTextState _takePhotoReducer(TopTextState topTextState, TakePhotoAction action) {
+  return topTextState.copyWith(text: my_strings.topTextConstructingSudoku, color: my_colors.white);
+}
+
+TopTextState _retakePhotoReducer(TopTextState topTextState, RetakePhotoAction action) {
+  return topTextState.copyWith(text: my_strings.topTextTakingPhoto, color: my_colors.white);
+}
+
+TopTextState _photoProcessedReducer(TopTextState topTextState, PhotoProcessedAction action) {
+  return topTextState.copyWith(text: my_strings.topTextVerifySudoku, color: my_colors.white);
 }

@@ -86,8 +86,8 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
       children: <Widget>[
         TopTextWidget(),
         SudokuWidget(),
-        RetakePhotoButtonWidget(),
         SolveItButtonWidget(),
+        RetakePhotoButtonWidget(),
       ],
     );
   }
@@ -104,7 +104,9 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
           appBar: SolveWithCameraScreenAppBar(AppBar()),
           backgroundColor: my_colors.pink,
           body: SingleChildScrollView(
-            child: (gameState == GameState.takingPhoto) ? _makeTakingPhotoScreen(gameState) : _makeVerifyPhotoScreen(gameState),
+            child: (gameState == GameState.takingPhoto)
+                ? _makeTakingPhotoScreen(gameState)
+                : _makeVerifyPhotoScreen(gameState),
           ),
         );
       },

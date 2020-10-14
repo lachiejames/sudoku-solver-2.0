@@ -20,7 +20,7 @@ class _SolveItButtonWidgetState extends State<SolveItButtonWidget> {
   Key _createPropertyKey(GameState gameState) {
     String key = 'text:${this._determineText(gameState)}';
     key += ' - color:${this._determineColorString(gameState)}';
-    key += ' - tappable:${(gameState==GameState.invalidTilesPresent) ? 'false' : 'true'}';
+    key += ' - tappable:${(gameState == GameState.invalidTilesPresent) ? 'false' : 'true'}';
     return Key(key);
   }
 
@@ -41,28 +41,32 @@ class _SolveItButtonWidgetState extends State<SolveItButtonWidget> {
       distinct: true,
       converter: (store) => store.state.gameState,
       builder: (context, gameState) {
-        return Container(
-          key: this._createPropertyKey(gameState),
-          alignment: Alignment.center,
-          margin: my_styles.buttonMargins,
-          child: Directionality(
-            textDirection: TextDirection.ltr,
-            child: RaisedButton(
-              shape: my_styles.buttonShape,
-              padding: my_styles.buttonPadding,
-              color: _determineColor(gameState),
-              child: Text(
-                _determineText(gameState),
-                style: my_styles.buttonTextStyle,
-              ),
-              onPressed: (gameState == GameState.invalidTilesPresent)
-                  ? null
-                  : () {
-                      _determineAction(gameState);
-                    },
-            ),
-          ),
-        );
+        return (gameState == GameState.photoProcessed ||
+                gameState == GameState.isSolving ||
+                gameState == GameState.solved)
+            ? Container(
+                key: this._createPropertyKey(gameState),
+                alignment: Alignment.center,
+                margin: my_styles.buttonMargins,
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: RaisedButton(
+                    shape: my_styles.buttonShape,
+                    padding: my_styles.buttonPadding,
+                    color: _determineColor(gameState),
+                    child: Text(
+                      _determineText(gameState),
+                      style: my_styles.buttonTextStyle,
+                    ),
+                    onPressed: (gameState == GameState.invalidTilesPresent)
+                        ? null
+                        : () {
+                            _determineAction(gameState);
+                          },
+                  ),
+                ),
+              )
+            : Container();
       },
     );
   }

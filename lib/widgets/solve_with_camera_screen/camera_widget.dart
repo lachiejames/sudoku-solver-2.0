@@ -55,9 +55,7 @@ class _CameraWidgetState extends State<CameraWidget> {
           return Center(child: Text('snapshot.hasError'));
         } else {
           // Shown while loading
-          return Container(
-            
-          );
+          return Container();
         }
       },
     );

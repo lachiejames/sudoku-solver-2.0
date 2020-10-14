@@ -23,25 +23,27 @@ class _RetakePhotoButtonWidgetState extends State<RetakePhotoButtonWidget> {
       distinct: true,
       converter: (store) => store.state.gameState,
       builder: (context, gameState) {
-        return Container(
-          alignment: Alignment.center,
-          margin: my_styles.buttonMargins,
-          child: Directionality(
-            textDirection: TextDirection.ltr,
-            child: RaisedButton(
-              shape: my_styles.buttonShape,
-              padding: my_styles.buttonPadding,
-              color: (gameState != GameState.takingPhoto) ? my_colors.grey : my_colors.blue,
-              child: Text(
-                my_strings.retakePhotoButtonText,
-                style: my_styles.buttonTextStyle,
-              ),
-              onPressed: () async {
-                Redux.store.dispatch(RetakePhotoAction());
-              },
-            ),
-          ),
-        );
+        return (gameState == GameState.photoProcessed)
+            ? Container(
+                alignment: Alignment.center,
+                margin: my_styles.buttonMargins,
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: RaisedButton(
+                    shape: my_styles.buttonShape,
+                    padding: my_styles.buttonPadding,
+                    color: my_colors.blue,
+                    child: Text(
+                      my_strings.retakePhotoButtonText,
+                      style: my_styles.buttonTextStyle,
+                    ),
+                    onPressed: () async {
+                      Redux.store.dispatch(RetakePhotoAction());
+                    },
+                  ),
+                ),
+              )
+            : Container();
       },
     );
   }
