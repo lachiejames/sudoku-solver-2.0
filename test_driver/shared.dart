@@ -46,7 +46,10 @@ Future<void> waitForThenTap(SerializableFinder finder) async {
 
 void navigateToSolveWithCameraScreen() async {
   await waitForThenTap(find.text(my_strings.solveWithCameraButtonText));
-  await driver.waitFor(find.text(my_strings.solveWithCameraScreenName));
+
+  await driver.runUnsynchronized(() async {
+    await driver.waitFor(find.text(my_strings.solveWithCameraScreenName));
+  });
 }
 
 void navigateToSolveWithTouchScreen() async {

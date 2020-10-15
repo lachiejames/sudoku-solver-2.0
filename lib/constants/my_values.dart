@@ -19,7 +19,7 @@ double horizontalPadding;
 
 // UI stuff
 final double topTextFontSize = 40;
-final double appBarFontSize = 30;
+final double appBarFontSize = 25;
 final double howToTextFontSize = 40;
 final double buttonTextFontSize = 40;
 final double dropDownMenuFontSize = 40;
