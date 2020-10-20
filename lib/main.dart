@@ -9,6 +9,8 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/home_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:flutter_driver/driver_extension.dart';
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
+
 
 Future<void> main() async {
   // Allows us to run integration tests
@@ -16,8 +18,11 @@ Future<void> main() async {
     if (command == my_strings.hotRestart) {
       await restartApp();
       return 'ok';
-    } else if (command == 'takePicture') {
-      await MyMockHelper.takePicture();
+    } else if (command == my_strings.setPictureMock) {
+      await MyMockHelper.setPictureMock();
+      return 'ok';
+    } else if (command == my_strings.deletePictureMock) {
+      await MyMockHelper.deletePictureMock();
       return 'ok';
     }
     throw Exception('Unknown command: $command');
@@ -33,6 +38,7 @@ Future<void> restartApp() async {
   await Redux.init();
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
   await sharedPrefs.setInt(my_strings.gameNumberSharedPrefsKey, 0);
+  await my_values.cameraController?.dispose();
 
   runApp(
     MyApp(

@@ -18,6 +18,7 @@ class _CameraWidgetState extends State<CameraWidget> {
   @override
   void initState() {
     super.initState();
+    print('_initCamera');
     _initCameraReference = _initCamera();
   }
 
@@ -39,12 +40,18 @@ class _CameraWidgetState extends State<CameraWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print('build');
     return FutureBuilder<void>(
       future: _initCameraReference,
       builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-        my_values.cameraController = _cameraController;
+            print('builder');
+
         if (snapshot.connectionState == ConnectionState.done) {
+          assert(_cameraController.value.isInitialized);
+          my_values.cameraController = _cameraController;
           // Camera takes up the whole screen
+              print('container');
+
           return Container(
             height: my_values.screenHeight,
             width: my_values.screenWidth,
@@ -60,4 +67,37 @@ class _CameraWidgetState extends State<CameraWidget> {
       },
     );
   }
+
+
+
+//    CameraController controller;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     controller = CameraController(cameras[0], ResolutionPreset.medium);
+//     controller.initialize().then((_) {
+//       if (!mounted) {
+//         return;
+//       }
+//       setState(() {});
+//     });
+//   }
+
+//   @override
+//   void dispose() {
+//     controller?.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     if (!controller.value.isInitialized) {
+//       return Container();
+//     }
+//     return AspectRatio(
+//         aspectRatio:
+//         controller.value.aspectRatio,
+//         child: CameraPreview(controller));
+//   }
 }

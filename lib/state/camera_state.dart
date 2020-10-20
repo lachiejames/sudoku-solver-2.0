@@ -24,7 +24,7 @@ class CameraState {
       print(e);
       return null;
     }
-    final file = File('${(await getApplicationDocumentsDirectory()).path}/$path');
+    File file = await File('${(await getApplicationDocumentsDirectory()).path}/$path');
     await file
         .writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
 

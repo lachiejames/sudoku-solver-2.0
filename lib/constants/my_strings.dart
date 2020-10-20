@@ -40,6 +40,8 @@ final String restartButtonText = 'RESTART';
 final String invalidSudokuToast = 'Invalid Sudoku';
 
 final String hotRestart = 'restart';
+final String setPictureMock = 'setPictureMock';
+final String deletePictureMock = 'deletePictureMock';
 
 // Set to null when running all tests
 final String dartVMServiceUrl = 'http://127.0.0.1:8888/';
