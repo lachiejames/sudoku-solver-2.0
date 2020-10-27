@@ -14,31 +14,35 @@ import 'package:sudoku_solver_2/state/tile_state.dart';
 /// All state relating to the Camera
 class CameraState {
   int croppedImageWidth;
+  final CameraController cameraController;
+
+  CameraState({this.cameraController});
 
   Future<File> getImageFileFromAssets(String path) async {
     ByteData byteData;
     try {
       byteData = await rootBundle.load('assets/$path');
     } on Exception catch (e) {
-      print('ERROR: no file found at assets/$path');
-      print(e);
+      print('ERROR: no file found at assets/$path\n$e');
       return null;
     }
     File file = await File('${(await getApplicationDocumentsDirectory()).path}/$path');
-    await file
-        .writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+    await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
 
     return file;
   }
 
-  Future<File> takePicture(CameraController cameraController) async {
+  Future<File> takePicture() async {
     File _pickedImageFile;
 
     final String imagePath = join((await getApplicationDocumentsDirectory()).path,
         '_pickedImageFile${DateTime.now().millisecondsSinceEpoch}.png');
 
     try {
-      await cameraController.takePicture(imagePath);
+      if (await File(imagePath).exists()) {
+        await File(imagePath).delete();
+      }
+      await this.cameraController.takePicture(imagePath);
       _pickedImageFile = File(imagePath);
       assert(_pickedImageFile != null);
     } on Exception catch (e) {
@@ -83,18 +87,15 @@ class CameraState {
     return _croppedImageFile;
   }
 
-  Future<void> getSudokuFromCamera(CameraController cameraController) async {
-    File pickedImageFile = await takePicture(cameraController);
-    File croppedImageFile = await cropPictureToSudokuSize(pickedImageFile);
-
+  Future<void> getSudokuFromCamera() async {
+    File pickedImageFile = await this.takePicture();
+    assert(pickedImageFile != null);
+    File croppedImageFile = await this.cropPictureToSudokuSize(pickedImageFile);
     final FirebaseVisionImage _firebaseVisionImage = FirebaseVisionImage.fromFile(croppedImageFile);
     final TextRecognizer _textRecognizer = FirebaseVision.instance.textRecognizer();
     final VisionText _visionText = await _textRecognizer.processImage(_firebaseVisionImage);
-
-    final List<TextElement> textElements = getTextElementsFromVisionText(_visionText);
-    final Sudoku sudoku = constructSudokuFromTextElements(textElements);
-
-    print('photo processed');
+    final List<TextElement> textElements = this.getTextElementsFromVisionText(_visionText);
+    final Sudoku sudoku = this.constructSudokuFromTextElements(textElements);
     Redux.store.dispatch(PhotoProcessedAction(sudoku));
   }
 
@@ -138,7 +139,13 @@ class CameraState {
     return double.tryParse(s) != null;
   }
 
-  CameraState copyWith() {
-    return CameraState();
+  CameraState copyWith({CameraController cameraController}) {
+    return CameraState(cameraController: cameraController);
+  }
+
+  static CameraState initCameraState() {
+    return CameraState(
+      cameraController: null,
+    );
   }
 }

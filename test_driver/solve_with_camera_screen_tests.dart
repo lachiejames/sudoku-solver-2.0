@@ -10,21 +10,32 @@ void main() {
     });
 
     tearDownAll(() async {
-      await driver.requestData(my_strings.deletePictureMock);
       if (driver != null) await driver.close();
     });
 
     setUp(() async {
       await hotRestart();
+      await driver.requestData(my_strings.setPictureMock);
       await navigateToSolveWithCameraScreen();
     });
+
+    tearDown(() async {
+      await driver.requestData(my_strings.deletePictureMock);
+    });
+
     test('pressing "TAKE PHOTO" replaces the CameraWidget with a SudokuWidget', () async {
-      await driver.requestData(my_strings.setPictureMock);
       await driver.runUnsynchronized(() async {
-        await Future.delayed(Duration(seconds: 3));
+        await Future.delayed(Duration(seconds: 5));
         await waitForThenTap(find.text('TAKE PHOTO'));
         await driver.waitFor(find.text('5'));
+      });
+    });
 
+    test('pressing "TAKE PHOTO" replaces the CameraWidget with a SudokuWidget', () async {
+      await driver.runUnsynchronized(() async {
+        await Future.delayed(Duration(seconds: 5));
+        await waitForThenTap(find.text('TAKE PHOTO'));
+        await driver.waitFor(find.text('5'));
       });
     });
   });

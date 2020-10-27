@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -5,12 +6,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/constants/mocks.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
+import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/home_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:flutter_driver/driver_extension.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
-
 
 Future<void> main() async {
   // Allows us to run integration tests
@@ -31,6 +31,17 @@ Future<void> main() async {
   await restartApp();
 }
 
+Future<void> _initCamera() async {
+  try {
+    List<CameraDescription> cameras = await availableCameras();
+    CameraController cameraController = CameraController(cameras.first, ResolutionPreset.high);
+    await cameraController.initialize();
+    Redux.store.dispatch(CameraReadyAction(cameraController));
+  } on Exception catch (e) {
+    print(e);
+  }
+}
+
 /// Builds/rebuilds the app
 Future<void> restartApp() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,8 +49,7 @@ Future<void> restartApp() async {
   await Redux.init();
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
   await sharedPrefs.setInt(my_strings.gameNumberSharedPrefsKey, 0);
-  await my_values.cameraController?.dispose();
-
+  await _initCamera();
   runApp(
     MyApp(
       key: UniqueKey(),

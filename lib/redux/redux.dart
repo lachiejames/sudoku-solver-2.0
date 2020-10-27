@@ -43,7 +43,7 @@ class Redux {
         gameNumber: (sharedPreferences != null) ? await _getGameNumber() : 0,
         screenState: ScreenState.homeScreen,
         gameState: GameState.normal,
-        cameraState: CameraState(),
+        cameraState: CameraState.initCameraState(),
       ),
     );
   }

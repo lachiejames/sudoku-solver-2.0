@@ -6,9 +6,7 @@ import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
-import 'package:sudoku_solver_2/state/game_state.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
-
+import 'package:sudoku_solver_2/state/camera_state.dart';
 
 /// Shown when the SolveWithCameraScreen is loaded
 class TakePhotoButtonWidget extends StatefulWidget {
@@ -21,10 +19,10 @@ class TakePhotoButtonWidget extends StatefulWidget {
 class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, GameState>(
+    return StoreConnector<AppState, CameraState>(
       distinct: true,
-      converter: (store) => store.state.gameState,
-      builder: (context, gameState) {
+      converter: (store) => store.state.cameraState,
+      builder: (context, cameraState) {
         return Container(
           alignment: Alignment.center,
           margin: my_styles.buttonMargins,
@@ -38,8 +36,12 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
                 my_strings.takePhotoButtonText,
                 style: my_styles.buttonTextStyle,
               ),
-              onPressed: () async {
-                Redux.store.dispatch(TakePhotoAction(my_values.cameraController));
+              onPressed: () {
+                if (cameraState.cameraController != null && cameraState.cameraController.value.isInitialized) {
+                  Redux.store.dispatch(TakePhotoAction());
+                } else {
+                  return null;
+                }
               },
             ),
           ),
