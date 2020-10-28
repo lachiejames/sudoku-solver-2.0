@@ -79,7 +79,7 @@ Future<File> cropPictureToSudokuSize(File pickedImageFile) async {
   return _croppedImageFile;
 }
 
-Future<Sudoku> getSudokuFromCamera(String dummy) async {
+Future<Sudoku> getSudokuFromCamera() async {
   File pickedImageFile = await takePicture();
   assert(pickedImageFile != null);
   File croppedImageFile = await cropPictureToSudokuSize(pickedImageFile);
@@ -87,7 +87,6 @@ Future<Sudoku> getSudokuFromCamera(String dummy) async {
   final TextRecognizer _textRecognizer = FirebaseVision.instance.textRecognizer();
   final VisionText _visionText = await _textRecognizer.processImage(_firebaseVisionImage);
   final List<TextElement> textElements = getTextElementsFromVisionText(_visionText);
-  print('getSudokuFromCamera');
   return constructSudokuFromTextElements(textElements);
 }
 
