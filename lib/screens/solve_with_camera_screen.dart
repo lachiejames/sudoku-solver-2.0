@@ -89,17 +89,6 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
         SolveItButtonWidget(),
         RetakePhotoButtonWidget(),
         TakePhotoButtonWidget(),
-        // (Redux.store.state.cameraState.pickedImageGlobal != null)
-        //     ? Center(
-        //         child: Container(
-        //           decoration: BoxDecoration(border: Border.all()),
-        //           margin: EdgeInsets.only(top: 200),
-        //           height: 300,
-        //           width: 300,
-        //           child: Image.file(Redux.store.state.cameraState.pickedImageGlobal),
-        //         ),
-        //       )
-        //     : Container()
       ],
     );
   }

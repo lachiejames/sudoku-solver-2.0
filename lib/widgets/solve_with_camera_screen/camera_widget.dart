@@ -27,7 +27,7 @@ class _CameraWidgetState extends State<CameraWidget> {
       builder: (context, cameraState) {
         return (cameraState.cameraController != null && cameraState.cameraController.value.isInitialized)
             ? Container(
-                height: my_values.screenHeight,
+                height: my_values.screenHeight - my_values.appBarHeight,
                 width: my_values.screenWidth,
                 child: CameraPreview(cameraState.cameraController),
               )
