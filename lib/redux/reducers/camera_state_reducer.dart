@@ -1,7 +1,5 @@
 import 'package:async/async.dart';
-import 'package:flutter/foundation.dart';
 import 'package:redux/redux.dart';
-import 'package:sudoku_solver_2/algorithm/photo_processor.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
@@ -19,7 +17,7 @@ CameraState _cameraReadyReducer(CameraState cameraState, CameraReadyAction actio
 CancelableOperation cancellableOperation;
 CameraState _takePhotoReducer(CameraState cameraState, TakePhotoAction action) {
   cancellableOperation = CancelableOperation.fromFuture(
-    getSudokuFromCamera()
+    cameraState.getSudokuFromCamera()
   );
 
   cancellableOperation.asStream().listen(
