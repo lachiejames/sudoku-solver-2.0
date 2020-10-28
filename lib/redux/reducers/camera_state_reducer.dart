@@ -19,12 +19,5 @@ CameraState _takePhotoReducer(CameraState cameraState, TakePhotoAction action) {
   cancellableOperation = CancelableOperation.fromFuture(
     cameraState.getSudokuFromCamera()
   );
-
-  cancellableOperation.asStream().listen(
-    (sudoku) {
-      print('hmm');
-      Redux.store.dispatch(PhotoProcessedAction(sudoku));
-    },
-  );
   return cameraState;
 }

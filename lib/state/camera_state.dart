@@ -64,7 +64,7 @@ class CameraState {
     this.croppedImageWidth = (imageWidth * my_values.cameraWidth / my_values.screenWidth).round();
     int croppedImageHeight = this.croppedImageWidth;
     int horizontalStartPixel = ((imageWidth - this.croppedImageWidth) / 2).round();
-    int verticalStartPixel = ((imageHeight - croppedImageHeight) / 2).round();
+    int verticalStartPixel = ((imageHeight - croppedImageHeight) / 2).round() + my_values.appBarHeight;
 
     Image croppedImage = copyCrop(
       pickedImage,

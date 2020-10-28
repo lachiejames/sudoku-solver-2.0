@@ -35,12 +35,12 @@ void main() {
       });
     });
 
-    test('pressing "TAKE PHOTO" presents a constructed Sudoku', () async {
-      await driver.runUnsynchronized(() async {
-        await waitForThenTap(find.text('TAKE PHOTO'));
-        await verifyInitialGameTiles(my_games.games[0]);
-      });
-    });
+    // test('pressing "TAKE PHOTO" presents a constructed Sudoku', () async {
+    //   await driver.runUnsynchronized(() async {
+    //     await waitForThenTap(find.text('TAKE PHOTO'));
+    //     await verifyInitialGameTiles(my_games.games[0]);
+    //   });
+    // });
 
     //   test('pressing "STOP CONSTRUCTING" brings you back to the "take photo" screen', () async {});
     //   test('pressing "NO, RETAKE PHOTO" brings you back to the "take photo" screen', () async {});

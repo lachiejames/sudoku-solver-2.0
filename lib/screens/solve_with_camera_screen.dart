@@ -26,12 +26,12 @@ class SolveWithCameraScreen extends StatefulWidget {
 class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
   void initScreenSizeProperties(BuildContext context) {
     // Set values required for SolveWithCameraScreen
-    my_values.screenHeight = 731.4 - 56.0; // subtract appbar height
-    my_values.screenWidth = 411.4;
+    my_values.screenHeight = MediaQuery.of(context).size.height;
+    my_values.screenWidth = MediaQuery.of(context).size.width;
     my_values.cameraWidth = my_values.screenWidth - 2 * my_values.pad;
     my_values.cameraHeight = my_values.cameraWidth;
 
-    my_values.verticalPadding = (my_values.screenHeight - my_values.cameraHeight) / 2 + my_values.pad;
+    my_values.verticalPadding = (my_values.screenHeight - my_values.cameraHeight) / 2;
     my_values.horizontalPadding = my_values.pad;
   }
 
@@ -89,6 +89,17 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
         SolveItButtonWidget(),
         RetakePhotoButtonWidget(),
         TakePhotoButtonWidget(),
+        // (Redux.store.state.cameraState.pickedImageGlobal != null)
+        //     ? Center(
+        //         child: Container(
+        //           decoration: BoxDecoration(border: Border.all()),
+        //           margin: EdgeInsets.only(top: 200),
+        //           height: 300,
+        //           width: 300,
+        //           child: Image.file(Redux.store.state.cameraState.pickedImageGlobal),
+        //         ),
+        //       )
+        //     : Container()
       ],
     );
   }

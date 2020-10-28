@@ -12,6 +12,7 @@ double cameraWidth;
 final double pad = 32;
 double verticalPadding;
 double horizontalPadding;
+int appBarHeight = 56;
 
 // UI stuff
 final double topTextFontSize = 40;
