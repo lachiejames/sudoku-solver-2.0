@@ -19,13 +19,6 @@ class MyMockHelper {
     return file;
   }
 
-  static Future<void> _deleteImageFileFromAssets(String path) async {
-    String fullPath = '${(await getApplicationDocumentsDirectory()).path}/$path';
-    if (await File(fullPath).exists()) {
-      await File(fullPath).delete();
-    }
-  }
-
   static void setPictureMock() async {
     await MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler((MethodCall methodCall) async {
       if (methodCall.method == 'takePicture') {

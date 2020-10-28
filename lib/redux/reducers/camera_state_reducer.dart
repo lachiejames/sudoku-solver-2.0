@@ -1,5 +1,9 @@
+import 'package:async/async.dart';
+import 'package:flutter/foundation.dart';
 import 'package:redux/redux.dart';
+import 'package:sudoku_solver_2/algorithm/photo_processor.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
 
 /// Contains all state reducers used by CameraState
@@ -12,7 +16,16 @@ CameraState _cameraReadyReducer(CameraState cameraState, CameraReadyAction actio
   return cameraState.copyWith(cameraController: action.cameraController);
 }
 
+CancelableOperation cancellableOperation;
 CameraState _takePhotoReducer(CameraState cameraState, TakePhotoAction action) {
-  cameraState.getSudokuFromCamera();
+  cancellableOperation = CancelableOperation.fromFuture(
+    compute(getSudokuFromCamera, 'cameraState'),
+  );
+
+  cancellableOperation.asStream().listen(
+    (sudoku) {
+      Redux.store.dispatch(PhotoProcessedAction(sudoku));
+    },
+  );
   return cameraState;
 }

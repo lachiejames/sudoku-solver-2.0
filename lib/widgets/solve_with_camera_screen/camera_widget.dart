@@ -22,7 +22,6 @@ class _CameraWidgetState extends State<CameraWidget> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, CameraState>(
-      key: Key('cameraWidget'),
       distinct: true,
       converter: (store) => store.state.cameraState,
       builder: (context, cameraState) {

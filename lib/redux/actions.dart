@@ -107,3 +107,8 @@ class CameraReadyAction {
   final CameraController cameraController;
   CameraReadyAction(this.cameraController);
 }
+
+class StopProcessingPhotoAction {
+  StopProcessingPhotoAction();
+}
+

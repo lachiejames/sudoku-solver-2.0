@@ -22,6 +22,7 @@ final Reducer<TopTextState> topTextStateReducer = combineReducers<TopTextState>(
   TypedReducer<TopTextState, TakePhotoAction>(_takePhotoReducer),
   TypedReducer<TopTextState, PhotoProcessedAction>(_photoProcessedReducer),
   TypedReducer<TopTextState, RetakePhotoAction>(_retakePhotoReducer),
+  TypedReducer<TopTextState, StopProcessingPhotoAction>(_stopProcessingPhotoReducer),
 ]);
 
 TopTextState _setTopTextToPickATile(TopTextState topTextState, TileDeselectedAction action) {
@@ -84,6 +85,13 @@ TopTextState _stopSolvingSudokuReducer(TopTextState topTextState, StopSolvingSud
     text: (Redux.store.state.screenState == ScreenState.solveWithCameraScreen)
         ? my_strings.topTextTakingPhoto
         : my_strings.topTextNoTileSelected,
+    color: my_colors.white,
+  );
+}
+
+TopTextState _stopProcessingPhotoReducer(TopTextState topTextState, StopProcessingPhotoAction action) {
+  return topTextState.copyWith(
+    text: my_strings.topTextTakingPhoto,
     color: my_colors.white,
   );
 }

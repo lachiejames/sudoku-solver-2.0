@@ -1,3 +1,4 @@
+import 'package:sudoku_solver_2/redux/reducers/camera_state_reducer.dart';
 import 'package:sudoku_solver_2/algorithm/solver.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
@@ -19,6 +20,7 @@ final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
   TypedReducer<GameState, GameSolvedAction>(_gameSolvedReducerReducer),
   TypedReducer<GameState, StopSolvingSudokuAction>(_stopSolvingSudokuReducer),
   TypedReducer<GameState, ChangeScreenAction>(_changeScreenReducer),
+  TypedReducer<GameState, StopProcessingPhotoAction>(_stopProcessingPhotoReducer),
 ]);
 
 GameState _solveSudokuReducer(GameState gameState, SolveSudokuAction action) {
@@ -45,8 +47,8 @@ GameState _sudokuSolvedReducer(GameState gameState, SudokuSolvedAction action) {
 
 GameState _setToDefault(GameState gameState, RestartAction action) {
   return (Redux.store.state.screenState == ScreenState.solveWithCameraScreen)
-        ? GameState.takingPhoto
-        : GameState.normal;
+      ? GameState.takingPhoto
+      : GameState.normal;
 }
 
 GameState _takePhotoReducer(GameState gameState, TakePhotoAction action) {
@@ -89,5 +91,12 @@ GameState _gameSolvedReducerReducer(GameState gameState, GameSolvedAction action
 }
 
 GameState _changeScreenReducer(GameState gameState, ChangeScreenAction action) {
+  return GameState.takingPhoto;
+}
+
+GameState _stopProcessingPhotoReducer(GameState gameState, StopProcessingPhotoAction action) {
+  if (cancellableOperation != null) {
+    cancellableOperation.cancel();
+  }
   return GameState.takingPhoto;
 }

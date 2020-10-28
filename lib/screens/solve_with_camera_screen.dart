@@ -88,6 +88,7 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
         SudokuWidget(),
         SolveItButtonWidget(),
         RetakePhotoButtonWidget(),
+        TakePhotoButtonWidget(),
       ],
     );
   }

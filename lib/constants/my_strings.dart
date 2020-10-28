@@ -16,6 +16,7 @@ final String topTextTakingPhoto = 'Align with camera';
 final String topTextWhenSolving = 'AI thinking...';
 final String topTextSolved = 'SOLVED';
 final String topTextConstructingSudoku = 'Constructing Sudoku...';
+final String topTextStopConstructingSudoku = 'STOP CONSTRUCTING';
 final String topTextVerifySudoku = 'Is this your Sudoku?';
 
 final String topTextWhenNoSolutionFound = 'NO SOLUTION';

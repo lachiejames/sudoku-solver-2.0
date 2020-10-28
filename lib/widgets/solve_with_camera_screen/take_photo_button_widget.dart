@@ -6,7 +6,8 @@ import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
-import 'package:sudoku_solver_2/state/camera_state.dart';
+import 'package:sudoku_solver_2/state/game_state.dart';
+import 'package:sudoku_solver_2/state/screen_state.dart';
 
 /// Shown when the SolveWithCameraScreen is loaded
 class TakePhotoButtonWidget extends StatefulWidget {
@@ -19,34 +20,75 @@ class TakePhotoButtonWidget extends StatefulWidget {
 class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, CameraState>(
+    return StoreConnector<AppState, GameState>(
       distinct: true,
-      converter: (store) => store.state.cameraState,
-      builder: (context, cameraState) {
-        return Container(
-          alignment: Alignment.center,
-          margin: my_styles.buttonMargins,
-          child: Directionality(
-            textDirection: TextDirection.ltr,
-            child: RaisedButton(
-              shape: my_styles.buttonShape,
-              padding: my_styles.buttonPadding,
-              color: my_colors.blue,
-              child: Text(
-                my_strings.takePhotoButtonText,
-                style: my_styles.buttonTextStyle,
-              ),
-              onPressed: () {
-                if (cameraState.cameraController != null && cameraState.cameraController.value.isInitialized) {
-                  Redux.store.dispatch(TakePhotoAction());
-                } else {
-                  return null;
-                }
-              },
-            ),
-          ),
-        );
+      converter: (store) => store.state.gameState,
+      builder: (context, gameState) {
+        return (gameState == GameState.takingPhoto || gameState == GameState.processingPhoto)
+            ? Container(
+                key: this._createPropertyKey(gameState),
+                alignment: Alignment.center,
+                margin: my_styles.buttonMargins,
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: RaisedButton(
+                    shape: my_styles.buttonShape,
+                    padding: my_styles.buttonPadding,
+                    color: _determineColor(gameState),
+                    child: Text(
+                      _determineText(gameState),
+                      style: my_styles.buttonTextStyle,
+                    ),
+                    onPressed: () => _determineAction(gameState),
+                  ),
+                ),
+              )
+            : Container();
       },
     );
+  }
+
+  Key _createPropertyKey(GameState gameState) {
+    String key = 'text:${this._determineText(gameState)}';
+    key += ' - color:${this._determineColorString(gameState)}';
+    return Key(key);
+  }
+
+  String _determineColorString(GameState gameState) {
+    switch (gameState) {
+      case GameState.processingPhoto:
+        return 'red';
+      default:
+        return 'blue';
+    }
+  }
+
+  Color _determineColor(GameState gameState) {
+    switch (gameState) {
+      case GameState.processingPhoto:
+        return my_colors.red;
+      default:
+        return my_colors.blue;
+    }
+  }
+
+  String _determineText(GameState gameState) {
+    switch (gameState) {
+      case GameState.processingPhoto:
+        return my_strings.topTextStopConstructingSudoku;
+      default:
+        return my_strings.takePhotoButtonText;
+    }
+  }
+
+  void _determineAction(GameState gameState) {
+    switch (gameState) {
+      case GameState.processingPhoto:
+        Redux.store.dispatch(StopProcessingPhotoAction());
+        Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
+        break;
+      default:
+        Redux.store.dispatch(TakePhotoAction());
+    }
   }
 }
