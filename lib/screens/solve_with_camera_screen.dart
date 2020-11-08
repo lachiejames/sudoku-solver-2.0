@@ -70,7 +70,7 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
           children: <Widget>[
             TopTextWidget(),
             Container(
-              height: my_values.cameraHeight,
+              height: my_values.cameraHeight + 2*my_values.pad,
             ),
             TakePhotoButtonWidget(),
           ],

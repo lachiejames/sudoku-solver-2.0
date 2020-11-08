@@ -1,4 +1,7 @@
+import 'dart:collection';
 import 'dart:io';
+import 'dart:math';
+import 'dart:ui';
 import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +12,7 @@ import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
+import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
 /// All state relating to the Camera
@@ -113,20 +117,53 @@ class CameraState {
     return textElements;
   }
 
+  double calculateOverlapArea(Rect rect1, Rect rect2) {
+    double xOverlap = max(0, min(rect1.right, rect2.right) - max(rect1.left, rect2.left));
+    double yOverlap = max(0, min(rect1.bottom, rect2.bottom) - max(rect1.top, rect2.top));
+    return xOverlap * yOverlap;
+  }
+
+  // TileState mostLikelyTileForNumber() {
+  //   HashMap<TileState, double> tileAreas = HashMap<TileState, double>();
+  //   TileState mostLikelyTile;
+  //   double greatestArea = 0.0;
+
+  //   for (int row = 0; row < 9; row++) {
+  //     for (int col = 0; col < 9; col++) {
+  //       double overlappingArea = this.calculateOverlapArea(rect1, rect2)
+  //       tileAreas[Redux.store.state.tileStateMap[TileKey(row: row, col: col)]];
+  //     }
+  //   }
+  // }
+
   Sudoku constructSudokuFromTextElements(List<TextElement> textElements) {
     Sudoku sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
     double factor = this.croppedImageWidth / 9;
     for (TextElement textElement in textElements) {
-      double tileImgX = textElement.boundingBox.center.dx;
-      double tileImgY = textElement.boundingBox.center.dy;
-      int value = int.parse(textElement.text);
-      for (int row = 0; row < 9; row++) {
-        for (int col = 0; col < 9; col++) {
-          if ((row * factor < tileImgY && tileImgY < (row + 1) * factor) &&
-              (col * factor < tileImgX && tileImgX < (col + 1) * factor)) {
-            sudoku.addValueToTile(value, sudoku.getTileStateAt(row + 1, col + 1));
+      print('value=${textElement.text}, boundingBox=${textElement.boundingBox}');
+      if (textElement.text.length == 1 && this.isNumeric(textElement.text)) {
+        TileState mostLikelyTile;
+        double greatestArea = 0.0;
+
+        for (int row = 0; row < 9; row++) {
+          for (int col = 0; col < 9; col++) {
+            double overlappingArea = this.calculateOverlapArea(
+              textElement.boundingBox,
+              Rect.fromLTRB(
+                col * factor,
+                row * factor,
+                (col + 1) * factor,
+                (row + 1) * factor,
+              ),
+            );
+            if (greatestArea < overlappingArea) {
+              greatestArea = overlappingArea;
+              mostLikelyTile = sudoku.getTileStateAt(row + 1, col + 1);
+            }
           }
         }
+        // print('adding ${int.parse(textElement.text)} to $mostLikelyTile');
+        sudoku.addValueToTile(int.parse(textElement.text), mostLikelyTile);
       }
     }
     return sudoku;
