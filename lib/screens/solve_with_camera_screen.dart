@@ -8,6 +8,7 @@ import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/sudoku_widget.dart';
+import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/camera_widget.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/retake_photo_button_widget.dart';
@@ -86,6 +87,7 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
       children: <Widget>[
         TopTextWidget(),
         SudokuWidget(),
+        // (croppedImageFile!=null) ? Image.file(croppedImageFile) : Container(),
         SolveItButtonWidget(),
         RetakePhotoButtonWidget(),
         TakePhotoButtonWidget(),
