@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui';
 import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart';
+import 'package:native_device_orientation/native_device_orientation.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
@@ -14,6 +17,7 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
 File croppedImageFile;
+CameraImage cameraImage;
 
 /// All state relating to the Camera
 class CameraState {
@@ -47,6 +51,21 @@ class CameraState {
         await File(imagePath).delete();
       }
       await this.cameraController.takePicture(imagePath);
+
+      await Future.delayed(Duration(seconds: 2));
+      print('xxx hmmm');
+
+      await this.cameraController.startImageStream((CameraImage image) {
+        if (image != null) {
+          print('xxx - got the image');
+        } else {
+          print('xxx - nope');
+        }
+        cameraImage = image;
+      });
+      await Future.delayed(Duration(seconds: 2));
+      await this.cameraController.stopImageStream();
+
       _pickedImageFile = File(imagePath);
       assert(_pickedImageFile != null);
     } on Exception catch (e) {
@@ -95,11 +114,18 @@ class CameraState {
   Future<void> getSudokuFromCamera() async {
     File pickedImageFile = await this.takePicture();
     assert(pickedImageFile != null);
-    File croppedImageFile = await this.cropPictureToSudokuSize(pickedImageFile);
-    final FirebaseVisionImage _firebaseVisionImage = FirebaseVisionImage.fromFile(croppedImageFile);
+    // File croppedImageFile = await this.cropPictureToSudokuSize(pickedImageFile);
+    // final FirebaseVisionImage _firebaseVisionImage = FirebaseVisionImage.fromFile(croppedImageFile);
     final TextRecognizer _textRecognizer = FirebaseVision.instance.textRecognizer();
-    final VisionText _visionText = await _textRecognizer.processImage(_firebaseVisionImage);
-    await _textRecognizer.close();
+    final NativeDeviceOrientationCommunicator _deviceOrientationProvider = NativeDeviceOrientationCommunicator();
+
+    final VisionText _visionText = await this.processCameraImage(
+      cameraImage,
+      this.cameraController.description.sensorOrientation,
+      await _deviceOrientationProvider.orientation(useSensor: true),
+      _textRecognizer,
+    );
+    // await _textRecognizer.close();
     final List<TextElement> textElements = this.getTextElementsFromVisionText(_visionText);
     final Sudoku sudoku = this.constructSudokuFromTextElements(textElements);
     Redux.store.dispatch(PhotoProcessedAction(sudoku));
@@ -161,7 +187,7 @@ class CameraState {
     Sudoku sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
     for (TextElement textElement in textElements) {
       sudoku.addValueToTile(int.parse(textElement.text), this.mostLikelyTileForTextElement(textElement, sudoku));
-      if (int.parse(textElement.text)==7) {
+      if (int.parse(textElement.text) == 7) {
         print(7);
       }
     }
@@ -183,5 +209,67 @@ class CameraState {
     return CameraState(
       cameraController: null,
     );
+  }
+
+  static const _fullCircleDegrees = 360;
+
+  Future<VisionText> processCameraImage(CameraImage image, int sensorOrientation,
+      NativeDeviceOrientation deviceOrientation, TextRecognizer textRecognizer) {
+    assert(image != null);
+    final bytes = _concatenatePlanes(image.planes);
+    final metadata = _prepareMetadata(image, sensorOrientation, deviceOrientation);
+    final visionImage = FirebaseVisionImage.fromBytes(bytes, metadata);
+    return textRecognizer.processImage(visionImage);
+  }
+
+  Uint8List _concatenatePlanes(List<Plane> planes) {
+    final WriteBuffer allBytes = WriteBuffer();
+    planes.forEach((Plane plane) => allBytes.putUint8List(plane.bytes));
+    return allBytes.done().buffer.asUint8List();
+  }
+
+  FirebaseVisionImageMetadata _prepareMetadata(
+      CameraImage image, int sensorOrientation, NativeDeviceOrientation deviceOrientation) {
+    return FirebaseVisionImageMetadata(
+      size: Size(image.width.toDouble(), image.height.toDouble()),
+      rawFormat: image.format.raw,
+      planeData: image.planes
+          .map((currentPlane) => FirebaseVisionImagePlaneMetadata(
+              bytesPerRow: currentPlane.bytesPerRow, height: currentPlane.height, width: currentPlane.width))
+          .toList(),
+      rotation: _pickImageRotation(sensorOrientation, deviceOrientation),
+    );
+  }
+
+  ImageRotation _pickImageRotation(int sensorOrientation, NativeDeviceOrientation deviceOrientation) {
+    int deviceOrientationCompensation = 0;
+    switch (deviceOrientation) {
+      case NativeDeviceOrientation.landscapeLeft:
+        deviceOrientationCompensation = -90;
+        break;
+      case NativeDeviceOrientation.landscapeRight:
+        deviceOrientationCompensation = 90;
+        break;
+      case NativeDeviceOrientation.portraitDown:
+        deviceOrientationCompensation = 180;
+        break;
+      default:
+        deviceOrientationCompensation = 0;
+        break;
+    }
+
+    final complexOrientation = (sensorOrientation + deviceOrientationCompensation) % _fullCircleDegrees;
+    switch (complexOrientation) {
+      case 0:
+        return ImageRotation.rotation0;
+      case 90:
+        return ImageRotation.rotation90;
+      case 180:
+        return ImageRotation.rotation180;
+      case 270:
+        return ImageRotation.rotation270;
+      default:
+        throw Exception("CameraToTextRecognizerBridge: Rotation must be 0, 90, 180, or 270.");
+    }
   }
 }

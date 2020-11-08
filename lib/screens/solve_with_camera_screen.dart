@@ -87,7 +87,7 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
       children: <Widget>[
         TopTextWidget(),
         SudokuWidget(),
-        // (croppedImageFile!=null) ? Image.file(croppedImageFile) : Container(),
+        // (cameraImage!=null) ? Image.file(croppedImageFile) : Container(),
         SolveItButtonWidget(),
         RetakePhotoButtonWidget(),
         TakePhotoButtonWidget(),
