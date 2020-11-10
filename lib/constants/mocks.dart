@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sudoku_solver_2/state/camera_state.dart';
 
 class MyMockHelper {
   static String imagePath;
@@ -21,11 +24,15 @@ class MyMockHelper {
 
   static void setPictureMock() async {
     await MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler((MethodCall methodCall) async {
-      if (methodCall.method == 'takePicture') {
-        imagePath = methodCall.arguments['path'];
-        File mockFile = await File(imagePath).create();
-        File mockImageFile = await _getImageFileFromAssets('sudoku_screenshot.png');
-        mockFile.writeAsBytesSync(mockImageFile.readAsBytesSync());
+      if (methodCall.method == 'startImageStream') {
+        dynamic mockData;
+
+        cameraImage = CameraImage(mockData);
+        // jsonEncode(cameraImage);
+        // imagePath = methodCall.arguments['path'];
+        // File mockFile = await File(imagePath).create();
+        // File mockImageFile = await _getImageFileFromAssets('sudoku_screenshot.png');
+        // mockFile.writeAsBytesSync(mockImageFile.readAsBytesSync());
       }
       return Future.value();
     });

@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
+import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
 
@@ -17,6 +18,15 @@ class _CameraWidgetState extends State<CameraWidget> {
   @override
   void initState() {
     super.initState();
+    Redux.store.state.cameraState.cameraController.startImageStream((CameraImage image) {
+      cameraImage = image;
+    });
+  }
+
+  @override
+  void dispose() {
+    Redux.store.state.cameraState.cameraController.stopImageStream();
+    super.dispose();
   }
 
   @override
