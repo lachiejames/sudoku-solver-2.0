@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
@@ -17,7 +16,6 @@ CameraImage cameraImage;
 
 /// All state relating to the Camera
 class CameraState {
-  int croppedImageWidth;
   final CameraController cameraController;
 
   CameraState({this.cameraController});
@@ -26,16 +24,19 @@ class CameraState {
     return cameraImage;
   }
 
-  bool isInSudokuBounds(TextElement textElement) {
-    return this.calculateOverlapArea(my_values.photoRect, textElement.boundingBox) > 0.0;
+  bool isInSudokuBounds(Rect boundingBox) {
+    return this.calculateOverlapArea(my_values.photoRect, boundingBox) > 0.0;
+  }
+
+  bool isValidSudokuValue(String valueString) {
+    return (1 <= int.parse(valueString) && int.parse(valueString) <= 9);
   }
 
   bool isSudokuElement(TextElement textElement) {
     return (this.isNumeric(textElement.text) &&
         textElement.text.length == 1 &&
-        this.isInSudokuBounds(textElement) &&
-        1 <= int.parse(textElement.text) &&
-        int.parse(textElement.text) <= 9);
+        this.isInSudokuBounds(textElement.boundingBox) &&
+        this.isValidSudokuValue(textElement.text));
   }
 
   List<TextElement> getTextElementsFromVisionText(VisionText visionText) {
