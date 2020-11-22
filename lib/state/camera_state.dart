@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
@@ -29,22 +30,26 @@ class CameraState {
     return this.calculateOverlapArea(my_values.photoRect, textElement.boundingBox) > 0.0;
   }
 
+  bool isSudokuElement(TextElement textElement) {
+    return (this.isNumeric(textElement.text) &&
+        textElement.text.length == 1 &&
+        this.isInSudokuBounds(textElement) &&
+        1 <= int.parse(textElement.text) &&
+        int.parse(textElement.text) <= 9);
+  }
+
   List<TextElement> getTextElementsFromVisionText(VisionText visionText) {
     final List<TextElement> textElements = [];
     for (TextBlock textBlock in visionText.blocks) {
       for (TextLine textLine in textBlock.lines) {
         for (TextElement textElement in textLine.elements) {
-          // print('xxx - ${textElement.text} - bounds=${textElement.boundingBox} - inBounds=${this.isInSudokuBounds(textElement)}');
-          if (this.isNumeric(textElement.text) && textElement.text.length == 1 && this.isInSudokuBounds(textElement)) {
-            print(
-                'xxx - ${textElement.text} - bounds=${textElement.boundingBox} - inBounds=${this.isInSudokuBounds(textElement)}');
-
+          if (this.isSudokuElement(textElement)) {
+            print('value=${textElement.text}, boundingBox=${textElement.boundingBox}');
             textElements.add(textElement);
           }
         }
       }
     }
-    print('done');
     return textElements;
   }
 
@@ -56,7 +61,9 @@ class CameraState {
 
   Rect makeTileRect(int row, int col) {
     double horizontalFactor = (my_values.photoRect.right - my_values.photoRect.left) / 9.0;
-    double verticalFactor = (my_values.photoRect.top - my_values.photoRect.bottom) / 9.0;
+    double verticalFactor = (my_values.photoRect.bottom - my_values.photoRect.top) / 9.0;
+    assert(horizontalFactor > 0);
+    assert(verticalFactor > 0);
 
     return Rect.fromLTRB(
       my_values.photoRect.left + (col - 1) * horizontalFactor,
@@ -66,32 +73,38 @@ class CameraState {
     );
   }
 
-  TileState mostLikelyTileForTextElement(TextElement textElement, Sudoku sudoku) {
+  TileState mostLikelyTileForTextElement(Rect textElementBoundingBox, Sudoku sudoku) {
     TileState mostLikelyTile;
     double greatestArea = 0.0;
 
     for (int row = 1; row <= 9; row++) {
       for (int col = 1; col <= 9; col++) {
+        Rect tileRect = this.makeTileRect(row, col);
+        assert(tileRect.left > 0);
+        assert(tileRect.top > 0);
+        assert(tileRect.right > 0);
+        assert(tileRect.bottom > 0);
         double overlappingArea = this.calculateOverlapArea(
-          textElement.boundingBox,
-          this.makeTileRect(row, col),
+          textElementBoundingBox,
+          tileRect,
         );
         if (greatestArea < overlappingArea) {
           greatestArea = overlappingArea;
-          mostLikelyTile = sudoku.getTileStateAt(row + 1, col + 1);
-          // print('row=${row + 1}, col=${col + 1}, value=${textElement.text}, greatestArea=$greatestArea');
-        } else {
-          // print('NOPE: row=${row + 1}, col=${col + 1}, value=${textElement.text}, overlappingArea=$overlappingArea');
+          mostLikelyTile = sudoku.getTileStateAt(row, col);
         }
       }
     }
+    assert(mostLikelyTile != null);
     return mostLikelyTile;
   }
 
   Sudoku constructSudokuFromTextElements(List<TextElement> textElements) {
     Sudoku sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
     for (TextElement textElement in textElements) {
-      sudoku.addValueToTile(int.parse(textElement.text), this.mostLikelyTileForTextElement(textElement, sudoku));
+      sudoku.addValueToTile(
+        int.parse(textElement.text),
+        this.mostLikelyTileForTextElement(textElement.boundingBox, sudoku),
+      );
     }
     return sudoku;
   }
@@ -112,8 +125,6 @@ class CameraState {
       cameraController: null,
     );
   }
-
-  static const _fullCircleDegrees = 360;
 
   Future<VisionText> processCameraImage(CameraImage image, int sensorOrientation,
       NativeDeviceOrientation deviceOrientation, TextRecognizer textRecognizer) {
@@ -162,7 +173,7 @@ class CameraState {
         break;
     }
 
-    final complexOrientation = (sensorOrientation + deviceOrientationCompensation) % _fullCircleDegrees;
+    final complexOrientation = (sensorOrientation + deviceOrientationCompensation) % 360;
     switch (complexOrientation) {
       case 0:
         return ImageRotation.rotation0;
@@ -187,18 +198,19 @@ class CameraState {
       cameraHoriFactor * my_values.cameraWidgetRect.right,
       cameraVertFactor * my_values.cameraWidgetRect.bottom,
     );
+    assert(my_values.photoRect.left > 0);
+    assert(my_values.photoRect.top > 0);
+    assert(my_values.photoRect.right > 0);
+    assert(my_values.photoRect.bottom > 0);
   }
 
   Future<void> getSudokuFromCamera() async {
-    print('getSudokuFromCamera() - now using CameraImage');
-
     CameraImage cameraImage = await this.takePicture();
     assert(cameraImage != null);
     this.setPhotoSizeProperties();
 
     final TextRecognizer _textRecognizer = FirebaseVision.instance.textRecognizer();
     final NativeDeviceOrientationCommunicator _deviceOrientationProvider = NativeDeviceOrientationCommunicator();
-    print('processing the image');
     final VisionText _visionText = await this.processCameraImage(
       cameraImage,
       this.cameraController.description.sensorOrientation,

@@ -65,6 +65,8 @@ class Sudoku {
 
   /// Assigns a given value to a given tile
   void addValueToTile(int value, TileState tileState) {
+    assert(tileState!=null);
+    assert(value!=null);
     // if tile already has a value, that is not this value
     if ((tileState.value == null && value == null) || (tileState.value != null && value != null)) {
       tileState.value = value;

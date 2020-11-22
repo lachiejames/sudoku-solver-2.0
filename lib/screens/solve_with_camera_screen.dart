@@ -52,8 +52,6 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
       my_values.screenSize.width - my_values.horizontalPadding,
       my_values.screenSize.height - my_values.verticalPadding,
     );
-    print('screenbounds=${my_values.screenRect}');
-    print('sudokuBounds=${my_values.cameraWidgetRect}');
   }
 
   Widget _makeTakingPhotoScreen(GameState gameState) {
