@@ -1,12 +1,13 @@
-import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
+
 import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/foundation.dart';
 import 'package:native_device_orientation/native_device_orientation.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
@@ -24,18 +25,26 @@ class CameraState {
     return cameraImage;
   }
 
+  bool isInSudokuBounds(TextElement textElement) {
+    return this.calculateOverlapArea(my_values.photoRect, textElement.boundingBox) > 0.0;
+  }
+
   List<TextElement> getTextElementsFromVisionText(VisionText visionText) {
     final List<TextElement> textElements = [];
     for (TextBlock textBlock in visionText.blocks) {
       for (TextLine textLine in textBlock.lines) {
         for (TextElement textElement in textLine.elements) {
-          print(textElement.text);
-          if (this.isNumeric(textElement.text) && textElement.text.length == 1) {
+          // print('xxx - ${textElement.text} - bounds=${textElement.boundingBox} - inBounds=${this.isInSudokuBounds(textElement)}');
+          if (this.isNumeric(textElement.text) && textElement.text.length == 1 && this.isInSudokuBounds(textElement)) {
+            print(
+                'xxx - ${textElement.text} - bounds=${textElement.boundingBox} - inBounds=${this.isInSudokuBounds(textElement)}');
+
             textElements.add(textElement);
           }
         }
       }
     }
+    print('done');
     return textElements;
   }
 
@@ -45,25 +54,27 @@ class CameraState {
     return xOverlap * yOverlap;
   }
 
-  Rect makeRect(int row, int col, double factor) {
+  Rect makeTileRect(int row, int col) {
+    double horizontalFactor = (my_values.photoRect.right - my_values.photoRect.left) / 9.0;
+    double verticalFactor = (my_values.photoRect.top - my_values.photoRect.bottom) / 9.0;
+
     return Rect.fromLTRB(
-      col * factor,
-      row * factor,
-      (col + 1) * factor,
-      (row + 1) * factor,
+      my_values.photoRect.left + (col - 1) * horizontalFactor,
+      my_values.photoRect.top + (row - 1) * verticalFactor,
+      my_values.photoRect.left + col * horizontalFactor,
+      my_values.photoRect.top + row * verticalFactor,
     );
   }
 
   TileState mostLikelyTileForTextElement(TextElement textElement, Sudoku sudoku) {
     TileState mostLikelyTile;
     double greatestArea = 0.0;
-    double factor = 900; //this.croppedImageWidth / 9;
 
-    for (int row = 0; row < 9; row++) {
-      for (int col = 0; col < 9; col++) {
+    for (int row = 1; row <= 9; row++) {
+      for (int col = 1; col <= 9; col++) {
         double overlappingArea = this.calculateOverlapArea(
           textElement.boundingBox,
-          this.makeRect(row, col, factor),
+          this.makeTileRect(row, col),
         );
         if (greatestArea < overlappingArea) {
           greatestArea = overlappingArea;
@@ -81,9 +92,6 @@ class CameraState {
     Sudoku sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
     for (TextElement textElement in textElements) {
       sudoku.addValueToTile(int.parse(textElement.text), this.mostLikelyTileForTextElement(textElement, sudoku));
-      if (int.parse(textElement.text) == 7) {
-        print(7);
-      }
     }
     return sudoku;
   }
@@ -109,8 +117,6 @@ class CameraState {
 
   Future<VisionText> processCameraImage(CameraImage image, int sensorOrientation,
       NativeDeviceOrientation deviceOrientation, TextRecognizer textRecognizer) {
-    // print(jsonEncode(image));
-
     assert(image != null);
     final bytes = _concatenatePlanes(image.planes);
     final metadata = _prepareMetadata(image, sensorOrientation, deviceOrientation);
@@ -171,11 +177,25 @@ class CameraState {
     }
   }
 
+  void setPhotoSizeProperties() {
+    my_values.photoSize = Size(cameraImage.width * 1.0, cameraImage.height * 1.0);
+    double cameraHoriFactor = my_values.photoSize.width / my_values.cameraWidgetSize.width;
+    double cameraVertFactor = my_values.photoSize.height / my_values.cameraWidgetSize.height;
+    my_values.photoRect = Rect.fromLTRB(
+      cameraHoriFactor * my_values.cameraWidgetRect.left,
+      cameraVertFactor * my_values.cameraWidgetRect.top,
+      cameraHoriFactor * my_values.cameraWidgetRect.right,
+      cameraVertFactor * my_values.cameraWidgetRect.bottom,
+    );
+  }
+
   Future<void> getSudokuFromCamera() async {
     print('getSudokuFromCamera() - now using CameraImage');
 
     CameraImage cameraImage = await this.takePicture();
     assert(cameraImage != null);
+    this.setPhotoSizeProperties();
+
     final TextRecognizer _textRecognizer = FirebaseVision.instance.textRecognizer();
     final NativeDeviceOrientationCommunicator _deviceOrientationProvider = NativeDeviceOrientationCommunicator();
     print('processing the image');

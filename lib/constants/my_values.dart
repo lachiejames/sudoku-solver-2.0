@@ -2,11 +2,15 @@
 
 library my_values;
 
+import 'dart:ui';
+
 // Set when app initialises
-double screenHeight;
-double screenWidth;
-double cameraHeight;
-double cameraWidth;
+Size screenSize;
+Size cameraWidgetSize;
+Size photoSize;
+Rect cameraWidgetRect;
+Rect screenRect;
+Rect photoRect;
 
 // Used for positioning CameraWidget
 final double pad = 32;

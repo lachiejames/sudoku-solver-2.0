@@ -1,7 +1,6 @@
 import 'package:async/async.dart';
 import 'package:redux/redux.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
-import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
 
 /// Contains all state reducers used by CameraState

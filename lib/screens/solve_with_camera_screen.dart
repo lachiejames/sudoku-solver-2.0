@@ -8,7 +8,6 @@ import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/sudoku_widget.dart';
-import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/camera_widget.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/retake_photo_button_widget.dart';
@@ -27,13 +26,34 @@ class SolveWithCameraScreen extends StatefulWidget {
 class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
   void initScreenSizeProperties(BuildContext context) {
     // Set values required for SolveWithCameraScreen
-    my_values.screenHeight = MediaQuery.of(context).size.height;
-    my_values.screenWidth = MediaQuery.of(context).size.width;
-    my_values.cameraWidth = my_values.screenWidth - 2 * my_values.pad;
-    my_values.cameraHeight = my_values.cameraWidth;
+    my_values.screenSize = Size(
+      MediaQuery.of(context).size.width,
+      MediaQuery.of(context).size.height,
+    );
 
-    my_values.verticalPadding = (my_values.screenHeight - my_values.cameraHeight) / 2;
+    my_values.cameraWidgetSize = Size(
+      my_values.screenSize.width - 2 * my_values.pad,
+      my_values.screenSize.width - 2 * my_values.pad,
+    );
+
+    my_values.verticalPadding = (my_values.screenSize.height - my_values.cameraWidgetSize.height) / 2;
     my_values.horizontalPadding = my_values.pad;
+
+    my_values.screenRect = Rect.fromLTRB(
+      0,
+      0,
+      my_values.screenSize.width,
+      my_values.screenSize.height,
+    );
+
+    my_values.cameraWidgetRect = Rect.fromLTRB(
+      my_values.horizontalPadding,
+      my_values.verticalPadding,
+      my_values.screenSize.width - my_values.horizontalPadding,
+      my_values.screenSize.height - my_values.verticalPadding,
+    );
+    print('screenbounds=${my_values.screenRect}');
+    print('sudokuBounds=${my_values.cameraWidgetRect}');
   }
 
   Widget _makeTakingPhotoScreen(GameState gameState) {
@@ -41,8 +61,8 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
       children: <Widget>[
         Container(
           color: my_colors.white,
-          height: my_values.screenHeight,
-          width: my_values.screenWidth,
+          height: my_values.screenSize.height,
+          width: my_values.screenSize.width,
           alignment: Alignment.center,
           child: CircularProgressIndicator(),
         ),
@@ -52,8 +72,8 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
 
         // Border
         Container(
-          height: my_values.screenHeight,
-          width: my_values.screenWidth,
+          height: my_values.screenSize.height,
+          width: my_values.screenSize.width,
           decoration: BoxDecoration(
             border: Border(
               top: BorderSide(width: my_values.verticalPadding, color: my_colors.pink),
@@ -71,7 +91,7 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
           children: <Widget>[
             TopTextWidget(),
             Container(
-              height: my_values.cameraHeight + 2*my_values.pad,
+              height: my_values.cameraWidgetSize.height + 2 * my_values.pad,
             ),
             TakePhotoButtonWidget(),
           ],

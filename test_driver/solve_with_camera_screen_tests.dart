@@ -1,5 +1,4 @@
 import 'package:flutter_driver/flutter_driver.dart';
-import 'package:sudoku_solver_2/constants/my_games.dart' as my_games;
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:test/test.dart';
 import 'shared.dart';

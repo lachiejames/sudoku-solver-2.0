@@ -48,7 +48,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "762080a6f16731f7a99a1c5ab838f4483f5eb2b8"
+      resolved-ref: d57aed6bc0c16564daeb54e28a28d0042d3fc77e
       url: "https://github.com/lachiejames/plugins.git"
     source: git
     version: "0.5.8+15"

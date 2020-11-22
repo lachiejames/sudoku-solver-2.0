@@ -36,7 +36,7 @@ class _SudokuWidgetState extends State<SudokuWidget> {
             return (gameState == GameState.isSolving || gameState == GameState.processingPhoto)
                 ? Container(
                     height: 290,
-                    width: my_values.screenWidth,
+                    width: my_values.screenSize.width,
                     alignment: Alignment.center,
                     child: CircularProgressIndicator(),
                   )
