@@ -10,6 +10,8 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
+import '../constants/test_constants.dart';
+
 void main() {
   CameraState cameraState;
 
@@ -49,22 +51,26 @@ void main() {
       cameraState = CameraState();
       await SharedPreferences.setMockInitialValues({});
       await Redux.init();
+      my_values.photoRect = Rect.fromLTRB(0, 0, 10, 10);
     });
 
-    test('initialised with correct values', () {
-      expect(cameraState, isNotNull);
+    group('initialisation', () {
+      test('initialised with correct values', () {
+        expect(cameraState, isNotNull);
+      });
     });
 
-    test('isNumeric() returns true when String is a number, and false otherwise', () {
-      expect(cameraState.isNumeric('10'), true);
-      expect(cameraState.isNumeric('10 '), true);
-      expect(cameraState.isNumeric('a'), false);
-      expect(cameraState.isNumeric('3a'), false);
+    group('takePicture()', () {
+      test('returns current cameraImage', () {});
     });
 
-    test('copyWith() returns a new object', () {
-      CameraState cloneCameraState = cameraState.copyWith();
-      expect(cameraState == cloneCameraState, false);
+    group('isNumeric()', () {
+      test('returns true when String is a number, and false otherwise', () {
+        expect(cameraState.isNumeric('10'), true);
+        expect(cameraState.isNumeric('10 '), true);
+        expect(cameraState.isNumeric('a'), false);
+        expect(cameraState.isNumeric('3a'), false);
+      });
     });
 
     group('calculateOverlapArea()', () {
@@ -82,12 +88,6 @@ void main() {
     });
 
     group('isInSudokuBounds()', () {
-      setUp(() {
-        my_values.photoRect = Rect.fromLTRB(0, 0, 10, 10);
-      });
-      tearDown(() {
-        my_values.photoRect = null;
-      });
       test('returns false when rectangles have no overlap', () async {
         expect(cameraState.isInSudokuBounds(Rect.fromLTRB(100, 100, 110, 110)), false);
       });
@@ -101,12 +101,14 @@ void main() {
       });
     });
 
+    group('isValidSudokuValue()', () {
+      test('returns true for values 1-9', () {});
+
+      test('returns false for other values', () {});
+    });
+
     group('isSudokuElement()', () {
       Rect validRect = Rect.fromLTRB(0, 0, 10, 10);
-
-      setUp(() {
-        my_values.photoRect = Rect.fromLTRB(0, 0, 10, 10);
-      });
 
       test('returns true value 1-9', () async {
         expect(cameraState.isSudokuElement(MockTextElement('1', validRect)), true);
@@ -124,9 +126,6 @@ void main() {
     });
 
     group('makeTileRect()', () {
-      setUp(() {
-        my_values.photoRect = Rect.fromLTRB(0, 0, 900, 900);
-      });
 
       test('returns valid rect', () async {
         expect(cameraState.makeTileRect(1, 1), Rect.fromLTRB(0, 0, 100, 100));
@@ -140,11 +139,10 @@ void main() {
     group('mostLikelyTileForTextElement()', () {
       Sudoku sudoku;
       setUp(() {
-        my_values.photoRect = Rect.fromLTRB(100, 100, 1000, 1000);
         sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
       });
 
-      test('returns tile with most area overlap', () async {
+      test('when overlap>0 for some tiles, returns tile with most area overlap', () async {
         expect(
           cameraState.mostLikelyTileForTextElement(Rect.fromLTRB(102, 105, 140, 140), sudoku),
           sudoku.getTileStateAt(1, 1),
@@ -154,25 +152,61 @@ void main() {
           cameraState.mostLikelyTileForTextElement(Rect.fromLTRB(400, 450, 500, 520), sudoku),
           sudoku.getTileStateAt(4, 4),
         );
+
+        expect(
+          cameraState.mostLikelyTileForTextElement(Rect.fromLTRB(850, 890, 950, 950), sudoku),
+          sudoku.getTileStateAt(9, 8),
+        );
+      });
+
+      test('when overlap=0 for all tiles, throws exception', () async {
+        expect(
+          () => cameraState.mostLikelyTileForTextElement(Rect.fromLTRB(0, 0, 50, 50), sudoku),
+          throwsException,
+        );
+
+        expect(
+          () => cameraState.mostLikelyTileForTextElement(Rect.fromLTRB(1000, 1000, 1050, 1050), sudoku),
+          throwsException,
+        );
+      });
+    });
+
+    group('constructSudokuFromTextElements()', () {
+      test('if list is empty, sudoku is also empty', () {
+        List<TextElement> textElements = [];
+        Sudoku constructedSudoku = cameraState.constructSudokuFromTextElements(textElements);
+        expect(constructedSudoku.toString(), TestConstants.emptySudokuString);
+      });
+
+      test('if list is empty, sudoku is also empty', () {
+        List<TextElement> textElements = [MockTextElement('1', Rect.fromLTRB(0, 0, 50, 50))];
+        Sudoku constructedSudoku = cameraState.constructSudokuFromTextElements(textElements);
+        expect(constructedSudoku.toString(), TestConstants.emptySudokuString);
+      });
+    });
+
+    group('processCameraImage()', () {
+      test('', () {});
+    });
+
+    group('setPhotoSizeProperties()', () {
+      test('', () {});
+    });
+
+    group('getTextElementsFromVisionText()', () {
+      test('', () {});
+    });
+
+    group('getSudokuFromCamera()', () {
+      test('', () {});
+    });
+
+    group('copyWith()', () {
+      test('returns a new object', () {
+        CameraState cloneCameraState = cameraState.copyWith();
+        expect(cameraState == cloneCameraState, false);
       });
     });
   });
-}
-
-class MockTextElement implements TextElement {
-  final String text;
-  final Rect boundingBox;
-  MockTextElement(
-    this.text,
-    this.boundingBox,
-  );
-
-  @override
-  double get confidence => throw UnimplementedError();
-
-  @override
-  List<Offset> get cornerPoints => throw UnimplementedError();
-
-  @override
-  List<RecognizedLanguage> get recognizedLanguages => throw UnimplementedError();
 }

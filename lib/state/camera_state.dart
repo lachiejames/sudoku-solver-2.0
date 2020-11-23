@@ -24,34 +24,11 @@ class CameraState {
     return cameraImage;
   }
 
-  bool isInSudokuBounds(Rect boundingBox) {
-    return this.calculateOverlapArea(my_values.photoRect, boundingBox) > 0.0;
-  }
-
-  bool isValidSudokuValue(String valueString) {
-    return (1 <= int.parse(valueString) && int.parse(valueString) <= 9);
-  }
-
-  bool isSudokuElement(TextElement textElement) {
-    return (this.isNumeric(textElement.text) &&
-        textElement.text.length == 1 &&
-        this.isInSudokuBounds(textElement.boundingBox) &&
-        this.isValidSudokuValue(textElement.text));
-  }
-
-  List<TextElement> getTextElementsFromVisionText(VisionText visionText) {
-    final List<TextElement> textElements = [];
-    for (TextBlock textBlock in visionText.blocks) {
-      for (TextLine textLine in textBlock.lines) {
-        for (TextElement textElement in textLine.elements) {
-          if (this.isSudokuElement(textElement)) {
-            print('value=${textElement.text}, boundingBox=${textElement.boundingBox}');
-            textElements.add(textElement);
-          }
-        }
-      }
+  bool isNumeric(String s) {
+    if (s == null) {
+      return false;
     }
-    return textElements;
+    return double.tryParse(s) != null;
   }
 
   double calculateOverlapArea(Rect rect1, Rect rect2) {
@@ -60,18 +37,36 @@ class CameraState {
     return xOverlap * yOverlap;
   }
 
+  bool isInSudokuBounds(Rect boundingBox) {
+    return this.calculateOverlapArea(my_values.photoRect, boundingBox) > 0.0;
+  }
+
+  bool isValidSudokuValue(String valueString) {
+    return valueString.length == 1 && (1 <= int.parse(valueString) && int.parse(valueString) <= 9);
+  }
+
+  bool isSudokuElement(TextElement textElement) {
+    return (this.isNumeric(textElement.text) &&
+        this.isInSudokuBounds(textElement.boundingBox) &&
+        this.isValidSudokuValue(textElement.text));
+  }
+
   Rect makeTileRect(int row, int col) {
     double horizontalFactor = (my_values.photoRect.right - my_values.photoRect.left) / 9.0;
     double verticalFactor = (my_values.photoRect.bottom - my_values.photoRect.top) / 9.0;
-    assert(horizontalFactor > 0);
-    assert(verticalFactor > 0);
 
-    return Rect.fromLTRB(
+    Rect tileRect = Rect.fromLTRB(
       my_values.photoRect.left + (col - 1) * horizontalFactor,
       my_values.photoRect.top + (row - 1) * verticalFactor,
       my_values.photoRect.left + col * horizontalFactor,
       my_values.photoRect.top + row * verticalFactor,
     );
+
+    if (tileRect.left < 0 || tileRect.top < 0 || tileRect.right < 0 || tileRect.bottom < 0) {
+      throw Exception("Created invalid tile bounds: $tileRect");
+    }
+
+    return tileRect;
   }
 
   TileState mostLikelyTileForTextElement(Rect textElementBoundingBox, Sudoku sudoku) {
@@ -81,10 +76,6 @@ class CameraState {
     for (int row = 1; row <= 9; row++) {
       for (int col = 1; col <= 9; col++) {
         Rect tileRect = this.makeTileRect(row, col);
-        assert(tileRect.left > 0);
-        assert(tileRect.top > 0);
-        assert(tileRect.right > 0);
-        assert(tileRect.bottom > 0);
         double overlappingArea = this.calculateOverlapArea(
           textElementBoundingBox,
           tileRect,
@@ -95,7 +86,11 @@ class CameraState {
         }
       }
     }
-    assert(mostLikelyTile != null);
+
+    if (mostLikelyTile == null) {
+      throw Exception('No tile could be assigned to TextElement at $textElementBoundingBox');
+    }
+
     return mostLikelyTile;
   }
 
@@ -108,23 +103,6 @@ class CameraState {
       );
     }
     return sudoku;
-  }
-
-  bool isNumeric(String s) {
-    if (s == null) {
-      return false;
-    }
-    return double.tryParse(s) != null;
-  }
-
-  CameraState copyWith({CameraController cameraController}) {
-    return CameraState(cameraController: cameraController);
-  }
-
-  static CameraState initCameraState() {
-    return CameraState(
-      cameraController: null,
-    );
   }
 
   Future<VisionText> processCameraImage(CameraImage image, int sensorOrientation,
@@ -205,9 +183,30 @@ class CameraState {
     assert(my_values.photoRect.bottom > 0);
   }
 
+  List<TextElement> getTextElementsFromVisionText(VisionText visionText) {
+    final List<TextElement> textElements = [];
+    for (TextBlock textBlock in visionText.blocks) {
+      for (TextLine textLine in textBlock.lines) {
+        for (TextElement textElement in textLine.elements) {
+          if (this.isSudokuElement(textElement)) {
+            print("MockTextElement('${textElement.text}', ${textElement.boundingBox}), ");
+            textElements.add(textElement);
+          } else {
+            print("hmm('${textElement.text}', ${textElement.boundingBox}), ");
+          }
+        }
+      }
+    }
+    return textElements;
+  }
+
   Future<void> getSudokuFromCamera() async {
     CameraImage cameraImage = await this.takePicture();
-    assert(cameraImage != null);
+
+    if (cameraImage == null) {
+      throw Exception("No cameraImage available :(");
+    }
+
     this.setPhotoSizeProperties();
 
     final TextRecognizer _textRecognizer = FirebaseVision.instance.textRecognizer();
@@ -225,5 +224,15 @@ class CameraState {
     final Sudoku sudoku = this.constructSudokuFromTextElements(textElements);
     print(sudoku);
     Redux.store.dispatch(PhotoProcessedAction(sudoku));
+  }
+
+  CameraState copyWith({CameraController cameraController}) {
+    return CameraState(cameraController: cameraController);
+  }
+
+  static CameraState initCameraState() {
+    return CameraState(
+      cameraController: null,
+    );
   }
 }
