@@ -7,10 +7,12 @@ import 'dart:ui';
 // Set when app initialises
 Size screenSize;
 Size cameraWidgetSize;
-Size photoSize;
+Size fullPhotoSize;
+Size sudokuPhotoSize;
+Size tilePhotoSize;
 Rect cameraWidgetRect;
 Rect screenRect;
-Rect photoRect;
+Rect sudokuPhotoRect;
 
 // Used for positioning CameraWidget
 final double pad = 32;
