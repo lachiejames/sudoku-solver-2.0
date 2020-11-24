@@ -1,6 +1,11 @@
+import 'dart:io';
+import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:flutter/services.dart';
 
 import 'my_solved_games.dart' as my_solved_games;
 
@@ -91,6 +96,42 @@ class TestConstants {
     MockTextElement('7', Rect.fromLTRB(503.0, 919.0, 576.0, 977.0)),
     MockTextElement('9', Rect.fromLTRB(594.0, 918.0, 634.0, 975.0)),
   ];
+
+  static List<File> createdFiles = [];
+
+  static Future<void> deleteCreatedFiles() async {
+    for (File file in TestConstants.createdFiles) {
+      if (file.existsSync()) {
+        file.deleteSync();
+      }
+    }
+    TestConstants.createdFiles.clear();
+  }
+
+  static Future<File> getImageFileFromAssets(String path) async {
+    ByteData byteData;
+    try {
+      byteData = await rootBundle.load('assets/$path');
+    } on Exception catch (e) {
+      print('ERROR: no file found at assets/$path\n $e');
+      return null;
+    }
+    File file = await File('${Random().nextDouble()}_$path');
+    await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+    createdFiles.add(file);
+    return file;
+  }
+
+  static CameraController getMockCameraController() {
+    return CameraController(
+      CameraDescription(
+        name: "mock",
+        lensDirection: CameraLensDirection.front,
+        sensorOrientation: 0,
+      ),
+      ResolutionPreset.high,
+    );
+  }
 }
 
 class MockTextElement implements TextElement {

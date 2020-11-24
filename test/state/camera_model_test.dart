@@ -1,44 +1,17 @@
 import 'dart:io';
-
-import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image/image.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
 
+import '../constants/test_constants.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   CameraState cameraState;
-
-  Future<File> getImageFileFromAssets(String path) async {
-    ByteData byteData;
-    try {
-      byteData = await rootBundle.load('assets/$path');
-    } on Exception catch (e) {
-      print('ERROR: no file found at assets/$path\n $e');
-      return null;
-    }
-    File file = await File('${(await getApplicationDocumentsDirectory()).path}/$path');
-    await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-
-    return file;
-  }
-
-  CameraController getMockCameraController() {
-    return CameraController(
-      CameraDescription(
-        name: "mock",
-        lensDirection: CameraLensDirection.front,
-        sensorOrientation: 0,
-      ),
-      ResolutionPreset.high,
-    );
-  }
 
   Future<void> setMocks() async {
     const MethodChannel('plugins.flutter.io/path_provider').setMockMethodCallHandler((MethodCall methodCall) async {
@@ -60,22 +33,12 @@ void main() {
       if (methodCall.method == 'takePicture') {
         String imagePath = methodCall.arguments['path'];
         File mockFile = await File(imagePath).create();
-        File mockImageFile = await getImageFileFromAssets('sudoku_screenshot.png');
+        File mockImageFile = await TestConstants.getImageFileFromAssets('sudoku_screenshot.png');
         mockFile.writeAsBytesSync(mockImageFile.readAsBytesSync());
       }
       return null;
     });
   }
-
-  // Image getImageFromFile(File file) {
-  //   return decodeImage(file.readAsBytesSync());
-  // }
-
-  // Future<Image> getCroppedImageFromFilePath(String path) async {
-  //   File imageFile = await cameraState.getImageFileFromAssets(path);
-  //   File imageFileCropped = await cameraState.cropPictureToSudokuSize(imageFile);
-  //   return getImageFromFile(imageFileCropped);
-  // }
 
   group('CameraState ->', () {
     setUp(() async {
@@ -83,6 +46,10 @@ void main() {
       await SharedPreferences.setMockInitialValues({});
       await Redux.init();
       await setMocks();
+    });
+
+    tearDown(() async {
+      await TestConstants.deleteCreatedFiles();
     });
 
     group('initialisation', () {
@@ -105,7 +72,7 @@ void main() {
 
     group('getImageFileFromCamera()', () {
       test('returns a valid file', () async {
-        cameraState = CameraState(cameraController: getMockCameraController());
+        cameraState = CameraState(cameraController: TestConstants.getMockCameraController());
         File file = await cameraState.getImageFileFromCamera();
         expect(file, isNotNull);
       });
@@ -118,12 +85,18 @@ void main() {
     });
 
     group('getImageFromFile()', () {
-      test('returns a valid file', () async {
-        // File file = await getImageFileFromAssets("sudoku_screenshot.png");
-        // Image image = await cameraState.getImageFromFile(file);
-        // expect(image, isNotNull);
+      test('returns a valid image', () async {
+        File file = await TestConstants.getImageFileFromAssets("sudoku_screenshot.png");
+        Image image = await cameraState.getImageFromFile(file);
+        expect(image, isNotNull);
+        expect(image.length > 0, true);
       });
-      test('is expected size', () {});
+      test('is expected size', () async {
+        File file = await TestConstants.getImageFileFromAssets("sudoku_screenshot.png");
+        Image image = await cameraState.getImageFromFile(file);
+        expect(image.width, 410);
+        expect(image.height, 731);
+      });
     });
 
     group('getFileFromImage()', () {
