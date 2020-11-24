@@ -1,38 +1,71 @@
-import 'dart:ui';
+import 'dart:io';
 
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:image/image.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sudoku_solver_2/algorithm/sudoku.dart';
-
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
-import 'package:sudoku_solver_2/state/tile_state.dart';
 
-import '../constants/test_constants.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   CameraState cameraState;
 
-  // void setPathMockForTesting() {
-  //   const MethodChannel('plugins.flutter.io/path_provider')
-  //       .setMockMethodCallHandler((MethodCall methodCall) async {
-  //     if (methodCall.method == 'getApplicationDocumentsDirectory') {
-  //       final Directory directory = await Directory.systemTemp.createTemp();
-  //       return directory.path;
-  //     }
-  //     return null;
-  //   });
+  Future<File> getImageFileFromAssets(String path) async {
+    ByteData byteData;
+    try {
+      byteData = await rootBundle.load('assets/$path');
+    } on Exception catch (e) {
+      print('ERROR: no file found at assets/$path\n $e');
+      return null;
+    }
+    File file = await File('${(await getApplicationDocumentsDirectory()).path}/$path');
+    await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
 
-  //   const MethodChannel('plugins.flutter.io/firebase_ml_vision')
-  //       .setMockMethodCallHandler((MethodCall methodCall) async {
-  //     if (methodCall.method == 'TextRecognizer#processImage') {
-  //       return {};
-  //     }
-  //     return null;
-  //   });
-  // }
+    return file;
+  }
+
+  CameraController getMockCameraController() {
+    return CameraController(
+      CameraDescription(
+        name: "mock",
+        lensDirection: CameraLensDirection.front,
+        sensorOrientation: 0,
+      ),
+      ResolutionPreset.high,
+    );
+  }
+
+  Future<void> setMocks() async {
+    const MethodChannel('plugins.flutter.io/path_provider').setMockMethodCallHandler((MethodCall methodCall) async {
+      if (methodCall.method == 'getApplicationDocumentsDirectory') {
+        return "/data/user/0/com.lachie.sudoku_solver_2/app_flutter";
+      }
+      return null;
+    });
+
+    const MethodChannel('plugins.flutter.io/firebase_ml_vision')
+        .setMockMethodCallHandler((MethodCall methodCall) async {
+      if (methodCall.method == 'TextRecognizer#processImage') {
+        return {};
+      }
+      return null;
+    });
+
+    const MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler((MethodCall methodCall) async {
+      if (methodCall.method == 'takePicture') {
+        String imagePath = methodCall.arguments['path'];
+        File mockFile = await File(imagePath).create();
+        File mockImageFile = await getImageFileFromAssets('sudoku_screenshot.png');
+        mockFile.writeAsBytesSync(mockImageFile.readAsBytesSync());
+      }
+      return null;
+    });
+  }
 
   // Image getImageFromFile(File file) {
   //   return decodeImage(file.readAsBytesSync());
@@ -45,168 +78,87 @@ void main() {
   // }
 
   group('CameraState ->', () {
-    setUpAll(TestWidgetsFlutterBinding.ensureInitialized);
-
     setUp(() async {
       cameraState = CameraState();
       await SharedPreferences.setMockInitialValues({});
       await Redux.init();
-      my_values.photoRect = Rect.fromLTRB(0, 0, 10, 10);
+      await setMocks();
     });
 
     group('initialisation', () {
-      test('initialised with correct values', () {
+      test('cameraState is defined', () {
         expect(cameraState, isNotNull);
       });
-    });
 
-    group('takePicture()', () {
-      test('returns current cameraImage', () {});
-    });
-
-    group('isNumeric()', () {
-      test('returns true when String is a number, and false otherwise', () {
-        expect(cameraState.isNumeric('10'), true);
-        expect(cameraState.isNumeric('10 '), true);
-        expect(cameraState.isNumeric('a'), false);
-        expect(cameraState.isNumeric('3a'), false);
+      test('cameraController is null', () {
+        expect(cameraState.cameraController, isNull);
       });
     });
 
-    group('calculateOverlapArea()', () {
-      test('returns 0.0 when rectangles have no overlap', () async {
-        expect(cameraState.calculateOverlapArea(Rect.fromLTRB(0, 0, 10, 10), Rect.fromLTRB(100, 100, 110, 110)), 0.0);
-      });
-
-      test('returns correct area when rectangles have some overlap', () async {
-        expect(cameraState.calculateOverlapArea(Rect.fromLTRB(0, 0, 10, 10), Rect.fromLTRB(0, 0, 10, 5)), 50.0);
-      });
-
-      test('returns correct area when rectangles have completely overlap', () async {
-        expect(cameraState.calculateOverlapArea(Rect.fromLTRB(0, 0, 10, 10), Rect.fromLTRB(0, 0, 10, 10)), 100.0);
+    group('getUniqueFilePath()', () {
+      test('returns a unique file path whenever it is called', () async {
+        String filePath1 = await cameraState.getUniqueFilePath();
+        String filePath2 = await cameraState.getUniqueFilePath();
+        expect(filePath1 != filePath2, true);
       });
     });
 
-    group('isInSudokuBounds()', () {
-      test('returns false when rectangles have no overlap', () async {
-        expect(cameraState.isInSudokuBounds(Rect.fromLTRB(100, 100, 110, 110)), false);
+    group('getImageFileFromCamera()', () {
+      test('returns a valid file', () async {
+        cameraState = CameraState(cameraController: getMockCameraController());
+        File file = await cameraState.getImageFileFromCamera();
+        expect(file, isNotNull);
       });
-
-      test('returns true when rectangles have some overlap', () async {
-        expect(cameraState.isInSudokuBounds(Rect.fromLTRB(0, 0, 10, 5)), true);
-      });
-
-      test('returns true when rectangles have completely overlap', () async {
-        expect(cameraState.isInSudokuBounds(Rect.fromLTRB(0, 0, 10, 10)), true);
-      });
-    });
-
-    group('isValidSudokuValue()', () {
-      test('returns true for values 1-9', () {});
-
-      test('returns false for other values', () {});
-    });
-
-    group('isSudokuElement()', () {
-      Rect validRect = Rect.fromLTRB(0, 0, 10, 10);
-
-      test('returns true value 1-9', () async {
-        expect(cameraState.isSudokuElement(MockTextElement('1', validRect)), true);
-      });
-
-      test('returns false for values other than 1-9', () async {
-        expect(cameraState.isSudokuElement(MockTextElement('0', validRect)), false);
-        expect(cameraState.isSudokuElement(MockTextElement('-1', validRect)), false);
-      });
-
-      test('returns false for multi-digit values', () async {
-        expect(cameraState.isSudokuElement(MockTextElement('10', validRect)), false);
-        expect(cameraState.isSudokuElement(MockTextElement('01', validRect)), false);
-      });
-    });
-
-    group('makeTileRect()', () {
-
-      test('returns valid rect', () async {
-        expect(cameraState.makeTileRect(1, 1), Rect.fromLTRB(0, 0, 100, 100));
-        expect(cameraState.makeTileRect(1, 9), Rect.fromLTRB(800, 0, 900, 100));
-        expect(cameraState.makeTileRect(9, 1), Rect.fromLTRB(0, 800, 100, 900));
-        expect(cameraState.makeTileRect(9, 9), Rect.fromLTRB(800, 800, 900, 900));
-        expect(cameraState.makeTileRect(5, 5), Rect.fromLTRB(400, 400, 500, 500));
-      });
-    });
-
-    group('mostLikelyTileForTextElement()', () {
-      Sudoku sudoku;
-      setUp(() {
-        sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
-      });
-
-      test('when overlap>0 for some tiles, returns tile with most area overlap', () async {
-        expect(
-          cameraState.mostLikelyTileForTextElement(Rect.fromLTRB(102, 105, 140, 140), sudoku),
-          sudoku.getTileStateAt(1, 1),
-        );
-
-        expect(
-          cameraState.mostLikelyTileForTextElement(Rect.fromLTRB(400, 450, 500, 520), sudoku),
-          sudoku.getTileStateAt(4, 4),
-        );
-
-        expect(
-          cameraState.mostLikelyTileForTextElement(Rect.fromLTRB(850, 890, 950, 950), sudoku),
-          sudoku.getTileStateAt(9, 8),
-        );
-      });
-
-      test('when overlap=0 for all tiles, throws exception', () async {
-        expect(
-          () => cameraState.mostLikelyTileForTextElement(Rect.fromLTRB(0, 0, 50, 50), sudoku),
-          throwsException,
-        );
-
-        expect(
-          () => cameraState.mostLikelyTileForTextElement(Rect.fromLTRB(1000, 1000, 1050, 1050), sudoku),
-          throwsException,
-        );
-      });
-    });
-
-    group('constructSudokuFromTextElements()', () {
-      test('if list is empty, sudoku is also empty', () {
-        List<TextElement> textElements = [];
-        Sudoku constructedSudoku = cameraState.constructSudokuFromTextElements(textElements);
-        expect(constructedSudoku.toString(), TestConstants.emptySudokuString);
-      });
-
-      test('if list is empty, sudoku is also empty', () {
-        List<TextElement> textElements = [MockTextElement('1', Rect.fromLTRB(0, 0, 50, 50))];
-        Sudoku constructedSudoku = cameraState.constructSudokuFromTextElements(textElements);
-        expect(constructedSudoku.toString(), TestConstants.emptySudokuString);
-      });
-    });
-
-    group('processCameraImage()', () {
-      test('', () {});
     });
 
     group('setPhotoSizeProperties()', () {
-      test('', () {});
+      test('for a 720x1080 image, sets sudokuPhotoRect to ...', () {});
+      test('for a 720x1080 image, sets sudokuPhotoSize to ...', () {});
+      test('for a 720x1080 image, sets tilePhotoSize to ...', () {});
     });
 
-    group('getTextElementsFromVisionText()', () {
-      test('', () {});
+    group('getImageFromFile()', () {
+      test('returns a valid file', () async {
+        File file = await getImageFileFromAssets("sudoku_screenshot.png");
+        Image image = await cameraState.getImageFromFile(file);
+        expect(image, isNotNull);
+      });
+      test('is expected size', () {});
+    });
+
+    group('getFileFromImage()', () {
+      test('returns a valid file', () {});
+    });
+
+    group('cropImageToSudokuBounds()', () {
+      test('returns image of expected size', () {});
+    });
+
+    group('cropSudokuImageToTileBounds()', () {
+      test('returns image of expected size for Tile(1,1)', () {});
+      test('returns image of expected size for Tile(1,9)', () {});
+      test('returns image of expected size for Tile(9,9)', () {});
+      test('throws exception for Tile(0,9)', () {});
+    });
+
+    group('createTileFileMap()', () {
+      test('returns valid tilemap', () {});
+      test('files are valid', () {});
+      test('all file paths are unique', () {});
+    });
+
+    group('getValueFromTileImageFile()', () {
+      test('for image with no text, returns null', () {});
+      test('for image with text="5", returns 5', () {});
+      test('for image with text="1", returns 1', () {});
+    });
+
+    group('getSudokuFromTileImageMap()', () {
+      test('returns expected sudoku for the given image', () {});
     });
 
     group('getSudokuFromCamera()', () {
-      test('', () {});
-    });
-
-    group('copyWith()', () {
-      test('returns a new object', () {
-        CameraState cloneCameraState = cameraState.copyWith();
-        expect(cameraState == cloneCameraState, false);
-      });
+      test('returns expected sudoku for the given image', () {});
     });
   });
 }
