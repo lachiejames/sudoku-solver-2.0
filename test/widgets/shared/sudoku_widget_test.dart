@@ -41,16 +41,6 @@ void main() {
         expect(find.text(''), findsNWidgets(81));
       });
     });
-    group('while solving -', () {
-      testWidgets('should display a progress indicator', (WidgetTester tester) async {
-        await createSudokuWidget(tester);
-
-        Redux.store.dispatch(SolveSudokuAction());
-        await tester.pump(debounceTime);
-
-        expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      });
-    });
 
     group('after solving -', () {
       testWidgets('should NOT display a progress indicator', (WidgetTester tester) async {

@@ -30,7 +30,7 @@ bool backtracking(Sudoku sudoku) {
 
 /// required since backtracking() returns a bool, and this returns a sudoku,
 /// which we need for solveSudokuAsync
-Sudoku _solveSudoku(Sudoku sudoku) {
+Sudoku solveSudoku(Sudoku sudoku) {
   backtracking(sudoku);
   return sudoku;
 }
@@ -41,7 +41,7 @@ CancelableOperation _cancellableOperation;
 /// Solves the sudoku asynchronously with 'compute'
 Future<Sudoku> solveSudokuAsync(Sudoku sudoku) async {
   _cancellableOperation = CancelableOperation.fromFuture(
-    compute(_solveSudoku, sudoku),
+    compute(solveSudoku, sudoku),
   );
 
   _cancellableOperation.asStream().listen(

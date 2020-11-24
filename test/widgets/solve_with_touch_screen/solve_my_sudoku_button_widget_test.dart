@@ -55,13 +55,13 @@ void main() {
     });
 
     group('after being tapped -', () {
-      testWidgets('should turn grey', (WidgetTester tester) async {
+      testWidgets('should turn red', (WidgetTester tester) async {
         await createSolveMySudokuButtonWidget(tester);
 
         await tester.tap(find.byWidget(solveMySudokuButtonWidget));
         await tester.pump(debounceTime);
 
-        expect(getSolveMySudokuButtonWidgetColor(tester), my_colors.grey);
+        expect(getSolveMySudokuButtonWidgetColor(tester), my_colors.red);
       });
 
       testWidgets('should start solving the sudoku', (WidgetTester tester) async {
@@ -84,7 +84,7 @@ void main() {
 
           // Becomes grey while solving
           await tester.pump(debounceTime);
-          expect(getSolveMySudokuButtonWidgetColor(tester), my_colors.grey);
+          expect(getSolveMySudokuButtonWidgetColor(tester), my_colors.red);
 
           // Give it enough time to solve the sudoku
           await Future.delayed(Duration(milliseconds: 1000));

@@ -36,43 +36,41 @@ class _NumberWidgetState extends State<NumberWidget> {
       converter: (store) => store.state.numberStateList[this.number - 1],
       builder: (context, numberState) {
         assert(numberState.number != null);
-        return Expanded(
-          child: GestureDetector(
-            child: Container(
-              key: this._createPropertyKey(numberState),
-              height: 36,
-              width: 36,
-              margin: EdgeInsets.only(
-                top: 36,
-                bottom: 36,
-                left: 4,
-                right: 4,
-              ),
-              decoration: ShapeDecoration(
-                color: (numberState.isActive) ? my_colors.green : my_colors.white,
-                shape: CircleBorder(),
-              ),
-              child: Center(
-                child: Text(
-                  '${numberState.number}',
-                  style: TextStyle(
-                    fontSize: my_values.numberFontSize,
-                    fontFamily: my_styles.fontStyleNumber,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  textDirection: TextDirection.ltr,
+        return GestureDetector(
+          child: Container(
+            key: this._createPropertyKey(numberState),
+            height: 36,
+            width: 36,
+            margin: EdgeInsets.only(
+              top: 36,
+              bottom: 36,
+              left: 4,
+              right: 4,
+            ),
+            decoration: ShapeDecoration(
+              color: (numberState.isActive) ? my_colors.green : my_colors.white,
+              shape: CircleBorder(),
+            ),
+            child: Center(
+              child: Text(
+                '${numberState.number}',
+                style: TextStyle(
+                  fontSize: my_values.numberFontSize,
+                  fontFamily: my_styles.fontStyleNumber,
+                  fontWeight: FontWeight.w400,
                 ),
+                textDirection: TextDirection.ltr,
               ),
             ),
-            onTap: () {
-              if (numberState.isActive) {
-                Redux.store.dispatch(NumberPressedAction(numberState));
-                Redux.store.dispatch(UpdateInvalidTilesAction());
-                Redux.store.dispatch(UpdateGameStateAction(Redux.store.state.tileStateMap));
-                Redux.store.dispatch(ApplyGameStateChangesAction(Redux.store.state.gameState));
-              }
-            },
           ),
+          onTap: () {
+            if (numberState.isActive) {
+              Redux.store.dispatch(NumberPressedAction(numberState));
+              Redux.store.dispatch(UpdateInvalidTilesAction());
+              Redux.store.dispatch(UpdateGameStateAction(Redux.store.state.tileStateMap));
+              Redux.store.dispatch(ApplyGameStateChangesAction(Redux.store.state.gameState));
+            }
+          },
         );
       },
     );

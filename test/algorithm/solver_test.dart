@@ -25,7 +25,7 @@ void main() {
       });
 
       test('solveSudokuAsync returns a solved sudoku', () async {
-        sudoku = await solveSudokuAsync(sudoku);
+        sudoku = solveSudoku(sudoku);
         expect(sudoku.toString(), TestConstants.solvedGames[0]);
       });
     });
