@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image/image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 
 import '../constants/test_constants.dart';
 
@@ -16,7 +18,7 @@ void main() {
   Future<void> setMocks() async {
     const MethodChannel('plugins.flutter.io/path_provider').setMockMethodCallHandler((MethodCall methodCall) async {
       if (methodCall.method == 'getApplicationDocumentsDirectory') {
-        return "/data/user/0/com.lachie.sudoku_solver_2/app_flutter";
+        return TestConstants.getTempDirectory();
       }
       return null;
     });
@@ -75,11 +77,22 @@ void main() {
         cameraState = CameraState(cameraController: TestConstants.getMockCameraController());
         File file = await cameraState.getImageFileFromCamera();
         expect(file, isNotNull);
+        expect(file.existsSync(), true);
       });
     });
 
     group('setPhotoSizeProperties()', () {
-      test('for a 720x1080 image, sets sudokuPhotoRect to ...', () {});
+      setUp(() {
+        my_values.cameraWidgetSize = Size(300, 300);
+        my_values.cameraWidgetRect = Rect.fromLTRB(30, 30, 30, 30);
+      });
+      test('fullPhotoSize matches size of photo', () async {
+        File file = await TestConstants.getImageFileFromAssets("sudoku_screenshot.png");
+        Image image = await cameraState.getImageFromFile(file);
+        cameraState.setPhotoSizeProperties(image);
+        expect(my_values.fullPhotoSize.width, 410);
+        expect(my_values.fullPhotoSize.height, 731);
+      });
       test('for a 720x1080 image, sets sudokuPhotoSize to ...', () {});
       test('for a 720x1080 image, sets tilePhotoSize to ...', () {});
     });
@@ -100,7 +113,13 @@ void main() {
     });
 
     group('getFileFromImage()', () {
-      test('returns a valid file', () {});
+      test('returns a valid file', () async {
+        File file = await TestConstants.getImageFileFromAssets("sudoku_screenshot.png");
+        Image image = await cameraState.getImageFromFile(file);
+        file = await cameraState.getFileFromImage(image);
+        expect(file, isNotNull);
+        expect(file.existsSync(), true);
+      });
     });
 
     group('cropImageToSudokuBounds()', () {

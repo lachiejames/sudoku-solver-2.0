@@ -1,10 +1,12 @@
 import 'dart:collection';
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:flutter/services.dart';
 import 'package:image/image.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -25,6 +27,13 @@ class CameraState {
     return join((await getApplicationDocumentsDirectory()).path, '${Random().nextDouble()}.png');
   }
 
+  Future<void> _writeFileToAssets(String fileName, List<int> bytes) async {
+    Directory directory = await getExternalStorageDirectory();
+    String path = directory.path;
+    File file = await File('$path/$fileName').create();
+    await file.writeAsBytes(bytes);
+  }
+
   Future<File> getImageFileFromCamera() async {
     String imagePath = await getUniqueFilePath();
 
@@ -34,7 +43,12 @@ class CameraState {
       print(e);
     }
 
-    return File(imagePath);
+    File imageFile = await File(imagePath).create();
+
+    await _writeFileToAssets('full_photo_low_res.png', imageFile.readAsBytesSync());
+    print('file creation complete');
+
+    return imageFile;
   }
 
   void setPhotoSizeProperties(Image fullImage) {
@@ -60,6 +74,15 @@ class CameraState {
       fullImage.width.toDouble(),
       fullImage.height.toDouble(),
     );
+
+    print('xxx - ${my_values.screenSize}');
+    print('xxx - ${my_values.cameraWidgetSize}');
+    print('xxx - ${my_values.fullPhotoSize}');
+    print('xxx - ${my_values.sudokuPhotoSize}');
+    print('xxx - ${my_values.tilePhotoSize}');
+    print('xxx - ${my_values.cameraWidgetRect}');
+    print('xxx - ${my_values.screenRect}');
+    print('xxx - ${my_values.sudokuPhotoRect}');
   }
 
   Future<Image> getImageFromFile(File file) async {
@@ -147,10 +170,10 @@ class CameraState {
   Future<void> getSudokuFromCamera() async {
     File fullImageFile = await this.getImageFileFromCamera();
     Image fullImage = await this.getImageFromFile(fullImageFile);
-    Image sudokuImage = await this.cropImageToSudokuBounds(fullImage);
-    HashMap<TileKey, File> tileImageMap = await this.createTileFileMap(sudokuImage);
-    Sudoku sudoku = await this.getSudokuFromTileImageMap(tileImageMap);
-    Redux.store.dispatch(PhotoProcessedAction(sudoku));
+    // Image sudokuImage = await this.cropImageToSudokuBounds(fullImage);
+    // HashMap<TileKey, File> tileImageMap = await this.createTileFileMap(sudokuImage);
+    // Sudoku sudoku = await this.getSudokuFromTileImageMap(tileImageMap);
+    // Redux.store.dispatch(PhotoProcessedAction(sudoku));
   }
 
   CameraState copyWith({CameraController cameraController}) {

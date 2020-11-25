@@ -97,6 +97,15 @@ class TestConstants {
     MockTextElement('9', Rect.fromLTRB(594.0, 918.0, 634.0, 975.0)),
   ];
 
+  static String _tempDirectory;
+  static Future<String> getTempDirectory() async {
+    if (_tempDirectory == null) {
+      final Directory directory = await Directory.systemTemp.createTemp();
+      _tempDirectory = directory.path;
+    }
+    return _tempDirectory;
+  }
+
   static List<File> createdFiles = [];
 
   static Future<void> deleteCreatedFiles() async {
@@ -116,7 +125,7 @@ class TestConstants {
       print('ERROR: no file found at assets/$path\n $e');
       return null;
     }
-    File file = await File('${Random().nextDouble()}_$path');
+    File file = await File('${Random().nextDouble()}_$path').create();
     await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
     createdFiles.add(file);
     return file;
@@ -129,7 +138,7 @@ class TestConstants {
         lensDirection: CameraLensDirection.front,
         sensorOrientation: 0,
       ),
-      ResolutionPreset.high,
+      ResolutionPreset.max,
     );
   }
 }
