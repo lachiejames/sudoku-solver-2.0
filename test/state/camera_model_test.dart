@@ -35,7 +35,7 @@ void main() {
       if (methodCall.method == 'takePicture') {
         String imagePath = methodCall.arguments['path'];
         File mockFile = await File(imagePath).create();
-        File mockImageFile = await TestConstants.getImageFileFromAssets('sudoku_screenshot.png');
+        File mockImageFile = await TestConstants.getImageFileFromAssets('full_photo_max_res.png');
         mockFile.writeAsBytesSync(mockImageFile.readAsBytesSync());
       }
       return null;
@@ -87,11 +87,11 @@ void main() {
         my_values.cameraWidgetRect = Rect.fromLTRB(30, 30, 30, 30);
       });
       test('fullPhotoSize matches size of photo', () async {
-        File file = await TestConstants.getImageFileFromAssets("sudoku_screenshot.png");
+        File file = await TestConstants.getImageFileFromAssets("full_photo_max_res.png");
         Image image = await cameraState.getImageFromFile(file);
         cameraState.setPhotoSizeProperties(image);
-        expect(my_values.fullPhotoSize.width, 410);
-        expect(my_values.fullPhotoSize.height, 731);
+        expect(my_values.fullPhotoSize.width, 2160);
+        expect(my_values.fullPhotoSize.height, 3840);
       });
       test('for a 720x1080 image, sets sudokuPhotoSize to ...', () {});
       test('for a 720x1080 image, sets tilePhotoSize to ...', () {});
@@ -99,22 +99,22 @@ void main() {
 
     group('getImageFromFile()', () {
       test('returns a valid image', () async {
-        File file = await TestConstants.getImageFileFromAssets("sudoku_screenshot.png");
+        File file = await TestConstants.getImageFileFromAssets("full_photo_max_res.png");
         Image image = await cameraState.getImageFromFile(file);
         expect(image, isNotNull);
         expect(image.length > 0, true);
       });
       test('is expected size', () async {
-        File file = await TestConstants.getImageFileFromAssets("sudoku_screenshot.png");
+        File file = await TestConstants.getImageFileFromAssets("full_photo_max_res.png");
         Image image = await cameraState.getImageFromFile(file);
-        expect(image.width, 410);
-        expect(image.height, 731);
+        expect(image.width, 2160);
+        expect(image.height, 3840);
       });
     });
 
     group('getFileFromImage()', () {
       test('returns a valid file', () async {
-        File file = await TestConstants.getImageFileFromAssets("sudoku_screenshot.png");
+        File file = await TestConstants.getImageFileFromAssets("full_photo_max_res.png");
         Image image = await cameraState.getImageFromFile(file);
         file = await cameraState.getFileFromImage(image);
         expect(file, isNotNull);

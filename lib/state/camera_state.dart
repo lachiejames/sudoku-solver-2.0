@@ -1,19 +1,14 @@
 import 'dart:collection';
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui';
-
 import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
-import 'package:flutter/services.dart';
 import 'package:image/image.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
-import 'package:sudoku_solver_2/redux/actions.dart';
-import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
@@ -45,8 +40,8 @@ class CameraState {
 
     File imageFile = await File(imagePath).create();
 
-    await _writeFileToAssets('full_photo_low_res.png', imageFile.readAsBytesSync());
-    print('file creation complete');
+    // await _writeFileToAssets('full_photo_low_res.png', imageFile.readAsBytesSync());
+    // print('file creation complete');
 
     return imageFile;
   }
@@ -86,7 +81,7 @@ class CameraState {
   }
 
   Future<Image> getImageFromFile(File file) async {
-    return decodeImage(file.readAsBytesSync());
+    return bakeOrientation(decodeImage(file.readAsBytesSync()));
   }
 
   Future<File> getFileFromImage(Image image) async {
@@ -170,6 +165,8 @@ class CameraState {
   Future<void> getSudokuFromCamera() async {
     File fullImageFile = await this.getImageFileFromCamera();
     Image fullImage = await this.getImageFromFile(fullImageFile);
+    print(fullImage.width);
+    print(fullImage.height);
     // Image sudokuImage = await this.cropImageToSudokuBounds(fullImage);
     // HashMap<TileKey, File> tileImageMap = await this.createTileFileMap(sudokuImage);
     // Sudoku sudoku = await this.getSudokuFromTileImageMap(tileImageMap);
