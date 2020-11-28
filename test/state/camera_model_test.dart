@@ -82,19 +82,41 @@ void main() {
     });
 
     group('setPhotoSizeProperties()', () {
-      setUp(() {
-        my_values.cameraWidgetSize = Size(300, 300);
-        my_values.cameraWidgetRect = Rect.fromLTRB(30, 30, 30, 30);
+      Image fullImage;
+      group('max res image', () {
+        setUp(() async {
+          File file = await TestConstants.getImageFileFromAssets("full_photo_max_res.png");
+          fullImage = await cameraState.getImageFromFile(file);
+          my_values.screenSize = Size(360.0, 722.7);
+          my_values.cameraWidgetSize = Size(296.0, 296.0);
+          my_values.cameraWidgetRect = Rect.fromLTRB(32.0, 213.3, 328.0, 509.3);
+          cameraState.setPhotoSizeProperties(fullImage);
+        });
+
+        test('my_values.fullPhotoSize sets correct values', () async {
+          expect(my_values.fullPhotoSize.width, 2160);
+          expect(my_values.fullPhotoSize.height, 3840);
+        });
+
+        test('my_values.sudokuPhotoSize sets correct values', () async {
+          expect(my_values.sudokuPhotoSize.width, 1776);
+          expect(my_values.sudokuPhotoSize.height, 1776);
+        });
       });
-      test('fullPhotoSize matches size of photo', () async {
-        File file = await TestConstants.getImageFileFromAssets("full_photo_max_res.png");
-        Image image = await cameraState.getImageFromFile(file);
-        cameraState.setPhotoSizeProperties(image);
-        expect(my_values.fullPhotoSize.width, 2160);
-        expect(my_values.fullPhotoSize.height, 3840);
+      group('medium res image', () {
+        setUp(() async {
+          File file = await TestConstants.getImageFileFromAssets("full_photo_medium_res.png");
+          fullImage = await cameraState.getImageFromFile(file);
+          cameraState.setPhotoSizeProperties(fullImage);
+        });
       });
-      test('for a 720x1080 image, sets sudokuPhotoSize to ...', () {});
-      test('for a 720x1080 image, sets tilePhotoSize to ...', () {});
+      group('low res image', () {
+        setUp(() async {
+          File file = await TestConstants.getImageFileFromAssets("full_photo_low_res.png");
+          fullImage = await cameraState.getImageFromFile(file);
+          cameraState.setPhotoSizeProperties(fullImage);
+        });
+      });
     });
 
     group('getImageFromFile()', () {

@@ -50,19 +50,22 @@ class CameraState {
     my_values.fullPhotoSize = Size(fullImage.width.toDouble(), fullImage.height.toDouble());
 
     assert(my_values.cameraWidgetSize != null);
-    double horizontalPhotoToWidgetRatio = my_values.fullPhotoSize.width / my_values.cameraWidgetSize.width;
-    double verticalPhotoToWidgetRatio = my_values.fullPhotoSize.height / my_values.cameraWidgetSize.height;
+
+    double screenWidthToPhotoWidthRatio = my_values.fullPhotoSize.width / my_values.screenSize.width;
+    double screenHeightToPhotoHeightRatio = my_values.fullPhotoSize.height / my_values.screenSize.height;
+    print(screenWidthToPhotoWidthRatio);
+    print(screenHeightToPhotoHeightRatio);
 
     my_values.sudokuPhotoRect = Rect.fromLTRB(
-      horizontalPhotoToWidgetRatio * my_values.cameraWidgetRect.left,
-      verticalPhotoToWidgetRatio * my_values.cameraWidgetRect.top,
-      horizontalPhotoToWidgetRatio * my_values.cameraWidgetRect.right,
-      verticalPhotoToWidgetRatio * my_values.cameraWidgetRect.bottom,
+      screenWidthToPhotoWidthRatio * my_values.cameraWidgetRect.left,
+      screenHeightToPhotoHeightRatio * my_values.cameraWidgetRect.top,
+      screenWidthToPhotoWidthRatio * my_values.cameraWidgetRect.right,
+      screenHeightToPhotoHeightRatio * my_values.cameraWidgetRect.bottom,
     );
 
     my_values.sudokuPhotoSize = Size(
-      fullImage.width.toDouble(),
-      fullImage.height.toDouble(),
+      screenWidthToPhotoWidthRatio * my_values.cameraWidgetSize.width,
+      screenHeightToPhotoHeightRatio * my_values.cameraWidgetSize.height,
     );
 
     my_values.tilePhotoSize = Size(
