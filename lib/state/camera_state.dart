@@ -59,11 +59,42 @@ class CameraState {
     return file;
   }
 
+  Future<Image> correctFullImage(Image fullImage, Size photoToScreenRatio) async {
+    if (photoToScreenRatio.width > photoToScreenRatio.height) {
+      int newWidth = (fullImage.width * photoToScreenRatio.height / photoToScreenRatio.width).floor();
+      return copyCrop(
+        fullImage,
+        ((fullImage.width - newWidth) / 2.0).floor(),
+        0,
+        newWidth,
+        fullImage.height,
+      );
+    } else {
+      int newHeight = (fullImage.height * photoToScreenRatio.width / photoToScreenRatio.height).floor();
+      return copyCrop(
+        fullImage,
+        0,
+        ((fullImage.width - newHeight) / 2.0).floor(),
+        fullImage.width,
+        newHeight,
+      );
+    }
+  }
+
   Future<Image> cropImageToSudokuBounds(Image fullImage) async {
     Size photoToScreenRatio = Size(
       fullImage.width / this.screenSize.width,
       fullImage.height / this.screenSize.height,
     );
+
+    if (photoToScreenRatio.width != photoToScreenRatio.height) {
+      fullImage = await this.correctFullImage(fullImage, photoToScreenRatio);
+      photoToScreenRatio = Size(
+        fullImage.width / this.screenSize.width,
+        fullImage.height / this.screenSize.height,
+      );
+    }
+
     int x = (photoToScreenRatio.width * this.cameraWidgetBounds.left).floor();
     int y = (photoToScreenRatio.height * this.cameraWidgetBounds.top).floor();
     int width = (photoToScreenRatio.width * this.cameraWidgetBounds.right - x).floor();
@@ -124,6 +155,8 @@ class CameraState {
         }
       }
     }
+        print(5);
+
 
     return tileValue;
   }
