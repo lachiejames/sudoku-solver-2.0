@@ -8,9 +8,7 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
-
-// GlobalKey keyEstimatedBorder;
-// GlobalKey keyCameraWidgetBorder;
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 
 /// Shown when the SolveWithCameraScreen is loaded
 class TakePhotoButtonWidget extends StatefulWidget {
@@ -42,7 +40,7 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
                       _determineText(gameState),
                       style: my_styles.buttonTextStyle,
                     ),
-                    onPressed: () => _determineAction(gameState),
+                    onPressed: () => _determineAction(gameState, context),
                   ),
                 ),
               )
@@ -84,28 +82,29 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
     }
   }
 
-  void _determineAction(GameState gameState) {
+  void _determineAction(GameState gameState, BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
+    double verticalPadding = (screenSize.height - 296) / 2;
+    double horizontalPadding = my_values.pad;
+
     switch (gameState) {
       case GameState.processingPhoto:
         Redux.store.dispatch(StopProcessingPhotoAction());
         Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
         break;
       default:
+        Redux.store.dispatch(
+          SetCameraStateProperties(
+            screenSize: MediaQuery.of(context).size,
+            cameraWidgetBounds: Rect.fromLTRB(
+              horizontalPadding,
+              verticalPadding,
+              screenSize.width - horizontalPadding,
+              screenSize.height - verticalPadding,
+            ),
+          ),
+        );
         Redux.store.dispatch(TakePhotoAction());
     }
   }
 }
-
-// getSizes(BuildContext buildContext) {
-//   if (keyCameraWidgetBorder==null) {
-//     keyCameraWidgetBorder = GlobalKey();
-//   }
-//     if (keyEstimatedBorder==null) {
-//     keyEstimatedBorder = GlobalKey();
-//   }
-//   final RenderBox renderBoxCameraWidgetBorder = keyCameraWidgetBorder.currentContext.findRenderObject();
-//   print("Camera Widget border - ${renderBoxCameraWidgetBorder.size} - ${renderBoxCameraWidgetBorder.semanticBounds}");
-
-//   final RenderBox renderBoxEstimatedBorder = keyEstimatedBorder.currentContext.findRenderObject();
-//   print("Estimated border - ${renderBoxEstimatedBorder.size} - ${renderBoxEstimatedBorder.semanticBounds}");
-// }

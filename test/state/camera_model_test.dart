@@ -4,9 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image/image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 
 import '../constants/test_constants.dart';
 
@@ -44,9 +44,9 @@ void main() {
 
   group('CameraState ->', () {
     setUp(() async {
-      cameraState = CameraState();
       await SharedPreferences.setMockInitialValues({});
       await Redux.init();
+      cameraState = Redux.store.state.cameraState;
       await setMocks();
     });
 
@@ -81,40 +81,48 @@ void main() {
       });
     });
 
-    group('setPhotoSizeProperties()', () {
+    group('cropImageToSudokuBounds()', () {
       Image fullImage;
       group('max res image', () {
         setUp(() async {
+          Redux.store.dispatch(SetCameraStateProperties(
+            screenSize: Size(360.0, 722.7),
+            cameraWidgetBounds: Rect.fromLTRB(32.0, 213.3, 328.0, 509.3),
+          ));
+          cameraState = Redux.store.state.cameraState;
+
           File file = await TestConstants.getImageFileFromAssets("full_photo_max_res.png");
           fullImage = await cameraState.getImageFromFile(file);
-          my_values.screenSize = Size(360.0, 722.7);
-          my_values.cameraWidgetSize = Size(296.0, 296.0);
-          my_values.cameraWidgetRect = Rect.fromLTRB(32.0, 213.3, 328.0, 509.3);
-          cameraState.setPhotoSizeProperties(fullImage);
         });
 
-        test('my_values.fullPhotoSize sets correct values', () async {
-          expect(my_values.fullPhotoSize.width, 2160);
-          expect(my_values.fullPhotoSize.height, 3840);
+        test('screenSize has been set', () async {
+          expect(cameraState.screenSize.width, 360.0);
+          expect(cameraState.screenSize.height, 722.7);
         });
 
-        test('my_values.sudokuPhotoSize sets correct values', () async {
-          expect(my_values.sudokuPhotoSize.width, 1776);
-          expect(my_values.sudokuPhotoSize.height, 1776);
+        test('cameraWidgetBounds has been set', () async {
+          expect(cameraState.cameraWidgetBounds.left, 32.0);
+          expect(cameraState.cameraWidgetBounds.top, 213.3);
+          expect(cameraState.cameraWidgetBounds.right, 328.0);
+          expect(cameraState.cameraWidgetBounds.bottom, 509.3);
+        });
+
+        test('crops sudoku to expected size', () async {
+          Image croppedPhoto = await cameraState.cropImageToSudokuBounds(fullImage);
+          expect(croppedPhoto.width, 1776);
+          expect(croppedPhoto.height, 1573);
         });
       });
       group('medium res image', () {
         setUp(() async {
           File file = await TestConstants.getImageFileFromAssets("full_photo_medium_res.png");
           fullImage = await cameraState.getImageFromFile(file);
-          cameraState.setPhotoSizeProperties(fullImage);
         });
       });
       group('low res image', () {
         setUp(() async {
           File file = await TestConstants.getImageFileFromAssets("full_photo_low_res.png");
           fullImage = await cameraState.getImageFromFile(file);
-          cameraState.setPhotoSizeProperties(fullImage);
         });
       });
     });

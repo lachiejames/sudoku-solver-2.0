@@ -19,7 +19,11 @@ class _CameraWidgetState extends State<CameraWidget> {
       distinct: true,
       converter: (store) => store.state.cameraState,
       builder: (context, cameraState) {
-        final double size = 296;
+        double size = 296.0;
+
+        if (cameraState.screenSize != null && cameraState.cameraWidgetBounds != null) {
+          size = cameraState.cameraWidgetBounds.right - cameraState.cameraWidgetBounds.left;
+        }
 
         return (cameraState.cameraController != null && cameraState.cameraController.value.isInitialized)
             ? Container(
@@ -39,15 +43,6 @@ class _CameraWidgetState extends State<CameraWidget> {
                   ),
                 ),
               )
-            // ? Transform.scale(
-            //     scale: cameraState.cameraController.value.aspectRatio / deviceRatio,
-            //     child: Center(
-            //       child: AspectRatio(
-            //         aspectRatio: cameraState.cameraController.value.aspectRatio,
-            //         child: CameraPreview(cameraState.cameraController),
-            //       ),
-            //     ),
-            //   )
             : Container();
       },
     );

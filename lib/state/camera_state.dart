@@ -8,19 +8,18 @@ import 'package:image/image.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
+import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
-
-File sudokuImageFile;
-// File originalImageFile;
-// File croppedImageFile;
 
 /// All state relating to the Camera
 class CameraState {
   final CameraController cameraController;
+  final Size screenSize;
+  final Rect cameraWidgetBounds;
 
-  CameraState({this.cameraController});
+  CameraState({this.cameraController, this.screenSize, this.cameraWidgetBounds});
 
   Future<String> getUniqueFilePath() async {
     return join((await getApplicationDocumentsDirectory()).path, '${Random().nextDouble()}.png');
@@ -50,83 +49,6 @@ class CameraState {
     return imageFile;
   }
 
-  void setPhotoSizeProperties(Image fullImage) {
-    double cameraAspectRatio = fullImage.height / fullImage.width;
-    double screenAspectRatio = my_values.screenSize.height / my_values.screenSize.width;
-
-    print('cameraAspectRatio=$cameraAspectRatio');
-    print('screenAspectRatio=$screenAspectRatio');
-    // originalImageFile = await this.getFileFromImage(fullImage);
-    
-
-    // Correct photo aspect ratio to match screen
-    if (cameraAspectRatio != screenAspectRatio) {
-      if (cameraAspectRatio < screenAspectRatio) {
-        double requiredWidth = fullImage.height / screenAspectRatio;
-        double requiredX = (fullImage.width - requiredWidth) / 2.0;
-        fullImage = copyCrop(
-          fullImage,
-          requiredX.floor(),
-          0,
-          requiredWidth.floor(),
-          fullImage.height,
-        );
-      } else {
-        int requiredHeight = (fullImage.width * screenAspectRatio).floor();
-        int requiredY = ((fullImage.height - requiredHeight) / 2.0).floor();
-        fullImage = copyCrop(
-          fullImage,
-          0,
-          requiredY,
-          fullImage.width,
-          requiredHeight,
-        );
-      }
-    }
-    // croppedImageFile = await this.getFileFromImage(fullImage);
-
-    cameraAspectRatio = fullImage.height / fullImage.width;
-    screenAspectRatio = my_values.screenSize.height / my_values.screenSize.width;
-
-    print('cameraAspectRatio=$cameraAspectRatio');
-    print('screenAspectRatio=$screenAspectRatio');
-
-    my_values.fullPhotoSize = Size(fullImage.width.toDouble(), fullImage.height.toDouble());
-
-    assert(my_values.cameraWidgetSize != null);
-
-    double screenWidthToPhotoWidthRatio = my_values.fullPhotoSize.width / my_values.screenSize.width;
-    double screenHeightToPhotoHeightRatio = my_values.fullPhotoSize.height / my_values.screenSize.height;
-    print(screenWidthToPhotoWidthRatio);
-    print(screenHeightToPhotoHeightRatio);
-
-    my_values.sudokuPhotoRect = Rect.fromLTRB(
-      screenWidthToPhotoWidthRatio * my_values.cameraWidgetRect.left,
-      screenHeightToPhotoHeightRatio * my_values.cameraWidgetRect.top,
-      screenWidthToPhotoWidthRatio * my_values.cameraWidgetRect.right,
-      screenHeightToPhotoHeightRatio * my_values.cameraWidgetRect.bottom,
-    );
-
-    my_values.sudokuPhotoSize = Size(
-      screenWidthToPhotoWidthRatio * my_values.cameraWidgetSize.width,
-      screenHeightToPhotoHeightRatio * my_values.cameraWidgetSize.height,
-    );
-
-    my_values.tilePhotoSize = Size(
-      my_values.sudokuPhotoSize.width / 9.0,
-      my_values.sudokuPhotoSize.height / 9.0,
-    );
-
-    print('xxx - screenSize=${my_values.screenSize}');
-    print('xxx - cameraWidgetSize=${my_values.cameraWidgetSize}');
-    print('xxx - fullPhotoSize=${my_values.fullPhotoSize}');
-    print('xxx - sudokuPhotoSize=${my_values.sudokuPhotoSize}');
-    print('xxx - tilePhotoSize=${my_values.tilePhotoSize}');
-    print('xxx - cameraWidgetRect=${my_values.cameraWidgetRect}');
-    print('xxx - screenRect=${my_values.screenRect}');
-    print('xxx - sudokuPhotoRect=${my_values.sudokuPhotoRect}');
-  }
-
   Future<Image> getImageFromFile(File file) async {
     return bakeOrientation(decodeImage(file.readAsBytesSync()));
   }
@@ -138,23 +60,33 @@ class CameraState {
   }
 
   Future<Image> cropImageToSudokuBounds(Image fullImage) async {
-    this.setPhotoSizeProperties(fullImage);
+    Size photoToScreenRatio = Size(
+      fullImage.width / this.screenSize.width,
+      fullImage.height / this.screenSize.height,
+    );
+    int x = (photoToScreenRatio.width * this.cameraWidgetBounds.left).floor();
+    int y = (photoToScreenRatio.height * this.cameraWidgetBounds.top).floor();
+    int width = (photoToScreenRatio.width * this.cameraWidgetBounds.right - x).floor();
+    int height = (photoToScreenRatio.height * this.cameraWidgetBounds.bottom - y).floor();
+
+    print('photoToScreenRatio=$photoToScreenRatio, x=$x, y=$y, width=$width, height=$height');
+
     return copyCrop(
       fullImage,
-      my_values.sudokuPhotoRect.left.floor(),
-      my_values.sudokuPhotoRect.top.floor(),
-      my_values.sudokuPhotoSize.width.floor(),
-      my_values.sudokuPhotoSize.height.floor(),
+      x,
+      y,
+      width,
+      height,
     );
   }
 
   Future<Image> cropSudokuImageToTileBounds(Image sudokuImage, TileKey tileKey) async {
     return copyCrop(
       sudokuImage,
-      ((tileKey.col - 1) * my_values.sudokuPhotoSize.width / 9.0).floor(),
-      ((tileKey.row - 1) * my_values.sudokuPhotoSize.height / 9.0).floor(),
-      (my_values.sudokuPhotoSize.width / 9.0).floor(),
-      (my_values.sudokuPhotoSize.height / 9.0).floor(),
+      ((tileKey.col - 1) * sudokuImage.width / 9.0).floor(),
+      ((tileKey.row - 1) * sudokuImage.height / 9.0).floor(),
+      (sudokuImage.width / 9.0).floor(),
+      (sudokuImage.height / 9.0).floor(),
     );
   }
 
@@ -212,17 +144,21 @@ class CameraState {
   Future<void> getSudokuFromCamera() async {
     File fullImageFile = await this.getImageFileFromCamera();
     Image fullImage = await this.getImageFromFile(fullImageFile);
-    print(fullImage.width);
-    print(fullImage.height);
     Image sudokuImage = await this.cropImageToSudokuBounds(fullImage);
-    sudokuImageFile = await this.getFileFromImage(sudokuImage);
-    // HashMap<TileKey, File> tileImageMap = await this.createTileFileMap(sudokuImage);
-    // Sudoku sudoku = await this.getSudokuFromTileImageMap(tileImageMap);
-    // Redux.store.dispatch(PhotoProcessedAction(sudoku));
+
+    HashMap<TileKey, File> tileImageMap = await this.createTileFileMap(sudokuImage);
+
+    Sudoku sudoku = await this.getSudokuFromTileImageMap(tileImageMap);
+
+    Redux.store.dispatch(PhotoProcessedAction(sudoku));
   }
 
-  CameraState copyWith({CameraController cameraController}) {
-    return CameraState(cameraController: cameraController);
+  CameraState copyWith({CameraController cameraController, Size screenSize, Rect cameraWidgetBounds}) {
+    return CameraState(
+      cameraController: cameraController ?? this.cameraController,
+      screenSize: screenSize ?? this.screenSize,
+      cameraWidgetBounds: cameraWidgetBounds ?? this.cameraWidgetBounds,
+    );
   }
 
   static CameraState initCameraState() {

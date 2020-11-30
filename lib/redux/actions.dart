@@ -1,5 +1,7 @@
 import 'dart:collection';
+import 'dart:ui';
 import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
@@ -112,3 +114,12 @@ class StopProcessingPhotoAction {
   StopProcessingPhotoAction();
 }
 
+class SetCameraStateProperties {
+  final Size screenSize;
+  final Rect cameraWidgetBounds;
+
+  SetCameraStateProperties({
+    this.screenSize,
+    this.cameraWidgetBounds,
+  });
+}

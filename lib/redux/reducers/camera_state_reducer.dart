@@ -7,6 +7,7 @@ import 'package:sudoku_solver_2/state/camera_state.dart';
 final Reducer<CameraState> cameraStateReducer = combineReducers<CameraState>([
   TypedReducer<CameraState, CameraReadyAction>(_cameraReadyReducer),
   TypedReducer<CameraState, TakePhotoAction>(_takePhotoReducer),
+  TypedReducer<CameraState, SetCameraStateProperties>(_setCameraStatePropertiesReducer),
 ]);
 
 CameraState _cameraReadyReducer(CameraState cameraState, CameraReadyAction action) {
@@ -15,8 +16,13 @@ CameraState _cameraReadyReducer(CameraState cameraState, CameraReadyAction actio
 
 CancelableOperation cancellableOperation;
 CameraState _takePhotoReducer(CameraState cameraState, TakePhotoAction action) {
-  cancellableOperation = CancelableOperation.fromFuture(
-    cameraState.getSudokuFromCamera()
-  );
+  cancellableOperation = CancelableOperation.fromFuture(cameraState.getSudokuFromCamera());
   return cameraState;
+}
+
+CameraState _setCameraStatePropertiesReducer(CameraState cameraState, SetCameraStateProperties action) {
+  return cameraState.copyWith(
+    screenSize: action.screenSize,
+    cameraWidgetBounds: action.cameraWidgetBounds,
+  );
 }
