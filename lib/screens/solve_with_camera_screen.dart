@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
-import 'package:sudoku_solver_2/redux/actions.dart';
-import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
-import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/sudoku_widget.dart';
 import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/camera_widget.dart';
@@ -14,6 +11,7 @@ import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/retake_photo_bu
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/solve_it_button_widget.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/solve_with_camera_screen_app_bar.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/take_photo_button_widget.dart';
+import 'package:sudoku_solver_2/state/camera_state.dart';
 
 /// Shown when 'camera' is selected from the HomeScreen
 class SolveWithCameraScreen extends StatefulWidget {
@@ -30,6 +28,8 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
       MediaQuery.of(context).size.width,
       MediaQuery.of(context).size.height,
     );
+    print(my_values.screenSize.height);
+    print(my_values.screenSize.width);
 
     my_values.cameraWidgetSize = Size(
       my_values.screenSize.width - 2 * my_values.pad,
@@ -57,13 +57,13 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
   Widget _makeTakingPhotoScreen(GameState gameState) {
     return Stack(
       children: <Widget>[
-        Container(
-          color: my_colors.white,
-          height: my_values.screenSize.height,
-          width: my_values.screenSize.width,
-          alignment: Alignment.center,
-          child: CircularProgressIndicator(),
-        ),
+        // Container(
+        //   color: my_colors.white,
+        //   height: my_values.screenSize.height,
+        //   width: my_values.screenSize.width,
+        //   alignment: Alignment.center,
+        //   child: CircularProgressIndicator(),
+        // ),
 
         // Camera
         CameraWidget(),
@@ -80,6 +80,12 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
               right: BorderSide(width: my_values.horizontalPadding, color: my_colors.pink),
             ),
           ),
+          child: Container(
+            key: keyCameraWidgetBorder,
+            decoration: BoxDecoration(
+              border: Border.all(width: 1, color: Colors.red),
+            ),
+          ),
         ),
 
         // Everything else
@@ -93,6 +99,21 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
             ),
             TakePhotoButtonWidget(),
           ],
+        ),
+
+        // Camera Widget debugging border
+        Container(
+          key: keyEstimatedBorder,
+          height: 300,
+          width: 300,
+          margin: EdgeInsets.only(
+            left: my_values.cameraWidgetRect.left,
+            top: my_values.cameraWidgetRect.top,
+            right: my_values.cameraWidgetRect.right,
+            bottom: my_values.cameraWidgetRect.bottom,
+          ),
+          decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.red)),
+          child: Text('test box'),
         ),
       ],
     );
@@ -116,7 +137,7 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
   @override
   Widget build(BuildContext context) {
     this.initScreenSizeProperties(context);
-    Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
+    // Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
     return StoreConnector<AppState, GameState>(
       distinct: true,
       converter: (store) => store.state.gameState,
@@ -127,7 +148,26 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
           body: SingleChildScrollView(
             child: (gameState == GameState.takingPhoto)
                 ? _makeTakingPhotoScreen(gameState)
-                : _makeVerifyPhotoScreen(gameState),
+                : Column(
+                    children: <Widget>[
+                      RaisedButton(
+                        child: Text('refresh'),
+                        onPressed: () {
+                          setState(() {});
+                        },
+                      ),
+
+                      (sudokuImageFile != null)
+                          ? Center(
+                              child: Container(
+                                height: 300,
+                                width: 300,
+                                child: Image.file(sudokuImageFile),
+                              ),
+                            )
+                          : Container(), //_makeVerifyPhotoScreen(gameState),
+                    ],
+                  ),
           ),
         );
       },
