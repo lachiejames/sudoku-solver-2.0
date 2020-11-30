@@ -8,11 +8,9 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
-import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/camera_widget.dart';
-import 'package:sudoku_solver_2/screens/solve_with_camera_screen.dart';
 
-GlobalKey keyEstimatedBorder = GlobalKey();
-GlobalKey keyCameraWidgetBorder = GlobalKey();
+// GlobalKey keyEstimatedBorder;
+// GlobalKey keyCameraWidgetBorder;
 
 /// Shown when the SolveWithCameraScreen is loaded
 class TakePhotoButtonWidget extends StatefulWidget {
@@ -44,9 +42,7 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
                       _determineText(gameState),
                       style: my_styles.buttonTextStyle,
                     ),
-                    onPressed: () {
-                      getSizes(context);
-                    }, //_determineAction(gameState),
+                    onPressed: () => _determineAction(gameState),
                   ),
                 ),
               )
@@ -100,10 +96,16 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
   }
 }
 
-getSizes(BuildContext buildContext) {
-  final RenderBox renderBoxCameraWidgetBorder = keyCameraWidgetBorder.currentContext.findRenderObject();
-  print("Camera Widget border - ${renderBoxCameraWidgetBorder.size} - ${renderBoxCameraWidgetBorder.semanticBounds}");
+// getSizes(BuildContext buildContext) {
+//   if (keyCameraWidgetBorder==null) {
+//     keyCameraWidgetBorder = GlobalKey();
+//   }
+//     if (keyEstimatedBorder==null) {
+//     keyEstimatedBorder = GlobalKey();
+//   }
+//   final RenderBox renderBoxCameraWidgetBorder = keyCameraWidgetBorder.currentContext.findRenderObject();
+//   print("Camera Widget border - ${renderBoxCameraWidgetBorder.size} - ${renderBoxCameraWidgetBorder.semanticBounds}");
 
-  final RenderBox renderBoxEstimatedBorder = keyEstimatedBorder.currentContext.findRenderObject();
-  print("Estimated border - ${renderBoxEstimatedBorder.size} - ${renderBoxEstimatedBorder.semanticBounds}");
-}
+//   final RenderBox renderBoxEstimatedBorder = keyEstimatedBorder.currentContext.findRenderObject();
+//   print("Estimated border - ${renderBoxEstimatedBorder.size} - ${renderBoxEstimatedBorder.semanticBounds}");
+// }

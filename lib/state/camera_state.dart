@@ -13,6 +13,8 @@ import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
 File sudokuImageFile;
+// File originalImageFile;
+// File croppedImageFile;
 
 /// All state relating to the Camera
 class CameraState {
@@ -54,10 +56,12 @@ class CameraState {
 
     print('cameraAspectRatio=$cameraAspectRatio');
     print('screenAspectRatio=$screenAspectRatio');
+    // originalImageFile = await this.getFileFromImage(fullImage);
+    
 
+    // Correct photo aspect ratio to match screen
     if (cameraAspectRatio != screenAspectRatio) {
       if (cameraAspectRatio < screenAspectRatio) {
-        print('mmm');
         double requiredWidth = fullImage.height / screenAspectRatio;
         double requiredX = (fullImage.width - requiredWidth) / 2.0;
         fullImage = copyCrop(
@@ -68,7 +72,6 @@ class CameraState {
           fullImage.height,
         );
       } else {
-        print('aaa');
         int requiredHeight = (fullImage.width * screenAspectRatio).floor();
         int requiredY = ((fullImage.height - requiredHeight) / 2.0).floor();
         fullImage = copyCrop(
@@ -80,10 +83,10 @@ class CameraState {
         );
       }
     }
+    // croppedImageFile = await this.getFileFromImage(fullImage);
 
-
-         cameraAspectRatio = fullImage.height / fullImage.width;
-     screenAspectRatio = my_values.screenSize.height / my_values.screenSize.width;
+    cameraAspectRatio = fullImage.height / fullImage.width;
+    screenAspectRatio = my_values.screenSize.height / my_values.screenSize.width;
 
     print('cameraAspectRatio=$cameraAspectRatio');
     print('screenAspectRatio=$screenAspectRatio');
@@ -110,8 +113,8 @@ class CameraState {
     );
 
     my_values.tilePhotoSize = Size(
-      fullImage.width.toDouble(),
-      fullImage.height.toDouble(),
+      my_values.sudokuPhotoSize.width / 9.0,
+      my_values.sudokuPhotoSize.height / 9.0,
     );
 
     print('xxx - screenSize=${my_values.screenSize}');
