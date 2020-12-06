@@ -18,10 +18,11 @@ dependencies:
   redux_thunk: ^0.3.0
   shared_preferences: ^0.5.8
   image: ^2.1.12
-  firebase_core: ^0.4.0+9
+  firebase_core: ^0.5.3
   firebase_ml_vision: ^0.9.4
   async: ^2.4.2
   native_device_orientation: ^0.4.3
+  firebase_analytics: ^6.3.0
 
 dev_dependencies:
   test: any
