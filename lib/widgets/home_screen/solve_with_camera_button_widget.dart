@@ -31,7 +31,7 @@ class SolveWithCameraButtonWidget extends StatelessWidget {
           ),
           onPressed: () {
             _navigateToSolveWithCameraScreen(context);
-            // FirebaseAnalytics().logEvent(name: 'solve_with_camera_button', parameters: null);
+            FirebaseAnalytics().logEvent(name: 'solve_with_camera_button', parameters: null);
           },
         ),
       ),
