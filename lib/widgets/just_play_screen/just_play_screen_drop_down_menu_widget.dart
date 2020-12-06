@@ -63,6 +63,7 @@ class JustPlayScreenDropDownMenuWidget extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => JustPlayHelpScreen(),
+        settings: RouteSettings(name: 'JustPlayHelpScreen'),
       ),
     );
   }

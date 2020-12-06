@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
@@ -30,6 +31,7 @@ class SolveWithCameraButtonWidget extends StatelessWidget {
           ),
           onPressed: () {
             _navigateToSolveWithCameraScreen(context);
+            // FirebaseAnalytics().logEvent(name: 'solve_with_camera_button', parameters: null);
           },
         ),
       ),
@@ -41,6 +43,7 @@ class SolveWithCameraButtonWidget extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => SolveWithCameraScreen(),
+        settings: RouteSettings(name: 'SolveWithCameraScreen'),
       ),
     );
   }
