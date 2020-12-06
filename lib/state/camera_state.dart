@@ -13,6 +13,11 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 
+File fullImageGlobal;
+File croppedImageGlobal;
+File sudokuImageGlobal;
+File tileImageGlobal;
+
 /// All state relating to the Camera
 class CameraState {
   final CameraController cameraController;
@@ -86,49 +91,66 @@ class CameraState {
       fullImage.width / this.screenSize.width,
       fullImage.height / this.screenSize.height,
     );
+    print('width=${fullImage.width}, height=${fullImage.height}');
 
-    if (photoToScreenRatio.width != photoToScreenRatio.height) {
-      fullImage = await this.correctFullImage(fullImage, photoToScreenRatio);
-      photoToScreenRatio = Size(
-        fullImage.width / this.screenSize.width,
-        fullImage.height / this.screenSize.height,
-      );
-    }
+    // Crop to aspect ratio if necessary
+    // if (photoToScreenRatio.width != photoToScreenRatio.height) {
+    //   fullImage = await this.correctFullImage(fullImage, photoToScreenRatio);
+    //   photoToScreenRatio = Size(
+    //     fullImage.width / this.screenSize.width,
+    //     fullImage.height / this.screenSize.height,
+    //   );
+    //   croppedImageGlobal = await this.getFileFromImage(fullImage);
+    // }
 
     int x = (photoToScreenRatio.width * this.cameraWidgetBounds.left).floor();
     int y = (photoToScreenRatio.height * this.cameraWidgetBounds.top).floor();
     int width = (photoToScreenRatio.width * this.cameraWidgetBounds.right - x).floor();
     int height = (photoToScreenRatio.height * this.cameraWidgetBounds.bottom - y).floor();
 
-    print('photoToScreenRatio=$photoToScreenRatio, x=$x, y=$y, width=$width, height=$height');
-
     return copyCrop(
       fullImage,
-      x,
-      y,
-      width,
-      height,
+      0, // x,
+      800, // y,
+      fullImage.width, // width,
+      fullImage.width,
     );
   }
 
   Future<Image> cropSudokuImageToTileBounds(Image sudokuImage, TileKey tileKey) async {
+    int tolerance = 10;
+    double x = (tileKey.col - 1) * sudokuImage.width / 9.0;
+    if ((x - tolerance) >= 0) {
+      x -= tolerance;
+    }
+    double y = (tileKey.row - 1) * sudokuImage.height / 9.0;
+        if ((y - tolerance) >= 0) {
+      y -= tolerance;
+    }
+    double width = sudokuImage.width / 9.0 + tolerance;
+    double height = sudokuImage.height / 9.0 + tolerance;
+
     return copyCrop(
       sudokuImage,
-      ((tileKey.col - 1) * sudokuImage.width / 9.0).floor(),
-      ((tileKey.row - 1) * sudokuImage.height / 9.0).floor(),
-      (sudokuImage.width / 9.0).floor(),
-      (sudokuImage.height / 9.0).floor(),
+      x.floor(),
+      y.floor(),
+      width.floor(),
+      height.floor(),
     );
   }
 
   Future<HashMap<TileKey, File>> createTileFileMap(Image sudokuImage) async {
     HashMap<TileKey, File> _tileFileMap = HashMap<TileKey, File>();
-    for (int row = 1; row < 9; row++) {
-      for (int col = 1; col < 9; col++) {
+    for (int row = 1; row <= 9; row++) {
+      for (int col = 1; col <= 9; col++) {
         Image tileImage = await cropSudokuImageToTileBounds(sudokuImage, TileKey(row: row, col: col));
         _tileFileMap[TileKey(row: row, col: col)] = await this.getFileFromImage(tileImage);
+        if (row == 1 && col == 1) {
+          tileImageGlobal = _tileFileMap[TileKey(row: row, col: col)];
+        }
       }
     }
+
     return _tileFileMap;
   }
 
@@ -155,8 +177,6 @@ class CameraState {
         }
       }
     }
-        print(5);
-
 
     return tileValue;
   }
@@ -176,12 +196,13 @@ class CameraState {
 
   Future<void> getSudokuFromCamera() async {
     File fullImageFile = await this.getImageFileFromCamera();
+    fullImageGlobal = fullImageFile;
     Image fullImage = await this.getImageFromFile(fullImageFile);
     Image sudokuImage = await this.cropImageToSudokuBounds(fullImage);
+    sudokuImageGlobal = await this.getFileFromImage(sudokuImage);
+    HashMap<TileKey, File> tileFileMap = await this.createTileFileMap(sudokuImage);
 
-    HashMap<TileKey, File> tileImageMap = await this.createTileFileMap(sudokuImage);
-
-    Sudoku sudoku = await this.getSudokuFromTileImageMap(tileImageMap);
+    Sudoku sudoku = await this.getSudokuFromTileImageMap(tileFileMap);
 
     Redux.store.dispatch(PhotoProcessedAction(sudoku));
   }

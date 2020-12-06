@@ -1,10 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
-import 'dart:ui';
-
 import 'package:camera/camera.dart';
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/services.dart';
 
 import 'my_solved_games.dart' as my_solved_games;
@@ -76,26 +73,26 @@ class TestConstants {
   static final String game1TilesInSegment2String =
       '[TileState(row=1, col=4, value=5, isSelected=false, isOriginalTile=false, isinvalid=false), TileState(row=1, col=5, value=4, isSelected=false, isOriginalTile=false, isinvalid=false), TileState(row=1, col=6, value=3, isSelected=false, isOriginalTile=false, isinvalid=false), TileState(row=2, col=4, value=null, isSelected=false, isOriginalTile=false, isinvalid=false), TileState(row=2, col=5, value=null, isSelected=false, isOriginalTile=false, isinvalid=false), TileState(row=2, col=6, value=null, isSelected=false, isOriginalTile=false, isinvalid=false), TileState(row=3, col=4, value=6, isSelected=false, isOriginalTile=false, isinvalid=false), TileState(row=3, col=5, value=null, isSelected=false, isOriginalTile=false, isinvalid=false), TileState(row=3, col=6, value=null, isSelected=false, isOriginalTile=false, isinvalid=false)]';
 
-  static final List<TextElement> game1TextElements = [
-    MockTextElement('9', Rect.fromLTRB(137.0, 553.0, 194.0, 601.0)),
-    MockTextElement('8', Rect.fromLTRB(224.0, 552.0, 248.0, 588.0)),
-    MockTextElement('1', Rect.fromLTRB(264.0, 480.0, 308.0, 533.0)),
-    MockTextElement('9', Rect.fromLTRB(338.0, 481.0, 375.0, 534.0)),
-    MockTextElement('5', Rect.fromLTRB(392.0, 481.0, 438.0, 534.0)),
-    MockTextElement('6', Rect.fromLTRB(516.0, 544.0, 563.0, 593.0)),
-    MockTextElement('3', Rect.fromLTRB(603.0, 612.0, 634.0, 663.0)),
-    MockTextElement('6', Rect.fromLTRB(330.0, 612.0, 374.0, 650.0)),
-    MockTextElement('2', Rect.fromLTRB(329.0, 731.0, 373.0, 783.0)),
-    MockTextElement('2', Rect.fromLTRB(438.0, 793.0, 502.0, 851.0)),
-    MockTextElement('8', Rect.fromLTRB(529.0, 792.0, 569.0, 849.0)),
-    MockTextElement('1', Rect.fromLTRB(354.0, 864.0, 373.0, 902.0)),
-    MockTextElement('9', Rect.fromLTRB(401.0, 859.0, 446.0, 913.0)),
-    MockTextElement('8', Rect.fromLTRB(327.0, 918.0, 379.0, 978.0)),
-    MockTextElement('6', Rect.fromLTRB(133.0, 792.0, 185.0, 848.0)),
-    MockTextElement('5', Rect.fromLTRB(591.0, 856.0, 652.0, 915.0)),
-    MockTextElement('7', Rect.fromLTRB(503.0, 919.0, 576.0, 977.0)),
-    MockTextElement('9', Rect.fromLTRB(594.0, 918.0, 634.0, 975.0)),
-  ];
+  // static final List<TextElement> game1TextElements = [
+  //   MockTextElement('9', Rect.fromLTRB(137.0, 553.0, 194.0, 601.0)),
+  //   MockTextElement('8', Rect.fromLTRB(224.0, 552.0, 248.0, 588.0)),
+  //   MockTextElement('1', Rect.fromLTRB(264.0, 480.0, 308.0, 533.0)),
+  //   MockTextElement('9', Rect.fromLTRB(338.0, 481.0, 375.0, 534.0)),
+  //   MockTextElement('5', Rect.fromLTRB(392.0, 481.0, 438.0, 534.0)),
+  //   MockTextElement('6', Rect.fromLTRB(516.0, 544.0, 563.0, 593.0)),
+  //   MockTextElement('3', Rect.fromLTRB(603.0, 612.0, 634.0, 663.0)),
+  //   MockTextElement('6', Rect.fromLTRB(330.0, 612.0, 374.0, 650.0)),
+  //   MockTextElement('2', Rect.fromLTRB(329.0, 731.0, 373.0, 783.0)),
+  //   MockTextElement('2', Rect.fromLTRB(438.0, 793.0, 502.0, 851.0)),
+  //   MockTextElement('8', Rect.fromLTRB(529.0, 792.0, 569.0, 849.0)),
+  //   MockTextElement('1', Rect.fromLTRB(354.0, 864.0, 373.0, 902.0)),
+  //   MockTextElement('9', Rect.fromLTRB(401.0, 859.0, 446.0, 913.0)),
+  //   MockTextElement('8', Rect.fromLTRB(327.0, 918.0, 379.0, 978.0)),
+  //   MockTextElement('6', Rect.fromLTRB(133.0, 792.0, 185.0, 848.0)),
+  //   MockTextElement('5', Rect.fromLTRB(591.0, 856.0, 652.0, 915.0)),
+  //   MockTextElement('7', Rect.fromLTRB(503.0, 919.0, 576.0, 977.0)),
+  //   MockTextElement('9', Rect.fromLTRB(594.0, 918.0, 634.0, 975.0)),
+  // ];
 
   static String _tempDirectory;
   static Future<String> getTempDirectory() async {
@@ -141,22 +138,11 @@ class TestConstants {
       ResolutionPreset.max,
     );
   }
-}
 
-class MockTextElement implements TextElement {
-  final String text;
-  final Rect boundingBox;
-  MockTextElement(
-    this.text,
-    this.boundingBox,
-  );
-
-  @override
-  double get confidence => throw UnimplementedError();
-
-  @override
-  List<Offset> get cornerPoints => throw UnimplementedError();
-
-  @override
-  List<RecognizedLanguage> get recognizedLanguages => throw UnimplementedError();
+  static dynamic getMockVisionText(String value) {
+    return <dynamic, dynamic>{
+      'text': 'Hey!',
+      'blocks': [],
+    };
+  }
 }

@@ -25,13 +25,13 @@ void main() {
       return null;
     });
 
-    // const MethodChannel('plugins.flutter.io/firebase_ml_vision')
-    //     .setMockMethodCallHandler((MethodCall methodCall) async {
-    //   if (methodCall.method == 'TextRecognizer#processImage') {
-    //     return {};
-    //   }
-    //   return null;
-    // });
+    const MethodChannel('plugins.flutter.io/firebase_ml_vision')
+        .setMockMethodCallHandler((MethodCall methodCall) async {
+      if (methodCall.method == 'TextRecognizer#processImage') {
+        return TestConstants.getMockVisionText('5');
+      }
+      return null;
+    });
 
     const MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler((MethodCall methodCall) async {
       if (methodCall.method == 'takePicture') {
@@ -308,12 +308,12 @@ void main() {
         Image fullImage = await cameraState.getImageFromFile(file);
         sudokuImage = await cameraState.cropImageToSudokuBounds(fullImage);
       });
-      // test('for image with no text, returns null', () async {
-      //   HashMap<TileKey, File> tileFileMap = await cameraState.createTileFileMap(sudokuImage);
-      //   File fileToBeRead = tileFileMap[TileKey(row: 1, col: 1)];
-      //   int value = await cameraState.getValueFromTileImageFile(fileToBeRead);
-      //   expect(value, 5);
-      // });
+      test('for image with no text, returns null', () async {
+        HashMap<TileKey, File> tileFileMap = await cameraState.createTileFileMap(sudokuImage);
+        File fileToBeRead = tileFileMap[TileKey(row: 1, col: 1)];
+        int value = await cameraState.getValueFromTileImageFile(fileToBeRead);
+        expect(value, null);
+      });
       test('for image with text="5", returns 5', () {});
       test('for image with text="1", returns 1', () {});
     });
