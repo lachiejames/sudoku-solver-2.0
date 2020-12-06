@@ -2,6 +2,8 @@
 
 library my_values;
 
+import 'package:firebase_analytics/firebase_analytics.dart';
+
 // Used for positioning CameraWidget
 final double pad = 32;
 double verticalPadding;
@@ -20,3 +22,5 @@ final double numberFontSize = 15;
 
 // Solving will time out after this time has elapsed
 final int maxSolveTime = 30000;
+
+final FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics();

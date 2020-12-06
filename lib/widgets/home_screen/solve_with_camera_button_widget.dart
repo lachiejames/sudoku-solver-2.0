@@ -43,7 +43,6 @@ class SolveWithCameraButtonWidget extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => SolveWithCameraScreen(),
-        settings: RouteSettings(name: 'SolveWithCameraScreen'),
       ),
     );
   }

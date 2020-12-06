@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
@@ -21,6 +22,12 @@ class SolveWithCameraScreen extends StatefulWidget {
 }
 
 class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
+    @override
+  void initState() {
+    super.initState();
+    my_values.firebaseAnalytics.setCurrentScreen(screenName: 'SolveWithCameraScreen');
+  }
+
   Widget _makeTakingPhotoScreen(GameState gameState) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

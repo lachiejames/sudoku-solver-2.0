@@ -41,7 +41,6 @@ class JustPlayButtonWidget extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => JustPlayScreen(),
-        settings: RouteSettings(name: 'JustPlayScreen'),
       ),
     );
   }

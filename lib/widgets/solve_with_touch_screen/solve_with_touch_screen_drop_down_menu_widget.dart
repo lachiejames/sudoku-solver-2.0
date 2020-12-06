@@ -67,7 +67,6 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => SolveWithTouchHelpScreen(),
-        settings: RouteSettings(name: 'SolveWithTouchHelpScreen'),
       ),
     );
   }

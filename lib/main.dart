@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -47,6 +48,7 @@ Future<void> _initCamera() async {
 /// Builds/rebuilds the app
 Future<void> restartApp() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
   await Redux.init();
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
@@ -69,10 +71,10 @@ class MyApp extends StatelessWidget {
     return StoreProvider<AppState>(
       store: Redux.store,
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Sudoku Solver',
         debugShowCheckedModeBanner: false,
         navigatorObservers: <NavigatorObserver>[
-          FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
+          FirebaseAnalyticsObserver(analytics: my_values.firebaseAnalytics),
         ],
         theme: ThemeData(
           primaryColor: my_colors.blue,
