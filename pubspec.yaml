@@ -9,28 +9,23 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  camera: 
-    git:
-      url: https://github.com/lachiejames/plugins.git
-  cupertino_icons: ^0.1.3
-  flutter_redux: ^0.6.0
-  path_provider: any
-  redux_thunk: ^0.3.0
-  shared_preferences: ^0.5.8
-  image: ^2.1.12
-  firebase_core: ^0.5.3
-  firebase_ml_vision: ^0.9.4
   async: ^2.4.2
-  native_device_orientation: ^0.4.3
+  camera: ^0.5.8+17
   firebase_analytics: ^6.3.0
+  firebase_core: ^0.5.3
+  firebase_ml_vision: ^0.9.10
+  flutter_redux: ^0.7.0
+  image: ^2.1.19
+  path_provider: ^1.6.24
+  redux_thunk: ^0.3.0
+  shared_preferences: ^0.5.12+4
 
 dev_dependencies:
-  test: any
   flutter_test:
     sdk: flutter
   flutter_driver:
     sdk: flutter
-  mockito: ^4.1.1
+  test: any
   effective_dart: ^1.0.0
 
 flutter:
