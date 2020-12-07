@@ -103,10 +103,10 @@ class CameraState {
     //   croppedImageGlobal = await this.getFileFromImage(fullImage);
     // }
 
-    int x = (photoToScreenRatio.width * this.cameraWidgetBounds.left).floor();
-    int y = (photoToScreenRatio.height * this.cameraWidgetBounds.top).floor();
-    int width = (photoToScreenRatio.width * this.cameraWidgetBounds.right - x).floor();
-    int height = (photoToScreenRatio.height * this.cameraWidgetBounds.bottom - y).floor();
+    // int x = (photoToScreenRatio.width * this.cameraWidgetBounds.left).floor();
+    // int y = (photoToScreenRatio.height * this.cameraWidgetBounds.top).floor();
+    // int width = (photoToScreenRatio.width * this.cameraWidgetBounds.right - x).floor();
+    // int height = (photoToScreenRatio.height * this.cameraWidgetBounds.bottom - y).floor();
 
     return copyCrop(
       fullImage,

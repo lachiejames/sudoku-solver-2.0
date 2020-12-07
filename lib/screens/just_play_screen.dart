@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -21,12 +20,6 @@ class JustPlayScreen extends StatefulWidget {
 }
 
 class _JustPlayScreenState extends State<JustPlayScreen> {
-  @override
-  void initState() {
-    super.initState();
-    my_values.firebaseAnalytics.setCurrentScreen(screenName: 'JustPlayScreen');
-  }
-
   @override
   Widget build(BuildContext context) {
     Redux.store.dispatch(ChangeScreenAction(ScreenState.justPlayScreen));

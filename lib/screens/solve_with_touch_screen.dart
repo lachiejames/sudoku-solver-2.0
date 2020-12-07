@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
@@ -19,12 +18,6 @@ class SolveWithTouchScreen extends StatefulWidget {
 }
 
 class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
-  @override
-  void initState() {
-    super.initState();
-    my_values.firebaseAnalytics.setCurrentScreen(screenName: 'SolveWithTouchScreen');
-  }
-
   @override
   Widget build(BuildContext context) {
     Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithTouchScreen));

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
@@ -19,8 +18,6 @@ class SolveWithCameraHelpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    my_values.firebaseAnalytics.setCurrentScreen(screenName: 'SolveWithCameraHelpScreen');
-
     Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraHelpScreen));
 
     return Scaffold(

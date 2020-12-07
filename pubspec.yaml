@@ -11,8 +11,8 @@ dependencies:
     sdk: flutter
   async: ^2.4.2
   camera: ^0.5.8+17
-  firebase_analytics: ^6.3.0
-  firebase_core: ^0.5.3
+  firebase_analytics: ^5.0.11
+  firebase_core: ^0.4.4+3
   firebase_ml_vision: ^0.9.10
   flutter_redux: ^0.7.0
   image: ^2.1.19

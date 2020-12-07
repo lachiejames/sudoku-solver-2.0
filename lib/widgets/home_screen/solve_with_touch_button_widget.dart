@@ -41,6 +41,7 @@ class SolveWithTouchButtonWidget extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => SolveWithTouchScreen(),
+        settings: RouteSettings(name: '/solve-with-touch'),
       ),
     );
   }

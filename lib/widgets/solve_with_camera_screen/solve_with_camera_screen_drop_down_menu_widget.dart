@@ -63,6 +63,7 @@ class SolveWithCameraScreenDropDownMenuWidget extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => SolveWithCameraHelpScreen(),
+        settings: RouteSettings(name: '/solve-with-camera/help'),
       ),
     );
   }
