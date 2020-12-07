@@ -28,16 +28,16 @@ class SolveWithTouchButtonWidget extends StatelessWidget {
             my_strings.solveWithTouchButtonText,
             style: my_styles.buttonTextStyle,
           ),
-          onPressed: () {
-            _navigateToSolveWithTouchScreen(context);
+          onPressed: () async {
+            await _navigateToSolveWithTouchScreen(context);
           },
         ),
       ),
     );
   }
 
-  void _navigateToSolveWithTouchScreen(BuildContext context) {
-    Navigator.push(
+  Future<void> _navigateToSolveWithTouchScreen(BuildContext context) async {
+    await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => SolveWithTouchScreen(),

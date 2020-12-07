@@ -19,8 +19,8 @@ class JustPlayScreenDropDownMenuWidget extends StatelessWidget {
       ),
       style: my_styles.dropDownMenuTextStyle,
       items: _createDropdownMenuItems(),
-      onChanged: (value) {
-        this._performAction(value, context);
+      onChanged: (value) async {
+        await this._performAction(value, context);
       },
     );
   }
@@ -46,11 +46,11 @@ class JustPlayScreenDropDownMenuWidget extends StatelessWidget {
     );
   }
 
-  void _performAction(String value, BuildContext context) {
+  void _performAction(String value, BuildContext context) async {
     if (value == my_strings.dropDownMenuOption1) {
       _restart();
     } else if (value == my_strings.dropDownMenuOption2) {
-      _navigateToJustPlayHelpScreen(context);
+      await _navigateToJustPlayHelpScreen(context);
     }
   }
 
@@ -58,8 +58,8 @@ class JustPlayScreenDropDownMenuWidget extends StatelessWidget {
     Redux.store.dispatch(RestartAction());
   }
 
-  void _navigateToJustPlayHelpScreen(BuildContext context) {
-    Navigator.push(
+  void _navigateToJustPlayHelpScreen(BuildContext context) async {
+    await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => JustPlayHelpScreen(),

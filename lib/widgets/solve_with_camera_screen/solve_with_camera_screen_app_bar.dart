@@ -33,12 +33,11 @@ class SolveWithCameraScreenAppBar extends StatelessWidget implements PreferredSi
         ),
       ],
       leading: IconButton(
-        onPressed: () {
+        onPressed: () async {
           Redux.store.dispatch(ChangeScreenAction(ScreenState.homeScreen));
-          Navigator.pop(context);
+          await Navigator.pop(context);
         },
-        icon:
-            (Platform.isAndroid) ? const Icon(Icons.arrow_back) : const Icon(Icons.arrow_back_ios),
+        icon: (Platform.isAndroid) ? const Icon(Icons.arrow_back) : const Icon(Icons.arrow_back_ios),
       ),
     );
   }

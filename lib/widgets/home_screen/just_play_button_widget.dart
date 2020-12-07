@@ -28,16 +28,16 @@ class JustPlayButtonWidget extends StatelessWidget {
             my_strings.justPlayButtonText,
             style: my_styles.buttonTextStyle,
           ),
-          onPressed: () {
-            _navigateToJustPlayScreen(context);
+          onPressed: () async {
+            await _navigateToJustPlayScreen(context);
           },
         ),
       ),
     );
   }
 
-  void _navigateToJustPlayScreen(BuildContext context) {
-    Navigator.push(
+  Future<void> _navigateToJustPlayScreen(BuildContext context) async {
+    await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => JustPlayScreen(),

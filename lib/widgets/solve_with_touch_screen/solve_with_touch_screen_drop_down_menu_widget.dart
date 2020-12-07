@@ -20,8 +20,8 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
       ),
       style: my_styles.dropDownMenuTextStyle,
       items: _createDropdownMenuItems(),
-      onChanged: (value) {
-        this._performAction(value, context);
+      onChanged: (value) async {
+        await this._performAction(value, context);
       },
     );
   }
@@ -47,11 +47,11 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
     );
   }
 
-  void _performAction(String value, BuildContext context) {
+  void _performAction(String value, BuildContext context) async {
     if (value == my_strings.dropDownMenuOption1) {
       _restart();
     } else if (value == my_strings.dropDownMenuOption2) {
-      _navigateToSolveWithTouchHelpScreen(context);
+      await _navigateToSolveWithTouchHelpScreen(context);
     }
   }
 
@@ -62,8 +62,8 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
     Redux.store.dispatch(RestartAction());
   }
 
-  void _navigateToSolveWithTouchHelpScreen(BuildContext context) {
-    Navigator.push(
+  Future<void> _navigateToSolveWithTouchHelpScreen(BuildContext context) async {
+    await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => SolveWithTouchHelpScreen(),

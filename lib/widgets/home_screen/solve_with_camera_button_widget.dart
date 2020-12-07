@@ -28,16 +28,16 @@ class SolveWithCameraButtonWidget extends StatelessWidget {
             my_strings.solveWithCameraButtonText,
             style: my_styles.buttonTextStyle,
           ),
-          onPressed: () {
-            _navigateToSolveWithCameraScreen(context);
+          onPressed: () async {
+            await _navigateToSolveWithCameraScreen(context);
           },
         ),
       ),
     );
   }
 
-  void _navigateToSolveWithCameraScreen(BuildContext context) {
-    Navigator.push(
+  Future<void> _navigateToSolveWithCameraScreen(BuildContext context) async {
+    await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => SolveWithCameraScreen(),
