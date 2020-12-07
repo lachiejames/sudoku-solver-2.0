@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/widgets/just_play_screen/just_play_screen_drop_down_menu_widget.dart';
 
 /// AppBar shown on the help screens
@@ -27,6 +29,13 @@ class HelpScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ],
+      leading: IconButton(
+        onPressed: () async {
+          await Navigator.pop(context);
+          await my_values.firebaseAnalytics.logEvent(name: 'button_back');
+        },
+        icon: (Platform.isAndroid) ? const Icon(Icons.arrow_back) : const Icon(Icons.arrow_back_ios),
+      ),
     );
   }
 
