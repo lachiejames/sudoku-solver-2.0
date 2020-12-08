@@ -27,4 +27,6 @@ final int maxSolveTime = 30000;
 final FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics();
 
 final FirebasePerformance firebasePerformance = FirebasePerformance.instance;
-final Trace solveMySudokuTrace = firebasePerformance.newTrace("solve-my-sudoku");
+final Trace solveMySudokuButtonPressedTrace = firebasePerformance.newTrace("solve-my-sudoku-button-pressed");
+final Trace takePhotoButtonPressedTrace = firebasePerformance.newTrace("take-photo-button-pressed");
+final Trace yesSolveItButtonPressedTrace = firebasePerformance.newTrace("yes-solve-it-button-pressed");

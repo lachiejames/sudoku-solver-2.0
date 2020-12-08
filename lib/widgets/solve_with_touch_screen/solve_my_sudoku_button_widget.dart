@@ -102,7 +102,7 @@ class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
         Redux.store.dispatch(RestartAction());
         break;
       default:
-        await my_values.solveMySudokuTrace.start();
+        await my_values.solveMySudokuButtonPressedTrace.start();
         Redux.store.dispatch(SolveSudokuAction());
     }
   }

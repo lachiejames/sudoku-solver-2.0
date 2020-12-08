@@ -12,6 +12,7 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 
 File fullImageGlobal;
 File croppedImageGlobal;
@@ -124,7 +125,7 @@ class CameraState {
       x -= tolerance;
     }
     double y = (tileKey.row - 1) * sudokuImage.height / 9.0;
-        if ((y - tolerance) >= 0) {
+    if ((y - tolerance) >= 0) {
       y -= tolerance;
     }
     double width = sudokuImage.width / 9.0 + tolerance;
@@ -205,6 +206,8 @@ class CameraState {
     Sudoku sudoku = await this.getSudokuFromTileImageMap(tileFileMap);
 
     Redux.store.dispatch(PhotoProcessedAction(sudoku));
+
+    my_values.takePhotoButtonPressedTrace.stop();
   }
 
   CameraState copyWith({CameraController cameraController, Size screenSize, Rect cameraWidgetBounds}) {

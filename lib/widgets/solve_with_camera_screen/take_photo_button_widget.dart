@@ -41,7 +41,7 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
                         style: my_styles.buttonTextStyle,
                       ),
                       onPressed: () async {
-                        _determineAction(gameState, context);
+                        await _determineAction(gameState, context);
                         await my_values.firebaseAnalytics.logEvent(name: 'button_take_photo');
                       }),
                 ),
@@ -84,7 +84,7 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
     }
   }
 
-  void _determineAction(GameState gameState, BuildContext context) {
+  Future<void> _determineAction(GameState gameState, BuildContext context) async {
     Size screenSize = MediaQuery.of(context).size;
     double verticalPadding = (screenSize.height - 296) / 2;
     double horizontalPadding = my_values.pad;
@@ -95,6 +95,8 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
         Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
         break;
       default:
+        await my_values.takePhotoButtonPressedTrace.start();
+
         Redux.store.dispatch(
           SetCameraStateProperties(
             screenSize: MediaQuery.of(context).size,

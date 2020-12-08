@@ -64,8 +64,8 @@ class _SolveItButtonWidgetState extends State<SolveItButtonWidget> {
                           return null;
                         }
 
-                        _determineAction(gameState);
-            await my_values.firebaseAnalytics.logEvent(name: 'button_yes_solve_it');
+                        await _determineAction(gameState);
+                        await my_values.firebaseAnalytics.logEvent(name: 'button_yes_solve_it');
                       }),
                 ),
               )
@@ -96,7 +96,7 @@ class _SolveItButtonWidgetState extends State<SolveItButtonWidget> {
     }
   }
 
-  void _determineAction(GameState gameState) {
+  Future<void> _determineAction(GameState gameState) async {
     switch (gameState) {
       case GameState.isSolving:
         Redux.store.dispatch(StopSolvingSudokuAction());
@@ -105,6 +105,7 @@ class _SolveItButtonWidgetState extends State<SolveItButtonWidget> {
         Redux.store.dispatch(RestartAction());
         break;
       default:
+        await my_values.yesSolveItButtonPressedTrace.start();
         Redux.store.dispatch(SolveSudokuAction());
     }
   }
