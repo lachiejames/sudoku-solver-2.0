@@ -91,6 +91,7 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
 
     switch (gameState) {
       case GameState.processingPhoto:
+        await my_values.takePhotoButtonPressedTrace.incrementMetric('stop-constructing-button-pressed', 1);
         Redux.store.dispatch(StopProcessingPhotoAction());
         Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
         break;

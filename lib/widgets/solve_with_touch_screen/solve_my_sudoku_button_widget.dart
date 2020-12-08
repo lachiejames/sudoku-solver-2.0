@@ -96,6 +96,7 @@ class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
   Future<void> _determineAction(GameState gameState) async {
     switch (gameState) {
       case GameState.isSolving:
+        await my_values.solveMySudokuButtonPressedTrace.incrementMetric('stop-solving-button-pressed', 1);
         Redux.store.dispatch(StopSolvingSudokuAction());
         break;
       case GameState.solved:
