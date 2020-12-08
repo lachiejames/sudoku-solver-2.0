@@ -61,8 +61,8 @@ class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
                   return null;
                 }
 
-                _determineAction(gameState);
-            await my_values.firebaseAnalytics.logEvent(name: 'button_solve_my_sudoku');
+                await _determineAction(gameState);
+                await my_values.firebaseAnalytics.logEvent(name: 'button_solve_my_sudoku');
               },
             ),
           ),
@@ -93,7 +93,7 @@ class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
     }
   }
 
-  void _determineAction(GameState gameState) {
+  Future<void> _determineAction(GameState gameState) async {
     switch (gameState) {
       case GameState.isSolving:
         Redux.store.dispatch(StopSolvingSudokuAction());
@@ -102,6 +102,7 @@ class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
         Redux.store.dispatch(RestartAction());
         break;
       default:
+        await my_values.solveMySudokuTrace.start();
         Redux.store.dispatch(SolveSudokuAction());
     }
   }

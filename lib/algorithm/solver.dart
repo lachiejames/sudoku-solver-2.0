@@ -4,6 +4,7 @@ import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 
 /// An algorithm for solving 'constraint satisfaction problems', like a Sudoku
 bool backtracking(Sudoku sudoku) {
@@ -48,6 +49,7 @@ Future<Sudoku> solveSudokuAsync(Sudoku sudoku) async {
     (solvedSudoku) {
       if (solvedSudoku.isFull() && solvedSudoku.allConstraintsSatisfied()) {
         Redux.store.dispatch(SudokuSolvedAction(solvedSudoku));
+        my_values.solveMySudokuTrace.stop();
       }
     },
   );

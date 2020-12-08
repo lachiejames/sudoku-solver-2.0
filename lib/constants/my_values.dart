@@ -3,6 +3,7 @@
 library my_values;
 
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 
 // Used for positioning CameraWidget
 final double pad = 32;
@@ -24,3 +25,6 @@ final double numberFontSize = 15;
 final int maxSolveTime = 30000;
 
 final FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics();
+
+final FirebasePerformance firebasePerformance = FirebasePerformance.instance;
+final Trace solveMySudokuTrace = firebasePerformance.newTrace("solve-my-sudoku");

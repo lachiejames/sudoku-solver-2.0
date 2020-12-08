@@ -25,6 +25,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 apply plugin: 'com.google.firebase.crashlytics' // required for crashlytics
+apply plugin: 'com.google.firebase.firebase-perf' // required for performance monitoring
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
@@ -62,8 +63,9 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.google.android.gms:play-services-vision:20.1.1'
-    implementation 'com.google.android.gms:play-services-vision-common:19.1.1'
-    implementation 'com.google.android.gms:play-services-vision-image-label:18.0.5'
-    implementation 'com.google.firebase:firebase-ml-vision:24.1.0'
+    implementation 'com.google.android.gms:play-services-vision:20.1.1' // required to resolve dependency conflicts
+    implementation 'com.google.android.gms:play-services-vision-common:19.1.1' // required to resolve dependency conflicts
+    implementation 'com.google.android.gms:play-services-vision-image-label:18.0.5' // required to resolve dependency conflicts
+    implementation 'com.google.firebase:firebase-ml-vision:24.1.0' // required for mlkit
+    implementation 'com.google.firebase:firebase-perf:19.0.7' // required for performance monitoring
 }
