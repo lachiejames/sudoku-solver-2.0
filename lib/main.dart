@@ -50,7 +50,7 @@ Future<void> _initCamera() async {
 Future<void> restartApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true); // send crash reports during debugging
 
   await Redux.init();
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();

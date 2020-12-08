@@ -4,7 +4,6 @@ import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
 import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/screens/solve_with_touch_screen.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 /// Lives on the HomeScreen, navigating users to the SolveWithTouchButtonWidget
 class SolveWithTouchButtonWidget extends StatelessWidget {
@@ -31,7 +30,6 @@ class SolveWithTouchButtonWidget extends StatelessWidget {
             style: my_styles.buttonTextStyle,
           ),
           onPressed: () async {
-            FirebaseCrashlytics.instance.crash();
             await _navigateToSolveWithTouchScreen(context);
             await my_values.firebaseAnalytics.logEvent(name: 'button_solve_with_touch');
           },
