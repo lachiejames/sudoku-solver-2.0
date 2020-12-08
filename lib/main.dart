@@ -1,4 +1,6 @@
 import 'package:camera/camera.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +49,8 @@ Future<void> _initCamera() async {
 /// Builds/rebuilds the app
 Future<void> restartApp() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
 
   await Redux.init();
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
