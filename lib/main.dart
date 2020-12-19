@@ -1,20 +1,22 @@
 import 'package:camera/camera.dart';
+import 'package:firebase_admob/firebase_admob.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
-import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_driver/driver_extension.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/constants/mocks.dart';
+import 'package:sudoku_solver_2/constants/my_ad_helper.dart' as my_ad_helper;
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/home_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
-import 'package:flutter_driver/driver_extension.dart';
 
 Future<void> main() async {
   // Allows us to run integration tests
@@ -51,6 +53,7 @@ Future<void> restartApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true); // send crash reports during debugging
+  await FirebaseAdMob.instance.initialize(appId: my_ad_helper.appIdForAdMob);
 
   await Redux.init();
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();

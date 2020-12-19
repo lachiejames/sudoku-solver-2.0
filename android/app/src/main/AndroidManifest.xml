@@ -9,6 +9,12 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="sudoku_solver_2"
         android:icon="@mipmap/ic_launcher">
+
+        <!-- required for AdMob -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-6687326312027109~4201385146"/>
+            
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -33,6 +39,7 @@
               android:name="io.flutter.embedding.android.SplashScreenDrawable"
               android:resource="@drawable/launch_background"
               />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

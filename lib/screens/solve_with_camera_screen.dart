@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/my_ad_helper.dart' as my_ad_helper;
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/sudoku_widget.dart';
@@ -20,6 +21,21 @@ class SolveWithCameraScreen extends StatefulWidget {
 }
 
 class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    my_ad_helper.bannerAd
+      ..load()
+      ..show();
+  }
+
+  @override
+  void dispose() {
+    my_ad_helper.bannerAd?.dispose();
+    super.dispose();
+  }
+
   Widget _makeTakingPhotoScreen(GameState gameState) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
