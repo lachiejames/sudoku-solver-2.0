@@ -21,18 +21,15 @@ class SolveWithCameraScreen extends StatefulWidget {
 }
 
 class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
-
   @override
   void initState() {
     super.initState();
-    my_ad_helper.bannerAd
-      ..load()
-      ..show();
+    my_ad_helper.showNewBannerAd();
   }
 
   @override
   void dispose() {
-    my_ad_helper.bannerAd?.dispose();
+    my_ad_helper.disposeBannerAd();
     super.dispose();
   }
 

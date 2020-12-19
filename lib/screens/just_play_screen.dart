@@ -24,16 +24,15 @@ class _JustPlayScreenState extends State<JustPlayScreen> {
   @override
   void initState() {
     super.initState();
-    my_ad_helper.bannerAd
-      ..load()
-      ..show();
+    my_ad_helper.showNewBannerAd();
   }
 
   @override
   void dispose() {
-    my_ad_helper.bannerAd?.dispose();
+    my_ad_helper.disposeBannerAd();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     Redux.store.dispatch(ChangeScreenAction(ScreenState.justPlayScreen));
