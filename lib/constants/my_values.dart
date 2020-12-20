@@ -14,7 +14,7 @@ int appBarHeight = 56;
 // UI stuff
 final double topTextFontSize = 40;
 final double appBarFontSize = 25;
-final double howToTextFontSize = 40;
+final double howToTextFontSize = 30;
 final double buttonTextFontSize = 40;
 final double dropDownMenuFontSize = 40;
 final double toastFontSize = 15;
