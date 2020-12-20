@@ -14,7 +14,8 @@ class RetakePhotoButtonWidget extends StatefulWidget {
   RetakePhotoButtonWidget({Key key}) : super(key: key);
 
   @override
-  _RetakePhotoButtonWidgetState createState() => _RetakePhotoButtonWidgetState();
+  _RetakePhotoButtonWidgetState createState() =>
+      _RetakePhotoButtonWidgetState();
 }
 
 class _RetakePhotoButtonWidgetState extends State<RetakePhotoButtonWidget> {
@@ -27,7 +28,7 @@ class _RetakePhotoButtonWidgetState extends State<RetakePhotoButtonWidget> {
         return (gameState == GameState.photoProcessed)
             ? Container(
                 alignment: Alignment.center,
-                margin: my_styles.buttonMargins,
+                margin: EdgeInsets.all(0),
                 child: Directionality(
                   textDirection: TextDirection.ltr,
                   child: RaisedButton(
@@ -40,7 +41,8 @@ class _RetakePhotoButtonWidgetState extends State<RetakePhotoButtonWidget> {
                     ),
                     onPressed: () async {
                       Redux.store.dispatch(RetakePhotoAction());
-            await my_values.firebaseAnalytics.logEvent(name: 'button_retake_photo');
+                      await my_values.firebaseAnalytics
+                          .logEvent(name: 'button_retake_photo');
                     },
                   ),
                 ),
