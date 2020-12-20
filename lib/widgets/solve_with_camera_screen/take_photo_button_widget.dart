@@ -25,7 +25,8 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
       distinct: true,
       converter: (store) => store.state.gameState,
       builder: (context, gameState) {
-        return (gameState == GameState.takingPhoto || gameState == GameState.processingPhoto)
+        return (gameState == GameState.takingPhoto ||
+                gameState == GameState.processingPhoto)
             ? Container(
                 key: this._createPropertyKey(gameState),
                 alignment: Alignment.center,
@@ -42,7 +43,8 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
                       ),
                       onPressed: () async {
                         await _determineAction(gameState, context);
-                        await my_values.firebaseAnalytics.logEvent(name: 'button_take_photo');
+                        await my_values.firebaseAnalytics
+                            .logEvent(name: 'button_take_photo');
                       }),
                 ),
               )
@@ -84,16 +86,24 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
     }
   }
 
-  Future<void> _determineAction(GameState gameState, BuildContext context) async {
+  Future<void> _determineAction(
+      GameState gameState, BuildContext context) async {
     switch (gameState) {
       case GameState.processingPhoto:
-        await my_values.takePhotoButtonPressedTrace.incrementMetric('stop-constructing-button-pressed', 1);
+        await my_values.takePhotoButtonPressedTrace
+            .incrementMetric('stop-constructing-button-pressed', 1);
         Redux.store.dispatch(StopProcessingPhotoAction());
-        Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
+        Redux.store
+            .dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
         break;
       default:
         await my_values.takePhotoButtonPressedTrace.start();
 
+        Redux.store.dispatch(
+          SetCameraStateProperties(
+            screenSize: MediaQuery.of(context).size,
+          ),
+        );
         Redux.store.dispatch(TakePhotoAction());
     }
   }

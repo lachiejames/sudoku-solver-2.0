@@ -20,7 +20,9 @@ class _CameraWidgetState extends State<CameraWidget> {
       distinct: true,
       converter: (store) => store.state.cameraState,
       builder: (context, cameraState) {
-        double widgetSize = cameraState.screenSize.width - my_values.pad * 2.0;
+        double screenWidth = MediaQuery.of(context).size.width;
+        double widgetSize = screenWidth - my_values.pad * 2.0;
+        print(screenWidth);
 
         return (cameraState.cameraController != null &&
                 cameraState.cameraController.value.isInitialized)
