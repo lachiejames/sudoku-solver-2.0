@@ -98,13 +98,6 @@ void main() {
         expect(cameraState.screenSize.height, 722.7);
       });
 
-      test('cameraWidgetBounds has been set', () async {
-        expect(cameraState.cameraWidgetBounds.left, 32.0);
-        expect(cameraState.cameraWidgetBounds.top, 213.3);
-        expect(cameraState.cameraWidgetBounds.right, 328.0);
-        expect(cameraState.cameraWidgetBounds.bottom, 509.3);
-      });
-
       group('max res image', () {
         setUp(() async {
           File file = await TestConstants.getImageFileFromAssets("full_photo_max_res.png");

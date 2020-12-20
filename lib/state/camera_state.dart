@@ -23,9 +23,8 @@ File tileImageGlobal;
 class CameraState {
   final CameraController cameraController;
   final Size screenSize;
-  final Rect cameraWidgetBounds;
 
-  CameraState({this.cameraController, this.screenSize, this.cameraWidgetBounds});
+  CameraState({this.cameraController, this.screenSize});
 
   Future<String> getUniqueFilePath() async {
     return join((await getApplicationDocumentsDirectory()).path, '${Random().nextDouble()}.png');
@@ -65,54 +64,21 @@ class CameraState {
     return file;
   }
 
-  Future<Image> correctFullImage(Image fullImage, Size photoToScreenRatio) async {
-    if (photoToScreenRatio.width > photoToScreenRatio.height) {
-      int newWidth = (fullImage.width * photoToScreenRatio.height / photoToScreenRatio.width).floor();
-      return copyCrop(
-        fullImage,
-        ((fullImage.width - newWidth) / 2.0).floor(),
-        0,
-        newWidth,
-        fullImage.height,
-      );
-    } else {
-      int newHeight = (fullImage.height * photoToScreenRatio.width / photoToScreenRatio.height).floor();
-      return copyCrop(
-        fullImage,
-        0,
-        ((fullImage.width - newHeight) / 2.0).floor(),
-        fullImage.width,
-        newHeight,
-      );
-    }
-  }
-
   Future<Image> cropImageToSudokuBounds(Image fullImage) async {
-    Size photoToScreenRatio = Size(
-      fullImage.width / this.screenSize.width,
-      fullImage.height / this.screenSize.height,
-    );
-    print('width=${fullImage.width}, height=${fullImage.height}');
-
-    // Crop to aspect ratio if necessary
-    // if (photoToScreenRatio.width != photoToScreenRatio.height) {
-    //   fullImage = await this.correctFullImage(fullImage, photoToScreenRatio);
-    //   photoToScreenRatio = Size(
-    //     fullImage.width / this.screenSize.width,
-    //     fullImage.height / this.screenSize.height,
-    //   );
-    //   croppedImageGlobal = await this.getFileFromImage(fullImage);
-    // }
-
-    // int x = (photoToScreenRatio.width * this.cameraWidgetBounds.left).floor();
-    // int y = (photoToScreenRatio.height * this.cameraWidgetBounds.top).floor();
-    // int width = (photoToScreenRatio.width * this.cameraWidgetBounds.right - x).floor();
-    // int height = (photoToScreenRatio.height * this.cameraWidgetBounds.bottom - y).floor();
-
+    int x = 0;
+    int y = 850;
+    print('xxx screenWidth=${this.screenSize.width}');
+    print('screenHeight=${this.screenSize.height}');
+    print('fullImageWidth=${fullImage.width}');
+    print('fullImageHeight=${fullImage.height}');
+    print('croppedImageHeight=${fullImage.width}');
+    print('croppedImageWidth=${fullImage.width}');
+    print('croppedImageX=$x');
+    print('croppedImageY=$y');
     return copyCrop(
       fullImage,
-      0, // x,
-      800, // y,
+      x, // x,
+      y, // y,
       fullImage.width, // width,
       fullImage.width,
     );
@@ -206,7 +172,7 @@ class CameraState {
     Sudoku sudoku = await this.getSudokuFromTileImageMap(tileFileMap);
 
     Redux.store.dispatch(PhotoProcessedAction(sudoku));
-
+    print(sudoku);
     my_values.takePhotoButtonPressedTrace.stop();
   }
 
@@ -214,7 +180,6 @@ class CameraState {
     return CameraState(
       cameraController: cameraController ?? this.cameraController,
       screenSize: screenSize ?? this.screenSize,
-      cameraWidgetBounds: cameraWidgetBounds ?? this.cameraWidgetBounds,
     );
   }
 

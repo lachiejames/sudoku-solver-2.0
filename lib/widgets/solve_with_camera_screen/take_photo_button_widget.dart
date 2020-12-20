@@ -85,10 +85,6 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
   }
 
   Future<void> _determineAction(GameState gameState, BuildContext context) async {
-    Size screenSize = MediaQuery.of(context).size;
-    double verticalPadding = (screenSize.height - 296) / 2;
-    double horizontalPadding = my_values.pad;
-
     switch (gameState) {
       case GameState.processingPhoto:
         await my_values.takePhotoButtonPressedTrace.incrementMetric('stop-constructing-button-pressed', 1);
@@ -98,17 +94,6 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
       default:
         await my_values.takePhotoButtonPressedTrace.start();
 
-        Redux.store.dispatch(
-          SetCameraStateProperties(
-            screenSize: MediaQuery.of(context).size,
-            cameraWidgetBounds: Rect.fromLTRB(
-              horizontalPadding,
-              verticalPadding,
-              screenSize.width - horizontalPadding,
-              screenSize.height - verticalPadding,
-            ),
-          ),
-        );
         Redux.store.dispatch(TakePhotoAction());
     }
   }
