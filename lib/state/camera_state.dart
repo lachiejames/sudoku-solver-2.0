@@ -8,6 +8,8 @@ import 'package:image/image.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
+import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
@@ -25,7 +27,8 @@ class CameraState {
   CameraState({this.cameraController, this.screenSize});
 
   Future<String> getUniqueFilePath() async {
-    return join((await getApplicationDocumentsDirectory()).path, '${Random().nextDouble()}.png');
+    return join((await getApplicationDocumentsDirectory()).path,
+        '${Random().nextDouble()}.png');
   }
 
   Future<void> _writeFileToAssets(String fileName, List<int> bytes) async {
@@ -64,7 +67,7 @@ class CameraState {
 
   Future<Image> cropImageToSudokuBounds(Image fullImage) async {
     int x = 0;
-    int y = 850;
+    int y = (0.21875*fullImage.height).floor();
     print('xxx screenWidth=${this.screenSize.width}');
     print('screenHeight=${this.screenSize.height}');
     print('fullImageWidth=${fullImage.width}');
@@ -82,18 +85,21 @@ class CameraState {
     );
   }
 
-  Future<Image> cropSudokuImageToTileBounds(Image sudokuImage, TileKey tileKey) async {
-    int tolerance = 10;
+  Future<Image> cropSudokuImageToTileBounds(
+      Image sudokuImage, TileKey tileKey) async {
+    double tolerance = sudokuImage.width / 100;
+    double width = sudokuImage.width / 9.0 + tolerance;
+    double height = sudokuImage.height / 9.0 + tolerance;
     double x = (tileKey.col - 1) * sudokuImage.width / 9.0;
     if ((x - tolerance) >= 0) {
       x -= tolerance;
+      width += tolerance;
     }
     double y = (tileKey.row - 1) * sudokuImage.height / 9.0;
     if ((y - tolerance) >= 0) {
       y -= tolerance;
+      height += tolerance;
     }
-    double width = sudokuImage.width / 9.0 + tolerance;
-    double height = sudokuImage.height / 9.0 + tolerance;
 
     return copyCrop(
       sudokuImage,
@@ -108,9 +114,11 @@ class CameraState {
     HashMap<TileKey, File> _tileFileMap = HashMap<TileKey, File>();
     for (int row = 1; row <= 9; row++) {
       for (int col = 1; col <= 9; col++) {
-        Image tileImage = await cropSudokuImageToTileBounds(sudokuImage, TileKey(row: row, col: col));
-        _tileFileMap[TileKey(row: row, col: col)] = await this.getFileFromImage(tileImage);
-        if (row == 1 && col == 1) {
+        Image tileImage = await cropSudokuImageToTileBounds(
+            sudokuImage, TileKey(row: row, col: col));
+        _tileFileMap[TileKey(row: row, col: col)] =
+            await this.getFileFromImage(tileImage);
+        if (row == 9 && col == 8) {
           tileImageGlobal = _tileFileMap[TileKey(row: row, col: col)];
         }
       }
@@ -127,16 +135,19 @@ class CameraState {
   }
 
   Future<int> getValueFromTileImageFile(File tileImageFile) async {
-    FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromFile(tileImageFile);
+    FirebaseVisionImage firebaseVisionImage =
+        FirebaseVisionImage.fromFile(tileImageFile);
     TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
-    VisionText visionText = await textRecognizer.processImage(firebaseVisionImage);
+    VisionText visionText =
+        await textRecognizer.processImage(firebaseVisionImage);
 
     int tileValue;
 
     for (TextBlock textBlock in visionText.blocks) {
       for (TextLine textLine in textBlock.lines) {
         for (TextElement textElement in textLine.elements) {
-          if (this.isNumeric(textElement.text) && textElement.text.length == 1) {
+          if (this.isNumeric(textElement.text) &&
+              textElement.text.length == 1) {
             tileValue = int.parse(textElement.text);
           }
         }
@@ -146,7 +157,8 @@ class CameraState {
     return tileValue;
   }
 
-  Future<Sudoku> getSudokuFromTileImageMap(HashMap<TileKey, File> tileImageMap) async {
+  Future<Sudoku> getSudokuFromTileImageMap(
+      HashMap<TileKey, File> tileImageMap) async {
     Sudoku sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
 
     for (int row = 1; row <= 9; row++) {
@@ -165,16 +177,20 @@ class CameraState {
     Image fullImage = await this.getImageFromFile(fullImageFile);
     Image sudokuImage = await this.cropImageToSudokuBounds(fullImage);
     sudokuImageGlobal = await this.getFileFromImage(sudokuImage);
-    // HashMap<TileKey, File> tileFileMap = await this.createTileFileMap(sudokuImage);
-    //
-    // Sudoku sudoku = await this.getSudokuFromTileImageMap(tileFileMap);
-    //
-    // Redux.store.dispatch(PhotoProcessedAction(sudoku));
-    // print(sudoku);
+    HashMap<TileKey, File> tileFileMap =
+        await this.createTileFileMap(sudokuImage);
+
+    Sudoku sudoku = await this.getSudokuFromTileImageMap(tileFileMap);
+
+    Redux.store.dispatch(PhotoProcessedAction(sudoku));
+    print(sudoku);
     my_values.takePhotoButtonPressedTrace.stop();
   }
 
-  CameraState copyWith({CameraController cameraController, Size screenSize, Rect cameraWidgetBounds}) {
+  CameraState copyWith(
+      {CameraController cameraController,
+      Size screenSize,
+      Rect cameraWidgetBounds}) {
     return CameraState(
       cameraController: cameraController ?? this.cameraController,
       screenSize: screenSize ?? this.screenSize,
