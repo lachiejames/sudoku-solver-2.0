@@ -8,20 +8,17 @@ import 'package:sudoku_solver_2/widgets/shared/help_screen_text_widget.dart';
 
 /// Shown when 'help' is selected from the drop down menu on SolveWithCameraScreen
 class SolveWithCameraHelpScreen extends StatelessWidget {
-  static final String _tip1SolveWithCameraScreen =
-      '1. Align your sudoku with the camera';
+  static final String _tip1SolveWithCameraScreen = '1. Align your sudoku with the camera';
   static final String _tip2SolveWithCameraScreen = '2. Press TAKE PHOTO';
   static final String _tip3SolveWithCameraScreen =
       '3. Verify whether the generated sudoku matches the sudoku you are trying to solve';
-  static final String _tip4SolveWithCameraScreen =
-      '4. If it matches, press SOLVE MY SUDOKU';
+  static final String _tip4SolveWithCameraScreen = '4. If it matches, press SOLVE MY SUDOKU';
 
   SolveWithCameraHelpScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Redux.store
-        .dispatch(ChangeScreenAction(ScreenState.solveWithCameraHelpScreen));
+    Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraHelpScreen));
 
     return Scaffold(
       backgroundColor: my_colors.pink,

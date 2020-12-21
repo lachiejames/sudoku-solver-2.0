@@ -2,13 +2,14 @@
 library my_ad_helper;
 
 import 'package:firebase_admob/firebase_admob.dart';
+import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 
 final String appIdForAdMob = "ca-app-pub-6687326312027109~4201385146";
 
 BannerAd _bannerAd;
 
 Future<void> showNewBannerAd() async {
-  assert(_bannerAd==null);
+  assert(_bannerAd == null);
   _bannerAd = BannerAd(
     adUnitId: BannerAd.testAdUnitId,
     size: AdSize.banner,
@@ -19,8 +20,8 @@ Future<void> showNewBannerAd() async {
       childDirected: false,
       nonPersonalizedAds: false,
     ),
-    listener: (MobileAdEvent event) {
-      print("BannerAd event $event");
+    listener: (MobileAdEvent event) async {
+      await my_values.firebaseAnalytics.logEvent(name: 'banner_ad_event_$event');
     },
   );
   await _bannerAd.load();

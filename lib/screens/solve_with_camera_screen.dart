@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:sudoku_solver_2/constants/my_ad_helper.dart' as my_ad_helper;
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
+import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/sudoku_widget.dart';
 import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/camera_widget.dart';
@@ -62,7 +65,8 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
+    Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
+
     return StoreConnector<AppState, GameState>(
       distinct: true,
       converter: (store) => store.state.gameState,
@@ -73,60 +77,7 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
           body: SingleChildScrollView(
             child: (gameState == GameState.takingPhoto)
                 ? _makeTakingPhotoScreen(gameState)
-                : SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          child: Container(
-                            margin: EdgeInsets.all(50),
-                            width: 200,
-                            height: 200,
-                            child: fullImageGlobal != null
-                                ? Image.file(fullImageGlobal)
-                                : Container(),
-                          ),
-                        ),
-                        Container(
-                          child: Container(
-                            margin: EdgeInsets.all(50),
-                            width: 200,
-                            height: 200,
-                            child: croppedImageGlobal != null
-                                ? Image.file(croppedImageGlobal)
-                                : Container(),
-                          ),
-                        ),
-                        Container(
-                          child: Container(
-                            margin: EdgeInsets.all(50),
-                            width: 200,
-                            height: 200,
-                            child: sudokuImageGlobal != null
-                                ? Image.file(sudokuImageGlobal)
-                                : Container(),
-                          ),
-                        ),
-                        Container(
-                          child: Container(
-                            margin: EdgeInsets.all(50),
-                            width: 200,
-                            height: 200,
-                            child: tileImageGlobal != null
-                                ? Image.file(tileImageGlobal)
-                                : Container(),
-                          ),
-                        ),
-                        RaisedButton(
-                          child: Text('refresh'),
-                          onPressed: () {
-                            setState(() {});
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-
-            // _makeVerifyPhotoScreen(gameState),
+                : _makeVerifyPhotoScreen(gameState),
           ),
         );
       },
