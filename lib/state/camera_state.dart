@@ -26,13 +26,6 @@ class CameraState {
     return join((await getApplicationDocumentsDirectory()).path, '${Random().nextDouble()}.png');
   }
 
-  Future<void> _writeFileToAssets(String fileName, List<int> bytes) async {
-    Directory directory = await getExternalStorageDirectory();
-    String path = directory.path;
-    File file = await File('$path/$fileName').create();
-    await file.writeAsBytes(bytes);
-  }
-
   Future<File> getImageFileFromCamera() async {
     String imagePath = await getUniqueFilePath();
 
@@ -43,9 +36,6 @@ class CameraState {
     }
 
     File imageFile = await File(imagePath).create();
-
-    await _writeFileToAssets('sudoku_photo_720x1280.png', imageFile.readAsBytesSync());
-    print('file creation complete');
 
     return imageFile;
   }
@@ -63,33 +53,38 @@ class CameraState {
   Future<Image> cropImageToSudokuBounds(Image fullImage) async {
     return copyCrop(
       fullImage,
-      0, // x,
-      (this._verticalPhotoScaleFactor * fullImage.height).floor(), // y,
-      fullImage.width, // width,
+      0,
+      (this._verticalPhotoScaleFactor * fullImage.height).floor(),
+      fullImage.width,
       fullImage.width,
     );
   }
 
   Future<Image> cropSudokuImageToTileBounds(Image sudokuImage, TileKey tileKey) async {
     double tolerance = sudokuImage.width / 100;
-    double width = sudokuImage.width / 9.0 + tolerance;
-    double height = sudokuImage.height / 9.0 + tolerance;
-    double x = (tileKey.col - 1) * sudokuImage.width / 9.0;
+    double tileSize = sudokuImage.width / 9.0;
+
+    double x = (tileKey.col - 1) * tileSize;
+    double y = (tileKey.row - 1) * tileSize;
+    double width = tileSize + tolerance;
+    double height = tileSize + tolerance;
+
+    // If subtracting tolerance makes x or y negative, then don't
     if ((x - tolerance) >= 0) {
       x -= tolerance;
       width += tolerance;
     }
-    double y = (tileKey.row - 1) * sudokuImage.height / 9.0;
     if ((y - tolerance) >= 0) {
       y -= tolerance;
       height += tolerance;
     }
+
     return copyCrop(
       sudokuImage,
       x.floor(),
       y.floor(),
-      width.floor(),
-      height.floor(),
+      width.ceil(),
+      height.ceil(),
     );
   }
 
@@ -124,19 +119,18 @@ class CameraState {
       return 0;
     }
 
-    int tileValue;
-
     for (TextBlock textBlock in visionText.blocks) {
       for (TextLine textLine in textBlock.lines) {
         for (TextElement textElement in textLine.elements) {
-          if (this.isNumeric(textElement.text) && textElement.text.length == 1) {
-            tileValue = int.parse(textElement.text);
+          String text = textElement.text.replaceAll("|", "");
+          if (this.isNumeric(text) && text.length == 1) {
+            return int.parse(text);
           }
         }
       }
     }
 
-    return tileValue;
+    return null;
   }
 
   Future<Sudoku> getSudokuFromTileImageMap(HashMap<TileKey, File> tileImageMap) async {
