@@ -2,9 +2,9 @@
 library my_strings;
 
 // Screen names
-final String solveWithCameraScreenName = 'Solve With Camera';
-final String solveWithTouchScreenName = 'Solve With Touch';
-final String justPlayScreenName = 'Just Play';
+final String solveWithCameraScreenName = 'Camera';
+final String solveWithTouchScreenName = 'Touch';
+final String justPlayScreenName = 'Play';
 final String helpScreenName = 'Help';
 
 // TopText
@@ -41,7 +41,9 @@ final String restartButtonText = 'RESTART';
 final String invalidSudokuToast = 'Invalid Sudoku';
 
 final String hotRestart = 'restart';
-final String setPictureMock = 'setPictureMock';
+final String setVeryHighResPictureMock = 'setVeryHighResPictureMock';
+final String setHighResPictureMock = 'setHighResPictureMock';
+final String setMediumResPictureMock = 'setMediumResPictureMock';
 final String deletePictureMock = 'deletePictureMock';
 
 // Set to null when running all tests

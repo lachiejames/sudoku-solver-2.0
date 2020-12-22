@@ -24,8 +24,14 @@ Future<void> main() async {
     if (command == my_strings.hotRestart) {
       await restartApp();
       return 'ok';
-    } else if (command == my_strings.setPictureMock) {
-      await MyMockHelper.setPictureMock();
+    } else if (command == my_strings.setVeryHighResPictureMock) {
+      await MyMockHelper.setVeryHighResPictureMock();
+      return 'ok';
+    } else if (command == my_strings.setHighResPictureMock) {
+      await MyMockHelper.setHighResPictureMock();
+      return 'ok';
+    } else if (command == my_strings.setMediumResPictureMock) {
+      await MyMockHelper.setMediumResPictureMock();
       return 'ok';
     } else if (command == my_strings.deletePictureMock) {
       await MyMockHelper.deletePictureMock();
