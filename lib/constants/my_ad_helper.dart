@@ -21,7 +21,7 @@ Future<void> showNewBannerAd() async {
       nonPersonalizedAds: false,
     ),
     listener: (MobileAdEvent event) async {
-      await my_values.firebaseAnalytics.logEvent(name: 'banner_ad_event_$event');
+      await my_values.firebaseAnalytics.logEvent(name: 'banner_ad_event_${_mapAdEventToString(event)}');
     },
   );
   await _bannerAd.load();
@@ -32,4 +32,25 @@ Future<void> disposeBannerAd() async {
   assert(await _bannerAd.isLoaded());
   await _bannerAd.dispose();
   _bannerAd = null;
+}
+
+String _mapAdEventToString(MobileAdEvent event) {
+  switch (event) {
+    case MobileAdEvent.clicked:
+      return "clicked";
+    case MobileAdEvent.closed:
+      return "closed";
+    case MobileAdEvent.failedToLoad:
+      return "failed_to_load";
+    case MobileAdEvent.impression:
+      return "impression";
+    case MobileAdEvent.leftApplication:
+      return "left_application";
+    case MobileAdEvent.loaded:
+      return "loaded";
+    case MobileAdEvent.opened:
+      return "opened";
+    default:
+      return "";
+  }
 }

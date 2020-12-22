@@ -37,7 +37,7 @@ void main() {
       if (methodCall.method == 'takePicture') {
         String imagePath = methodCall.arguments['path'];
         File mockFile = await File(imagePath).create();
-        File mockImageFile = await TestConstants.getImageFileFromAssets('full_photo_max_res.png');
+        File mockImageFile = await TestConstants.getImageFileFromAssets('sudoku_photo_2160x3840.png');
         mockFile.writeAsBytesSync(mockImageFile.readAsBytesSync());
       }
       return null;
@@ -100,7 +100,7 @@ void main() {
 
       group('max res image', () {
         setUp(() async {
-          File file = await TestConstants.getImageFileFromAssets("full_photo_max_res.png");
+          File file = await TestConstants.getImageFileFromAssets("sudoku_photo_2160x3840.png");
           fullImage = await cameraState.getImageFromFile(file);
         });
 
@@ -112,7 +112,7 @@ void main() {
       });
       group('medium res image', () {
         setUp(() async {
-          File file = await TestConstants.getImageFileFromAssets("full_photo_medium_res.png");
+          File file = await TestConstants.getImageFileFromAssets("sudoku_photo_1080x1920.png");
           fullImage = await cameraState.getImageFromFile(file);
         });
 
@@ -124,7 +124,7 @@ void main() {
       });
       group('low res image', () {
         setUp(() async {
-          File file = await TestConstants.getImageFileFromAssets("full_photo_low_res.png");
+          File file = await TestConstants.getImageFileFromAssets("sudoku_photo_720x1280.png");
           fullImage = await cameraState.getImageFromFile(file);
         });
 
@@ -148,7 +148,7 @@ void main() {
 
       group('max res image', () {
         setUp(() async {
-          File file = await TestConstants.getImageFileFromAssets("full_photo_max_res.png");
+          File file = await TestConstants.getImageFileFromAssets("sudoku_photo_2160x3840.png");
           Image fullImage = await cameraState.getImageFromFile(file);
           sudokuImage = await cameraState.cropImageToSudokuBounds(fullImage);
         });
@@ -173,7 +173,7 @@ void main() {
       });
       group('medium res image', () {
         setUp(() async {
-          File file = await TestConstants.getImageFileFromAssets("full_photo_medium_res.png");
+          File file = await TestConstants.getImageFileFromAssets("sudoku_photo_1080x1920.png");
           Image fullImage = await cameraState.getImageFromFile(file);
           sudokuImage = await cameraState.cropImageToSudokuBounds(fullImage);
         });
@@ -198,7 +198,7 @@ void main() {
       });
       group('low res image', () {
         setUp(() async {
-          File file = await TestConstants.getImageFileFromAssets("full_photo_low_res.png");
+          File file = await TestConstants.getImageFileFromAssets("sudoku_photo_720x1280.png");
           Image fullImage = await cameraState.getImageFromFile(file);
           sudokuImage = await cameraState.cropImageToSudokuBounds(fullImage);
         });
@@ -225,13 +225,13 @@ void main() {
 
     group('getImageFromFile()', () {
       test('returns a valid image', () async {
-        File file = await TestConstants.getImageFileFromAssets("full_photo_max_res.png");
+        File file = await TestConstants.getImageFileFromAssets("sudoku_photo_2160x3840.png");
         Image image = await cameraState.getImageFromFile(file);
         expect(image, isNotNull);
         expect(image.length > 0, true);
       });
       test('is expected size', () async {
-        File file = await TestConstants.getImageFileFromAssets("full_photo_max_res.png");
+        File file = await TestConstants.getImageFileFromAssets("sudoku_photo_2160x3840.png");
         Image image = await cameraState.getImageFromFile(file);
         expect(image.width, 2160);
         expect(image.height, 3840);
@@ -240,7 +240,7 @@ void main() {
 
     group('getFileFromImage()', () {
       test('returns a valid file', () async {
-        File file = await TestConstants.getImageFileFromAssets("full_photo_max_res.png");
+        File file = await TestConstants.getImageFileFromAssets("sudoku_photo_2160x3840.png");
         Image image = await cameraState.getImageFromFile(file);
         file = await cameraState.getFileFromImage(image);
         expect(file, isNotNull);
@@ -257,7 +257,7 @@ void main() {
         ));
         cameraState = Redux.store.state.cameraState;
 
-        File file = await TestConstants.getImageFileFromAssets("full_photo_max_res.png");
+        File file = await TestConstants.getImageFileFromAssets("sudoku_photo_2160x3840.png");
         Image fullImage = await cameraState.getImageFromFile(file);
         sudokuImage = await cameraState.cropImageToSudokuBounds(fullImage);
       });
@@ -297,7 +297,7 @@ void main() {
         ));
         cameraState = Redux.store.state.cameraState;
 
-        File file = await TestConstants.getImageFileFromAssets("full_photo_max_res.png");
+        File file = await TestConstants.getImageFileFromAssets("sudoku_photo_2160x3840.png");
         Image fullImage = await cameraState.getImageFromFile(file);
         sudokuImage = await cameraState.cropImageToSudokuBounds(fullImage);
       });

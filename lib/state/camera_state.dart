@@ -44,8 +44,8 @@ class CameraState {
 
     File imageFile = await File(imagePath).create();
 
-    // await _writeFileToAssets('full_photo_low_res.png', imageFile.readAsBytesSync());
-    // print('file creation complete');
+    await _writeFileToAssets('sudoku_photo_720x1280.png', imageFile.readAsBytesSync());
+    print('file creation complete');
 
     return imageFile;
   }

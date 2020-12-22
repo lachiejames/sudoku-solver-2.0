@@ -24,7 +24,7 @@ class MyMockHelper {
       if (methodCall.method == 'takePicture') {
         imagePath = methodCall.arguments['path'];
         File mockFile = await File(imagePath).create();
-        File mockImageFile = await _getImageFileFromAssets('full_photo_max_res.png');
+        File mockImageFile = await _getImageFileFromAssets('sudoku_photo_2160x3840.png');
         mockFile.writeAsBytesSync(mockImageFile.readAsBytesSync());
       }
       return Future.value();

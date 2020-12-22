@@ -1,5 +1,6 @@
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
+import 'package:sudoku_solver_2/constants/my_games.dart' as my_games;
 import 'package:test/test.dart';
 import 'shared.dart';
 
@@ -34,12 +35,13 @@ void main() {
       });
     });
 
-    // test('pressing "TAKE PHOTO" presents a constructed Sudoku', () async {
-    //   await driver.runUnsynchronized(() async {
-    //     await waitForThenTap(find.text('TAKE PHOTO'));
-    //     await verifyInitialGameTiles(my_games.games[0]);
-    //   });
-    // });
+    test('pressing "TAKE PHOTO" eventually presents a constructed Sudoku', () async {
+      await driver.runUnsynchronized(() async {
+        await waitForThenTap(find.text('TAKE PHOTO'));
+        await driver.waitFor(find.text('YES, SOLVE IT'));
+        await verifyInitialGameTiles(my_games.games[0]);
+      });
+    }, timeout: Timeout(Duration(seconds: 60)));
 
     //   test('pressing "STOP CONSTRUCTING" brings you back to the "take photo" screen', () async {});
     //   test('pressing "NO, RETAKE PHOTO" brings you back to the "take photo" screen', () async {});
