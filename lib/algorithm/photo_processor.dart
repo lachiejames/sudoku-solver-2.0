@@ -16,18 +16,14 @@ import 'package:flutter/foundation.dart';
 
 final double _verticalPhotoScaleFactor = 0.21875;
 CancelableOperation _processPhotoCancellableOperation;
+String _appFolder;
 
 Future<Image> _getImageFromFile(File file) async {
   return bakeOrientation(decodeImage(file.readAsBytesSync()));
 }
 
 Future<File> _getFileFromImage(Image image) async {
-  print('xxx 1');
-
-  File file = await File("/data/user/0/com.lachie.sudoku_solver_2/app_flutter/0.04504844281578424.png").create();
-  // File file = await File(await getUniqueFilePath()).create();
-  print('xxx 2');
-
+  File file = await File(await getUniqueFilePath()).create();
   file.writeAsBytesSync(encodePng(image));
   return file;
 }
@@ -123,37 +119,38 @@ Future<Sudoku> _getSudokuFromTileImageMap(HashMap<TileKey, File> tileImageMap) a
   return sudoku;
 }
 
-Future<String> getUniqueFilePath() async {
-  return join((await getApplicationDocumentsDirectory()).path, '${Random().nextDouble()}.png');
-}
-
-Future<Sudoku> getSudokuFromImageFile(File imageFile) async {
-  Image fullImage = await _getImageFromFile(imageFile);
+Future<HashMap<TileKey, File>> getSudokuFromImageFile(dynamic data) async {
+  _appFolder = data['appFolder'];
+  Image fullImage = await _getImageFromFile(data['imageFile']);
   Image sudokuImage = await _cropImageToSudokuBounds(fullImage);
-  HashMap<TileKey, File> tileFileMap = await _createTileFileMap(sudokuImage);
-  Sudoku sudoku = await _getSudokuFromTileImageMap(tileFileMap);
-
-  Redux.store.dispatch(PhotoProcessedAction(sudoku));
-  my_values.takePhotoButtonPressedTrace.stop();
-  print('xxx - complete');
-
-  return sudoku;
+  return _createTileFileMap(sudokuImage);
 }
 
 Future<void> processPhoto(File imageFile) async {
   _processPhotoCancellableOperation = CancelableOperation.fromFuture(
-    compute(getSudokuFromImageFile, imageFile),
+    compute(getSudokuFromImageFile, {
+      'imageFile': imageFile,
+      'appFolder': (await getApplicationDocumentsDirectory()).path,
+    }),
   );
 
   _processPhotoCancellableOperation.asStream().listen(
-    (constructedSudoku) {
-      print('xxx - $constructedSudoku');
+    (tileFileMap) async {
+      Sudoku constructedSudoku = await _getSudokuFromTileImageMap(tileFileMap);
       Redux.store.dispatch(PhotoProcessedAction(constructedSudoku));
       my_values.takePhotoButtonPressedTrace.stop();
+      print('xxx - complete');
     },
   );
 }
 
 void stopProcessingPhoto() {
   _processPhotoCancellableOperation.cancel();
+}
+
+Future<String> getUniqueFilePath() async {
+  if (_appFolder == null) {
+    _appFolder = (await getApplicationDocumentsDirectory()).path;
+  }
+  return join(_appFolder, '${Random().nextDouble()}.png');
 }

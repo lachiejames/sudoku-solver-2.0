@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/algorithm/photo_processor.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
@@ -101,7 +100,6 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
             screenSize: MediaQuery.of(context).size,
           ),
         );
-        print(await getUniqueFilePath());
         File imageFile = await Redux.store.state.cameraState.getImageFileFromCamera();
         Redux.store.dispatch(TakePhotoAction(imageFile));
     }
