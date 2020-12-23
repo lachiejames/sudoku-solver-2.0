@@ -8,7 +8,7 @@ import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
-import 'package:sudoku_solver_2/widgets/solve_with_touch_screen/solve_sudoku_button_widget.dart';
+import 'package:sudoku_solver_2/widgets/shared/solve_sudoku_button_widget.dart';
 
 void main() {
   group('SolveSudokuButtonWidget -', () {
@@ -41,10 +41,10 @@ void main() {
         expect(solveSudokuButtonWidget, isNotNull);
       });
 
-      testWidgets('should display "SOLVE MY SUDOKU"', (WidgetTester tester) async {
+      testWidgets('should display "SOLVE SUDOKU"', (WidgetTester tester) async {
         await createSolveSudokuButtonWidget(tester);
 
-        expect(find.text('SOLVE MY SUDOKU'), findsOneWidget);
+        expect(find.text('SOLVE SUDOKU'), findsOneWidget);
       });
 
       testWidgets('should be blue', (WidgetTester tester) async {

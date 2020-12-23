@@ -12,7 +12,7 @@ class SolveWithCameraHelpScreen extends StatelessWidget {
   static final String _tip2SolveWithCameraScreen = '2. Press TAKE PHOTO';
   static final String _tip3SolveWithCameraScreen =
       '3. Verify whether the generated sudoku matches the sudoku you are trying to solve';
-  static final String _tip4SolveWithCameraScreen = '4. If it matches, press SOLVE MY SUDOKU';
+  static final String _tip4SolveWithCameraScreen = '4. If it matches, press SOLVE SUDOKU';
 
   SolveWithCameraHelpScreen({Key key}) : super(key: key);
 

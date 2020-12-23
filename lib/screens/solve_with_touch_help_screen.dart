@@ -11,7 +11,7 @@ class SolveWithTouchHelpScreen extends StatelessWidget {
   static final String _tip1SolveWithTouchScreen = '1. Touch a tile to select it';
   static final String _tip2SolveWithTouchScreen = '2. Touch the number you want to add to the tile';
   static final String _tip3SolveWithTouchScreen = '3. Continue until the sudoku matches the sudoku you want to solve';
-  static final String _tip4SolveWithTouchScreen = '4. Press SOLVE MY SUDOKU';
+  static final String _tip4SolveWithTouchScreen = '4. Press SOLVE SUDOKU';
   static final String _tip5SolveWithTouchScreen = 'To remove the number from a tile, tap it twice';
 
   SolveWithTouchHelpScreen({Key key}) : super(key: key);

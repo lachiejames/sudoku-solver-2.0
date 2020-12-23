@@ -151,11 +151,11 @@ void main() {
 
       test('pressing RESTART stops solving the sudoku', () async {
         await driver.runUnsynchronized(() async {
-          await waitForThenTap(find.text('SOLVE MY SUDOKU'));
+          await waitForThenTap(find.text('SOLVE SUDOKU'));
           await expectButtonPropertiesAre(text: 'STOP SOLVING', color: 'red', tappable: 'true');
 
           await pressRestartOnDropDownMenu('SolveWithTouchScreenDropDownMenuWidget');
-          await expectButtonPropertiesAre(text: 'SOLVE MY SUDOKU', color: 'blue', tappable: 'true');
+          await expectButtonPropertiesAre(text: 'SOLVE SUDOKU', color: 'blue', tappable: 'true');
         });
       });
     });
@@ -184,10 +184,10 @@ void main() {
         await driver.waitFor(find.text('RESTART'));
       });
 
-      test('SOLVE MY SUDOKU button is disabled when invalid tiles are present', () async {
+      test('SOLVE SUDOKU button is disabled when invalid tiles are present', () async {
         await addSudoku(my_games.games[0]);
         await addNumberToTile(5, TileKey(row: 2, col: 2));
-        await expectButtonPropertiesAre(text: 'SOLVE MY SUDOKU', color: 'grey', tappable: 'false');
+        await expectButtonPropertiesAre(text: 'SOLVE SUDOKU', color: 'grey', tappable: 'false');
       });
 
       test('a STOP SOLVING button will appear during the solve', () async {
@@ -195,8 +195,8 @@ void main() {
 
         // Required because an animation occurs while solving
         await driver.runUnsynchronized(() async {
-          await expectButtonPropertiesAre(text: 'SOLVE MY SUDOKU', color: 'blue', tappable: 'true');
-          await waitForThenTap(find.text('SOLVE MY SUDOKU'));
+          await expectButtonPropertiesAre(text: 'SOLVE SUDOKU', color: 'blue', tappable: 'true');
+          await waitForThenTap(find.text('SOLVE SUDOKU'));
           await expectButtonPropertiesAre(text: 'STOP SOLVING', color: 'red', tappable: 'true');
           await waitForThenTap(find.text('STOP SOLVING'));
         });
@@ -207,21 +207,21 @@ void main() {
 
         // Required because an animation occurs while solving
         await driver.runUnsynchronized(() async {
-          await waitForThenTap(find.text('SOLVE MY SUDOKU'));
+          await waitForThenTap(find.text('SOLVE SUDOKU'));
           await waitForThenTap(find.text('STOP SOLVING'));
         });
 
         await driver.waitFor(find.text('Pick a tile'));
-        await driver.waitFor(find.text('SOLVE MY SUDOKU'));
+        await driver.waitFor(find.text('SOLVE SUDOKU'));
       });
 
       test('can solve 2 games in a row', () async {
         await addSudoku(my_games.games[0]);
-        await waitForThenTap(find.text('SOLVE MY SUDOKU'));
+        await waitForThenTap(find.text('SOLVE SUDOKU'));
         await waitForThenTap(find.text('RESTART'));
 
         await addSudoku(my_games.games[2]);
-        await waitForThenTap(find.text('SOLVE MY SUDOKU'));
+        await waitForThenTap(find.text('SOLVE SUDOKU'));
         await waitForThenTap(find.text('RESTART'));
       }, timeout: Timeout(Duration(seconds: 60)));
     });

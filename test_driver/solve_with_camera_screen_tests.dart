@@ -65,7 +65,7 @@ void main() {
 
           await driver.waitFor(find.text('Is this your Sudoku?'));
           await driver.waitFor(find.byType('SudokuWidget'));
-          await driver.waitFor(find.text('YES, SOLVE IT'));
+          await driver.waitFor(find.text('SOLVE SUDOKU'));
           await driver.waitFor(find.text('NO, RETAKE PHOTO'));
 
           await verifyInitialGameTiles(my_games.games[0]);
@@ -84,10 +84,10 @@ void main() {
         });
       }, timeout: Timeout(Duration(seconds: 60)));
 
-      test('pressing "YES, SOLVE IT" shows the "solving" screen', () async {
+      test('pressing "SOLVE SUDOKU" shows the "solving" screen', () async {
         await driver.runUnsynchronized(() async {
           await waitForThenTap(find.text('TAKE PHOTO'));
-          await waitForThenTap(find.text('YES, SOLVE IT'));
+          await waitForThenTap(find.text('SOLVE SUDOKU'));
 
           await driver.waitFor(find.text('AI thinking...'));
           await driver.waitFor(find.byType('CircularProgressIndicator'));
@@ -96,12 +96,12 @@ void main() {
         });
       }, timeout: Timeout(Duration(seconds: 60)));
 
-      test('pressing "YES, SOLVE IT" solves the sudoku', () async {
+      test('pressing "SOLVE SUDOKU" solves the sudoku', () async {
         await waitForThenTap(find.text('TAKE PHOTO'));
 
-        await driver.waitFor(find.text('YES, SOLVE IT'));
+        await driver.waitFor(find.text('SOLVE SUDOKU'));
         await verifyInitialGameTiles(my_games.games[0]);
-        await driver.tap(find.text('YES, SOLVE IT'));
+        await driver.tap(find.text('SOLVE SUDOKU'));
 
         await driver.waitFor(find.text('RESTART'));
         await verifyInitialGameTiles(my_solved_games.solvedGamesList[0]);
@@ -109,7 +109,7 @@ void main() {
 
       test('pressing "RESTART" shows the "take photo" screen', () async {
         await waitForThenTap(find.text('TAKE PHOTO'));
-        await waitForThenTap(find.text('YES, SOLVE IT'));
+        await waitForThenTap(find.text('SOLVE SUDOKU'));
         await waitForThenTap(find.text('RESTART'));
 
         await driver.waitFor(find.text('Camera'));
@@ -125,9 +125,9 @@ void main() {
 
         await waitForThenTap(find.text('TAKE PHOTO'));
 
-        await driver.waitFor(find.text('YES, SOLVE IT'));
+        await driver.waitFor(find.text('SOLVE SUDOKU'));
         await verifyInitialGameTiles(my_games.games[0]);
-        await driver.tap(find.text('YES, SOLVE IT'));
+        await driver.tap(find.text('SOLVE SUDOKU'));
 
         await driver.waitFor(find.text('RESTART'));
         await verifyInitialGameTiles(my_solved_games.solvedGamesList[0]);
@@ -140,9 +140,9 @@ void main() {
 
       //   await waitForThenTap(find.text('TAKE PHOTO'));
 
-      //   await driver.waitFor(find.text('YES, SOLVE IT'));
+      //   await driver.waitFor(find.text('SOLVE SUDOKU'));
       //   await verifyInitialGameTiles(my_games.games[0]);
-      //   await driver.tap(find.text('YES, SOLVE IT'));
+      //   await driver.tap(find.text('SOLVE SUDOKU'));
 
       //   await driver.waitFor(find.text('RESTART'));
       //   await verifyInitialGameTiles(my_solved_games.solvedGamesList[0]);
@@ -154,9 +154,9 @@ void main() {
 
       //   await waitForThenTap(find.text('TAKE PHOTO'));
 
-      //   await driver.waitFor(find.text('YES, SOLVE IT'));
+      //   await driver.waitFor(find.text('SOLVE SUDOKU'));
       //   await verifyInitialGameTiles(my_games.games[0]);
-      //   await driver.tap(find.text('YES, SOLVE IT'));
+      //   await driver.tap(find.text('SOLVE SUDOKU'));
 
       //   await driver.waitFor(find.text('RESTART'));
       //   await verifyInitialGameTiles(my_solved_games.solvedGamesList[0]);

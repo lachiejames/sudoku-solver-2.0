@@ -7,11 +7,11 @@ import 'package:sudoku_solver_2/constants/my_ad_helper.dart' as my_ad_helper;
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
+import 'package:sudoku_solver_2/widgets/shared/solve_sudoku_button_widget.dart';
 import 'package:sudoku_solver_2/widgets/shared/sudoku_widget.dart';
 import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/camera_widget.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/retake_photo_button_widget.dart';
-import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/solve_it_button_widget.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/solve_with_camera_screen_app_bar.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/take_photo_button_widget.dart';
 
@@ -55,7 +55,7 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
       children: <Widget>[
         TopTextWidget(),
         SudokuWidget(),
-        SolveItButtonWidget(),
+        SolveSudokuButtonWidget(),
         RetakePhotoButtonWidget(),
         TakePhotoButtonWidget(),
       ],

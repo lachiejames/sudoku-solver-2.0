@@ -9,15 +9,15 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 
-/// Shown when the user has taken a photo, and wants to solve the corresponding Sudoku
-class SolveItButtonWidget extends StatefulWidget {
-  SolveItButtonWidget({Key key}) : super(key: key);
+/// Applies the solving algorithm to the Sudoku the user has entered
+class SolveSudokuButtonWidget extends StatefulWidget {
+  SolveSudokuButtonWidget({Key key}) : super(key: key);
 
   @override
-  _SolveItButtonWidgetState createState() => _SolveItButtonWidgetState();
+  _SolveSudokuButtonWidgetState createState() => _SolveSudokuButtonWidgetState();
 }
 
-class _SolveItButtonWidgetState extends State<SolveItButtonWidget> {
+class _SolveSudokuButtonWidgetState extends State<SolveSudokuButtonWidget> {
   Key _createPropertyKey(GameState gameState) {
     String key = 'text:${this._determineText(gameState)}';
     key += ' - color:${this._determineColorString(gameState)}';
@@ -42,34 +42,31 @@ class _SolveItButtonWidgetState extends State<SolveItButtonWidget> {
       distinct: true,
       converter: (store) => store.state.gameState,
       builder: (context, gameState) {
-        return (gameState == GameState.photoProcessed ||
-                gameState == GameState.isSolving ||
-                gameState == GameState.solved)
-            ? Container(
-                key: this._createPropertyKey(gameState),
-                alignment: Alignment.center,
-                margin: my_styles.buttonMargins,
-                child: Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: RaisedButton(
-                      shape: my_styles.buttonShape,
-                      padding: my_styles.buttonPadding,
-                      color: _determineColor(gameState),
-                      child: Text(
-                        this._determineText(gameState),
-                        style: my_styles.buttonTextStyle,
-                      ),
-                      onPressed: () async {
-                        if (gameState == GameState.invalidTilesPresent) {
-                          return null;
-                        }
+        return Container(
+          key: this._createPropertyKey(gameState),
+          alignment: Alignment.center,
+          margin: my_styles.buttonMargins,
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: RaisedButton(
+              shape: my_styles.buttonShape,
+              padding: my_styles.buttonPadding,
+              color: _determineColor(gameState),
+              child: Text(
+                this._determineText(gameState),
+                style: my_styles.buttonTextStyle,
+              ),
+              onPressed: () async {
+                if (gameState == GameState.invalidTilesPresent) {
+                  return null;
+                }
 
-                        await _determineAction(gameState);
-                        await my_values.firebaseAnalytics.logEvent(name: 'button_yes_solve_it');
-                      }),
-                ),
-              )
-            : Container();
+                await _determineAction(gameState);
+                await my_values.firebaseAnalytics.logEvent(name: 'button_solve_sudoku');
+              },
+            ),
+          ),
+        );
       },
     );
   }
@@ -92,21 +89,21 @@ class _SolveItButtonWidgetState extends State<SolveItButtonWidget> {
       case GameState.solved:
         return my_strings.restartButtonText;
       default:
-        return my_strings.solveItButtonText;
+        return my_strings.solveSudokuButtonText;
     }
   }
 
   Future<void> _determineAction(GameState gameState) async {
     switch (gameState) {
       case GameState.isSolving:
-        await my_values.yesSolveItButtonPressedTrace.incrementMetric('stop-solving-button-pressed', 1);
+        await my_values.solveSudokuButtonPressedTrace.incrementMetric('stop-solving-button-pressed', 1);
         Redux.store.dispatch(StopSolvingSudokuAction());
         break;
       case GameState.solved:
         Redux.store.dispatch(RestartAction());
         break;
       default:
-        await my_values.yesSolveItButtonPressedTrace.start();
+        await my_values.solveSudokuButtonPressedTrace.start();
         Redux.store.dispatch(SolveSudokuAction());
     }
   }
