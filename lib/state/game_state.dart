@@ -8,4 +8,7 @@ enum GameState {
   takingPhoto,
   processingPhoto,
   photoProcessed,
+  cameraNotLoadedError,
+  processingPhotoError,
+  solvingSudokuError,
 }

@@ -21,6 +21,9 @@ final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
   TypedReducer<GameState, StopSolvingSudokuAction>(_stopSolvingSudokuReducer),
   TypedReducer<GameState, ChangeScreenAction>(_changeScreenReducer),
   TypedReducer<GameState, StopProcessingPhotoAction>(_stopProcessingPhotoReducer),
+  TypedReducer<GameState, CameraNotLoadedErrorAction>(_cameraNotLoadedErrorReducer),
+  TypedReducer<GameState, PhotoProcessingErrorAction>(_processingPhotoErrorReducer),
+  TypedReducer<GameState, SudokuSolvingErrorAction>(_solvingSudokuErrorReducer),
 ]);
 
 GameState _solveSudokuReducer(GameState gameState, SolveSudokuAction action) {
@@ -99,4 +102,16 @@ GameState _stopProcessingPhotoReducer(GameState gameState, StopProcessingPhotoAc
   stopProcessingPhoto();
 
   return GameState.takingPhoto;
+}
+
+GameState _cameraNotLoadedErrorReducer(GameState gameState, CameraNotLoadedErrorAction action) {
+  return GameState.cameraNotLoadedError;
+}
+
+GameState _processingPhotoErrorReducer(GameState gameState, PhotoProcessingErrorAction action) {
+  return GameState.processingPhotoError;
+}
+
+GameState _solvingSudokuErrorReducer(GameState gameState, SudokuSolvingErrorAction action) {
+  return GameState.solvingSudokuError;
 }

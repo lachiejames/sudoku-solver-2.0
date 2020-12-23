@@ -125,3 +125,15 @@ class SetCameraStateProperties {
     this.cameraWidgetBounds,
   });
 }
+
+class CameraNotLoadedErrorAction {
+  CameraNotLoadedErrorAction();
+}
+
+class PhotoProcessingErrorAction {
+  PhotoProcessingErrorAction();
+}
+
+class SudokuSolvingErrorAction {
+  SudokuSolvingErrorAction();
+}

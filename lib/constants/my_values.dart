@@ -17,7 +17,6 @@ final double appBarFontSize = 25;
 final double howToTextFontSize = 30;
 final double buttonTextFontSize = 40;
 final double dropDownMenuFontSize = 40;
-final double toastFontSize = 15;
 final double tileFontSize = 15;
 final double numberFontSize = 15;
 

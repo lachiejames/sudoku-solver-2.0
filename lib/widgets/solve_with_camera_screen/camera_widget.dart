@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
@@ -20,31 +22,31 @@ class _CameraWidgetState extends State<CameraWidget> {
       distinct: true,
       converter: (store) => store.state.cameraState,
       builder: (context, cameraState) {
-        double screenWidth = MediaQuery.of(context).size.width;
-        double widgetSize = screenWidth - my_values.pad * 2.0;
+        if (cameraState.cameraController != null && cameraState.cameraController.value.isInitialized) {
+          double screenWidth = MediaQuery.of(context).size.width;
+          double widgetSize = screenWidth - my_values.pad * 2.0;
 
-        return (cameraState.cameraController != null &&
-                cameraState.cameraController.value.isInitialized)
-            ? Container(
-                width: widgetSize,
-                height: widgetSize,
-                child: ClipRect(
-                  child: OverflowBox(
-                    alignment: Alignment.center,
-                    child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Container(
-                        width: widgetSize,
-                        height: widgetSize /
-                            cameraState.cameraController.value.aspectRatio,
-                        child: CameraPreview(cameraState
-                            .cameraController), // this is my CameraPreview
-                      ),
-                    ),
+          return Container(
+            width: widgetSize,
+            height: widgetSize,
+            child: ClipRect(
+              child: OverflowBox(
+                alignment: Alignment.center,
+                child: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Container(
+                    width: widgetSize,
+                    height: widgetSize / cameraState.cameraController.value.aspectRatio,
+                    child: CameraPreview(cameraState.cameraController),
                   ),
                 ),
-              )
-            : Container();
+              ),
+            ),
+          );
+        } else {
+          Redux.store.dispatch(CameraNotLoadedErrorAction());
+          return Container();
+        }
       },
     );
   }

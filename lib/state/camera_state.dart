@@ -2,6 +2,8 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:camera/camera.dart';
 import 'package:sudoku_solver_2/algorithm/photo_processor.dart';
+import 'package:sudoku_solver_2/redux/actions.dart';
+import 'package:sudoku_solver_2/redux/redux.dart';
 
 /// All state relating to the Camera
 class CameraState {
@@ -16,6 +18,7 @@ class CameraState {
     try {
       await this.cameraController.takePicture(imagePath);
     } on Exception catch (e) {
+      Redux.store.dispatch(PhotoProcessingErrorAction());
       print(e);
     }
 

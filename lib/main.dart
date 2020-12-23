@@ -46,10 +46,11 @@ Future<void> main() async {
 Future<void> _initCamera() async {
   try {
     List<CameraDescription> cameras = await availableCameras();
-    CameraController cameraController = CameraController(cameras.first, ResolutionPreset.high);
+    CameraController cameraController = CameraController(cameras.first, ResolutionPreset.max);
     await cameraController.initialize();
     Redux.store.dispatch(CameraReadyAction(cameraController));
   } on Exception catch (e) {
+    Redux.store.dispatch(CameraNotLoadedErrorAction());
     print(e);
   }
 }

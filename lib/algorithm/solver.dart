@@ -37,27 +37,37 @@ Sudoku solveSudoku(Sudoku sudoku) {
 }
 
 // Stream<Sudoku> myStream;
-CancelableOperation _cancellableOperation;
+CancelableOperation _solveSudokuCancellableOperation;
 
 /// Solves the sudoku asynchronously with 'compute'
 Future<Sudoku> solveSudokuAsync(Sudoku sudoku) async {
-  _cancellableOperation = CancelableOperation.fromFuture(
-    compute(solveSudoku, sudoku),
-  );
+  try {
+    _solveSudokuCancellableOperation = CancelableOperation.fromFuture(
+      compute(solveSudoku, sudoku),
+    );
 
-  _cancellableOperation.asStream().listen(
-    (solvedSudoku) {
-      if (solvedSudoku.isFull() && solvedSudoku.allConstraintsSatisfied()) {
-        Redux.store.dispatch(SudokuSolvedAction(solvedSudoku));
-        my_values.solveMySudokuButtonPressedTrace.stop();
-        my_values.yesSolveItButtonPressedTrace.stop();
-      }
-    },
-  );
+    _solveSudokuCancellableOperation.asStream().listen(
+      (solvedSudoku) {
+        if (solvedSudoku.isFull() && solvedSudoku.allConstraintsSatisfied()) {
+          Redux.store.dispatch(SudokuSolvedAction(solvedSudoku));
+          my_values.solveMySudokuButtonPressedTrace.stop();
+          my_values.yesSolveItButtonPressedTrace.stop();
+        }
+      },
+    );
+  } on Exception catch (e) {
+    Redux.store.dispatch(SudokuSolvingErrorAction());
+    print(e);
+  }
 
   return sudoku;
 }
 
 void stopSolvingSudoku() {
-  _cancellableOperation.cancel();
+  try {
+    _solveSudokuCancellableOperation.cancel();
+  } on Exception catch (e) {
+    Redux.store.dispatch(SudokuSolvingErrorAction());
+    print(e);
+  }
 }

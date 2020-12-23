@@ -23,6 +23,9 @@ final Reducer<TopTextState> topTextStateReducer = combineReducers<TopTextState>(
   TypedReducer<TopTextState, PhotoProcessedAction>(_photoProcessedReducer),
   TypedReducer<TopTextState, RetakePhotoAction>(_retakePhotoReducer),
   TypedReducer<TopTextState, StopProcessingPhotoAction>(_stopProcessingPhotoReducer),
+  TypedReducer<TopTextState, CameraNotLoadedErrorAction>(_cameraNotLoadedErrorReducer),
+  TypedReducer<TopTextState, PhotoProcessingErrorAction>(_processingPhotoErrorReducer),
+  TypedReducer<TopTextState, SudokuSolvingErrorAction>(_solvingSudokuErrorReducer),
 ]);
 
 TopTextState _setTopTextToPickATile(TopTextState topTextState, TileDeselectedAction action) {
@@ -106,4 +109,16 @@ TopTextState _retakePhotoReducer(TopTextState topTextState, RetakePhotoAction ac
 
 TopTextState _photoProcessedReducer(TopTextState topTextState, PhotoProcessedAction action) {
   return topTextState.copyWith(text: my_strings.topTextVerifySudoku, color: my_colors.white);
+}
+
+TopTextState _cameraNotLoadedErrorReducer(TopTextState topTextState, CameraNotLoadedErrorAction action) {
+  return topTextState.copyWith(text: my_strings.topTextCameraNotFoundError, color: my_colors.red);
+}
+
+TopTextState _processingPhotoErrorReducer(TopTextState topTextState, PhotoProcessingErrorAction action) {
+  return topTextState.copyWith(text: my_strings.topTextPhotoProcessingError, color: my_colors.red);
+}
+
+TopTextState _solvingSudokuErrorReducer(TopTextState topTextState, SudokuSolvingErrorAction action) {
+  return topTextState.copyWith(text: my_strings.topTextsolvingSudokuError, color: my_colors.red);
 }

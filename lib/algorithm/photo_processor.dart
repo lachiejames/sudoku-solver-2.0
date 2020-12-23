@@ -127,25 +127,35 @@ Future<HashMap<TileKey, File>> getSudokuFromImageFile(dynamic data) async {
 }
 
 Future<void> processPhoto(File imageFile) async {
-  _processPhotoCancellableOperation = CancelableOperation.fromFuture(
-    compute(getSudokuFromImageFile, {
-      'imageFile': imageFile,
-      'appFolder': (await getApplicationDocumentsDirectory()).path,
-    }),
-  );
+  try {
+    _processPhotoCancellableOperation = CancelableOperation.fromFuture(
+      compute(getSudokuFromImageFile, {
+        'imageFile': imageFile,
+        'appFolder': (await getApplicationDocumentsDirectory()).path,
+      }),
+    );
 
-  _processPhotoCancellableOperation.asStream().listen(
-    (tileFileMap) async {
-      Sudoku constructedSudoku = await _getSudokuFromTileImageMap(tileFileMap);
-      Redux.store.dispatch(PhotoProcessedAction(constructedSudoku));
-      my_values.takePhotoButtonPressedTrace.stop();
-      print('xxx - complete');
-    },
-  );
+    _processPhotoCancellableOperation.asStream().listen(
+      (tileFileMap) async {
+        Sudoku constructedSudoku = await _getSudokuFromTileImageMap(tileFileMap);
+        Redux.store.dispatch(PhotoProcessedAction(constructedSudoku));
+        my_values.takePhotoButtonPressedTrace.stop();
+        print('xxx - complete');
+      },
+    );
+  } on Exception catch (e) {
+    Redux.store.dispatch(PhotoProcessingErrorAction());
+    print(e);
+  }
 }
 
 void stopProcessingPhoto() {
-  _processPhotoCancellableOperation.cancel();
+  try {
+    _processPhotoCancellableOperation.cancel();
+  } on Exception catch (e) {
+    Redux.store.dispatch(PhotoProcessingErrorAction());
+    print(e);
+  }
 }
 
 Future<String> getUniqueFilePath() async {

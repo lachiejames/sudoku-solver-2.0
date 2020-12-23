@@ -18,6 +18,9 @@ final String topTextSolved = 'SOLVED';
 final String topTextConstructingSudoku = 'Constructing Sudoku...';
 final String topTextStopConstructingSudoku = 'STOP CONSTRUCTING';
 final String topTextVerifySudoku = 'Is this your Sudoku?';
+final String topTextCameraNotFoundError = 'Camera not found';
+final String topTextPhotoProcessingError = 'Unable to generate Sudoku';
+final String topTextsolvingSudokuError = 'Cannot solve, Sudoku is invalid';
 
 final String topTextWhenNoSolutionFound = 'NO SOLUTION';
 
@@ -36,9 +39,7 @@ final String solveMySudokuButtonText = 'SOLVE MY SUDOKU';
 final String stopSolvingButtonText = 'STOP SOLVING';
 final String newGameButtonText = 'NEW GAME';
 final String restartButtonText = 'RESTART';
-
-// Toast messages
-final String invalidSudokuToast = 'Invalid Sudoku';
+final String backToHomeText = 'BACK TO HOME';
 
 final String hotRestart = 'restart';
 final String setVeryHighResPictureMock = 'setVeryHighResPictureMock';
