@@ -50,7 +50,7 @@ Future<Sudoku> solveSudokuAsync(Sudoku sudoku) async {
       (solvedSudoku) {
         if (solvedSudoku.isFull() && solvedSudoku.allConstraintsSatisfied()) {
           Redux.store.dispatch(SudokuSolvedAction(solvedSudoku));
-          my_values.solveMySudokuButtonPressedTrace.stop();
+          my_values.solveSudokuButtonPressedTrace.stop();
           my_values.yesSolveItButtonPressedTrace.stop();
         }
       },

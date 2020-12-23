@@ -10,14 +10,14 @@ import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 
 /// Applies the solving algorithm to the Sudoku the user has entered
-class SolveMySudokuButtonWidget extends StatefulWidget {
-  SolveMySudokuButtonWidget({Key key}) : super(key: key);
+class SolveSudokuButtonWidget extends StatefulWidget {
+  SolveSudokuButtonWidget({Key key}) : super(key: key);
 
   @override
-  _SolveMySudokuButtonWidgetState createState() => _SolveMySudokuButtonWidgetState();
+  _SolveSudokuButtonWidgetState createState() => _SolveSudokuButtonWidgetState();
 }
 
-class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
+class _SolveSudokuButtonWidgetState extends State<SolveSudokuButtonWidget> {
   Key _createPropertyKey(GameState gameState) {
     String key = 'text:${this._determineText(gameState)}';
     key += ' - color:${this._determineColorString(gameState)}';
@@ -89,21 +89,21 @@ class _SolveMySudokuButtonWidgetState extends State<SolveMySudokuButtonWidget> {
       case GameState.solved:
         return my_strings.restartButtonText;
       default:
-        return my_strings.solveMySudokuButtonText;
+        return my_strings.solveSudokuButtonText;
     }
   }
 
   Future<void> _determineAction(GameState gameState) async {
     switch (gameState) {
       case GameState.isSolving:
-        await my_values.solveMySudokuButtonPressedTrace.incrementMetric('stop-solving-button-pressed', 1);
+        await my_values.solveSudokuButtonPressedTrace.incrementMetric('stop-solving-button-pressed', 1);
         Redux.store.dispatch(StopSolvingSudokuAction());
         break;
       case GameState.solved:
         Redux.store.dispatch(RestartAction());
         break;
       default:
-        await my_values.solveMySudokuButtonPressedTrace.start();
+        await my_values.solveSudokuButtonPressedTrace.start();
         Redux.store.dispatch(SolveSudokuAction());
     }
   }
