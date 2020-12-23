@@ -1,4 +1,4 @@
-import 'package:sudoku_solver_2/redux/reducers/camera_state_reducer.dart';
+import 'package:sudoku_solver_2/algorithm/photo_processor.dart';
 import 'package:sudoku_solver_2/algorithm/solver.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
@@ -52,6 +52,7 @@ GameState _setToDefault(GameState gameState, RestartAction action) {
 }
 
 GameState _takePhotoReducer(GameState gameState, TakePhotoAction action) {
+  processPhoto(action.imageFile);
   return GameState.processingPhoto;
 }
 
@@ -95,8 +96,7 @@ GameState _changeScreenReducer(GameState gameState, ChangeScreenAction action) {
 }
 
 GameState _stopProcessingPhotoReducer(GameState gameState, StopProcessingPhotoAction action) {
-  if (cancellableOperation != null) {
-    cancellableOperation.cancel();
-  }
+  stopProcessingPhoto();
+
   return GameState.takingPhoto;
 }

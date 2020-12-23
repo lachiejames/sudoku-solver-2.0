@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:sudoku_solver_2/algorithm/photo_processor.dart';
 import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
@@ -25,8 +27,7 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
       distinct: true,
       converter: (store) => store.state.gameState,
       builder: (context, gameState) {
-        return (gameState == GameState.takingPhoto ||
-                gameState == GameState.processingPhoto)
+        return (gameState == GameState.takingPhoto || gameState == GameState.processingPhoto)
             ? Container(
                 key: this._createPropertyKey(gameState),
                 alignment: Alignment.center,
@@ -43,8 +44,7 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
                       ),
                       onPressed: () async {
                         await _determineAction(gameState, context);
-                        await my_values.firebaseAnalytics
-                            .logEvent(name: 'button_take_photo');
+                        await my_values.firebaseAnalytics.logEvent(name: 'button_take_photo');
                       }),
                 ),
               )
@@ -86,15 +86,12 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
     }
   }
 
-  Future<void> _determineAction(
-      GameState gameState, BuildContext context) async {
+  Future<void> _determineAction(GameState gameState, BuildContext context) async {
     switch (gameState) {
       case GameState.processingPhoto:
-        await my_values.takePhotoButtonPressedTrace
-            .incrementMetric('stop-constructing-button-pressed', 1);
+        await my_values.takePhotoButtonPressedTrace.incrementMetric('stop-constructing-button-pressed', 1);
         Redux.store.dispatch(StopProcessingPhotoAction());
-        Redux.store
-            .dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
+        Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
         break;
       default:
         await my_values.takePhotoButtonPressedTrace.start();
@@ -104,7 +101,9 @@ class _TakePhotoButtonWidgetState extends State<TakePhotoButtonWidget> {
             screenSize: MediaQuery.of(context).size,
           ),
         );
-        Redux.store.dispatch(TakePhotoAction());
+        print(await getUniqueFilePath());
+        File imageFile = await Redux.store.state.cameraState.getImageFileFromCamera();
+        Redux.store.dispatch(TakePhotoAction(imageFile));
     }
   }
 }

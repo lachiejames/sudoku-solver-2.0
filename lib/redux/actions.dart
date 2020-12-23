@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:io';
 import 'dart:ui';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
@@ -66,7 +67,8 @@ class ChangeScreenAction {
 
 /// Fired when user takes a photo on the SolveWithCameraScreen
 class TakePhotoAction {
-  TakePhotoAction();
+  final File imageFile;
+  TakePhotoAction(this.imageFile);
 }
 
 /// Fired when user is confirming the Sudoku based on their photo on the SolveWithCameraScreen
