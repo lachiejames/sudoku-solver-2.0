@@ -11,12 +11,16 @@ import 'package:sudoku_solver_2/state/game_state.dart';
 
 /// Applies the solving algorithm to the Sudoku the user has entered
 class SolveSudokuButtonWidget extends StatelessWidget {
+  final List<GameState> _gameStatesToBeActiveFor = [GameState.photoProcessed, GameState.normal];
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, GameState>(
       distinct: true,
       converter: (store) => store.state.gameState,
       builder: (context, gameState) {
+        if (!_gameStatesToBeActiveFor.contains(gameState)) {
+          return Container();
+        }
         return Container(
           alignment: Alignment.center,
           margin: my_styles.buttonMargins,

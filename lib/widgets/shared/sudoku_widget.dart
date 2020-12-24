@@ -8,34 +8,43 @@ import 'package:sudoku_solver_2/widgets/shared/tile_widget.dart';
 
 /// the 81 tiles that makes up a Sudoku
 class SudokuWidget extends StatelessWidget {
+  final List<GameState> _gameStatesToBeInactiveFor = [
+    GameState.cameraNotLoadedError,
+    GameState.processingPhotoError,
+    GameState.takingPhoto,
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      textDirection: TextDirection.ltr,
-      children: <Widget>[
-        Container(
-          color: my_colors.white,
-          margin: EdgeInsets.only(
-            left: 27,
-            right: 27,
-          ),
-          child: this.makeTable(),
-        ),
-        StoreConnector<AppState, GameState>(
-          distinct: true,
-          converter: (store) => store.state.gameState,
-          builder: (context, gameState) {
-            return (gameState == GameState.isSolving || gameState == GameState.processingPhoto)
+    return StoreConnector<AppState, GameState>(
+      distinct: true,
+      converter: (store) => store.state.gameState,
+      builder: (context, gameState) {
+        if (_gameStatesToBeInactiveFor.contains(gameState)) {
+          return Container();
+        }
+        return Stack(
+          textDirection: TextDirection.ltr,
+          children: <Widget>[
+            Container(
+              color: my_colors.white,
+              margin: EdgeInsets.only(
+                left: 27,
+                right: 27,
+              ),
+              child: this.makeTable(),
+            ),
+            (gameState == GameState.isSolving || gameState == GameState.processingPhoto)
                 ? Container(
                     height: 290,
                     width: MediaQuery.of(context).size.width,
                     alignment: Alignment.center,
                     child: CircularProgressIndicator(),
                   )
-                : Container();
-          },
-        ),
-      ],
+                : Container()
+          ],
+        );
+      },
     );
   }
 
