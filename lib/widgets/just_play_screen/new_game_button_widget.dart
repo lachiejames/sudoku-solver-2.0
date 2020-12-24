@@ -46,7 +46,7 @@ class _NewGameButtonWidgetState extends State<NewGameButtonWidget> {
                   int nextGameNumber = Redux.store.state.gameNumber;
                   await Redux.sharedPreferences.setInt(my_strings.gameNumberSharedPrefsKey, nextGameNumber);
 
-            await my_values.firebaseAnalytics.logEvent(name: 'button_new_game');
+                  await my_values.firebaseAnalytics.logEvent(name: 'button_new_game');
                 },
               ),
             ),

@@ -36,32 +36,6 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
     super.dispose();
   }
 
-  Widget _makeTakingPhotoScreen(GameState gameState) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        TopTextWidget(),
-        CameraWidget(),
-        TakePhotoButtonWidget(),
-      ],
-    );
-  }
-
-  Widget _makeVerifyPhotoScreen(GameState gameState) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        TopTextWidget(),
-        SudokuWidget(),
-        SolveSudokuButtonWidget(),
-        RetakePhotoButtonWidget(),
-        TakePhotoButtonWidget(),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
@@ -74,9 +48,19 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
           appBar: SolveWithCameraScreenAppBar(AppBar()),
           backgroundColor: my_colors.pink,
           body: SingleChildScrollView(
-            child: (gameState == GameState.takingPhoto)
-                ? _makeTakingPhotoScreen(gameState)
-                : _makeVerifyPhotoScreen(gameState),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                TopTextWidget(),
+                (gameState == GameState.takingPhoto || gameState == GameState.cameraNotLoadedError)
+                    ? CameraWidget()
+                    : SudokuWidget(),
+                (gameState == GameState.photoProcessed) ? SolveSudokuButtonWidget() : Container(),
+                (gameState == GameState.photoProcessed) ? RetakePhotoButtonWidget() : Container(),
+                (gameState == GameState.takingPhoto) ? TakePhotoButtonWidget() : Container(),
+              ],
+            ),
           ),
         );
       },

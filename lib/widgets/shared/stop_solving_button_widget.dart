@@ -6,26 +6,27 @@ import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 
-/// Shown when the user has taken a photo, but wants to take another
-class RetakePhotoButtonWidget extends StatelessWidget {
+/// Applies the solving algorithm to the Sudoku the user has entered
+class StopSolvingSudokuButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      margin: EdgeInsets.all(0),
+      margin: my_styles.buttonMargins,
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: RaisedButton(
           shape: my_styles.buttonShape,
           padding: my_styles.buttonPadding,
-          color: my_colors.blue,
+          color: my_colors.red,
           child: Text(
-            my_strings.retakePhotoButtonText,
+            my_strings.stopSolvingButtonText,
             style: my_styles.buttonTextStyle,
           ),
           onPressed: () async {
-            Redux.store.dispatch(RetakePhotoAction());
-            await my_values.firebaseAnalytics.logEvent(name: 'button_retake_photo');
+            Redux.store.dispatch(StopSolvingSudokuAction());
+            await my_values.firebaseAnalytics.logEvent(name: 'button_solve_sudoku');
+            await my_values.solveSudokuButtonPressedTrace.incrementMetric('stop-solving-button-pressed', 1);
           },
         ),
       ),

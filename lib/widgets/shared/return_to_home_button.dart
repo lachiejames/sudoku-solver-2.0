@@ -6,13 +6,12 @@ import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 
-/// Shown when the user has taken a photo, but wants to take another
-class RetakePhotoButtonWidget extends StatelessWidget {
+class ReturnToHomeButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      margin: EdgeInsets.all(0),
+      margin: my_styles.buttonMargins,
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: RaisedButton(
@@ -20,12 +19,12 @@ class RetakePhotoButtonWidget extends StatelessWidget {
           padding: my_styles.buttonPadding,
           color: my_colors.blue,
           child: Text(
-            my_strings.retakePhotoButtonText,
+            my_strings.returnToHomeText,
             style: my_styles.buttonTextStyle,
           ),
           onPressed: () async {
-            Redux.store.dispatch(RetakePhotoAction());
-            await my_values.firebaseAnalytics.logEvent(name: 'button_retake_photo');
+            Redux.store.dispatch(ReturnToHomeAction());
+            await my_values.firebaseAnalytics.logEvent(name: 'button_return_to_home');
           },
         ),
       ),

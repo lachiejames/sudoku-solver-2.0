@@ -38,7 +38,7 @@ final String solveSudokuButtonText = 'SOLVE SUDOKU';
 final String stopSolvingButtonText = 'STOP SOLVING';
 final String newGameButtonText = 'NEW GAME';
 final String restartButtonText = 'RESTART';
-final String backToHomeText = 'BACK TO HOME';
+final String returnToHomeText = 'RETURN TO HOME';
 
 final String hotRestart = 'restart';
 final String setVeryHighResPictureMock = 'setVeryHighResPictureMock';

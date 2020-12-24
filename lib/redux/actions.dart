@@ -137,3 +137,7 @@ class PhotoProcessingErrorAction {
 class SudokuSolvingErrorAction {
   SudokuSolvingErrorAction();
 }
+
+class ReturnToHomeAction {
+  ReturnToHomeAction();
+}
