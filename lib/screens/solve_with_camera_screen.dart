@@ -44,6 +44,7 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
       distinct: true,
       converter: (store) => store.state.gameState,
       builder: (context, gameState) {
+        print('${gameState}');
         return Scaffold(
           appBar: SolveWithCameraScreenAppBar(AppBar()),
           backgroundColor: my_colors.pink,

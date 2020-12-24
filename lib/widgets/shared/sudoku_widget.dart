@@ -7,14 +7,7 @@ import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/widgets/shared/tile_widget.dart';
 
 /// the 81 tiles that makes up a Sudoku
-class SudokuWidget extends StatefulWidget {
-  SudokuWidget({Key key}) : super(key: key);
-
-  @override
-  _SudokuWidgetState createState() => _SudokuWidgetState();
-}
-
-class _SudokuWidgetState extends State<SudokuWidget> {
+class SudokuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(

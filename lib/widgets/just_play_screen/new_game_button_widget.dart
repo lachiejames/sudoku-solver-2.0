@@ -10,14 +10,7 @@ import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 
 /// Shown when a game is completed on the JustPlayScreen
-class NewGameButtonWidget extends StatefulWidget {
-  NewGameButtonWidget({Key key}) : super(key: key);
-
-  @override
-  _NewGameButtonWidgetState createState() => _NewGameButtonWidgetState();
-}
-
-class _NewGameButtonWidgetState extends State<NewGameButtonWidget> {
+class NewGameButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, GameState>(

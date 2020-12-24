@@ -9,18 +9,9 @@ import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
 
 /// Contains a number from 1-9 for the user to select
-class NumberWidget extends StatefulWidget {
+class NumberWidget extends StatelessWidget {
   final int number;
   NumberWidget({this.number, Key key}) : super(key: key);
-
-  @override
-  _NumberWidgetState createState() => _NumberWidgetState(number: this.number);
-}
-
-class _NumberWidgetState extends State<NumberWidget> {
-  final int number;
-
-  _NumberWidgetState({@required this.number});
 
   Key _createPropertyKey(NumberState numberState) {
     String key = 'Number(${this.number})';

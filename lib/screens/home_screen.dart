@@ -9,13 +9,7 @@ import 'package:sudoku_solver_2/widgets/home_screen/solve_with_touch_button_widg
 import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 
 /// Shown when the app starts
-class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key}) : super(key: key);
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Redux.store.dispatch(ChangeScreenAction(ScreenState.homeScreen));

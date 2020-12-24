@@ -6,14 +6,7 @@ import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 
 /// Provides a live view of the front camera
-class CameraWidget extends StatefulWidget {
-  CameraWidget({Key key}) : super(key: key);
-
-  @override
-  _CameraWidgetState createState() => _CameraWidgetState();
-}
-
-class _CameraWidgetState extends State<CameraWidget> {
+class CameraWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -24,12 +17,6 @@ class _CameraWidgetState extends State<CameraWidget> {
       builder: (context, cameraState) {
         return (cameraState.cameraController != null && cameraState.cameraController.value.isInitialized)
             ? Container(
-                height: widgetSize,
-                width: MediaQuery.of(context).size.width,
-                alignment: Alignment.center,
-                child: CircularProgressIndicator(),
-              )
-            : Container(
                 width: widgetSize,
                 height: widgetSize,
                 child: ClipRect(
@@ -45,6 +32,12 @@ class _CameraWidgetState extends State<CameraWidget> {
                     ),
                   ),
                 ),
+              )
+            : Container(
+                height: widgetSize,
+                width: MediaQuery.of(context).size.width,
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
               );
       },
     );

@@ -10,17 +10,9 @@ import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 
 /// 1 of the 81 tiles that makes up a Sudoku
-class TileWidget extends StatefulWidget {
+class TileWidget extends StatelessWidget {
   final TileKey tileKey;
   TileWidget({@required this.tileKey, Key key}) : super(key: key);
-
-  @override
-  _TileWidgetState createState() => _TileWidgetState(tileKey: this.tileKey);
-}
-
-class _TileWidgetState extends State<TileWidget> {
-  final TileKey tileKey;
-  _TileWidgetState({@required this.tileKey});
 
   Key _createPropertyKey(TileState tileState) {
     String key = '${this.tileKey.toString()}';
@@ -56,12 +48,8 @@ class _TileWidgetState extends State<TileWidget> {
             decoration: BoxDecoration(
               color: _determineTileColor(tileState),
               border: Border(
-                bottom: BorderSide(
-                    width: (tileState.row == 3 || tileState.row == 6) ? 3 : 0,
-                    color: my_colors.black),
-                right: BorderSide(
-                    width: (tileState.col == 3 || tileState.col == 6) ? 3 : 0,
-                    color: my_colors.black),
+                bottom: BorderSide(width: (tileState.row == 3 || tileState.row == 6) ? 3 : 0, color: my_colors.black),
+                right: BorderSide(width: (tileState.col == 3 || tileState.col == 6) ? 3 : 0, color: my_colors.black),
               ),
             ),
             child: Stack(

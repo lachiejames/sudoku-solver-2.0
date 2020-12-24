@@ -6,14 +6,7 @@ import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
 
 /// Contains text which provides tips for the user when the game changes state
-class TopTextWidget extends StatefulWidget {
-  TopTextWidget({Key key}) : super(key: key);
-
-  @override
-  _TopTextWidgetState createState() => _TopTextWidgetState();
-}
-
-class _TopTextWidgetState extends State<TopTextWidget> {
+class TopTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, TopTextState>(
