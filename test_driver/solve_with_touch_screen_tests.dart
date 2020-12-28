@@ -237,7 +237,7 @@ void main() {
         await driver.runUnsynchronized(() async {
           await addSudoku(my_games.solvingInvalidErrorGame);
           await waitForThenTap(find.text('SOLVE SUDOKU'));
-          await driver.waitFor(find.text('Cannot solve, Sudoku is invalddid'));
+          await driver.waitFor(find.text('Cannot solve, Sudoku is invalid'));
         });
       });
     });

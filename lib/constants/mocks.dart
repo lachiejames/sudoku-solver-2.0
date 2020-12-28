@@ -56,8 +56,33 @@ class MyMockHelper {
     });
   }
 
-  static void deletePictureMock() async {
+    static void setTimeoutErrorPictureMock() async {
+    await MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler((MethodCall methodCall) async {
+      if (methodCall.method == 'takePicture') {
+        imagePath = methodCall.arguments['path'];
+        File mockFile = await File(imagePath).create();
+        File mockImageFile = await _getImageFileFromAssets('sudoku_photo_that_causes_timeout_error.png');
+        mockFile.writeAsBytesSync(mockImageFile.readAsBytesSync());
+      }
+      return Future.value();
+    });
+  }
+
+    static void setInvalidErrorPictureMock() async {
+    await MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler((MethodCall methodCall) async {
+      if (methodCall.method == 'takePicture') {
+        imagePath = methodCall.arguments['path'];
+        File mockFile = await File(imagePath).create();
+        File mockImageFile = await _getImageFileFromAssets('sudoku_photo_that_causes_invalid_error.png');
+        mockFile.writeAsBytesSync(mockImageFile.readAsBytesSync());
+      }
+      return Future.value();
+    });
+  }
+
+  static void deleteAllMocks() async {
     await MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler(null);
+    await MethodChannel('plugins.flutter.io/firebase_ml_vision').setMockMethodCallHandler(null);
   }
 
   static void setCameraNotFoundErrorMock() async {

@@ -33,14 +33,20 @@ Future<void> main() async {
     } else if (command == my_strings.setMediumResPictureMock) {
       await MyMockHelper.setMediumResPictureMock();
       return 'ok';
-    } else if (command == my_strings.deletePictureMock) {
-      await MyMockHelper.deletePictureMock();
+    } else if (command == my_strings.deleteAllMocks) {
+      await MyMockHelper.deleteAllMocks();
       return 'ok';
     } else if (command == my_strings.setCameraNotFoundErrorMock) {
       await MyMockHelper.setCameraNotFoundErrorMock();
       return 'ok';
     } else if (command == my_strings.setPhotoProcessingErrorMock) {
       await MyMockHelper.setPhotoProcessingErrorMock();
+      return 'ok';
+    } else if (command == my_strings.setTimeoutErrorPictureMock) {
+      await MyMockHelper.setTimeoutErrorPictureMock();
+      return 'ok';
+    } else if (command == my_strings.setInvalidErrorPictureMock) {
+      await MyMockHelper.setInvalidErrorPictureMock();
       return 'ok';
     }
     throw Exception('Unknown command: $command');
