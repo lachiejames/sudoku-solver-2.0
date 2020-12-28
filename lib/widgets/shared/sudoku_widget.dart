@@ -10,7 +10,6 @@ import 'package:sudoku_solver_2/widgets/shared/tile_widget.dart';
 class SudokuWidget extends StatelessWidget {
   final List<GameState> _gameStatesToBeInactiveFor = [
     GameState.cameraNotLoadedError,
-    GameState.processingPhotoError,
     GameState.takingPhoto,
   ];
 

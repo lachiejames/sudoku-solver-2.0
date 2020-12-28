@@ -169,19 +169,51 @@ void main() {
     // });
 
     group('Error scenarios', () {
-      group('camera not loaded error', () {
+      // group('camera not loaded error', () {
+      //   setUp(() async {
+      //     await driver.requestData(my_strings.setCameraNotFoundErrorMock);
+      //     await hotRestart();
+      //     await navigateToSolveWithCameraScreen();
+      //   });
+
+      //   test('shows "Camera Not Loaded Error" screen', () async {
+      //     await driver.waitFor(find.text('Camera not found'));
+      //     await driver.waitFor(find.text('RETURN TO HOME'));
+      //   });
+
+      //   test('pressing "RETURN TO HOME" brings you back to home screen', () async {
+      //     await waitForThenTap(find.text('RETURN TO HOME'));
+
+      //     await driver.waitFor(find.text('How would you like it to be solved?'));
+      //     await driver.waitFor(find.text('SOLVE WITH CAMERA'));
+      //     await driver.waitFor(find.text('SOLVE WITH TOUCH'));
+      //     await driver.waitFor(find.text('JUST PLAY'));
+      //   });
+      // });
+      group('photo processing error', () {
         setUp(() async {
-          await driver.requestData(my_strings.setCameraNotFoundErrorMock);
+          await driver.requestData(my_strings.setPhotoProcessingErrorMock);
           await hotRestart();
           await navigateToSolveWithCameraScreen();
+          await waitForThenTap(find.text('TAKE PHOTO'));
         });
 
-        test('when camera is not loaded, shows "Camera Not Loaded Error" screen', () async {
-          await driver.waitFor(find.text('Camera not found'));
+        test('shows "Photo Processing Error" screen', () async {
+          await driver.waitFor(find.text('Unable to generate Sudoku'));
+          await driver.waitFor(find.text('RETAKE PHOTO'));
           await driver.waitFor(find.text('RETURN TO HOME'));
         });
 
-        test('when camera is not loaded, pressing "RETURN TO HOME" brings yoou back to home screen', () async {
+        test('pressing "RETAKE PHOTO" brings you back to taking photo screen', () async {
+          await waitForThenTap(find.text('RETAKE PHOTO'));
+
+          await driver.waitFor(find.text('Camera'));
+          await driver.waitFor(find.text('Align with camera'));
+          await driver.waitFor(find.byType('CameraWidget'));
+          await driver.waitFor(find.text('TAKE PHOTO'));
+        });
+
+        test('pressing "RETURN TO HOME" brings you back to home screen', () async {
           await waitForThenTap(find.text('RETURN TO HOME'));
 
           await driver.waitFor(find.text('How would you like it to be solved?'));
@@ -190,10 +222,6 @@ void main() {
           await driver.waitFor(find.text('JUST PLAY'));
         });
       });
-      // test('stop solving', () async {});
-      // test('retake photo', () async {});
-      // test('back button during construction', () async {});
-      // test('back button during solve', () async {});
     });
   });
 }

@@ -12,7 +12,7 @@ double horizontalPadding;
 int appBarHeight = 56;
 
 // UI stuff
-final double topTextFontSize = 40;
+final double topTextFontSize = 32;
 final double appBarFontSize = 25;
 final double howToTextFontSize = 30;
 final double buttonTextFontSize = 40;

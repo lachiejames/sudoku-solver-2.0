@@ -65,4 +65,11 @@ class MyMockHelper {
       throw CameraException('mock camera exception', 'yeee');
     });
   }
+
+  static void setPhotoProcessingErrorMock() async {
+    await MethodChannel('plugins.flutter.io/firebase_ml_vision')
+        .setMockMethodCallHandler((MethodCall methodCall) async {
+      throw Exception('mock firebase exception');
+    });
+  }
 }

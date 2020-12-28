@@ -39,6 +39,9 @@ Future<void> main() async {
     } else if (command == my_strings.setCameraNotFoundErrorMock) {
       await MyMockHelper.setCameraNotFoundErrorMock();
       return 'ok';
+    } else if (command == my_strings.setPhotoProcessingErrorMock) {
+      await MyMockHelper.setPhotoProcessingErrorMock();
+      return 'ok';
     }
     throw Exception('Unknown command: $command');
   });

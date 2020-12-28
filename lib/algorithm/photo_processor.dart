@@ -119,7 +119,7 @@ Future<Sudoku> _getSudokuFromTileImageMap(HashMap<TileKey, File> tileImageMap) a
   return sudoku;
 }
 
-Future<HashMap<TileKey, File>> getSudokuFromImageFile(dynamic data) async {
+Future<HashMap<TileKey, File>> getTileFileMapFromImageFile(dynamic data) async {
   _appFolder = data['appFolder'];
   Image fullImage = await _getImageFromFile(data['imageFile']);
   Image sudokuImage = await _cropImageToSudokuBounds(fullImage);
@@ -127,35 +127,30 @@ Future<HashMap<TileKey, File>> getSudokuFromImageFile(dynamic data) async {
 }
 
 Future<void> processPhoto(File imageFile) async {
-  try {
-    _processPhotoCancellableOperation = CancelableOperation.fromFuture(
-      compute(getSudokuFromImageFile, {
-        'imageFile': imageFile,
-        'appFolder': (await getApplicationDocumentsDirectory()).path,
-      }),
-    );
+  _processPhotoCancellableOperation = CancelableOperation.fromFuture(compute(getTileFileMapFromImageFile, {
+    'imageFile': imageFile,
+    'appFolder': (await getApplicationDocumentsDirectory()).path,
+  }));
 
-    _processPhotoCancellableOperation.asStream().listen(
-      (tileFileMap) async {
+  _processPhotoCancellableOperation.asStream().listen((tileFileMap) async {
+    if (tileFileMap != null) {
+      try {
         Sudoku constructedSudoku = await _getSudokuFromTileImageMap(tileFileMap);
         Redux.store.dispatch(PhotoProcessedAction(constructedSudoku));
         my_values.takePhotoButtonPressedTrace.stop();
-        print('xxx - complete');
-      },
-    );
-  } on Exception catch (e) {
+      } on Exception catch (e) {
+        Redux.store.dispatch(PhotoProcessingErrorAction());
+        print(e);
+      }
+    }
+  }, onError: (e) {
     Redux.store.dispatch(PhotoProcessingErrorAction());
     print(e);
-  }
+  });
 }
 
 void stopProcessingPhoto() {
-  try {
-    _processPhotoCancellableOperation.cancel();
-  } on Exception catch (e) {
-    Redux.store.dispatch(PhotoProcessingErrorAction());
-    print(e);
-  }
+  _processPhotoCancellableOperation.cancel();
 }
 
 Future<String> getUniqueFilePath() async {
