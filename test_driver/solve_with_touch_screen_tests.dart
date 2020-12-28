@@ -151,11 +151,12 @@ void main() {
 
       test('pressing RESTART stops solving the sudoku', () async {
         await driver.runUnsynchronized(() async {
+          await addSudoku(my_games.solvingTimeoutErrorGame);
           await waitForThenTap(find.text('SOLVE SUDOKU'));
-          await expectButtonPropertiesAre(text: 'STOP SOLVING', color: 'red', tappable: 'true');
 
+          await driver.waitFor(find.text('STOP SOLVING'));
           await pressRestartOnDropDownMenu('SolveWithTouchScreenDropDownMenuWidget');
-          await expectButtonPropertiesAre(text: 'SOLVE SUDOKU', color: 'blue', tappable: 'true');
+          await driver.waitFor(find.text('SOLVE SUDOKU'));
         });
       });
     });
@@ -184,20 +185,11 @@ void main() {
         await driver.waitFor(find.text('RESTART'));
       });
 
-      test('SOLVE SUDOKU button is disabled when invalid tiles are present', () async {
-        await addSudoku(my_games.games[0]);
-        await addNumberToTile(5, TileKey(row: 2, col: 2));
-        await expectButtonPropertiesAre(text: 'SOLVE SUDOKU', color: 'grey', tappable: 'false');
-      });
-
       test('a STOP SOLVING button will appear during the solve', () async {
         await addSudoku(my_games.games[0]);
 
-        // Required because an animation occurs while solving
         await driver.runUnsynchronized(() async {
-          await expectButtonPropertiesAre(text: 'SOLVE SUDOKU', color: 'blue', tappable: 'true');
           await waitForThenTap(find.text('SOLVE SUDOKU'));
-          await expectButtonPropertiesAre(text: 'STOP SOLVING', color: 'red', tappable: 'true');
           await waitForThenTap(find.text('STOP SOLVING'));
         });
       });
@@ -205,7 +197,6 @@ void main() {
       test('pressing STOP SOLVING will stop the solve', () async {
         await addSudoku(my_games.games[0]);
 
-        // Required because an animation occurs while solving
         await driver.runUnsynchronized(() async {
           await waitForThenTap(find.text('SOLVE SUDOKU'));
           await waitForThenTap(find.text('STOP SOLVING'));
