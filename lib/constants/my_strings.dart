@@ -45,6 +45,7 @@ final String setVeryHighResPictureMock = 'setVeryHighResPictureMock';
 final String setHighResPictureMock = 'setHighResPictureMock';
 final String setMediumResPictureMock = 'setMediumResPictureMock';
 final String deletePictureMock = 'deletePictureMock';
+final String setCameraNotFoundErrorMock = 'setCameraNotFoundErrorMock';
 
 // Set to null when running all tests
 final String dartVMServiceUrl = 'http://127.0.0.1:8888/';

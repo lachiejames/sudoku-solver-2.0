@@ -95,7 +95,10 @@ GameState _gameSolvedReducerReducer(GameState gameState, GameSolvedAction action
 }
 
 GameState _changeScreenReducer(GameState gameState, ChangeScreenAction action) {
-  return GameState.takingPhoto;
+  if (action.screenState == ScreenState.solveWithCameraScreen) {
+    return GameState.takingPhoto;
+  }
+  return GameState.normal;
 }
 
 GameState _stopProcessingPhotoReducer(GameState gameState, StopProcessingPhotoAction action) {

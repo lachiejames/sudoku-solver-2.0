@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -57,5 +58,11 @@ class MyMockHelper {
 
   static void deletePictureMock() async {
     await MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler(null);
+  }
+
+  static void setCameraNotFoundErrorMock() async {
+    await MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler((MethodCall methodCall) async {
+      throw CameraException('mock camera exception', 'yeee');
+    });
   }
 }

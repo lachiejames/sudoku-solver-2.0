@@ -36,6 +36,9 @@ Future<void> main() async {
     } else if (command == my_strings.deletePictureMock) {
       await MyMockHelper.deletePictureMock();
       return 'ok';
+    } else if (command == my_strings.setCameraNotFoundErrorMock) {
+      await MyMockHelper.setCameraNotFoundErrorMock();
+      return 'ok';
     }
     throw Exception('Unknown command: $command');
   });
@@ -50,7 +53,6 @@ Future<void> _initCamera() async {
     await cameraController.initialize();
     Redux.store.dispatch(CameraReadyAction(cameraController));
   } on Exception catch (e) {
-    Redux.store.dispatch(CameraNotLoadedErrorAction());
     print(e);
   }
 }

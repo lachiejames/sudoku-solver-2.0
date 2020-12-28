@@ -4,6 +4,7 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/number_bar_widget.dart';
+import 'package:sudoku_solver_2/widgets/shared/restart_button_widget.dart';
 import 'package:sudoku_solver_2/widgets/shared/solve_sudoku_button_widget.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_touch_screen/solve_with_touch_screen_app_bar.dart';
 import 'package:sudoku_solver_2/widgets/shared/sudoku_widget.dart';
@@ -47,6 +48,7 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
             NumberBarWidget(),
             SudokuWidget(),
             SolveSudokuButtonWidget(),
+            RestartButtonWidget(),
           ],
         ),
       ),

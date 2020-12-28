@@ -14,7 +14,7 @@ class ReturnToHomeButtonWidget extends StatelessWidget {
     GameState.cameraNotLoadedError,
     GameState.processingPhotoError,
   ];
-  
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, GameState>(
@@ -40,6 +40,7 @@ class ReturnToHomeButtonWidget extends StatelessWidget {
               onPressed: () async {
                 Redux.store.dispatch(ReturnToHomeAction());
                 await my_values.firebaseAnalytics.logEvent(name: 'button_return_to_home');
+                await Navigator.pop(context);
               },
             ),
           ),

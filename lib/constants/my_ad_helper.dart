@@ -2,7 +2,6 @@
 library my_ad_helper;
 
 import 'package:firebase_admob/firebase_admob.dart';
-import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 
 final String appIdForAdMob = "ca-app-pub-6687326312027109~4201385146";
