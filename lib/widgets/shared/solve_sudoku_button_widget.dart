@@ -11,7 +11,21 @@ import 'package:sudoku_solver_2/state/game_state.dart';
 
 /// Applies the solving algorithm to the Sudoku the user has entered
 class SolveSudokuButtonWidget extends StatelessWidget {
-  final List<GameState> _gameStatesToBeActiveFor = [GameState.photoProcessed, GameState.normal];
+  final List<GameState> _gameStatesToBeActiveFor = [
+    GameState.photoProcessed,
+    GameState.normal,
+    GameState.invalidTilesPresent,
+    GameState.solvingSudokuTimeoutError,
+    GameState.solvingSudokuInvalidError,
+  ];
+
+  bool _cannotBeSolved(GameState gameState) {
+    return [
+      GameState.invalidTilesPresent,
+      GameState.solvingSudokuInvalidError,
+    ].contains(gameState);
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, GameState>(
@@ -34,15 +48,13 @@ class SolveSudokuButtonWidget extends StatelessWidget {
                 my_strings.solveSudokuButtonText,
                 style: my_styles.buttonTextStyle,
               ),
-              onPressed: () async {
-                if (gameState == GameState.invalidTilesPresent) {
-                  return null;
-                }
-
-                await my_values.solveSudokuButtonPressedTrace.start();
-                Redux.store.dispatch(SolveSudokuAction());
-                await my_values.firebaseAnalytics.logEvent(name: 'button_solve_sudoku');
-              },
+              onPressed: (this._cannotBeSolved(gameState))
+                  ? null
+                  : () async {
+                      await my_values.solveSudokuButtonPressedTrace.start();
+                      Redux.store.dispatch(SolveSudokuAction());
+                      await my_values.firebaseAnalytics.logEvent(name: 'button_solve_sudoku');
+                    },
             ),
           ),
         );

@@ -133,3 +133,27 @@ final List<List<List<int>>> games = [
   _game8ValuesList,
   _game9ValuesList,
 ];
+
+final List<List<int>> solvingTimeoutErrorGame = [
+  [null, null, null, 7, null, null, null, null, null],
+  [1, null, null, null, null, null, null, null, null],
+  [null, null, null, 4, 3, null, 2, null, null],
+  [null, null, null, null, null, null, null, null, 6],
+  [null, null, null, 5, null, 9, null, null, null],
+  [null, null, null, null, null, null, 4, 1, 8],
+  [null, null, null, null, 8, 1, null, null, null],
+  [null, null, 2, null, null, null, null, 5, null],
+  [null, 4, null, null, null, null, 3, null, null],
+];
+
+final List<List<int>> solvingInvalidErrorGame = [
+  [5, 1, 6, 8, 4, 9, 7, 3, 2],
+  [3, null, 7, 6, null, 5, null, null, null],
+  [8, null, 9, 7, null, null, null, 6, 5],
+  [1, 3, 5, null, 6, null, 9, null, 7],
+  [4, 7, 2, 5, 9, 1, null, null, 6],
+  [9, 6, 8, 3, 7, null, null, 5, null],
+  [2, 5, 3, 1, 8, 6, null, 7, 4],
+  [6, 8, 4, 2, null, 7, 5, null, null],
+  [7, 9, 1, null, 5, null, 6, null, 8],
+];

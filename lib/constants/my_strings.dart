@@ -20,7 +20,9 @@ final String topTextStopConstructingSudoku = 'STOP CONSTRUCTING';
 final String topTextVerifySudoku = 'Is this your Sudoku?';
 final String topTextCameraNotFoundError = 'Camera not found';
 final String topTextPhotoProcessingError = 'Unable to generate Sudoku';
-final String topTextsolvingSudokuError = 'Cannot solve, Sudoku is invalid';
+final String topTextSudokuInvalidError = 'Cannot solve, Sudoku is invalid';
+final String topTextSolvingTimeoutError = 'The A.I. timed out';
+
 
 final String topTextWhenNoSolutionFound = 'NO SOLUTION';
 

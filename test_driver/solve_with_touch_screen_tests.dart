@@ -224,6 +224,22 @@ void main() {
         await waitForThenTap(find.text('SOLVE SUDOKU'));
         await waitForThenTap(find.text('RESTART'));
       }, timeout: Timeout(Duration(seconds: 60)));
+
+      test('solving timeout', () async {
+        await driver.runUnsynchronized(() async {
+          await addSudoku(my_games.solvingTimeoutErrorGame);
+          await waitForThenTap(find.text('SOLVE SUDOKU'));
+          await driver.waitFor(find.text('The A.I. timed out'));
+        });
+      }, timeout: Timeout(Duration(seconds: 40)));
+
+      test('solving invalid', () async {
+        await driver.runUnsynchronized(() async {
+          await addSudoku(my_games.solvingInvalidErrorGame);
+          await waitForThenTap(find.text('SOLVE SUDOKU'));
+          await driver.waitFor(find.text('Cannot solve, Sudoku is invalddid'));
+        });
+      });
     });
   });
 }

@@ -134,8 +134,12 @@ class PhotoProcessingErrorAction {
   PhotoProcessingErrorAction();
 }
 
-class SudokuSolvingErrorAction {
-  SudokuSolvingErrorAction();
+class SudokuSolvingTimeoutErrorAction {
+  SudokuSolvingTimeoutErrorAction();
+}
+
+class SudokuSolvingInvalidErrorAction {
+  SudokuSolvingInvalidErrorAction();
 }
 
 class ReturnToHomeAction {

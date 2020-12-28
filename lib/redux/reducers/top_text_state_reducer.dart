@@ -25,7 +25,8 @@ final Reducer<TopTextState> topTextStateReducer = combineReducers<TopTextState>(
   TypedReducer<TopTextState, StopProcessingPhotoAction>(_stopProcessingPhotoReducer),
   TypedReducer<TopTextState, CameraNotLoadedErrorAction>(_cameraNotLoadedErrorReducer),
   TypedReducer<TopTextState, PhotoProcessingErrorAction>(_processingPhotoErrorReducer),
-  TypedReducer<TopTextState, SudokuSolvingErrorAction>(_solvingSudokuErrorReducer),
+  TypedReducer<TopTextState, SudokuSolvingTimeoutErrorAction>(_sudokuSolvingTimeoutErrorReducer),
+  TypedReducer<TopTextState, SudokuSolvingInvalidErrorAction>(_sudokuSolvingInvalidErrorReducer),
   TypedReducer<TopTextState, ReturnToHomeAction>(_returnToHomeReducer),
 ]);
 
@@ -120,8 +121,12 @@ TopTextState _processingPhotoErrorReducer(TopTextState topTextState, PhotoProces
   return topTextState.copyWith(text: my_strings.topTextPhotoProcessingError, color: my_colors.red);
 }
 
-TopTextState _solvingSudokuErrorReducer(TopTextState topTextState, SudokuSolvingErrorAction action) {
-  return topTextState.copyWith(text: my_strings.topTextsolvingSudokuError, color: my_colors.red);
+TopTextState _sudokuSolvingTimeoutErrorReducer(TopTextState topTextState, SudokuSolvingTimeoutErrorAction action) {
+  return topTextState.copyWith(text: my_strings.topTextSolvingTimeoutError, color: my_colors.red);
+}
+
+TopTextState _sudokuSolvingInvalidErrorReducer(TopTextState topTextState, SudokuSolvingInvalidErrorAction action) {
+  return topTextState.copyWith(text: my_strings.topTextSudokuInvalidError, color: my_colors.red);
 }
 
 TopTextState _returnToHomeReducer(TopTextState topTextState, ReturnToHomeAction action) {

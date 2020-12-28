@@ -4,11 +4,11 @@ enum GameState {
   invalidTilesPresent,
   isSolving,
   solved,
-  noSolution,
   takingPhoto,
   processingPhoto,
   photoProcessed,
   cameraNotLoadedError,
   processingPhotoError,
-  solvingSudokuError,
+  solvingSudokuTimeoutError,
+  solvingSudokuInvalidError,
 }

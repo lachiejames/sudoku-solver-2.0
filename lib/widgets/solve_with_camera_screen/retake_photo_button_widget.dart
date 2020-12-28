@@ -14,9 +14,9 @@ class RetakePhotoButtonWidget extends StatelessWidget {
   final List<GameState> _gameStatesToBeActiveFor = [
     GameState.photoProcessed,
     GameState.invalidTilesPresent,
-    GameState.noSolution,
     GameState.processingPhotoError,
-    GameState.solvingSudokuError,
+    GameState.solvingSudokuTimeoutError,
+    GameState.solvingSudokuInvalidError,
   ];
 
   @override

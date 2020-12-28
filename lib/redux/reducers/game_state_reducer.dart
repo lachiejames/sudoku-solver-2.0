@@ -23,7 +23,8 @@ final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
   TypedReducer<GameState, StopProcessingPhotoAction>(_stopProcessingPhotoReducer),
   TypedReducer<GameState, CameraNotLoadedErrorAction>(_cameraNotLoadedErrorReducer),
   TypedReducer<GameState, PhotoProcessingErrorAction>(_processingPhotoErrorReducer),
-  TypedReducer<GameState, SudokuSolvingErrorAction>(_solvingSudokuErrorReducer),
+  TypedReducer<GameState, SudokuSolvingTimeoutErrorAction>(_sudokuSolvingTimeoutErrorReducer),
+  TypedReducer<GameState, SudokuSolvingInvalidErrorAction>(_sudokuSolvingInvalidErrorReducer),
 ]);
 
 GameState _solveSudokuReducer(GameState gameState, SolveSudokuAction action) {
@@ -115,6 +116,10 @@ GameState _processingPhotoErrorReducer(GameState gameState, PhotoProcessingError
   return GameState.processingPhotoError;
 }
 
-GameState _solvingSudokuErrorReducer(GameState gameState, SudokuSolvingErrorAction action) {
-  return GameState.solvingSudokuError;
+GameState _sudokuSolvingTimeoutErrorReducer(GameState gameState, SudokuSolvingTimeoutErrorAction action) {
+  return GameState.solvingSudokuTimeoutError;
+}
+
+GameState _sudokuSolvingInvalidErrorReducer(GameState gameState, SudokuSolvingInvalidErrorAction action) {
+  return GameState.solvingSudokuInvalidError;
 }
