@@ -4,10 +4,33 @@ import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
 import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/screens/solve_with_camera_screen.dart';
+import 'package:sudoku_solver_2/widgets/shared/animated_route.dart';
 
 /// Lives on the HomeScreen, navigating users to the SolveWithCameraButtonWidget
-class SolveWithCameraButtonWidget extends StatelessWidget {
+class SolveWithCameraButtonWidget extends StatefulWidget {
   SolveWithCameraButtonWidget({Key key}) : super(key: key);
+
+  @override
+  _SolveWithCameraButtonWidgetState createState() => _SolveWithCameraButtonWidgetState();
+}
+
+class _SolveWithCameraButtonWidgetState extends State<SolveWithCameraButtonWidget> with SingleTickerProviderStateMixin {
+  AnimationController _animationController;
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+    _animationController.repeat();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +64,9 @@ class SolveWithCameraButtonWidget extends StatelessWidget {
   Future<void> _navigateToSolveWithCameraScreen(BuildContext context) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => SolveWithCameraScreen(),
-        settings: RouteSettings(name: '/solve-with-camera'),
+      AnimatedRoute(
+        nextPage: SolveWithCameraScreen(),
+        routeSettings: RouteSettings(name: '/solve-with-camera'),
       ),
     );
   }
