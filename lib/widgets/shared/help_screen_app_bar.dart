@@ -4,7 +4,6 @@ import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
 import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
 import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
-import 'package:sudoku_solver_2/widgets/just_play_screen/just_play_screen_drop_down_menu_widget.dart';
 
 /// AppBar shown on the help screens
 class HelpScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -21,14 +20,7 @@ class HelpScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: my_styles.appBarTextStyle,
         textDirection: TextDirection.ltr,
       ),
-      actions: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(right: 24),
-          child: GestureDetector(
-            child: JustPlayScreenDropDownMenuWidget(),
-          ),
-        ),
-      ],
+
       leading: IconButton(
         onPressed: () async {
           await Navigator.pop(context);

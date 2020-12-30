@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class AnimatedRoute extends PageRouteBuilder {
+class SizeAnimatedRoute extends PageRouteBuilder {
   final Widget nextPage;
   final RouteSettings routeSettings;
 
-  AnimatedRoute({this.nextPage, this.routeSettings})
+  SizeAnimatedRoute({this.nextPage, this.routeSettings})
       : super(
           settings: routeSettings,
           transitionDuration: Duration(milliseconds: 500),

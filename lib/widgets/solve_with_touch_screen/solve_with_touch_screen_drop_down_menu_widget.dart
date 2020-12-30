@@ -6,6 +6,7 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/solve_with_touch_help_screen.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
+import 'package:sudoku_solver_2/widgets/shared/slide_animated_route.dart';
 
 /// drop ddown menu on the SolveWithTouchScreen
 class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
@@ -65,9 +66,9 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
   Future<void> _navigateToSolveWithTouchHelpScreen(BuildContext context) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => SolveWithTouchHelpScreen(),
-        settings: RouteSettings(name: '/solve-with-touch/help'),
+      SlideAnimatedRoute(
+        nextPage: SolveWithTouchHelpScreen(),
+        routeSettings: RouteSettings(name: '/solve-with-touch/help'),
       ),
     );
   }

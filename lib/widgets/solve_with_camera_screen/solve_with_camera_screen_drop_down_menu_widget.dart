@@ -5,6 +5,7 @@ import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/solve_with_camera_help_screen.dart';
+import 'package:sudoku_solver_2/widgets/shared/slide_animated_route.dart';
 
 /// Drop down menu shown on the SolveWithCameraScreen
 class SolveWithCameraScreenDropDownMenuWidget extends StatelessWidget {
@@ -61,9 +62,9 @@ class SolveWithCameraScreenDropDownMenuWidget extends StatelessWidget {
   void _navigateToSolveWithTouchHelpScreen(BuildContext context) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => SolveWithCameraHelpScreen(),
-        settings: RouteSettings(name: '/solve-with-camera/help'),
+      SlideAnimatedRoute(
+        nextPage: SolveWithCameraHelpScreen(),
+        routeSettings: RouteSettings(name: '/solve-with-camera/help'),
       ),
     );
   }

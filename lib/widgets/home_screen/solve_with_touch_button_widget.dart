@@ -4,7 +4,7 @@ import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
 import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
 import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
 import 'package:sudoku_solver_2/screens/solve_with_touch_screen.dart';
-import 'package:sudoku_solver_2/widgets/shared/animated_route.dart';
+import 'package:sudoku_solver_2/widgets/shared/size_animated_route.dart';
 
 /// Lives on the HomeScreen, navigating users to the SolveWithTouchButtonWidget
 class SolveWithTouchButtonWidget extends StatelessWidget {
@@ -42,7 +42,7 @@ class SolveWithTouchButtonWidget extends StatelessWidget {
   Future<void> _navigateToSolveWithTouchScreen(BuildContext context) async {
     await Navigator.push(
       context,
-      AnimatedRoute(
+      SizeAnimatedRoute(
         nextPage: SolveWithTouchScreen(),
         routeSettings: RouteSettings(name: '/solve-with-touch'),
       ),

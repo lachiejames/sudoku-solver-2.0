@@ -5,6 +5,7 @@ import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/just_play_help_screen.dart';
+import 'package:sudoku_solver_2/widgets/shared/slide_animated_route.dart';
 
 /// Drop down menu on the JustPlayScreen
 class JustPlayScreenDropDownMenuWidget extends StatelessWidget {
@@ -61,9 +62,9 @@ class JustPlayScreenDropDownMenuWidget extends StatelessWidget {
   void _navigateToJustPlayHelpScreen(BuildContext context) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => JustPlayHelpScreen(),
-        settings: RouteSettings(name: '/just-play/help'),
+      SlideAnimatedRoute(
+        nextPage: JustPlayHelpScreen(),
+        routeSettings: RouteSettings(name: '/just-play/help'),
       ),
     );
   }
