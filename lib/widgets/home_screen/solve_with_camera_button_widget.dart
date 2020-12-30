@@ -41,10 +41,77 @@ class SolveWithCameraButtonWidget extends StatelessWidget {
   Future<void> _navigateToSolveWithCameraScreen(BuildContext context) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => SolveWithCameraScreen(),
-        settings: RouteSettings(name: '/solve-with-camera'),
+      _getScaleTransitionRoute(
+        SolveWithCameraScreen(),
+        RouteSettings(name: '/solve-with-camera'),
       ),
+    );
+  }
+
+  _getScaleTransitionRoute(Widget nextScreen, RouteSettings routeSettings) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => nextScreen,
+      settings: routeSettings,
+      transitionDuration: Duration(seconds: 5),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return ScaleTransition(
+          scale: animation.drive(
+            Tween(begin: 0.5, end: 1.0).chain(CurveTween(curve: Curves.ease)),
+          ),
+          child: child,
+        );
+      },
+    );
+  }
+
+  _getSlideTransitionRoute(Widget nextScreen, RouteSettings routeSettings) {
+    return PageRouteBuilder(
+      settings: routeSettings,
+      pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+      ) {
+        return nextScreen;
+      },
+      transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+      ) {
+        return ScaleTransition(
+          scale: Tween<double>(begin: 1, end: 2).animate(animation),
+          child: child,
+        );
+      },
+    );
+  }
+
+  _getHeroTransitionRoute(Widget nextScreen, RouteSettings routeSettings) {
+    return PageRouteBuilder(
+      settings: routeSettings,
+      transitionDuration: Duration(milliseconds: 500),
+      pageBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+      ) {
+        return nextScreen;
+      },
+      transitionsBuilder: (
+        BuildContext context,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+        Widget child,
+      ) {
+        return Align(
+          child: ScaleTransition(
+            scale: Tween<double>(begin: 0.5, end: 1).animate(animation),
+            child: child,
+          ),
+        );
+      },
     );
   }
 }
