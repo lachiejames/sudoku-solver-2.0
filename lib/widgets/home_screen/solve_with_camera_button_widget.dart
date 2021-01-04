@@ -14,23 +14,7 @@ class SolveWithCameraButtonWidget extends StatefulWidget {
   _SolveWithCameraButtonWidgetState createState() => _SolveWithCameraButtonWidgetState();
 }
 
-class _SolveWithCameraButtonWidgetState extends State<SolveWithCameraButtonWidget> with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 2),
-    );
-    _animationController.repeat();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
+class _SolveWithCameraButtonWidgetState extends State<SolveWithCameraButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
