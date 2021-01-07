@@ -61,6 +61,7 @@ Future<Sudoku> solveSudokuAsync(Sudoku sudoku) async {
         } else {
           Redux.store.dispatch(SudokuSolvingInvalidErrorAction());
         }
+        my_values.playSound('no_solution_sound.mp3');
         return sudoku;
       }),
   );
@@ -69,6 +70,7 @@ Future<Sudoku> solveSudokuAsync(Sudoku sudoku) async {
     if (solvedSudoku.isFull() && solvedSudoku.allConstraintsSatisfied()) {
       Redux.store.dispatch(SudokuSolvedAction(solvedSudoku));
       my_values.solveSudokuButtonPressedTrace.stop();
+      my_values.playSound('win_sound.mp3');
     }
   });
 

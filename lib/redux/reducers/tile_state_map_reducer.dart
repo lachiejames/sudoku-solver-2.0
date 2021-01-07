@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'package:redux/redux.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/constants/my_games.dart' as my_games;
+import 'package:sudoku_solver_2/constants/my_values.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
@@ -152,6 +153,7 @@ HashMap<TileKey, TileState> _updateInvalidTilesReducer(
   tileStateMap.forEach((tileKey, tileState) {
     if (invalidTileKeys.contains(tileKey) == true) {
       tileStateMap[tileKey] = tileState.copyWith(isInvalid: true);
+      playSound('invalid_tile_sound.mp3');
     } else if (tileState.isInvalid == true) {
       tileStateMap[tileKey] = tileState.copyWith(isInvalid: false);
     }

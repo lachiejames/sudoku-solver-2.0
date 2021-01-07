@@ -91,8 +91,10 @@ class TileWidget extends StatelessWidget {
               Redux.store.dispatch(UpdateInvalidTilesAction());
               Redux.store.dispatch(UpdateGameStateAction(Redux.store.state.tileStateMap));
               Redux.store.dispatch(ApplyGameStateChangesAction(Redux.store.state.gameState));
+              my_values.playSound('button_press_sound.mp3');
             } else {
               Redux.store.dispatch(TileSelectedAction(tileState));
+              my_values.playSound('button_press_sound.mp3');
             }
           },
         );
