@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
@@ -26,7 +26,7 @@ class SudokuWidget extends StatelessWidget {
           textDirection: TextDirection.ltr,
           children: <Widget>[
             Container(
-              color: my_colors.white,
+              color: constants.white,
               margin: EdgeInsets.only(
                 left: 27,
                 right: 27,

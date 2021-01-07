@@ -1,9 +1,5 @@
 /// Stores some numbers used within the app
-
-library my_values;
-
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_performance/firebase_performance.dart';
+part of './constants.dart';
 
 // Used for positioning CameraWidget
 final double pad = 32;
@@ -28,3 +24,11 @@ final FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics();
 final FirebasePerformance firebasePerformance = FirebasePerformance.instance;
 final Trace solveSudokuButtonPressedTrace = firebasePerformance.newTrace("solve-sudoku-button-pressed");
 final Trace takePhotoButtonPressedTrace = firebasePerformance.newTrace("take-photo-button-pressed");
+
+AudioCache audioCache;
+Future<AudioPlayer> playSound(String pathToFile) async {
+  if (audioCache == null) {
+    audioCache = AudioCache();
+  }
+  return await audioCache.play(pathToFile);
+}

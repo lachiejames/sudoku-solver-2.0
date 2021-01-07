@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
-import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
-import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/solve_with_touch_help_screen.dart';
@@ -17,9 +15,9 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
     return DropdownButton<String>(
       icon: Icon(
         Icons.more_vert,
-        color: my_colors.white,
+        color: constants.white,
       ),
-      style: my_styles.dropDownMenuTextStyle,
+      style: constants.dropDownMenuTextStyle,
       items: _createDropdownMenuItems(),
       onChanged: (value) async {
         await this._performAction(value, context);
@@ -29,8 +27,8 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
 
   List<DropdownMenuItem<String>> _createDropdownMenuItems() {
     return <String>[
-      my_strings.dropDownMenuOption1,
-      my_strings.dropDownMenuOption2,
+      constants.dropDownMenuOption1,
+      constants.dropDownMenuOption2,
     ].map(
       (String value) {
         return this._createDropdownMenuItem(value);
@@ -49,9 +47,9 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
   }
 
   void _performAction(String value, BuildContext context) async {
-    if (value == my_strings.dropDownMenuOption1) {
+    if (value == constants.dropDownMenuOption1) {
       _restart();
-    } else if (value == my_strings.dropDownMenuOption2) {
+    } else if (value == constants.dropDownMenuOption2) {
       await _navigateToSolveWithTouchHelpScreen(context);
     }
   }

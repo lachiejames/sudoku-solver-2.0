@@ -1,5 +1,5 @@
 import 'package:flutter_driver/flutter_driver.dart';
-import 'package:sudoku_solver_2/constants/my_games.dart' as my_games;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:test/test.dart';
 import 'my_solved_games.dart' as my_solved_games;
@@ -151,7 +151,7 @@ void main() {
 
       test('pressing RESTART stops solving the sudoku', () async {
         await driver.runUnsynchronized(() async {
-          await addSudoku(my_games.solvingTimeoutErrorGame);
+          await addSudoku(constants.solvingTimeoutErrorGame);
           await waitForThenTap(find.text('SOLVE SUDOKU'));
 
           await driver.waitFor(find.text('STOP SOLVING'));
@@ -186,7 +186,7 @@ void main() {
       });
 
       test('a STOP SOLVING button will appear during the solve', () async {
-        await addSudoku(my_games.games[0]);
+        await addSudoku(constants.games[0]);
 
         await driver.runUnsynchronized(() async {
           await waitForThenTap(find.text('SOLVE SUDOKU'));
@@ -195,7 +195,7 @@ void main() {
       });
 
       test('pressing STOP SOLVING will stop the solve', () async {
-        await addSudoku(my_games.games[0]);
+        await addSudoku(constants.games[0]);
 
         await driver.runUnsynchronized(() async {
           await waitForThenTap(find.text('SOLVE SUDOKU'));
@@ -207,18 +207,18 @@ void main() {
       });
 
       test('can solve 2 games in a row', () async {
-        await addSudoku(my_games.games[0]);
+        await addSudoku(constants.games[0]);
         await waitForThenTap(find.text('SOLVE SUDOKU'));
         await waitForThenTap(find.text('RESTART'));
 
-        await addSudoku(my_games.games[2]);
+        await addSudoku(constants.games[2]);
         await waitForThenTap(find.text('SOLVE SUDOKU'));
         await waitForThenTap(find.text('RESTART'));
       }, timeout: Timeout(Duration(seconds: 60)));
 
       test('solving timeout', () async {
         await driver.runUnsynchronized(() async {
-          await addSudoku(my_games.solvingTimeoutErrorGame);
+          await addSudoku(constants.solvingTimeoutErrorGame);
           await waitForThenTap(find.text('SOLVE SUDOKU'));
           await driver.waitFor(find.text('The A.I. timed out'));
         });
@@ -226,7 +226,7 @@ void main() {
 
       test('solving invalid', () async {
         await driver.runUnsynchronized(() async {
-          await addSudoku(my_games.solvingInvalidErrorGame);
+          await addSudoku(constants.solvingInvalidErrorGame);
           await waitForThenTap(find.text('SOLVE SUDOKU'));
           await driver.waitFor(find.text('Cannot solve, Sudoku is invalid'));
         });

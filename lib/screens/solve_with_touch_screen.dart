@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
@@ -9,7 +9,6 @@ import 'package:sudoku_solver_2/widgets/shared/solve_sudoku_button_widget.dart';
 import 'package:sudoku_solver_2/widgets/shared/stop_solving_button_widget.dart';
 import 'package:sudoku_solver_2/widgets/solve_with_touch_screen/solve_with_touch_screen_app_bar.dart';
 import 'package:sudoku_solver_2/widgets/shared/sudoku_widget.dart';
-import 'package:sudoku_solver_2/constants/my_ad_helper.dart' as my_ad_helper;
 import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 
 /// Shown when 'touch' is selected from the HomeScreen
@@ -24,12 +23,12 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
   @override
   void initState() {
     super.initState();
-    my_ad_helper.showNewBannerAd();
+    constants.showNewBannerAd();
   }
 
   @override
   void dispose() {
-    my_ad_helper.disposeBannerAd();
+    constants.disposeBannerAd();
     super.dispose();
   }
 
@@ -39,7 +38,7 @@ class _SolveWithTouchScreenState extends State<SolveWithTouchScreen> {
 
     return Scaffold(
       appBar: SolveWithTouchScreenAppBar(AppBar()),
-      backgroundColor: my_colors.pink,
+      backgroundColor: constants.pink,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

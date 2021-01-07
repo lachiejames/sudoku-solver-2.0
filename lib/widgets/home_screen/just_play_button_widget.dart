@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
-import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
-import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/screens/just_play_screen.dart';
 import 'package:sudoku_solver_2/widgets/shared/size_animated_route.dart';
 
@@ -14,25 +11,25 @@ class JustPlayButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      margin: my_styles.buttonMargins,
+      margin: constants.buttonMargins,
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: RaisedButton(
-          shape: my_styles.buttonShape,
+          shape: constants.buttonShape,
           padding: EdgeInsets.only(
             top: 16,
             bottom: 16,
             left: 50,
             right: 50,
           ),
-          color: my_colors.pink,
+          color: constants.pink,
           child: Text(
-            my_strings.justPlayButtonText,
-            style: my_styles.buttonTextStyle,
+            constants.justPlayButtonText,
+            style: constants.buttonTextStyle,
           ),
           onPressed: () async {
             await _navigateToJustPlayScreen(context);
-            await my_values.firebaseAnalytics.logEvent(name: 'button_just_play');
+            await constants.firebaseAnalytics.logEvent(name: 'button_just_play');
           },
         ),
       ),

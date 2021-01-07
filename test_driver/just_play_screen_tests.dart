@@ -1,5 +1,5 @@
 import 'package:flutter_driver/flutter_driver.dart';
-import 'package:sudoku_solver_2/constants/my_games.dart' as my_games;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:test/test.dart';
 import 'my_solved_games.dart' as my_solved_games;
@@ -222,7 +222,7 @@ void main() {
 
     group('playing a game ->', () {
       test('initial values on the board should be the values in game0', () async {
-        await verifyInitialGameTiles(my_games.games[0]);
+        await verifyInitialGameTiles(constants.games[0]);
       });
 
       test('adding correct values to all blank tiles will finish the game', () async {
@@ -232,21 +232,21 @@ void main() {
       });
 
       test('can play 2 games in a row', () async {
-        await verifyInitialGameTiles(my_games.games[0]);
+        await verifyInitialGameTiles(constants.games[0]);
         await playGame(my_solved_games.solvedGamesList[0]);
         await tapNewGameButton();
 
         await driver.waitForAbsent(find.text('NEW GAME'));
         await driver.waitFor(find.text('Pick a tile'));
 
-        await verifyInitialGameTiles(my_games.games[1]);
+        await verifyInitialGameTiles(constants.games[1]);
         await playGame(my_solved_games.solvedGamesList[1]);
         await tapNewGameButton();
 
         await driver.waitFor(find.text('Pick a tile'));
         await driver.waitForAbsent(find.text('NEW GAME'));
 
-        await verifyInitialGameTiles(my_games.games[2]);
+        await verifyInitialGameTiles(constants.games[2]);
       }, timeout: Timeout(Duration(seconds: 60)));
     });
   });

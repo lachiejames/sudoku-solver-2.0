@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
-import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
@@ -48,8 +46,8 @@ class TileWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: _determineTileColor(tileState),
               border: Border(
-                bottom: BorderSide(width: (tileState.row == 3 || tileState.row == 6) ? 3 : 0, color: my_colors.black),
-                right: BorderSide(width: (tileState.col == 3 || tileState.col == 6) ? 3 : 0, color: my_colors.black),
+                bottom: BorderSide(width: (tileState.row == 3 || tileState.row == 6) ? 3 : 0, color: constants.black),
+                right: BorderSide(width: (tileState.col == 3 || tileState.col == 6) ? 3 : 0, color: constants.black),
               ),
             ),
             child: Stack(
@@ -60,10 +58,10 @@ class TileWidget extends StatelessWidget {
                   child: Text(
                     (tileState.value == null) ? '' : '${tileState.value}',
                     style: TextStyle(
-                      fontSize: my_values.tileFontSize,
-                      fontFamily: my_styles.fontStyleNumber,
+                      fontSize: constants.tileFontSize,
+                      fontFamily: constants.fontStyleNumber,
                       fontWeight: FontWeight.w400,
-                      color: (tileState.isInvalid) ? my_colors.red : my_colors.black,
+                      color: (tileState.isInvalid) ? constants.red : constants.black,
                     ),
                     textDirection: TextDirection.ltr,
                     key: Key('${this.tileKey.toString()}_text'),
@@ -74,7 +72,7 @@ class TileWidget extends StatelessWidget {
                 (tileState.isSelected && tileState.value != null)
                     ? Text(
                         'X',
-                        style: my_styles.tileWithRemovableValueTextStyle,
+                        style: constants.tileWithRemovableValueTextStyle,
                         textDirection: TextDirection.ltr,
                       )
                     : Container(),
@@ -91,10 +89,10 @@ class TileWidget extends StatelessWidget {
               Redux.store.dispatch(UpdateInvalidTilesAction());
               Redux.store.dispatch(UpdateGameStateAction(Redux.store.state.tileStateMap));
               Redux.store.dispatch(ApplyGameStateChangesAction(Redux.store.state.gameState));
-              my_values.playSound('button_press_sound.mp3');
+              constants.playSound('button_press_sound.mp3');
             } else {
               Redux.store.dispatch(TileSelectedAction(tileState));
-              my_values.playSound('button_press_sound.mp3');
+              constants.playSound('button_press_sound.mp3');
             }
           },
         );
@@ -104,11 +102,11 @@ class TileWidget extends StatelessWidget {
 
   Color _determineTileColor(TileState tileState) {
     if (tileState.isOriginalTile) {
-      return my_colors.grey;
+      return constants.grey;
     } else if (tileState.isSelected) {
-      return my_colors.green;
+      return constants.green;
     } else {
-      return my_colors.white;
+      return constants.white;
     }
   }
 }

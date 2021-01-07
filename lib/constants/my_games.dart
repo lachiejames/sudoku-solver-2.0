@@ -1,5 +1,5 @@
 /// Stores 2d array representation of sudokus, used on JustPlayScreen
-library my_games;
+part of './constants.dart';
 
 final List<List<int>> _game0ValuesList = [
   [5, 3, null, null, 7, null, null, null, null],

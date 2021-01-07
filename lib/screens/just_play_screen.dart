@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
-import 'package:sudoku_solver_2/constants/my_ad_helper.dart' as my_ad_helper;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -24,12 +23,12 @@ class _JustPlayScreenState extends State<JustPlayScreen> {
   @override
   void initState() {
     super.initState();
-    my_ad_helper.showNewBannerAd();
+    constants.showNewBannerAd();
   }
 
   @override
   void dispose() {
-    my_ad_helper.disposeBannerAd();
+    constants.disposeBannerAd();
     super.dispose();
   }
 
@@ -43,7 +42,7 @@ class _JustPlayScreenState extends State<JustPlayScreen> {
         Redux.store.dispatch(LoadSudokuGameAction(gameNumber));
         return Scaffold(
           appBar: JustPlayScreenAppBar(AppBar()),
-          backgroundColor: my_colors.pink,
+          backgroundColor: constants.pink,
           body: SingleChildScrollView(
             child: Center(
               child: Column(

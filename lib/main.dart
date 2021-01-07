@@ -8,11 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sudoku_solver_2/constants/mocks.dart';
-import 'package:sudoku_solver_2/constants/my_ad_helper.dart' as my_ad_helper;
-import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
-import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/home_screen.dart';
@@ -21,32 +17,32 @@ import 'package:sudoku_solver_2/state/app_state.dart';
 Future<void> main() async {
   // Allows us to run integration tests
   enableFlutterDriverExtension(handler: (command) async {
-    if (command == my_strings.hotRestart) {
+    if (command == constants.hotRestart) {
       await restartApp();
       return 'ok';
-    } else if (command == my_strings.setVeryHighResPictureMock) {
-      await MyMockHelper.setVeryHighResPictureMock();
+    } else if (command == constants.setVeryHighResPictureMockString) {
+      await constants.setVeryHighResPictureMock();
       return 'ok';
-    } else if (command == my_strings.setHighResPictureMock) {
-      await MyMockHelper.setHighResPictureMock();
+    } else if (command == constants.setHighResPictureMockString) {
+      await constants.setHighResPictureMock();
       return 'ok';
-    } else if (command == my_strings.setMediumResPictureMock) {
-      await MyMockHelper.setMediumResPictureMock();
+    } else if (command == constants.setMediumResPictureMockString) {
+      await constants.setMediumResPictureMock();
       return 'ok';
-    } else if (command == my_strings.deleteAllMocks) {
-      await MyMockHelper.deleteAllMocks();
+    } else if (command == constants.deleteAllMocksString) {
+      await constants.deleteAllMocks();
       return 'ok';
-    } else if (command == my_strings.setCameraNotFoundErrorMock) {
-      await MyMockHelper.setCameraNotFoundErrorMock();
+    } else if (command == constants.setCameraNotFoundErrorMockString) {
+      await constants.setCameraNotFoundErrorMock();
       return 'ok';
-    } else if (command == my_strings.setPhotoProcessingErrorMock) {
-      await MyMockHelper.setPhotoProcessingErrorMock();
+    } else if (command == constants.setPhotoProcessingErrorMockString) {
+      await constants.setPhotoProcessingErrorMock();
       return 'ok';
-    } else if (command == my_strings.setTimeoutErrorPictureMock) {
-      await MyMockHelper.setTimeoutErrorPictureMock();
+    } else if (command == constants.setTimeoutErrorPictureMockString) {
+      await constants.setTimeoutErrorPictureMock();
       return 'ok';
-    } else if (command == my_strings.setInvalidErrorPictureMock) {
-      await MyMockHelper.setInvalidErrorPictureMock();
+    } else if (command == constants.setInvalidErrorPictureMockString) {
+      await constants.setInvalidErrorPictureMock();
       return 'ok';
     }
     throw Exception('Unknown command: $command');
@@ -71,11 +67,11 @@ Future<void> restartApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true); // send crash reports during debugging
-  await FirebaseAdMob.instance.initialize(appId: my_ad_helper.appIdForAdMob);
+  await FirebaseAdMob.instance.initialize(appId: constants.appIdForAdMob);
 
   await Redux.init();
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
-  await sharedPrefs.setInt(my_strings.gameNumberSharedPrefsKey, 0);
+  await sharedPrefs.setInt(constants.gameNumberSharedPrefsKey, 0);
   await _initCamera();
 
   runApp(
@@ -98,11 +94,11 @@ class MyApp extends StatelessWidget {
         title: 'Sudoku Solver',
         debugShowCheckedModeBanner: false,
         navigatorObservers: <NavigatorObserver>[
-          FirebaseAnalyticsObserver(analytics: my_values.firebaseAnalytics),
+          FirebaseAnalyticsObserver(analytics: constants.firebaseAnalytics),
         ],
         theme: ThemeData(
-          primaryColor: my_colors.blue,
-          backgroundColor: my_colors.pink,
+          primaryColor: constants.blue,
+          backgroundColor: constants.pink,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: HomeScreen(),

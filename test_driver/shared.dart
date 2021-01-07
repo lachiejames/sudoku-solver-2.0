@@ -3,7 +3,7 @@ library shared;
 import 'dart:io';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:path/path.dart';
-import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:test/test.dart';
 import 'package:meta/meta.dart';
@@ -12,7 +12,7 @@ FlutterDriver driver;
 
 Future<void> initTests() async {
   await grantAppPermissions();
-  driver = await FlutterDriver.connect(dartVmServiceUrl: my_strings.dartVMServiceUrl);
+  driver = await FlutterDriver.connect(dartVmServiceUrl: constants.dartVMServiceUrl);
   await hotRestart();
 }
 
@@ -36,7 +36,7 @@ Future<void> pressBackButton() async {
 }
 
 Future<void> hotRestart() async {
-  await driver.requestData(my_strings.hotRestart);
+  await driver.requestData(constants.hotRestart);
 }
 
 Future<void> waitForThenTap(SerializableFinder finder) async {
@@ -45,21 +45,21 @@ Future<void> waitForThenTap(SerializableFinder finder) async {
 }
 
 void navigateToSolveWithCameraScreen() async {
-  await waitForThenTap(find.text(my_strings.solveWithCameraButtonText));
+  await waitForThenTap(find.text(constants.solveWithCameraButtonText));
 
   await driver.runUnsynchronized(() async {
-    await driver.waitFor(find.text(my_strings.solveWithCameraScreenName));
+    await driver.waitFor(find.text(constants.solveWithCameraScreenName));
   });
 }
 
 void navigateToSolveWithTouchScreen() async {
-  await waitForThenTap(find.text(my_strings.solveWithTouchButtonText));
-  await driver.waitFor(find.text(my_strings.solveWithTouchScreenName));
+  await waitForThenTap(find.text(constants.solveWithTouchButtonText));
+  await driver.waitFor(find.text(constants.solveWithTouchScreenName));
 }
 
 void navigateToJustPlayScreen() async {
-  await waitForThenTap(find.text(my_strings.justPlayButtonText));
-  await driver.waitFor(find.text(my_strings.topTextNoTileSelected));
+  await waitForThenTap(find.text(constants.justPlayButtonText));
+  await driver.waitFor(find.text(constants.topTextNoTileSelected));
 
   // May load with the wrong sudoku when restarting, causing test failures
   bool needsAnotherRestart = (await getNumberOnTile(TileKey(row: 1, col: 1)) != 5);
@@ -70,25 +70,25 @@ void navigateToJustPlayScreen() async {
 }
 
 void pressSolveWithCameraButton() async {
-  await waitForThenTap(find.text(my_strings.solveWithCameraButtonText));
+  await waitForThenTap(find.text(constants.solveWithCameraButtonText));
 }
 
 void pressSolveWithTouchButton() async {
-  await waitForThenTap(find.text(my_strings.solveWithTouchButtonText));
+  await waitForThenTap(find.text(constants.solveWithTouchButtonText));
 }
 
 void pressJustPlayButton() async {
-  await waitForThenTap(find.text(my_strings.justPlayButtonText));
+  await waitForThenTap(find.text(constants.justPlayButtonText));
 }
 
 void pressHelpOnDropDownMenu(String dropDownMenuType) async {
   await waitForThenTap(find.byType(dropDownMenuType));
-  await waitForThenTap(find.text(my_strings.dropDownMenuOption2));
+  await waitForThenTap(find.text(constants.dropDownMenuOption2));
 }
 
 void pressRestartOnDropDownMenu(String dropDownMenuType) async {
   await waitForThenTap(find.byType(dropDownMenuType));
-  await waitForThenTap(find.text(my_strings.dropDownMenuOption1));
+  await waitForThenTap(find.text(constants.dropDownMenuOption1));
 }
 
 void tapTile(TileKey tileKey) async {

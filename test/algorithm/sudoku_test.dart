@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sudoku_solver_2/constants/my_games.dart' as my_games;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 import '../constants/test_constants.dart';
@@ -34,7 +34,7 @@ void main() {
 
     group('after example values added ->', () {
       setUp(() {
-        sudoku.applyExampleValues(my_games.games[1]);
+        sudoku.applyExampleValues(constants.games[1]);
       });
 
       test('getTileStateAt() returns correct tile', () {

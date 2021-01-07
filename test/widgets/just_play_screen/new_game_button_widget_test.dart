@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -53,7 +53,7 @@ void main() {
 
       testWidgets('should be blue', (WidgetTester tester) async {
         await createNewGameButtonWidget(tester);
-        expect(newGameButtonWidgetColor(tester), my_colors.blue);
+        expect(newGameButtonWidgetColor(tester), constants.blue);
       });
 
       testWidgets('tapping should increment the gameNumber', (WidgetTester tester) async {

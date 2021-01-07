@@ -5,14 +5,14 @@ import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 
 double timeElapsed, startTime;
 
 /// An algorithm for solving 'constraint satisfaction problems', like a Sudoku
 bool backtracking(Sudoku sudoku) {
   timeElapsed = DateTime.now().millisecondsSinceEpoch - startTime;
-  if (timeElapsed > my_values.maxSolveTime) {
+  if (timeElapsed > constants.maxSolveTime) {
     throw Exception('SudokuSolvingTimeoutException');
   }
 
@@ -61,7 +61,7 @@ Future<Sudoku> solveSudokuAsync(Sudoku sudoku) async {
         } else {
           Redux.store.dispatch(SudokuSolvingInvalidErrorAction());
         }
-        my_values.playSound('no_solution_sound.mp3');
+        constants.playSound('no_solution_sound.mp3');
         return sudoku;
       }),
   );
@@ -69,8 +69,8 @@ Future<Sudoku> solveSudokuAsync(Sudoku sudoku) async {
   _solveSudokuCancellableOperation.asStream().listen((solvedSudoku) {
     if (solvedSudoku.isFull() && solvedSudoku.allConstraintsSatisfied()) {
       Redux.store.dispatch(SudokuSolvedAction(solvedSudoku));
-      my_values.solveSudokuButtonPressedTrace.stop();
-      my_values.playSound('win_sound.mp3');
+      constants.solveSudokuButtonPressedTrace.stop();
+      constants.playSound('win_sound.mp3');
     }
   });
 

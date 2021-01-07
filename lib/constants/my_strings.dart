@@ -1,5 +1,5 @@
 /// Stores some strings used within the app
-library my_strings;
+part of './constants.dart';
 
 // Screen names
 final String solveWithCameraScreenName = 'Camera';
@@ -43,14 +43,14 @@ final String restartButtonText = 'RESTART';
 final String returnToHomeText = 'RETURN TO HOME';
 
 final String hotRestart = 'restart';
-final String setVeryHighResPictureMock = 'setVeryHighResPictureMock';
-final String setHighResPictureMock = 'setHighResPictureMock';
-final String setMediumResPictureMock = 'setMediumResPictureMock';
-final String deleteAllMocks = 'deleteAllMocks';
-final String setCameraNotFoundErrorMock = 'setCameraNotFoundErrorMock';
-final String setPhotoProcessingErrorMock = 'setPhotoProcessingErrorMock';
-final String setTimeoutErrorPictureMock = 'setTimeoutErrorPictureMock';
-final String setInvalidErrorPictureMock = 'setInvalidErrorPictureMock';
+final String setVeryHighResPictureMockString = 'setVeryHighResPictureMock';
+final String setHighResPictureMockString = 'setHighResPictureMock';
+final String setMediumResPictureMockString = 'setMediumResPictureMock';
+final String deleteAllMocksString = 'deleteAllMocks';
+final String setCameraNotFoundErrorMockString = 'setCameraNotFoundErrorMock';
+final String setPhotoProcessingErrorMockString = 'setPhotoProcessingErrorMock';
+final String setTimeoutErrorPictureMockString = 'setTimeoutErrorPictureMock';
+final String setInvalidErrorPictureMockString = 'setInvalidErrorPictureMock';
 
 // Set to null when running all tests
 final String dartVMServiceUrl = 'http://127.0.0.1:8888/';

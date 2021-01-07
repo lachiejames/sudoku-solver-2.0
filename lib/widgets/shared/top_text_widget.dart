@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
 
@@ -15,12 +14,12 @@ class TopTextWidget extends StatelessWidget {
       builder: (context, topTextState) {
         return Container(
           alignment: Alignment.center,
-          padding: my_styles.topTextMargins,
+          padding: constants.topTextMargins,
           child: Text(
             topTextState.text,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: my_values.topTextFontSize,
+              fontSize: constants.topTextFontSize,
               color: topTextState.color,
             ),
             textDirection: TextDirection.ltr,

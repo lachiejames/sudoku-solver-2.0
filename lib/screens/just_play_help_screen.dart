@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
@@ -22,7 +22,7 @@ class JustPlayHelpScreen extends StatelessWidget {
     Redux.store.dispatch(ChangeScreenAction(ScreenState.justPlayHelpScreen));
 
     return Scaffold(
-      backgroundColor: my_colors.pink,
+      backgroundColor: constants.pink,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

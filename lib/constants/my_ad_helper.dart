@@ -1,8 +1,5 @@
 /// Stores stuff to assist with showing ads
-library my_ad_helper;
-
-import 'package:firebase_admob/firebase_admob.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
+part of './constants.dart';
 
 final String appIdForAdMob = "ca-app-pub-6687326312027109~4201385146";
 
@@ -21,7 +18,7 @@ Future<void> showNewBannerAd() async {
       nonPersonalizedAds: false,
     ),
     listener: (MobileAdEvent event) async {
-      await my_values.firebaseAnalytics.logEvent(name: 'banner_ad_event_${_mapAdEventToString(event)}');
+      await firebaseAnalytics.logEvent(name: 'banner_ad_event_${_mapAdEventToString(event)}');
     },
   );
   await _bannerAd.load();

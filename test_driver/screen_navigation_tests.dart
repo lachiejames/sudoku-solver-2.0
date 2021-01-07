@@ -1,5 +1,5 @@
 import 'package:flutter_driver/flutter_driver.dart';
-import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:test/test.dart';
 
 import 'shared.dart';
@@ -23,25 +23,25 @@ void main() {
     test('SolveWithTouchScreen should show a different state', () async {});
 
     test('we start on the HomeScreen', () async {
-      await driver.waitFor(find.text(my_strings.topTextHome));
+      await driver.waitFor(find.text(constants.topTextHome));
     });
 
     test('pressing "SOLVE WITH CAMERA" button brings us to the SolveWithCameraScreen', () async {
       await pressSolveWithCameraButton();
 
-      await driver.waitFor(find.text(my_strings.solveWithCameraScreenName));
+      await driver.waitFor(find.text(constants.solveWithCameraScreenName));
     });
 
     test('pressing "SOLVE WITH TOUCH" button brings us to the SolveWithTouchScreen', () async {
       await pressSolveWithTouchButton();
 
-      await driver.waitFor(find.text(my_strings.solveWithTouchScreenName));
+      await driver.waitFor(find.text(constants.solveWithTouchScreenName));
     });
 
     test('pressing "JUST PLAY" button brings us to the JustPlayScreen', () async {
       await pressJustPlayButton();
 
-      await driver.waitFor(find.text(my_strings.justPlayScreenName));
+      await driver.waitFor(find.text(constants.justPlayScreenName));
     });
 
     test('pressing "Help" on SolveWithCameraScreen takes you to SolveWithCameraHelpScreen',

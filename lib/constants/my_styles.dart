@@ -1,10 +1,5 @@
 /// Stores some styles used within the app
-
-library my_styles;
-
-import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
+part of './constants.dart';
 
 final String fontStyle = 'Roboto';
 final String fontStyleSplashScreen = 'Pacifico';
@@ -13,7 +8,7 @@ final String fontStyleNumber = 'Segoe UI';
 final TextStyle buttonTextStyle = TextStyle(
   fontFamily: fontStyle,
   fontSize: 20,
-  color: my_colors.white,
+  color: white,
   fontWeight: FontWeight.bold,
 );
 
@@ -45,34 +40,34 @@ final RoundedRectangleBorder buttonShape = RoundedRectangleBorder(
 final TextStyle appBarTextStyle = TextStyle(
   fontFamily: fontStyle,
   fontWeight: FontWeight.normal,
-  fontSize: my_values.appBarFontSize,
-  color: my_colors.white,
+  fontSize: appBarFontSize,
+  color: white,
 );
 
 final TextStyle splashScreenTextStyle = TextStyle(
   fontFamily: fontStyleSplashScreen,
   fontWeight: FontWeight.w500,
-  fontSize: my_values.appBarFontSize,
-  color: my_colors.pink,
+  fontSize: appBarFontSize,
+  color: pink,
 );
 
 final TextStyle howToTextStyle = TextStyle(
-  fontSize: my_values.howToTextFontSize,
-  color: my_colors.white,
+  fontSize: howToTextFontSize,
+  color: white,
 );
 
 final TextStyle dropDownMenuTextStyle = TextStyle(
   fontWeight: FontWeight.w500,
-  color: my_colors.black,
+  color: black,
 );
 
 final TextStyle tileTextStyle = TextStyle(
-  fontSize: my_values.tileFontSize,
+  fontSize: tileFontSize,
   fontFamily: fontStyleNumber,
   fontWeight: FontWeight.w400,
 );
 
 final TextStyle tileWithRemovableValueTextStyle = TextStyle(
-  fontSize: my_values.tileFontSize,
-  color: my_colors.red,
+  fontSize: tileFontSize,
+  color: red,
 );

@@ -10,7 +10,7 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:async/async.dart';
 import 'package:flutter/foundation.dart';
 
@@ -137,7 +137,7 @@ Future<void> processPhoto(File imageFile) async {
       try {
         Sudoku constructedSudoku = await _getSudokuFromTileImageMap(tileFileMap);
         Redux.store.dispatch(PhotoProcessedAction(constructedSudoku));
-        my_values.takePhotoButtonPressedTrace.stop();
+        constants.takePhotoButtonPressedTrace.stop();
       } on Exception catch (e) {
         Redux.store.dispatch(PhotoProcessingErrorAction());
         print(e);

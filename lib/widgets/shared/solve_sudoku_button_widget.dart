@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/constants/my_colors.dart' as my_colors;
-import 'package:sudoku_solver_2/constants/my_strings.dart' as my_strings;
-import 'package:sudoku_solver_2/constants/my_styles.dart' as my_styles;
-import 'package:sudoku_solver_2/constants/my_values.dart' as my_values;
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -37,23 +34,23 @@ class SolveSudokuButtonWidget extends StatelessWidget {
         }
         return Container(
           alignment: Alignment.center,
-          margin: my_styles.buttonMargins,
+          margin: constants.buttonMargins,
           child: Directionality(
             textDirection: TextDirection.ltr,
             child: RaisedButton(
-              shape: my_styles.buttonShape,
-              padding: my_styles.buttonPadding,
-              color: my_colors.blue,
+              shape: constants.buttonShape,
+              padding: constants.buttonPadding,
+              color: constants.blue,
               child: Text(
-                my_strings.solveSudokuButtonText,
-                style: my_styles.buttonTextStyle,
+                constants.solveSudokuButtonText,
+                style: constants.buttonTextStyle,
               ),
               onPressed: (this._cannotBeSolved(gameState))
                   ? null
                   : () async {
-                      await my_values.solveSudokuButtonPressedTrace.start();
+                      await constants.solveSudokuButtonPressedTrace.start();
                       Redux.store.dispatch(SolveSudokuAction());
-                      await my_values.firebaseAnalytics.logEvent(name: 'button_solve_sudoku');
+                      await constants.firebaseAnalytics.logEvent(name: 'button_solve_sudoku');
                     },
             ),
           ),
