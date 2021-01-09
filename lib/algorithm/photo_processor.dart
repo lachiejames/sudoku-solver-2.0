@@ -137,14 +137,17 @@ Future<void> processPhoto(File imageFile) async {
       try {
         Sudoku constructedSudoku = await _getSudokuFromTileImageMap(tileFileMap);
         Redux.store.dispatch(PhotoProcessedAction(constructedSudoku));
-        constants.takePhotoButtonPressedTrace.stop();
+        await constants.takePhotoButtonPressedTrace.stop();
+        await constants.playSound(constants.photoProcessedSound);
       } on Exception catch (e) {
         Redux.store.dispatch(PhotoProcessingErrorAction());
         print(e);
       }
     }
-  }, onError: (e) {
+  }, onError: (e) async {
     Redux.store.dispatch(PhotoProcessingErrorAction());
+    await constants.playSound(constants.processingErrorSound);
+
     print(e);
   });
 }

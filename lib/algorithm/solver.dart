@@ -61,16 +61,16 @@ Future<Sudoku> solveSudokuAsync(Sudoku sudoku) async {
         } else {
           Redux.store.dispatch(SudokuSolvingInvalidErrorAction());
         }
-        constants.playSound('no_solution_sound.mp3');
+        await constants.playSound(constants.processingErrorSound);
         return sudoku;
       }),
   );
 
-  _solveSudokuCancellableOperation.asStream().listen((solvedSudoku) {
+  _solveSudokuCancellableOperation.asStream().listen((solvedSudoku) async{
     if (solvedSudoku.isFull() && solvedSudoku.allConstraintsSatisfied()) {
       Redux.store.dispatch(SudokuSolvedAction(solvedSudoku));
-      constants.solveSudokuButtonPressedTrace.stop();
-      constants.playSound('win_sound.mp3');
+      await constants.solveSudokuButtonPressedTrace.stop();
+      await constants.playSound(constants.gameSolvedSound);
     }
   });
 

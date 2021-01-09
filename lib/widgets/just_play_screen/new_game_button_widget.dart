@@ -37,6 +37,7 @@ class NewGameButtonWidget extends StatelessWidget {
                   await Redux.sharedPreferences.setInt(constants.gameNumberSharedPrefsKey, nextGameNumber);
 
                   await constants.firebaseAnalytics.logEvent(name: 'button_new_game');
+                  await constants.playSound(constants.buttonPressedSound);
                 },
               ),
             ),

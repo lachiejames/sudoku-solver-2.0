@@ -79,7 +79,7 @@ class TileWidget extends StatelessWidget {
               ],
             ),
           ),
-          onTap: () {
+          onTap: () async {
             if (tileState.isOriginalTile) {
               return;
             }
@@ -89,10 +89,10 @@ class TileWidget extends StatelessWidget {
               Redux.store.dispatch(UpdateInvalidTilesAction());
               Redux.store.dispatch(UpdateGameStateAction(Redux.store.state.tileStateMap));
               Redux.store.dispatch(ApplyGameStateChangesAction(Redux.store.state.gameState));
-              constants.playSound('button_press_sound.mp3');
+              await constants.playSound(constants.tileDeselectedSound);
             } else {
               Redux.store.dispatch(TileSelectedAction(tileState));
-              constants.playSound('button_press_sound.mp3');
+              await constants.playSound(constants.tileSelectedSound);
             }
           },
         );

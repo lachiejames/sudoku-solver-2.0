@@ -36,6 +36,7 @@ class StopProcessingPhotoButtonWidget extends StatelessWidget {
                   Redux.store.dispatch(StopProcessingPhotoAction());
                   Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
                   await constants.firebaseAnalytics.logEvent(name: 'button_take_photo');
+                  await constants.playSound(constants.buttonPressedSound);
                 }),
           ),
         );

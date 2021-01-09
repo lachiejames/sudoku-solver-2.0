@@ -152,7 +152,6 @@ HashMap<TileKey, TileState> _updateInvalidTilesReducer(
   tileStateMap.forEach((tileKey, tileState) {
     if (invalidTileKeys.contains(tileKey) == true) {
       tileStateMap[tileKey] = tileState.copyWith(isInvalid: true);
-      constants.playSound('invalid_tile_sound.mp3');
     } else if (tileState.isInvalid == true) {
       tileStateMap[tileKey] = tileState.copyWith(isInvalid: false);
     }

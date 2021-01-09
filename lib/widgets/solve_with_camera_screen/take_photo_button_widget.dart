@@ -42,6 +42,7 @@ class TakePhotoButtonWidget extends StatelessWidget {
                 File imageFile = await Redux.store.state.cameraState.getImageFileFromCamera();
                 Redux.store.dispatch(TakePhotoAction(imageFile));
                 await constants.firebaseAnalytics.logEvent(name: 'button_take_photo');
+                await constants.playSound(constants.buttonPressedSound);
               },
             ),
           ),

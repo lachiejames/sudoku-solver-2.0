@@ -36,6 +36,7 @@ class _SolveWithCameraButtonWidgetState extends State<SolveWithCameraButtonWidge
           onPressed: () async {
             await _navigateToSolveWithCameraScreen(context);
             await constants.firebaseAnalytics.logEvent(name: 'button_solve_with_camera');
+            await constants.playSound(constants.buttonPressedSound);
           },
         ),
       ),

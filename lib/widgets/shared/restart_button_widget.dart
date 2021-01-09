@@ -32,6 +32,7 @@ class RestartButtonWidget extends StatelessWidget {
               onPressed: () async {
                 Redux.store.dispatch(RestartAction());
                 await constants.firebaseAnalytics.logEvent(name: 'button_restart');
+                await constants.playSound(constants.buttonPressedSound);
               },
             ),
           ),

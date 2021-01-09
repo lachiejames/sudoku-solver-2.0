@@ -34,6 +34,7 @@ class StopSolvingSudokuButtonWidget extends StatelessWidget {
                 Redux.store.dispatch(StopSolvingSudokuAction());
                 await constants.firebaseAnalytics.logEvent(name: 'button_solve_sudoku');
                 await constants.solveSudokuButtonPressedTrace.incrementMetric('stop-solving-button-pressed', 1);
+                await constants.playSound(constants.buttonPressedSound);
               },
             ),
           ),

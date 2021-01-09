@@ -73,6 +73,7 @@ Future<void> restartApp() async {
   SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
   await sharedPrefs.setInt(constants.gameNumberSharedPrefsKey, 0);
   await _initCamera();
+  await constants.loadSoundsToCache();
 
   runApp(
     MyApp(

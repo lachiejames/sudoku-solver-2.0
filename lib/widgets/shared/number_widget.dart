@@ -4,7 +4,9 @@ import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
+import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
+import 'package:sudoku_solver_2/state/screen_state.dart';
 
 /// Contains a number from 1-9 for the user to select
 class NumberWidget extends StatelessWidget {
@@ -53,12 +55,19 @@ class NumberWidget extends StatelessWidget {
                 ),
               ),
             ),
-            onTap: () {
+            onTap: () async {
               if (numberState.isActive) {
                 Redux.store.dispatch(NumberPressedAction(numberState));
                 Redux.store.dispatch(UpdateInvalidTilesAction());
                 Redux.store.dispatch(UpdateGameStateAction(Redux.store.state.tileStateMap));
                 Redux.store.dispatch(ApplyGameStateChangesAction(Redux.store.state.gameState));
+                await constants.playSound(constants.valueAddedSound);
+
+                // If this action solved the game on Just Play Screen
+                if (Redux.store.state.screenState == ScreenState.justPlayScreen &&
+                    Redux.store.state.gameState == GameState.solved) {
+                  await constants.playSound(constants.gameSolvedSound);
+                }
               }
             },
           ),

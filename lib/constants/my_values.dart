@@ -24,11 +24,3 @@ final FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics();
 final FirebasePerformance firebasePerformance = FirebasePerformance.instance;
 final Trace solveSudokuButtonPressedTrace = firebasePerformance.newTrace("solve-sudoku-button-pressed");
 final Trace takePhotoButtonPressedTrace = firebasePerformance.newTrace("take-photo-button-pressed");
-
-AudioCache audioCache;
-Future<AudioPlayer> playSound(String pathToFile) async {
-  if (audioCache == null) {
-    audioCache = AudioCache();
-  }
-  return await audioCache.play(pathToFile);
-}

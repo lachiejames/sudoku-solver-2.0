@@ -6,6 +6,7 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
+import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 
 /// Contains all state reducers used by GameState
 final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
@@ -79,6 +80,9 @@ GameState _updateGameStateReducer(GameState gameState, UpdateGameStateAction act
   Sudoku sudoku = Sudoku(tileStateMap: action.tileStateMap);
 
   if (hasInvalidTiles) {
+    if (gameState != GameState.invalidTilesPresent) {
+      constants.playSound(constants.invalidTilesPresentSound);
+    }
     return GameState.invalidTilesPresent;
   } else if (sudoku.isFull() && sudoku.allConstraintsSatisfied()) {
     return GameState.solved;

@@ -30,6 +30,7 @@ class SolveWithTouchButtonWidget extends StatelessWidget {
           onPressed: () async {
             await _navigateToSolveWithTouchScreen(context);
             await constants.firebaseAnalytics.logEvent(name: 'button_solve_with_touch');
+            await constants.playSound(constants.buttonPressedSound);
           },
         ),
       ),
