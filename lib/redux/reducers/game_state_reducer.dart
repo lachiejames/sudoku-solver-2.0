@@ -70,21 +70,19 @@ GameState _retakePhotoReducer(GameState gameState, RetakePhotoAction action) {
 }
 
 GameState _updateGameStateReducer(GameState gameState, UpdateGameStateAction action) {
-  // In case we just removed a tile, but havent reset the values yet
-  bool hasInvalidTiles = false;
-  action.tileStateMap.forEach((tileKey, tileState) {
-    if (tileState.isInvalid) {
-      hasInvalidTiles = true;
-    }
-  });
-  Sudoku sudoku = Sudoku(tileStateMap: action.tileStateMap);
+  Sudoku newSudoku = Sudoku(tileStateMap: action.tileStateMap);
+  int numNewInvalidTiles = newSudoku.getInvalidTileKeys().length;
 
-  if (hasInvalidTiles) {
-    if (gameState != GameState.invalidTilesPresent) {
+  if (numNewInvalidTiles > 0) {
+    Sudoku oldSudoku = Sudoku(tileStateMap: Redux.store.state.tileStateMap);
+    int numOldInvalidTiles = oldSudoku.getInvalidTileKeys().length;
+
+    if (numNewInvalidTiles > numOldInvalidTiles) {
       constants.playSound(constants.invalidTilesPresentSound);
     }
+
     return GameState.invalidTilesPresent;
-  } else if (sudoku.isFull() && sudoku.allConstraintsSatisfied()) {
+  } else if (newSudoku.isFull() && newSudoku.allConstraintsSatisfied()) {
     return GameState.solved;
   } else {
     return GameState.normal;
