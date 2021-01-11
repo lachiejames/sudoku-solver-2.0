@@ -57,7 +57,7 @@ class NumberWidget extends StatelessWidget {
             ),
             onTap: () async {
               if (numberState.isActive) {
-                await constants.playSound(constants.valueAddedSound);
+                await constants.playSound(constants.tileDeselectedSound);
                 Redux.store.dispatch(NumberPressedAction(numberState));
                 Redux.store.dispatch(UpdateInvalidTilesAction());
                 Redux.store.dispatch(UpdateGameStateAction(Redux.store.state.tileStateMap));

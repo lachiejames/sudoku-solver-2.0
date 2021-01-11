@@ -2,7 +2,6 @@ part of './constants.dart';
 
 final String tileSelectedSound = 'tile_selected_sound.mp3';
 final String tileDeselectedSound = 'tile_deselected_sound.mp3';
-final String valueAddedSound = 'value_added_sound.mp3';
 final String invalidTilesPresentSound = 'invalid_tiles_present_sound.mp3';
 final String buttonPressedSound = 'button_pressed_sound.mp3';
 final String gameSolvedSound = 'game_solved_sound.mp3';
@@ -16,7 +15,6 @@ Future<void> loadSoundsToCache() async {
     await _audioCache.loadAll([
       tileSelectedSound,
       tileDeselectedSound,
-      valueAddedSound,
       invalidTilesPresentSound,
       buttonPressedSound,
       gameSolvedSound,
