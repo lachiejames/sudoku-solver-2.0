@@ -31,13 +31,11 @@ class NewGameButtonWidget extends StatelessWidget {
                   style: constants.buttonTextStyle,
                 ),
                 onPressed: () async {
+                  await constants.playSound(constants.buttonPressedSound);
                   Redux.store.dispatch(NewGameButtonPressedAction());
-
                   int nextGameNumber = Redux.store.state.gameNumber;
                   await Redux.sharedPreferences.setInt(constants.gameNumberSharedPrefsKey, nextGameNumber);
-
                   await constants.firebaseAnalytics.logEvent(name: 'button_new_game');
-                  await constants.playSound(constants.buttonPressedSound);
                 },
               ),
             ),

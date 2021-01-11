@@ -40,9 +40,9 @@ class RetakePhotoButtonWidget extends StatelessWidget {
                 style: constants.buttonTextStyle,
               ),
               onPressed: () async {
-                Redux.store.dispatch(RetakePhotoAction());
-                await constants.firebaseAnalytics.logEvent(name: 'button_retake_photo');
                 await constants.playSound(constants.buttonPressedSound);
+                await constants.firebaseAnalytics.logEvent(name: 'button_retake_photo');
+                Redux.store.dispatch(RetakePhotoAction());
               },
             ),
           ),

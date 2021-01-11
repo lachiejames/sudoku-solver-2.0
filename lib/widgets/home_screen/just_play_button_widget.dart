@@ -28,9 +28,9 @@ class JustPlayButtonWidget extends StatelessWidget {
             style: constants.buttonTextStyle,
           ),
           onPressed: () async {
-            await _navigateToJustPlayScreen(context);
-            await constants.firebaseAnalytics.logEvent(name: 'button_just_play');
             await constants.playSound(constants.buttonPressedSound);
+            await constants.firebaseAnalytics.logEvent(name: 'button_just_play');
+            await _navigateToJustPlayScreen(context);
           },
         ),
       ),

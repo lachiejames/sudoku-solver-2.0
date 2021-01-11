@@ -56,21 +56,22 @@ Future<Sudoku> solveSudokuAsync(Sudoku sudoku) async {
   _solveSudokuCancellableOperation = CancelableOperation.fromFuture(
     compute(solveSudoku, sudoku)
       ..catchError((e) async {
+        await constants.playSound(constants.processingErrorSound);
+
         if (e.message == 'Exception: SudokuSolvingTimeoutException') {
           Redux.store.dispatch(SudokuSolvingTimeoutErrorAction());
         } else {
           Redux.store.dispatch(SudokuSolvingInvalidErrorAction());
         }
-        await constants.playSound(constants.processingErrorSound);
         return sudoku;
       }),
   );
 
-  _solveSudokuCancellableOperation.asStream().listen((solvedSudoku) async{
+  _solveSudokuCancellableOperation.asStream().listen((solvedSudoku) async {
     if (solvedSudoku.isFull() && solvedSudoku.allConstraintsSatisfied()) {
-      Redux.store.dispatch(SudokuSolvedAction(solvedSudoku));
-      await constants.solveSudokuButtonPressedTrace.stop();
       await constants.playSound(constants.gameSolvedSound);
+      await constants.solveSudokuButtonPressedTrace.stop();
+      Redux.store.dispatch(SudokuSolvedAction(solvedSudoku));
     }
   });
 

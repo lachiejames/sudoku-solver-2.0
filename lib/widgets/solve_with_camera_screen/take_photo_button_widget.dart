@@ -32,6 +32,8 @@ class TakePhotoButtonWidget extends StatelessWidget {
                 style: constants.buttonTextStyle,
               ),
               onPressed: () async {
+                await constants.playSound(constants.buttonPressedSound);
+                await constants.firebaseAnalytics.logEvent(name: 'button_take_photo');
                 await constants.takePhotoButtonPressedTrace.start();
 
                 Redux.store.dispatch(
@@ -41,8 +43,6 @@ class TakePhotoButtonWidget extends StatelessWidget {
                 );
                 File imageFile = await Redux.store.state.cameraState.getImageFileFromCamera();
                 Redux.store.dispatch(TakePhotoAction(imageFile));
-                await constants.firebaseAnalytics.logEvent(name: 'button_take_photo');
-                await constants.playSound(constants.buttonPressedSound);
               },
             ),
           ),

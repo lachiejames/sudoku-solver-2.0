@@ -23,7 +23,9 @@ Future<void> loadSoundsToCache() async {
       photoProcessedSound,
       processingErrorSound,
     ]);
-  } on Exception catch (e) {
+  // ignore: avoid_catches_without_on_clauses
+  } catch (e) {
+    // Ignore warning because this throws a FlutterError instead of an Exception
     print(e);
   }
 }

@@ -35,10 +35,10 @@ class ReturnToHomeButtonWidget extends StatelessWidget {
                 style: constants.buttonTextStyle,
               ),
               onPressed: () async {
-                Redux.store.dispatch(ReturnToHomeAction());
-                await constants.firebaseAnalytics.logEvent(name: 'button_return_to_home');
-                await Navigator.pop(context);
                 await constants.playSound(constants.buttonPressedSound);
+                await constants.firebaseAnalytics.logEvent(name: 'button_return_to_home');
+                Redux.store.dispatch(ReturnToHomeAction());
+                await Navigator.pop(context);
               },
             ),
           ),

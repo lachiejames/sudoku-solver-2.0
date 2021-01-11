@@ -28,9 +28,9 @@ class SolveWithTouchButtonWidget extends StatelessWidget {
             style: constants.buttonTextStyle,
           ),
           onPressed: () async {
-            await _navigateToSolveWithTouchScreen(context);
-            await constants.firebaseAnalytics.logEvent(name: 'button_solve_with_touch');
             await constants.playSound(constants.buttonPressedSound);
+            await constants.firebaseAnalytics.logEvent(name: 'button_solve_with_touch');
+            await _navigateToSolveWithTouchScreen(context);
           },
         ),
       ),

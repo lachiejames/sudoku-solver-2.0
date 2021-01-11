@@ -57,11 +57,11 @@ class NumberWidget extends StatelessWidget {
             ),
             onTap: () async {
               if (numberState.isActive) {
+                await constants.playSound(constants.valueAddedSound);
                 Redux.store.dispatch(NumberPressedAction(numberState));
                 Redux.store.dispatch(UpdateInvalidTilesAction());
                 Redux.store.dispatch(UpdateGameStateAction(Redux.store.state.tileStateMap));
                 Redux.store.dispatch(ApplyGameStateChangesAction(Redux.store.state.gameState));
-                await constants.playSound(constants.valueAddedSound);
 
                 // If this action solved the game on Just Play Screen
                 if (Redux.store.state.screenState == ScreenState.justPlayScreen &&

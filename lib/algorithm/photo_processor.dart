@@ -135,19 +135,18 @@ Future<void> processPhoto(File imageFile) async {
   _processPhotoCancellableOperation.asStream().listen((tileFileMap) async {
     if (tileFileMap != null) {
       try {
+        await constants.playSound(constants.photoProcessedSound);
+        await constants.takePhotoButtonPressedTrace.stop();
         Sudoku constructedSudoku = await _getSudokuFromTileImageMap(tileFileMap);
         Redux.store.dispatch(PhotoProcessedAction(constructedSudoku));
-        await constants.takePhotoButtonPressedTrace.stop();
-        await constants.playSound(constants.photoProcessedSound);
       } on Exception catch (e) {
         Redux.store.dispatch(PhotoProcessingErrorAction());
         print(e);
       }
     }
   }, onError: (e) async {
-    Redux.store.dispatch(PhotoProcessingErrorAction());
     await constants.playSound(constants.processingErrorSound);
-
+    Redux.store.dispatch(PhotoProcessingErrorAction());
     print(e);
   });
 }

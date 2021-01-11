@@ -32,11 +32,11 @@ class StopProcessingPhotoButtonWidget extends StatelessWidget {
                   style: constants.buttonTextStyle,
                 ),
                 onPressed: () async {
+                  await constants.playSound(constants.buttonPressedSound);
+                  await constants.firebaseAnalytics.logEvent(name: 'button_take_photo');
                   await constants.takePhotoButtonPressedTrace.incrementMetric('stop-constructing-button-pressed', 1);
                   Redux.store.dispatch(StopProcessingPhotoAction());
                   Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
-                  await constants.firebaseAnalytics.logEvent(name: 'button_take_photo');
-                  await constants.playSound(constants.buttonPressedSound);
                 }),
           ),
         );
