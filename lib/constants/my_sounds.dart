@@ -21,10 +21,10 @@ Future<void> loadSoundsToCache() async {
       photoProcessedSound,
       processingErrorSound,
     ]);
-  // ignore: avoid_catches_without_on_clauses
-  } catch (e) {
     // Ignore warning because this throws a FlutterError instead of an Exception
-    print(e);
+    // ignore: avoid_catches_without_on_clauses
+  } catch (e) {
+    logError('ERROR: sound could not be loaded', e);
   }
 }
 
@@ -32,6 +32,6 @@ Future<void> playSound(String pathToFile) async {
   try {
     await _audioCache.play(pathToFile);
   } on Exception catch (e) {
-    print('failed to load sound $pathToFile.  $e');
+    logError('ERROR: failed to load sound $pathToFile', e);
   }
 }

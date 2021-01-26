@@ -7,7 +7,7 @@ Future<File> _getImageFileFromAssets(String path) async {
   try {
     byteData = await rootBundle.load('assets/$path');
   } on Exception catch (e) {
-    print('ERROR: no file found at assets/$path\n $e');
+    logError('ERROR: no file found at assets/$path', e);
     return null;
   }
   File file = await File('${(await getApplicationDocumentsDirectory()).path}/$path');

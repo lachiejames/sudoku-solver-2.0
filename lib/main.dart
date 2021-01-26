@@ -60,10 +60,7 @@ Future<void> _initCamera() async {
   try {
     cameras = await availableCameras();
   } on Exception catch (e) {
-    await firebaseAnalytics.logEvent(
-      name: 'Error: camera not found',
-      parameters: {'stackTrace': e},
-    );
+    logError('ERROR: camera not found', e);
     return;
   }
 
@@ -72,10 +69,7 @@ Future<void> _initCamera() async {
   try {
     await cameraController.initialize();
   } on Exception catch (e) {
-    await firebaseAnalytics.logEvent(
-      name: 'Error: camera could not be initialised',
-      parameters: {'stackTrace': e},
-    );
+    logError('ERROR: camera could not be initialised', e);
     return;
   }
 

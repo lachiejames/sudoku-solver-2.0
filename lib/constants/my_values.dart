@@ -24,3 +24,10 @@ final FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics();
 final FirebasePerformance firebasePerformance = FirebasePerformance.instance;
 final Trace solveSudokuButtonPressedTrace = firebasePerformance.newTrace("solve-sudoku-button-pressed");
 final Trace takePhotoButtonPressedTrace = firebasePerformance.newTrace("take-photo-button-pressed");
+
+Future<void> logError(String message, dynamic stackTrace) async {
+  await firebaseAnalytics.logEvent(
+    name: message,
+    parameters: {'stackTrace': stackTrace},
+  );
+}

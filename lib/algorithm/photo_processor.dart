@@ -6,6 +6,7 @@ import 'package:image/image.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
@@ -140,6 +141,7 @@ Future<void> processPhoto(File imageFile) async {
         await constants.takePhotoButtonPressedTrace.stop();
         Redux.store.dispatch(PhotoProcessedAction(constructedSudoku));
       } on Exception catch (e) {
+        logError('ERROR: photo could not be processed', e);
         await constants.playSound(constants.processingErrorSound);
         Redux.store.dispatch(PhotoProcessingErrorAction());
       }
@@ -147,6 +149,7 @@ Future<void> processPhoto(File imageFile) async {
   }, onError: (e) async {
     await constants.playSound(constants.processingErrorSound);
     Redux.store.dispatch(PhotoProcessingErrorAction());
+    print(e);
   });
 }
 

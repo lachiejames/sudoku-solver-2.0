@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:camera/camera.dart';
 import 'package:sudoku_solver_2/algorithm/photo_processor.dart';
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 
@@ -18,8 +19,8 @@ class CameraState {
     try {
       await this.cameraController.takePicture(imagePath);
     } on Exception catch (e) {
+      logError('ERROR: failed to take picture', e);
       Redux.store.dispatch(PhotoProcessingErrorAction());
-      print(e);
     }
 
     File imageFile = await File(imagePath).create();

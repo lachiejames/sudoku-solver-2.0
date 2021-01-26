@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:async/async.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sudoku_solver_2/algorithm/sudoku.dart';
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
@@ -56,6 +57,7 @@ Future<Sudoku> solveSudokuAsync(Sudoku sudoku) async {
   _solveSudokuCancellableOperation = CancelableOperation.fromFuture(
     compute(solveSudoku, sudoku)
       ..catchError((e) async {
+        logError('ERROR: sudoku could not be solved', e);
         await constants.playSound(constants.processingErrorSound);
 
         if (e.message == 'Exception: SudokuSolvingTimeoutException') {
