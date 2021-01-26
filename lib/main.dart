@@ -14,6 +14,8 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/home_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 
+import 'constants/constants.dart';
+
 Future<void> main() async {
   // Allows us to run integration tests
   enableFlutterDriverExtension(handler: (command) async {
@@ -52,14 +54,32 @@ Future<void> main() async {
 }
 
 Future<void> _initCamera() async {
+  List<CameraDescription> cameras;
+  CameraController cameraController;
+
   try {
-    List<CameraDescription> cameras = await availableCameras();
-    CameraController cameraController = CameraController(cameras.first, ResolutionPreset.max);
-    await cameraController.initialize();
-    Redux.store.dispatch(CameraReadyAction(cameraController));
+    cameras = await availableCameras();
   } on Exception catch (e) {
-    print(e);
+    await firebaseAnalytics.logEvent(
+      name: 'Error: camera not found',
+      parameters: {'stackTrace': e},
+    );
+    return;
   }
+
+  cameraController = CameraController(cameras.first, ResolutionPreset.max);
+
+  try {
+    await cameraController.initialize();
+  } on Exception catch (e) {
+    await firebaseAnalytics.logEvent(
+      name: 'Error: camera could not be initialised',
+      parameters: {'stackTrace': e},
+    );
+    return;
+  }
+
+  Redux.store.dispatch(CameraReadyAction(cameraController));
 }
 
 /// Builds/rebuilds the app
