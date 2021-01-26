@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -49,7 +50,8 @@ class SolveSudokuButtonWidget extends StatelessWidget {
                   ? null
                   : () async {
                       await constants.playSound(constants.buttonPressedSound);
-                      await constants.firebaseAnalytics.logEvent(name: 'button_solve_sudoku');
+                                      await logEvent('button_solve_sudoku');
+
                       await constants.solveSudokuButtonPressedTrace.start();
                       Redux.store.dispatch(SolveSudokuAction());
                     },

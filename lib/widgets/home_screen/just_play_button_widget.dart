@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/screens/just_play_screen.dart';
 import 'package:sudoku_solver_2/widgets/shared/size_animated_route.dart';
 
@@ -29,7 +30,7 @@ class JustPlayButtonWidget extends StatelessWidget {
           ),
           onPressed: () async {
             await constants.playSound(constants.buttonPressedSound);
-            await constants.firebaseAnalytics.logEvent(name: 'button_just_play');
+            await logEvent('button_just_play');
             await _navigateToJustPlayScreen(context);
           },
         ),

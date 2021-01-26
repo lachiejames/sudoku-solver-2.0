@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
 part './my_ad_helper.dart';
+part './my_analytics.dart';
 part './my_colors.dart';
 part './my_games.dart';
 part './my_mocks.dart';

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 
 /// AppBar shown on the help screens
 class HelpScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -17,11 +18,10 @@ class HelpScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: constants.appBarTextStyle,
         textDirection: TextDirection.ltr,
       ),
-
       leading: IconButton(
         onPressed: () async {
           await Navigator.pop(context);
-          await constants.firebaseAnalytics.logEvent(name: 'button_back');
+          await logEvent('button_back');
         },
         icon: (Platform.isAndroid) ? const Icon(Icons.arrow_back) : const Icon(Icons.arrow_back_ios),
       ),

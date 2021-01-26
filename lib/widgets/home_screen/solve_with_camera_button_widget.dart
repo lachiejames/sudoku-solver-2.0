@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/screens/solve_with_camera_screen.dart';
 import 'package:sudoku_solver_2/widgets/shared/size_animated_route.dart';
 
@@ -34,7 +35,7 @@ class _SolveWithCameraButtonWidgetState extends State<SolveWithCameraButtonWidge
           ),
           onPressed: () async {
             await constants.playSound(constants.buttonPressedSound);
-            await constants.firebaseAnalytics.logEvent(name: 'button_solve_with_camera');
+            await logEvent('button_solve_with_camera');
             await _navigateToSolveWithCameraScreen(context);
           },
         ),

@@ -18,7 +18,7 @@ Future<void> showNewBannerAd() async {
       nonPersonalizedAds: false,
     ),
     listener: (MobileAdEvent event) async {
-      await firebaseAnalytics.logEvent(name: 'banner_ad_event_${_mapAdEventToString(event)}');
+      await logEvent('banner_ad_event_${_mapAdEventToString(event)}');
     },
   );
   await _bannerAd.load();

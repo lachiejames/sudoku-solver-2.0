@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -33,7 +34,7 @@ class StopProcessingPhotoButtonWidget extends StatelessWidget {
                 ),
                 onPressed: () async {
                   await constants.playSound(constants.buttonPressedSound);
-                  await constants.firebaseAnalytics.logEvent(name: 'button_take_photo');
+                  await logEvent('button_take_photo');
                   await constants.takePhotoButtonPressedTrace.incrementMetric('stop-constructing-button-pressed', 1);
                   Redux.store.dispatch(StopProcessingPhotoAction());
                   Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));

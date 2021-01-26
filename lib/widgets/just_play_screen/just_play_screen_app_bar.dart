@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
@@ -33,7 +34,7 @@ class JustPlayScreenAppBar extends StatelessWidget implements PreferredSizeWidge
         onPressed: () async {
           Redux.store.dispatch(ChangeScreenAction(ScreenState.homeScreen));
           await Navigator.pop(context);
-          await constants.firebaseAnalytics.logEvent(name: 'button_back');
+          await logEvent('button_back');
         },
         icon: (Platform.isAndroid) ? const Icon(Icons.arrow_back) : const Icon(Icons.arrow_back_ios),
       ),
