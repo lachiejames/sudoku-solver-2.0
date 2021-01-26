@@ -3,7 +3,6 @@ library shared;
 import 'dart:io';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:path/path.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:test/test.dart';
 import 'package:meta/meta.dart';
@@ -12,7 +11,7 @@ FlutterDriver driver;
 
 Future<void> initTests() async {
   await grantAppPermissions();
-  driver = await FlutterDriver.connect(dartVmServiceUrl: constants.dartVMServiceUrl);
+  driver = await FlutterDriver.connect(dartVmServiceUrl: 'http://127.0.0.1:8888/');
   await hotRestart();
 }
 
@@ -36,7 +35,7 @@ Future<void> pressBackButton() async {
 }
 
 Future<void> hotRestart() async {
-  await driver.requestData(constants.hotRestart);
+  await driver.requestData('restart');
 }
 
 Future<void> waitForThenTap(SerializableFinder finder) async {
@@ -45,21 +44,21 @@ Future<void> waitForThenTap(SerializableFinder finder) async {
 }
 
 void navigateToSolveWithCameraScreen() async {
-  await waitForThenTap(find.text(constants.solveWithCameraButtonText));
+  await waitForThenTap(find.text('SOLVE WITH CAMERA'));
 
   await driver.runUnsynchronized(() async {
-    await driver.waitFor(find.text(constants.solveWithCameraScreenName));
+    await driver.waitFor(find.text('Camera'));
   });
 }
 
 void navigateToSolveWithTouchScreen() async {
-  await waitForThenTap(find.text(constants.solveWithTouchButtonText));
-  await driver.waitFor(find.text(constants.solveWithTouchScreenName));
+  await waitForThenTap(find.text('SOLVE WITH TOUCH'));
+  await driver.waitFor(find.text('Touch'));
 }
 
 void navigateToJustPlayScreen() async {
-  await waitForThenTap(find.text(constants.justPlayButtonText));
-  await driver.waitFor(find.text(constants.topTextNoTileSelected));
+  await waitForThenTap(find.text('JUST PLAY'));
+  await driver.waitFor(find.text('Pick a tile'));
 
   // May load with the wrong sudoku when restarting, causing test failures
   bool needsAnotherRestart = (await getNumberOnTile(TileKey(row: 1, col: 1)) != 5);
@@ -70,25 +69,25 @@ void navigateToJustPlayScreen() async {
 }
 
 void pressSolveWithCameraButton() async {
-  await waitForThenTap(find.text(constants.solveWithCameraButtonText));
+  await waitForThenTap(find.text('SOLVE WITH CAMERA'));
 }
 
 void pressSolveWithTouchButton() async {
-  await waitForThenTap(find.text(constants.solveWithTouchButtonText));
+  await waitForThenTap(find.text('SOLVE WITH TOUCH'));
 }
 
 void pressJustPlayButton() async {
-  await waitForThenTap(find.text(constants.justPlayButtonText));
+  await waitForThenTap(find.text('JUST PLAY'));
 }
 
 void pressHelpOnDropDownMenu(String dropDownMenuType) async {
   await waitForThenTap(find.byType(dropDownMenuType));
-  await waitForThenTap(find.text(constants.dropDownMenuOption2));
+  await waitForThenTap(find.text('Help'));
 }
 
 void pressRestartOnDropDownMenu(String dropDownMenuType) async {
   await waitForThenTap(find.byType(dropDownMenuType));
-  await waitForThenTap(find.text(constants.dropDownMenuOption1));
+  await waitForThenTap(find.text('Restart'));
 }
 
 void tapTile(TileKey tileKey) async {

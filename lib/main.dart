@@ -19,35 +19,12 @@ import 'constants/constants.dart';
 Future<void> main() async {
   // Allows us to run integration tests
   enableFlutterDriverExtension(handler: (command) async {
-    if (command == constants.hotRestart) {
+    if (command == 'hotRestart') {
       await restartApp();
-      return 'ok';
-    } else if (command == constants.setVeryHighResPictureMockString) {
-      await constants.setVeryHighResPictureMock();
-      return 'ok';
-    } else if (command == constants.setHighResPictureMockString) {
-      await constants.setHighResPictureMock();
-      return 'ok';
-    } else if (command == constants.setMediumResPictureMockString) {
-      await constants.setMediumResPictureMock();
-      return 'ok';
-    } else if (command == constants.deleteAllMocksString) {
-      await constants.deleteAllMocks();
-      return 'ok';
-    } else if (command == constants.setCameraNotFoundErrorMockString) {
-      await constants.setCameraNotFoundErrorMock();
-      return 'ok';
-    } else if (command == constants.setPhotoProcessingErrorMockString) {
-      await constants.setPhotoProcessingErrorMock();
-      return 'ok';
-    } else if (command == constants.setTimeoutErrorPictureMockString) {
-      await constants.setTimeoutErrorPictureMock();
-      return 'ok';
-    } else if (command == constants.setInvalidErrorPictureMockString) {
-      await constants.setInvalidErrorPictureMock();
-      return 'ok';
+    } else {
+      await setMock(command);
     }
-    throw Exception('Unknown command: $command');
+    return 'ok';
   });
 
   await restartApp();

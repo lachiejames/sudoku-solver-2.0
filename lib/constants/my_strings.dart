@@ -23,7 +23,6 @@ final String topTextPhotoProcessingError = 'Unable to generate Sudoku';
 final String topTextSudokuInvalidError = 'Cannot solve, Sudoku is invalid';
 final String topTextSolvingTimeoutError = 'The A.I. timed out';
 
-
 final String topTextWhenNoSolutionFound = 'NO SOLUTION';
 
 // DropDownMenu options
@@ -41,16 +40,6 @@ final String stopSolvingButtonText = 'STOP SOLVING';
 final String newGameButtonText = 'NEW GAME';
 final String restartButtonText = 'RESTART';
 final String returnToHomeText = 'RETURN TO HOME';
-
-final String hotRestart = 'restart';
-final String setVeryHighResPictureMockString = 'setVeryHighResPictureMock';
-final String setHighResPictureMockString = 'setHighResPictureMock';
-final String setMediumResPictureMockString = 'setMediumResPictureMock';
-final String deleteAllMocksString = 'deleteAllMocks';
-final String setCameraNotFoundErrorMockString = 'setCameraNotFoundErrorMock';
-final String setPhotoProcessingErrorMockString = 'setPhotoProcessingErrorMock';
-final String setTimeoutErrorPictureMockString = 'setTimeoutErrorPictureMock';
-final String setInvalidErrorPictureMockString = 'setInvalidErrorPictureMock';
 
 // Set to null when running all tests
 final String dartVMServiceUrl = 'http://127.0.0.1:8888/';

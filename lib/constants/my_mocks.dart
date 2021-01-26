@@ -1,6 +1,28 @@
 part of './constants.dart';
 
-String imagePath;
+Future<dynamic> setMock(String mockName) async {
+  switch (mockName) {
+    case 'setVeryHighResPictureMock':
+      return _setVeryHighResPictureMock();
+    case 'setHighResPictureMock':
+      return _setHighResPictureMock();
+    case 'setMediumResPictureMock':
+      return _setMediumResPictureMock();
+    case 'deleteAllMocks':
+      return _deleteAllMocks();
+    case 'setCameraNotFoundErrorMock':
+      return _setCameraNotFoundErrorMock();
+    case 'setPhotoProcessingErrorMock':
+      return _setPhotoProcessingErrorMock();
+    case 'setTimeoutErrorPictureMock':
+      return _setTimeoutErrorPictureMock();
+    case 'setInvalidErrorPictureMock':
+      return _setInvalidErrorPictureMock();
+    default:
+      print('ERROR: invalid mock name');
+      return null;
+  }
+}
 
 Future<File> _getImageFileFromAssets(String path) async {
   ByteData byteData;
@@ -16,10 +38,10 @@ Future<File> _getImageFileFromAssets(String path) async {
   return file;
 }
 
-void setVeryHighResPictureMock() async {
+Future<void> _setVeryHighResPictureMock() async {
   await MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler((MethodCall methodCall) async {
     if (methodCall.method == 'takePicture') {
-      imagePath = methodCall.arguments['path'];
+      String imagePath = methodCall.arguments['path'];
       File mockFile = await File(imagePath).create();
       File mockImageFile = await _getImageFileFromAssets('sudoku_photo_2160x3840.png');
       mockFile.writeAsBytesSync(mockImageFile.readAsBytesSync());
@@ -28,10 +50,10 @@ void setVeryHighResPictureMock() async {
   });
 }
 
-void setHighResPictureMock() async {
+Future<void> _setHighResPictureMock() async {
   await MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler((MethodCall methodCall) async {
     if (methodCall.method == 'takePicture') {
-      imagePath = methodCall.arguments['path'];
+      String imagePath = methodCall.arguments['path'];
       File mockFile = await File(imagePath).create();
       File mockImageFile = await _getImageFileFromAssets('sudoku_photo_1080x1920.png');
       mockFile.writeAsBytesSync(mockImageFile.readAsBytesSync());
@@ -40,10 +62,10 @@ void setHighResPictureMock() async {
   });
 }
 
-void setMediumResPictureMock() async {
+Future<void> _setMediumResPictureMock() async {
   await MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler((MethodCall methodCall) async {
     if (methodCall.method == 'takePicture') {
-      imagePath = methodCall.arguments['path'];
+      String imagePath = methodCall.arguments['path'];
       File mockFile = await File(imagePath).create();
       File mockImageFile = await _getImageFileFromAssets('sudoku_photo_720x1280.png');
       mockFile.writeAsBytesSync(mockImageFile.readAsBytesSync());
@@ -52,10 +74,10 @@ void setMediumResPictureMock() async {
   });
 }
 
-void setTimeoutErrorPictureMock() async {
+Future<void> _setTimeoutErrorPictureMock() async {
   await MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler((MethodCall methodCall) async {
     if (methodCall.method == 'takePicture') {
-      imagePath = methodCall.arguments['path'];
+      String imagePath = methodCall.arguments['path'];
       File mockFile = await File(imagePath).create();
       File mockImageFile = await _getImageFileFromAssets('sudoku_photo_that_causes_timeout_error.png');
       mockFile.writeAsBytesSync(mockImageFile.readAsBytesSync());
@@ -64,10 +86,10 @@ void setTimeoutErrorPictureMock() async {
   });
 }
 
-void setInvalidErrorPictureMock() async {
+Future<void> _setInvalidErrorPictureMock() async {
   await MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler((MethodCall methodCall) async {
     if (methodCall.method == 'takePicture') {
-      imagePath = methodCall.arguments['path'];
+      String imagePath = methodCall.arguments['path'];
       File mockFile = await File(imagePath).create();
       File mockImageFile = await _getImageFileFromAssets('sudoku_photo_that_causes_invalid_error.png');
       mockFile.writeAsBytesSync(mockImageFile.readAsBytesSync());
@@ -76,18 +98,18 @@ void setInvalidErrorPictureMock() async {
   });
 }
 
-void deleteAllMocks() async {
+Future<void> _deleteAllMocks() async {
   await MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler(null);
   await MethodChannel('plugins.flutter.io/firebase_ml_vision').setMockMethodCallHandler(null);
 }
 
-void setCameraNotFoundErrorMock() async {
+Future<void> _setCameraNotFoundErrorMock() async {
   await MethodChannel('plugins.flutter.io/camera').setMockMethodCallHandler((MethodCall methodCall) async {
     throw CameraException('mock camera exception', 'yeee');
   });
 }
 
-void setPhotoProcessingErrorMock() async {
+Future<void> _setPhotoProcessingErrorMock() async {
   await MethodChannel('plugins.flutter.io/firebase_ml_vision').setMockMethodCallHandler((MethodCall methodCall) async {
     throw Exception('mock firebase exception');
   });

@@ -1,8 +1,7 @@
 import 'package:flutter_driver/flutter_driver.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:test/test.dart';
 
-import 'shared.dart';
+import '../utils/shared.dart';
 
 void main() {
   group('Screen navigation tests ->', () {
@@ -23,25 +22,25 @@ void main() {
     test('SolveWithTouchScreen should show a different state', () async {});
 
     test('we start on the HomeScreen', () async {
-      await driver.waitFor(find.text(constants.topTextHome));
+      await driver.waitFor(find.text('How would you like it to be solved?'));
     });
 
     test('pressing "SOLVE WITH CAMERA" button brings us to the SolveWithCameraScreen', () async {
       await pressSolveWithCameraButton();
 
-      await driver.waitFor(find.text(constants.solveWithCameraScreenName));
+      await driver.waitFor(find.text('Camera'));
     });
 
     test('pressing "SOLVE WITH TOUCH" button brings us to the SolveWithTouchScreen', () async {
       await pressSolveWithTouchButton();
 
-      await driver.waitFor(find.text(constants.solveWithTouchScreenName));
+      await driver.waitFor(find.text('Touch'));
     });
 
     test('pressing "JUST PLAY" button brings us to the JustPlayScreen', () async {
       await pressJustPlayButton();
 
-      await driver.waitFor(find.text(constants.justPlayScreenName));
+      await driver.waitFor(find.text('Play'));
     });
 
     test('pressing "Help" on SolveWithCameraScreen takes you to SolveWithCameraHelpScreen',

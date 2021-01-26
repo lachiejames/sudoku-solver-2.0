@@ -1,9 +1,9 @@
 import 'package:flutter_driver/flutter_driver.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:test/test.dart';
 
-import 'my_solved_games.dart' as my_solved_games;
-import 'shared.dart';
+import '../utils/games.dart';
+import '../utils/shared.dart';
+import '../utils/solved_games.dart' as my_solved_games;
 
 void main() {
   group('SolveWithCameraScreen tests ->', () {
@@ -16,13 +16,13 @@ void main() {
     });
 
     tearDown(() async {
-      await driver.requestData(constants.deleteAllMocksString);
+      await driver.requestData('deleteAllMocks');
     });
 
     group('standard journeys', () {
       setUp(() async {
         await hotRestart();
-        await driver.requestData(constants.setVeryHighResPictureMockString);
+        await driver.requestData('setVeryHighResPictureMock');
         await navigateToSolveWithCameraScreen();
       });
 
@@ -67,7 +67,7 @@ void main() {
           await driver.waitFor(find.text('SOLVE SUDOKU'));
           await driver.waitFor(find.text('RETAKE PHOTO'));
 
-          await verifyInitialGameTiles(constants.games[0]);
+          await verifyInitialGameTiles(games[0]);
         });
       }, timeout: Timeout(Duration(seconds: 60)));
 
@@ -99,7 +99,7 @@ void main() {
         await waitForThenTap(find.text('TAKE PHOTO'));
 
         await driver.waitFor(find.text('SOLVE SUDOKU'));
-        await verifyInitialGameTiles(constants.games[0]);
+        await verifyInitialGameTiles(games[0]);
         await driver.tap(find.text('SOLVE SUDOKU'));
 
         await driver.waitFor(find.text('RESTART'));
@@ -121,17 +121,17 @@ void main() {
     group('different photo resolutions', () {
       setUp(() async {
         await hotRestart();
-        await driver.requestData(constants.setVeryHighResPictureMockString);
+        await driver.requestData('setVeryHighResPictureMock');
         await navigateToSolveWithCameraScreen();
       });
 
       test('very high res - 2160x3840', () async {
-        await driver.requestData(constants.setVeryHighResPictureMockString);
+        await driver.requestData('setVeryHighResPictureMock');
 
         await waitForThenTap(find.text('TAKE PHOTO'));
 
         await driver.waitFor(find.text('SOLVE SUDOKU'));
-        await verifyInitialGameTiles(constants.games[0]);
+        await verifyInitialGameTiles(games[0]);
         await driver.tap(find.text('SOLVE SUDOKU'));
 
         await driver.waitFor(find.text('RESTART'));
@@ -140,12 +140,12 @@ void main() {
 
       // Not solving constructing sudoku correctly :(
       // test('high res - 1080x1920', () async {
-      //   await driver.requestData(constants.setHighResPictureMock);
+      //   await driver.requestData(setHighResPictureMock);
 
       //   await waitForThenTap(find.text('TAKE PHOTO'));
 
       //   await driver.waitFor(find.text('SOLVE SUDOKU'));
-      //   await verifyInitialGameTiles(constants.games[0]);
+      //   await verifyInitialGameTiles(games[0]);
       //   await driver.tap(find.text('SOLVE SUDOKU'));
 
       //   await driver.waitFor(find.text('RESTART'));
@@ -154,12 +154,12 @@ void main() {
 
       // Not solving constructing sudoku correctly :(
       // test('medium res - 720x1280', () async {
-      //   await driver.requestData(constants.setMediumResPictureMock);
+      //   await driver.requestData(setMediumResPictureMock);
 
       //   await waitForThenTap(find.text('TAKE PHOTO'));
 
       //   await driver.waitFor(find.text('SOLVE SUDOKU'));
-      //   await verifyInitialGameTiles(constants.games[0]);
+      //   await verifyInitialGameTiles(games[0]);
       //   await driver.tap(find.text('SOLVE SUDOKU'));
 
       //   await driver.waitFor(find.text('RESTART'));
@@ -170,7 +170,7 @@ void main() {
     group('Error scenarios', () {
       group('camera not loaded error', () {
         setUp(() async {
-          await driver.requestData(constants.setCameraNotFoundErrorMockString);
+          await driver.requestData('setCameraNotFoundErrorMock');
           await hotRestart();
           await navigateToSolveWithCameraScreen();
         });
@@ -191,7 +191,7 @@ void main() {
       });
       group('photo processing error', () {
         setUp(() async {
-          await driver.requestData(constants.setPhotoProcessingErrorMockString);
+          await driver.requestData('setPhotoProcessingErrorMock');
           await hotRestart();
           await navigateToSolveWithCameraScreen();
           await waitForThenTap(find.text('TAKE PHOTO'));
@@ -225,7 +225,7 @@ void main() {
       group('solving timeout', () {
         setUp(() async {
           await hotRestart();
-          await driver.requestData(constants.setTimeoutErrorPictureMockString);
+          await driver.requestData('setTimeoutErrorPictureMock');
 
           await navigateToSolveWithCameraScreen();
         });
@@ -245,7 +245,7 @@ void main() {
       group('solving invalid', () {
         setUp(() async {
           await hotRestart();
-          await driver.requestData(constants.setInvalidErrorPictureMockString);
+          await driver.requestData('setInvalidErrorPictureMock');
           await navigateToSolveWithCameraScreen();
         });
 
