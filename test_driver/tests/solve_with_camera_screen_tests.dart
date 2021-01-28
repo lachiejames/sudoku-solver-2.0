@@ -28,94 +28,101 @@ void main() {
 
       test('presented with the Taking Photo screen', () async {
         await driver.runUnsynchronized(() async {
-          await driver.waitFor(find.text('Camera'));
-          await driver.waitFor(find.text('Align with camera'));
-          await driver.waitFor(find.byType('CameraWidget'));
-          await driver.waitFor(find.text('TAKE PHOTO'));
+          await waitToAppear(find.text('Camera'));
+          await waitToAppear(find.text('Align with camera'));
+          await waitToAppear(find.byType('CameraWidget'));
+          await waitToAppear(find.text('TAKE PHOTO'));
         });
-      });
+      }, timeout: defaultTimeout);
 
       test('pressing "TAKE PHOTO" shows the "constructing sudoku" screen', () async {
         await driver.runUnsynchronized(() async {
-          await driver.waitFor(find.byType('CameraWidget'));
+          print('xxx 1');
+          await waitToAppear(find.byType('CameraWidget'));
+          print('xxx 2');
           await waitForThenTap(find.text('TAKE PHOTO'));
-          await driver.waitFor(find.text('Constructing Sudoku...'));
-          await driver.waitFor(find.text('STOP CONSTRUCTING'));
-          await driver.waitFor(find.byType('CircularProgressIndicator'));
-          await driver.waitFor(find.byType('SudokuWidget'));
+          print('xxx 3');
+          await waitToAppear(find.text('Constructing Sudoku...'));
+          print('xxx 4');
+          await waitToAppear(find.text('STOP CONSTRUCTING'));
+          print('xxx 5');
+          await waitToAppear(find.byType('CircularProgressIndicator'));
+          print('xxx 6');
+          await waitToAppear(find.byType('SudokuWidget'));
+          print('xxx 7');
         });
-      });
+      }, timeout: defaultTimeout);
 
       test('pressing "STOP CONSTRUCTING" brings you back to the "take photo" screen', () async {
         await driver.runUnsynchronized(() async {
           await waitForThenTap(find.text('TAKE PHOTO'));
           await waitForThenTap(find.text('STOP CONSTRUCTING'));
 
-          await driver.waitFor(find.text('Camera'));
-          await driver.waitFor(find.text('Align with camera'));
-          await driver.waitFor(find.byType('CameraWidget'));
-          await driver.waitFor(find.text('TAKE PHOTO'));
+          await waitToAppear(find.text('Camera'));
+          await waitToAppear(find.text('Align with camera'));
+          await waitToAppear(find.byType('CameraWidget'));
+          await waitToAppear(find.text('TAKE PHOTO'));
         });
-      });
+      }, timeout: defaultTimeout);
 
       test('pressing "TAKE PHOTO" eventually presents the Verify Photo screen', () async {
         await driver.runUnsynchronized(() async {
           await waitForThenTap(find.text('TAKE PHOTO'));
 
-          await driver.waitFor(find.text('Is this your Sudoku?'));
-          await driver.waitFor(find.byType('SudokuWidget'));
-          await driver.waitFor(find.text('SOLVE SUDOKU'));
-          await driver.waitFor(find.text('RETAKE PHOTO'));
+          await waitToAppear(find.text('Is this your Sudoku?'));
+          await waitToAppear(find.byType('SudokuWidget'));
+          await waitToAppear(find.text('SOLVE SUDOKU'));
+          await waitToAppear(find.text('RETAKE PHOTO'));
 
           await verifyInitialGameTiles(games[0]);
         });
-      }, timeout: Timeout(Duration(seconds: 60)));
+      }, timeout: longTimeout);
 
       test('pressing "RETAKE PHOTO" brings you back to the "take photo" screen', () async {
         await driver.runUnsynchronized(() async {
           await waitForThenTap(find.text('TAKE PHOTO'));
           await waitForThenTap(find.text('RETAKE PHOTO'));
 
-          await driver.waitFor(find.text('Camera'));
-          await driver.waitFor(find.text('Align with camera'));
-          await driver.waitFor(find.byType('CameraWidget'));
-          await driver.waitFor(find.text('TAKE PHOTO'));
+          await waitToAppear(find.text('Camera'));
+          await waitToAppear(find.text('Align with camera'));
+          await waitToAppear(find.byType('CameraWidget'));
+          await waitToAppear(find.text('TAKE PHOTO'));
         });
-      }, timeout: Timeout(Duration(seconds: 60)));
+      }, timeout: longTimeout);
 
       test('pressing "SOLVE SUDOKU" shows the "solving" screen', () async {
         await driver.runUnsynchronized(() async {
           await waitForThenTap(find.text('TAKE PHOTO'));
           await waitForThenTap(find.text('SOLVE SUDOKU'));
 
-          await driver.waitFor(find.text('AI thinking...'));
-          await driver.waitFor(find.byType('CircularProgressIndicator'));
-          await driver.waitFor(find.byType('SudokuWidget'));
-          await driver.waitFor(find.text('STOP SOLVING'));
+          await waitToAppear(find.text('AI thinking...'));
+          await waitToAppear(find.byType('CircularProgressIndicator'));
+          await waitToAppear(find.byType('SudokuWidget'));
+          await waitToAppear(find.text('STOP SOLVING'));
         });
-      }, timeout: Timeout(Duration(seconds: 60)));
+      }, timeout: longTimeout);
 
       test('pressing "SOLVE SUDOKU" solves the sudoku', () async {
         await waitForThenTap(find.text('TAKE PHOTO'));
 
-        await driver.waitFor(find.text('SOLVE SUDOKU'));
+        await waitToAppear(find.text('SOLVE SUDOKU'));
         await verifyInitialGameTiles(games[0]);
         await driver.tap(find.text('SOLVE SUDOKU'));
 
-        await driver.waitFor(find.text('RESTART'));
+        await waitToAppear(find.text('RESTART'));
         await verifyInitialGameTiles(my_solved_games.solvedGamesList[0]);
-      }, timeout: Timeout(Duration(seconds: 120)));
+      }, timeout: longTimeout);
 
       test('pressing "RESTART" shows the "take photo" screen', () async {
         await waitForThenTap(find.text('TAKE PHOTO'));
         await waitForThenTap(find.text('SOLVE SUDOKU'));
         await waitForThenTap(find.text('RESTART'));
 
-        await driver.waitFor(find.text('Camera'));
-        await driver.waitFor(find.text('Align with camera'));
-        await driver.waitFor(find.byType('CameraWidget'));
-        await driver.waitFor(find.text('TAKE PHOTO'));
-      }, timeout: Timeout(Duration(seconds: 120)));
+        await waitToAppear(find.text('Camera'));
+        await waitToAppear(find.text('Align with camera'));
+        await waitToAppear(find.byType('CameraWidget'));
+        await waitToAppear(find.text('TAKE PHOTO'));
+      }, timeout: longTimeout);
     });
 
     group('different photo resolutions', () {
@@ -130,13 +137,13 @@ void main() {
 
         await waitForThenTap(find.text('TAKE PHOTO'));
 
-        await driver.waitFor(find.text('SOLVE SUDOKU'));
+        await waitToAppear(find.text('SOLVE SUDOKU'));
         await verifyInitialGameTiles(games[0]);
         await driver.tap(find.text('SOLVE SUDOKU'));
 
-        await driver.waitFor(find.text('RESTART'));
+        await waitToAppear(find.text('RESTART'));
         await verifyInitialGameTiles(my_solved_games.solvedGamesList[0]);
-      }, timeout: Timeout(Duration(seconds: 120)));
+      }, timeout: longTimeout);
 
       // Not solving constructing sudoku correctly :(
       // test('high res - 1080x1920', () async {
@@ -144,11 +151,11 @@ void main() {
 
       //   await waitForThenTap(find.text('TAKE PHOTO'));
 
-      //   await driver.waitFor(find.text('SOLVE SUDOKU'));
+      //   await waitToAppear(find.text('SOLVE SUDOKU'));
       //   await verifyInitialGameTiles(games[0]);
       //   await driver.tap(find.text('SOLVE SUDOKU'));
 
-      //   await driver.waitFor(find.text('RESTART'));
+      //   await waitToAppear(find.text('RESTART'));
       //   await verifyInitialGameTiles(my_solved_games.solvedGamesList[0]);
       // }, timeout: Timeout(Duration(seconds: 120)));
 
@@ -158,11 +165,11 @@ void main() {
 
       //   await waitForThenTap(find.text('TAKE PHOTO'));
 
-      //   await driver.waitFor(find.text('SOLVE SUDOKU'));
+      //   await waitToAppear(find.text('SOLVE SUDOKU'));
       //   await verifyInitialGameTiles(games[0]);
       //   await driver.tap(find.text('SOLVE SUDOKU'));
 
-      //   await driver.waitFor(find.text('RESTART'));
+      //   await waitToAppear(find.text('RESTART'));
       //   await verifyInitialGameTiles(my_solved_games.solvedGamesList[0]);
       // }, timeout: Timeout(Duration(seconds: 120)));
     });
@@ -176,18 +183,18 @@ void main() {
         });
 
         test('shows "Camera Not Loaded Error" screen', () async {
-          await driver.waitFor(find.text('Camera not found'));
-          await driver.waitFor(find.text('RETURN TO HOME'));
-        });
+          await waitToAppear(find.text('Camera not found'));
+          await waitToAppear(find.text('RETURN TO HOME'));
+        }, timeout: defaultTimeout);
 
         test('pressing "RETURN TO HOME" brings you back to home screen', () async {
           await waitForThenTap(find.text('RETURN TO HOME'));
 
-          await driver.waitFor(find.text('How would you like it to be solved?'));
-          await driver.waitFor(find.text('SOLVE WITH CAMERA'));
-          await driver.waitFor(find.text('SOLVE WITH TOUCH'));
-          await driver.waitFor(find.text('JUST PLAY'));
-        });
+          await waitToAppear(find.text('How would you like it to be solved?'));
+          await waitToAppear(find.text('SOLVE WITH CAMERA'));
+          await waitToAppear(find.text('SOLVE WITH TOUCH'));
+          await waitToAppear(find.text('JUST PLAY'));
+        }, timeout: defaultTimeout);
       });
       group('photo processing error', () {
         setUp(() async {
@@ -198,28 +205,28 @@ void main() {
         });
 
         test('shows "Photo Processing Error" screen', () async {
-          await driver.waitFor(find.text('Unable to generate Sudoku'));
-          await driver.waitFor(find.text('RETAKE PHOTO'));
-          await driver.waitFor(find.text('RETURN TO HOME'));
-        });
+          await waitToAppear(find.text('Unable to generate Sudoku'));
+          await waitToAppear(find.text('RETAKE PHOTO'));
+          await waitToAppear(find.text('RETURN TO HOME'));
+        }, timeout: defaultTimeout);
 
         test('pressing "RETAKE PHOTO" brings you back to taking photo screen', () async {
           await waitForThenTap(find.text('RETAKE PHOTO'));
 
-          await driver.waitFor(find.text('Camera'));
-          await driver.waitFor(find.text('Align with camera'));
-          await driver.waitFor(find.byType('CameraWidget'));
-          await driver.waitFor(find.text('TAKE PHOTO'));
-        });
+          await waitToAppear(find.text('Camera'));
+          await waitToAppear(find.text('Align with camera'));
+          await waitToAppear(find.byType('CameraWidget'));
+          await waitToAppear(find.text('TAKE PHOTO'));
+        }, timeout: defaultTimeout);
 
         test('pressing "RETURN TO HOME" brings you back to home screen', () async {
           await waitForThenTap(find.text('RETURN TO HOME'));
 
-          await driver.waitFor(find.text('How would you like it to be solved?'));
-          await driver.waitFor(find.text('SOLVE WITH CAMERA'));
-          await driver.waitFor(find.text('SOLVE WITH TOUCH'));
-          await driver.waitFor(find.text('JUST PLAY'));
-        });
+          await waitToAppear(find.text('How would you like it to be solved?'));
+          await waitToAppear(find.text('SOLVE WITH CAMERA'));
+          await waitToAppear(find.text('SOLVE WITH TOUCH'));
+          await waitToAppear(find.text('JUST PLAY'));
+        }, timeout: defaultTimeout);
       });
 
       group('solving timeout', () {
@@ -235,11 +242,11 @@ void main() {
             await waitForThenTap(find.text('TAKE PHOTO'));
             await waitForThenTap(find.text('SOLVE SUDOKU'));
 
-            await driver.waitFor(find.text('The A.I. timed out'));
-            await driver.waitFor(find.text('SOLVE SUDOKU'));
-            await driver.waitFor(find.text('RETAKE PHOTO'));
+            await waitToAppear(find.text('The A.I. timed out'));
+            await waitToAppear(find.text('SOLVE SUDOKU'));
+            await waitToAppear(find.text('RETAKE PHOTO'));
           });
-        }, timeout: Timeout(Duration(seconds: 60)));
+        }, timeout: longTimeout);
       });
 
       group('solving invalid', () {
@@ -254,11 +261,11 @@ void main() {
             await waitForThenTap(find.text('TAKE PHOTO'));
             await waitForThenTap(find.text('SOLVE SUDOKU'));
 
-            await driver.waitFor(find.text('Cannot solve, Sudoku is invalid'));
-            await driver.waitFor(find.text('SOLVE SUDOKU'));
-            await driver.waitFor(find.text('RETAKE PHOTO'));
+            await waitToAppear(find.text('Cannot solve, Sudoku is invalid'));
+            await waitToAppear(find.text('SOLVE SUDOKU'));
+            await waitToAppear(find.text('RETAKE PHOTO'));
           });
-        });
+        }, timeout: defaultTimeout);
       });
     });
   });

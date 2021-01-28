@@ -7,6 +7,8 @@ import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:test/test.dart';
 import 'package:meta/meta.dart';
 
+final Timeout defaultTimeout = Timeout(Duration(seconds: 60));
+final Timeout longTimeout = Timeout(Duration(seconds: 300));
 FlutterDriver driver;
 
 Future<void> initTests() async {
@@ -36,29 +38,31 @@ Future<void> pressBackButton() async {
 
 Future<void> hotRestart() async {
   await driver.requestData('restart');
+  await driver.waitUntilNoTransientCallbacks();
 }
 
 Future<void> waitForThenTap(SerializableFinder finder) async {
-  await driver.waitFor(finder);
+  await waitToAppear(finder);
   await driver.tap(finder);
+  await driver.waitUntilNoTransientCallbacks();
 }
 
-void navigateToSolveWithCameraScreen() async {
+Future<void> navigateToSolveWithCameraScreen() async {
   await waitForThenTap(find.text('SOLVE WITH CAMERA'));
 
   await driver.runUnsynchronized(() async {
-    await driver.waitFor(find.text('Camera'));
+    await waitToAppear(find.text('Camera'));
   });
 }
 
-void navigateToSolveWithTouchScreen() async {
+Future<void> navigateToSolveWithTouchScreen() async {
   await waitForThenTap(find.text('SOLVE WITH TOUCH'));
-  await driver.waitFor(find.text('Touch'));
+  await waitToAppear(find.text('Touch'));
 }
 
-void navigateToJustPlayScreen() async {
+Future<void> navigateToJustPlayScreen() async {
   await waitForThenTap(find.text('JUST PLAY'));
-  await driver.waitFor(find.text('Pick a tile'));
+  await waitToAppear(find.text('Pick a tile'));
 
   // May load with the wrong sudoku when restarting, causing test failures
   bool needsAnotherRestart = (await getNumberOnTile(TileKey(row: 1, col: 1)) != 5);
@@ -68,47 +72,47 @@ void navigateToJustPlayScreen() async {
   }
 }
 
-void pressSolveWithCameraButton() async {
+Future<void> pressSolveWithCameraButton() async {
   await waitForThenTap(find.text('SOLVE WITH CAMERA'));
 }
 
-void pressSolveWithTouchButton() async {
+Future<void> pressSolveWithTouchButton() async {
   await waitForThenTap(find.text('SOLVE WITH TOUCH'));
 }
 
-void pressJustPlayButton() async {
+Future<void> pressJustPlayButton() async {
   await waitForThenTap(find.text('JUST PLAY'));
 }
 
-void pressHelpOnDropDownMenu(String dropDownMenuType) async {
+Future<void> pressHelpOnDropDownMenu(String dropDownMenuType) async {
   await waitForThenTap(find.byType(dropDownMenuType));
   await waitForThenTap(find.text('Help'));
 }
 
-void pressRestartOnDropDownMenu(String dropDownMenuType) async {
+Future<void> pressRestartOnDropDownMenu(String dropDownMenuType) async {
   await waitForThenTap(find.byType(dropDownMenuType));
   await waitForThenTap(find.text('Restart'));
 }
 
-void tapTile(TileKey tileKey) async {
+Future<void> tapTile(TileKey tileKey) async {
   await waitForThenTap(find.byValueKey('${tileKey.toString()}'));
 }
 
-void doubleTapTile(TileKey tileKey) async {
+Future<void> doubleTapTile(TileKey tileKey) async {
   await tapTile(tileKey);
   await tapTile(tileKey);
 }
 
-void tapNumber(int number) async {
+Future<void> tapNumber(int number) async {
   await waitForThenTap(find.byValueKey('Number($number)'));
 }
 
-void addNumberToTile(int number, TileKey tileKey) async {
+Future<void> addNumberToTile(int number, TileKey tileKey) async {
   await tapTile(tileKey);
   await tapNumber(number);
 }
 
-void tapNewGameButton() async {
+Future<void> tapNewGameButton() async {
   await waitForThenTap(find.text('NEW GAME'));
 }
 
@@ -119,7 +123,7 @@ Future<void> expectNumbersAre({String color}) async {
 }
 
 Future<int> getNumberOnTile(TileKey tileKey) async {
-  await driver.waitFor(find.byValueKey('${tileKey.toString()}_text'));
+  await waitToAppear(find.byValueKey('${tileKey.toString()}_text'));
   String tileText = await driver.getText(find.byValueKey('${tileKey.toString()}_text'));
 
   if (tileText == "") {
@@ -135,14 +139,16 @@ Future<void> expectTileIs({
   @required String textColor,
   @required bool hasX,
 }) async {
-  await driver.waitFor(find.byValueKey('$tileKey - color:$color - textColor:$textColor - X:$hasX'));
+  await driver.waitUntilNoTransientCallbacks();
+  await waitToAppear(find.byValueKey('$tileKey - color:$color - textColor:$textColor - X:$hasX'));
 }
 
 Future<void> expectNumberPropertiesToBe({int number, String color}) async {
-  await driver.waitFor(find.byValueKey('Number($number) - color:$color'));
+  await driver.waitUntilNoTransientCallbacks();
+  await waitToAppear(find.byValueKey('Number($number) - color:$color'));
 }
 
-void expectNumberOnTileToBe(int number, TileKey tileKey) async {
+Future<void> expectNumberOnTileToBe(int number, TileKey tileKey) async {
   int numberOnTile = await getNumberOnTile(tileKey);
   expect(numberOnTile == number, true);
 }
@@ -182,5 +188,16 @@ Future<void> expectButtonPropertiesAre({
   @required String color,
   @required String tappable,
 }) async {
-  await driver.waitFor(find.byValueKey('text:$text - color:$color - tappable:$tappable'));
+  await waitToAppear(find.byValueKey('text:$text - color:$color - tappable:$tappable'));
 }
+
+Future<void> waitToAppear(SerializableFinder finder) async {
+  await driver.waitUntilNoTransientCallbacks();
+  await driver.waitFor(finder);
+}
+
+Future<void> waitToDisappear(SerializableFinder finder) async {
+  await driver.waitUntilNoTransientCallbacks();
+  await driver.waitForAbsent(finder);
+}
+

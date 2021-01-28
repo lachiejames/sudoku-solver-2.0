@@ -29,6 +29,6 @@ void main() {
 
       // After all games are finished, it rounds back to the first game
       await verifyInitialGameTiles(games[0]);
-    }, timeout: Timeout(Duration(seconds: 300)));
+    }, timeout: longTimeout);
   });
 }

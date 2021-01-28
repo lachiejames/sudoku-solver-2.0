@@ -19,7 +19,7 @@ import 'constants/constants.dart';
 Future<void> main() async {
   // Allows us to run integration tests
   enableFlutterDriverExtension(handler: (command) async {
-    if (command == 'hotRestart') {
+    if (command == 'restart') {
       await restartApp();
     } else {
       await setMock(command);
