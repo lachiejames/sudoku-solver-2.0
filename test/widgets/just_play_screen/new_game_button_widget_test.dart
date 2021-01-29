@@ -3,19 +3,20 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../../constants/test_constants.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/widgets/just_play_screen/new_game_button_widget.dart';
+
+import '../../constants/test_constants.dart';
 
 void main() {
   group('NewGameButtonWidget -', () {
     NewGameButtonWidget newGameButtonWidget;
 
     Future<void> createNewGameButtonWidget(WidgetTester tester) async {
-      newGameButtonWidget = NewGameButtonWidget();
+      newGameButtonWidget = const NewGameButtonWidget();
       await tester.pumpWidget(
         StoreProvider<AppState>(
           store: Redux.store,
@@ -24,12 +25,11 @@ void main() {
       );
     }
 
-    Color newGameButtonWidgetColor(WidgetTester tester) {
-      return ((tester.firstWidget(find.byType(RaisedButton)) as RaisedButton)).color;
-    }
+    Color newGameButtonWidgetColor(WidgetTester tester) =>
+        (tester.firstWidget<RaisedButton>(find.byType(RaisedButton))).color;
 
     setUp(() async {
-      TestConstants.setMockMethodsForUnitTests();
+      setMockMethodsForUnitTests();
       await Redux.init();
     });
 
@@ -53,7 +53,7 @@ void main() {
 
       testWidgets('should be blue', (WidgetTester tester) async {
         await createNewGameButtonWidget(tester);
-        expect(newGameButtonWidgetColor(tester), constants.blue);
+        expect(newGameButtonWidgetColor(tester), blue);
       });
 
       // testWidgets('tapping should increment the gameNumber', (WidgetTester tester) async {

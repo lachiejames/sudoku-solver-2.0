@@ -1,10 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import '../../constants/test_constants.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
+
+import '../../constants/test_constants.dart';
 
 void main() {
   AppState state;
@@ -15,7 +16,7 @@ void main() {
   }
 
   setUp(() async {
-    TestConstants.setMockMethodsForUnitTests();
+    setMockMethodsForUnitTests();
     await Redux.init();
     state = Redux.store.state;
   });
@@ -29,10 +30,10 @@ void main() {
       });
 
       test('sets topText to "AI thinking..." in white', () {
-        expect(state.topTextState.text, constants.topTextNoTileSelected);
+        expect(state.topTextState.text, topTextNoTileSelected);
         dispatchActionAndUpdateState(SolveSudokuAction());
-        expect(state.topTextState.text, constants.topTextWhenSolving);
-        expect(state.topTextState.color, constants.white);
+        expect(state.topTextState.text, topTextWhenSolving);
+        expect(state.topTextState.color, white);
       });
     });
 
@@ -41,7 +42,7 @@ void main() {
         dispatchActionAndUpdateState(SolveSudokuAction());
 
         // Takes a second to solve.  Gotta update the state too
-        await Future.delayed(Duration(milliseconds: 1000));
+        await Future<dynamic>.delayed(const Duration(milliseconds: 1000));
         state = Redux.store.state;
 
         expect(state.gameState, GameState.solved);
@@ -51,11 +52,11 @@ void main() {
         dispatchActionAndUpdateState(SolveSudokuAction());
 
         // Takes a second to solve.  Gotta update the state too
-        await Future.delayed(Duration(milliseconds: 1000));
+        await Future<dynamic>.delayed(const Duration(milliseconds: 1000));
         state = Redux.store.state;
 
-        expect(state.topTextState.text, constants.topTextSolved);
-        expect(state.topTextState.color, constants.green);
+        expect(state.topTextState.text, topTextSolved);
+        expect(state.topTextState.color, green);
       });
     });
   });

@@ -12,7 +12,9 @@ void main() {
     });
 
     tearDownAll(() async {
-      if (driver != null) await driver.close();
+      if (driver != null) {
+        await driver.close();
+      }
     });
 
     tearDown(() async {
@@ -37,19 +39,12 @@ void main() {
 
       test('pressing "TAKE PHOTO" shows the "constructing sudoku" screen', () async {
         await driver.runUnsynchronized(() async {
-          print('xxx 1');
           await waitToAppear(find.byType('CameraWidget'));
-          print('xxx 2');
           await waitForThenTap(find.text('TAKE PHOTO'));
-          print('xxx 3');
           await waitToAppear(find.text('Constructing Sudoku...'));
-          print('xxx 4');
           await waitToAppear(find.text('STOP CONSTRUCTING'));
-          print('xxx 5');
           await waitToAppear(find.byType('CircularProgressIndicator'));
-          print('xxx 6');
           await waitToAppear(find.byType('SudokuWidget'));
-          print('xxx 7');
         });
       }, timeout: defaultTimeout);
 

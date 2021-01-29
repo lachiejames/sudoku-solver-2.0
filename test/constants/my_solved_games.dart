@@ -1,4 +1,4 @@
-final String _game0ValuesStringSolved = '''
+const String _game0ValuesStringSolved = '''
 -------------------------------------
 | 5 | 3 | 4 | 6 | 7 | 8 | 9 | 1 | 2 |
 -------------------------------------
@@ -20,7 +20,7 @@ final String _game0ValuesStringSolved = '''
 -------------------------------------
 ''';
 
-final String _game1ValuesStringSolved = '''
+const String _game1ValuesStringSolved = '''
 -------------------------------------
 | 6 | 8 | 2 | 5 | 4 | 3 | 9 | 1 | 7 |
 -------------------------------------
@@ -42,7 +42,7 @@ final String _game1ValuesStringSolved = '''
 -------------------------------------
 ''';
 
-final String _game2ValuesStringSolved = '''
+const String _game2ValuesStringSolved = '''
 -------------------------------------
 | 8 | 2 | 1 | 4 | 9 | 7 | 3 | 5 | 6 |
 -------------------------------------
@@ -64,7 +64,7 @@ final String _game2ValuesStringSolved = '''
 -------------------------------------
 ''';
 
-final String _game3ValuesStringSolved = '''
+const String _game3ValuesStringSolved = '''
 -------------------------------------
 | 2 | 1 | 7 | 6 | 3 | 5 | 8 | 9 | 4 |
 -------------------------------------
@@ -86,7 +86,7 @@ final String _game3ValuesStringSolved = '''
 -------------------------------------
 ''';
 
-final String _game4ValuesStringSolved = '''
+const String _game4ValuesStringSolved = '''
 -------------------------------------
 | 3 | 4 | 6 | 8 | 9 | 1 | 5 | 7 | 2 |
 -------------------------------------
@@ -108,7 +108,7 @@ final String _game4ValuesStringSolved = '''
 -------------------------------------
 ''';
 
-final String _game5ValuesStringSolved = '''
+const String _game5ValuesStringSolved = '''
 -------------------------------------
 | 4 | 6 | 1 | 7 | 3 | 9 | 5 | 2 | 8 |
 -------------------------------------
@@ -130,7 +130,7 @@ final String _game5ValuesStringSolved = '''
 -------------------------------------
 ''';
 
-final String _game6ValuesStringSolved = '''
+const String _game6ValuesStringSolved = '''
 -------------------------------------
 | 3 | 5 | 1 | 2 | 7 | 8 | 4 | 9 | 6 |
 -------------------------------------
@@ -152,7 +152,7 @@ final String _game6ValuesStringSolved = '''
 -------------------------------------
 ''';
 
-final String _game7ValuesStringSolved = '''
+const String _game7ValuesStringSolved = '''
 -------------------------------------
 | 3 | 1 | 8 | 6 | 4 | 5 | 2 | 7 | 9 |
 -------------------------------------
@@ -174,7 +174,7 @@ final String _game7ValuesStringSolved = '''
 -------------------------------------
 ''';
 
-final String _game8ValuesStringSolved = '''
+const String _game8ValuesStringSolved = '''
 -------------------------------------
 | 1 | 5 | 7 | 2 | 9 | 6 | 4 | 3 | 8 |
 -------------------------------------
@@ -196,7 +196,7 @@ final String _game8ValuesStringSolved = '''
 -------------------------------------
 ''';
 
-final String _game9ValuesStringSolved = '''
+const String _game9ValuesStringSolved = '''
 -------------------------------------
 | 3 | 1 | 4 | 8 | 6 | 9 | 7 | 2 | 5 |
 -------------------------------------
@@ -218,7 +218,7 @@ final String _game9ValuesStringSolved = '''
 -------------------------------------
 ''';
 
-final List<String> solvedGames = [
+const List<String> solvedGames = <String>[
   _game0ValuesStringSolved,
   _game1ValuesStringSolved,
   _game2ValuesStringSolved,

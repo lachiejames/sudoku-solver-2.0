@@ -9,6 +9,6 @@ Future<void> logEvent(String message) async {
 Future<void> logError(String message, dynamic stackTrace) async {
   await firebaseAnalytics.logEvent(
     name: message,
-    parameters: {'stackTrace': stackTrace},
+    parameters: <String, dynamic>{'stackTrace': stackTrace},
   );
 }

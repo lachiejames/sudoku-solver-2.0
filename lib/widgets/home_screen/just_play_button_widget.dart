@@ -1,49 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/screens/just_play_screen.dart';
 import 'package:sudoku_solver_2/widgets/shared/size_animated_route.dart';
 
 /// Lives on the HomeScreen, navigating users to the JustPlayScreen
 class JustPlayButtonWidget extends StatelessWidget {
-  JustPlayButtonWidget({Key key}) : super(key: key);
+  const JustPlayButtonWidget({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      margin: constants.buttonMargins,
-      child: Directionality(
-        textDirection: TextDirection.ltr,
-        child: RaisedButton(
-          shape: constants.buttonShape,
-          padding: EdgeInsets.only(
-            top: 16,
-            bottom: 16,
-            left: 50,
-            right: 50,
+  Widget build(BuildContext context) => Container(
+        alignment: Alignment.center,
+        margin: buttonMargins,
+        child: Directionality(
+          textDirection: TextDirection.ltr,
+          child: RaisedButton(
+            shape: buttonShape,
+            padding: const EdgeInsets.only(
+              top: 16,
+              bottom: 16,
+              left: 50,
+              right: 50,
+            ),
+            color: pink,
+            onPressed: () async {
+              await playSound(buttonPressedSound);
+              await logEvent('button_just_play');
+              await _navigateToJustPlayScreen(context);
+            },
+            child: const Text(
+              justPlayButtonText,
+              style: buttonTextStyle,
+            ),
           ),
-          color: constants.pink,
-          child: Text(
-            constants.justPlayButtonText,
-            style: constants.buttonTextStyle,
-          ),
-          onPressed: () async {
-            await constants.playSound(constants.buttonPressedSound);
-            await logEvent('button_just_play');
-            await _navigateToJustPlayScreen(context);
-          },
         ),
-      ),
-    );
-  }
+      );
 
   Future<void> _navigateToJustPlayScreen(BuildContext context) async {
     await Navigator.push(
       context,
       SizeAnimatedRoute(
-        nextPage: JustPlayScreen(),
-        routeSettings: RouteSettings(name: '/just-play'),
+        nextPage: const JustPlayScreen(),
+        routeSettings: const RouteSettings(name: '/just-play'),
       ),
     );
   }

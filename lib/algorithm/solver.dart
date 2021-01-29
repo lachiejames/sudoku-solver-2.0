@@ -6,14 +6,13 @@ import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 
 double timeElapsed, startTime;
 
 /// An algorithm for solving 'constraint satisfaction problems', like a Sudoku
 bool backtracking(Sudoku sudoku) {
   timeElapsed = DateTime.now().millisecondsSinceEpoch - startTime;
-  if (timeElapsed > constants.maxSolveTime) {
+  if (timeElapsed > maxSolveTime) {
     throw Exception('SudokuSolvingTimeoutException');
   }
 
@@ -21,9 +20,9 @@ bool backtracking(Sudoku sudoku) {
     return true;
   }
 
-  TileState tileState = sudoku.getNextTileWithoutValue();
+  final TileState tileState = sudoku.getNextTileWithoutValue();
   assert(tileState != null);
-  for (int value in sudoku.getPossibleValuesAtTile(tileState)) {
+  for (final int value in sudoku.getPossibleValuesAtTile(tileState)) {
     assert(value != null);
     sudoku.addValueToTile(value, tileState);
     if (sudoku.allConstraintsSatisfied()) {
@@ -50,15 +49,15 @@ Sudoku solveSudoku(Sudoku sudoku) {
 }
 
 // Stream<Sudoku> myStream;
-CancelableOperation _solveSudokuCancellableOperation;
+CancelableOperation<dynamic> _solveSudokuCancellableOperation;
 
 /// Solves the sudoku asynchronously with 'compute'
 Future<Sudoku> solveSudokuAsync(Sudoku sudoku) async {
-  _solveSudokuCancellableOperation = CancelableOperation.fromFuture(
+  _solveSudokuCancellableOperation = CancelableOperation<dynamic>.fromFuture(
     compute(solveSudoku, sudoku)
-      ..catchError((e) async {
-        logError('ERROR: sudoku could not be solved', e);
-        await constants.playSound(constants.processingErrorSound);
+      .catchError((dynamic e) async {
+        await logError('ERROR: sudoku could not be solved', e);
+        await playSound(processingErrorSound);
 
         if (e.message == 'Exception: SudokuSolvingTimeoutException') {
           Redux.store.dispatch(SudokuSolvingTimeoutErrorAction());
@@ -69,10 +68,10 @@ Future<Sudoku> solveSudokuAsync(Sudoku sudoku) async {
       }),
   );
 
-  _solveSudokuCancellableOperation.asStream().listen((solvedSudoku) async {
+  _solveSudokuCancellableOperation.asStream().listen((dynamic solvedSudoku) async {
     if (solvedSudoku.isFull() && solvedSudoku.allConstraintsSatisfied()) {
-      await constants.playSound(constants.gameSolvedSound);
-      await constants.solveSudokuButtonPressedTrace.stop();
+      await playSound(gameSolvedSound);
+      await solveSudokuButtonPressedTrace.stop();
       Redux.store.dispatch(SudokuSolvedAction(solvedSudoku));
     }
   });

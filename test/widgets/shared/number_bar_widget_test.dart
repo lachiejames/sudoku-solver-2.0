@@ -1,17 +1,19 @@
 import 'dart:async';
+
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../../constants/test_constants.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/number_bar_widget.dart';
+
+import '../../constants/test_constants.dart';
 
 void main() {
   group('NumberBarWidget -', () {
     NumberBarWidget numberBarWidget;
 
     Future<void> createNumberBarWidget(WidgetTester tester) async {
-      numberBarWidget = NumberBarWidget();
+      numberBarWidget = const NumberBarWidget();
       await tester.pumpWidget(
         StoreProvider<AppState>(
           store: Redux.store,
@@ -21,7 +23,7 @@ void main() {
     }
 
     setUp(() async {
-      TestConstants.setMockMethodsForUnitTests();
+      setMockMethodsForUnitTests();
       await Redux.init();
     });
 

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../../constants/test_constants.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/widgets/shared/number_widget.dart';
 
+import '../../constants/test_constants.dart';
+
 void main() {
   group('NumberWidget -', () {
-    final Duration debounceTime = Duration(milliseconds: 100);
-    final TileKey tileKey = TileKey(row: 1, col: 1);
+    const Duration debounceTime = Duration(milliseconds: 100);
+    const TileKey tileKey = TileKey(row: 1, col: 1);
     NumberWidget numberWidget;
 
     Future<void> createNumberWidget(WidgetTester tester, int number) async {
@@ -36,11 +37,13 @@ void main() {
     }
 
     Color getNumberWidgetColor(WidgetTester tester) {
-      return ((tester.firstWidget(find.byType(Container)) as Container).decoration as ShapeDecoration).color;
+      final Container container = tester.firstWidget(find.byType(Container));
+      final ShapeDecoration shapeDecoration = container.decoration;
+      return shapeDecoration.color;
     }
 
     setUp(() async {
-      TestConstants.setMockMethodsForUnitTests();
+      setMockMethodsForUnitTests();
       await Redux.init();
     });
 
@@ -52,7 +55,7 @@ void main() {
 
       testWidgets('should be white', (WidgetTester tester) async {
         await createNumberWidget(tester, 1);
-        expect(getNumberWidgetColor(tester), constants.white);
+        expect(getNumberWidgetColor(tester), white);
       });
 
       testWidgets('not tappable', (WidgetTester tester) async {
@@ -60,7 +63,7 @@ void main() {
 
         await tapNumberWidget(tester);
 
-        expect(getNumberWidgetColor(tester), constants.white);
+        expect(getNumberWidgetColor(tester), white);
       });
     });
 
@@ -70,7 +73,7 @@ void main() {
 
         await tapTileWidget(tester);
 
-        expect(getNumberWidgetColor(tester), constants.green);
+        expect(getNumberWidgetColor(tester), green);
       });
 
       testWidgets('tapping this numberWidget sets color back to white', (WidgetTester tester) async {
@@ -78,7 +81,7 @@ void main() {
 
         await tapNumberWidget(tester);
 
-        expect(getNumberWidgetColor(tester), constants.white);
+        expect(getNumberWidgetColor(tester), white);
       });
 
       //   testWidgets('tapping this numberWidget caused tile to display this number',

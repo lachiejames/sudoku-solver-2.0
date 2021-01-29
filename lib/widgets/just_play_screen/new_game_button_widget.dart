@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:redux/redux.dart';
 import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
@@ -9,40 +9,37 @@ import 'package:sudoku_solver_2/state/game_state.dart';
 
 /// Shown when a game is completed on the JustPlayScreen
 class NewGameButtonWidget extends StatelessWidget {
+  const NewGameButtonWidget({Key key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    return StoreConnector<AppState, GameState>(
-      distinct: true,
-      converter: (store) => store.state.gameState,
-      builder: (context, gameState) {
-        // Should only be visible when solved
-        return Visibility(
-          visible: (gameState == GameState.solved),
+  Widget build(BuildContext context) => StoreConnector<AppState, GameState>(
+        distinct: true,
+        converter: (Store<AppState> store) => store.state.gameState,
+        builder: (BuildContext context, GameState gameState) => Visibility(
+          visible: gameState == GameState.solved,
           child: Container(
             alignment: Alignment.center,
-            margin: constants.buttonMargins,
+            margin: buttonMargins,
             child: Directionality(
               textDirection: TextDirection.ltr,
               child: RaisedButton(
-                shape: constants.buttonShape,
-                padding: constants.buttonPadding,
-                color: constants.blue,
-                child: Text(
-                  constants.newGameButtonText,
-                  style: constants.buttonTextStyle,
-                ),
+                shape: buttonShape,
+                padding: buttonPadding,
+                color: blue,
                 onPressed: () async {
-                  await constants.playSound(constants.buttonPressedSound);
+                  await playSound(buttonPressedSound);
                   Redux.store.dispatch(NewGameButtonPressedAction());
-                  int nextGameNumber = Redux.store.state.gameNumber;
-                  await Redux.sharedPreferences.setInt(constants.gameNumberSharedPrefsKey, nextGameNumber);
+                  final int nextGameNumber = Redux.store.state.gameNumber;
+                  await Redux.sharedPreferences.setInt(gameNumberSharedPrefsKey, nextGameNumber);
                   await logEvent('button_new_game');
                 },
+                child: const Text(
+                  newGameButtonText,
+                  style: buttonTextStyle,
+                ),
               ),
             ),
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
 }

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/solve_sudoku_button_widget.dart';
@@ -24,12 +24,11 @@ void main() {
       );
     }
 
-    Color getSolveSudokuButtonWidgetColor(WidgetTester tester) {
-      return ((tester.firstWidget(find.byType(RaisedButton)) as RaisedButton)).color;
-    }
+    Color getSolveSudokuButtonWidgetColor(WidgetTester tester) =>
+        (tester.firstWidget<RaisedButton>(find.byType(RaisedButton))).color;
 
     setUp(() async {
-TestConstants.setMockMethodsForUnitTests();
+      setMockMethodsForUnitTests();
       await Redux.init();
     });
 
@@ -49,7 +48,7 @@ TestConstants.setMockMethodsForUnitTests();
       testWidgets('should be blue', (WidgetTester tester) async {
         await createSolveSudokuButtonWidget(tester);
 
-        expect(getSolveSudokuButtonWidgetColor(tester), constants.blue);
+        expect(getSolveSudokuButtonWidgetColor(tester), blue);
       });
     });
   });

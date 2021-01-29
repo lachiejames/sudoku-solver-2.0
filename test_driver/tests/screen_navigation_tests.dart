@@ -10,7 +10,9 @@ void main() {
     });
 
     tearDownAll(() async {
-      if (driver != null) await driver.close();
+      if (driver != null) {
+        await driver.close();
+      }
     });
 
     setUp(() async {

@@ -1,8 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../constants/test_constants.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/home_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -11,12 +11,14 @@ import 'package:sudoku_solver_2/widgets/home_screen/solve_with_camera_button_wid
 import 'package:sudoku_solver_2/widgets/home_screen/solve_with_touch_button_widget.dart';
 import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 
+import '../constants/test_constants.dart';
+
 void main() {
   group('HomeScreen -', () {
     HomeScreen homeScreen;
 
     Future<void> createHomeScreen(WidgetTester tester) async {
-      homeScreen = HomeScreen();
+      homeScreen = const HomeScreen();
       await tester.pumpWidget(
         StoreProvider<AppState>(
           store: Redux.store,
@@ -28,7 +30,7 @@ void main() {
     }
 
     setUp(() async {
-TestConstants.setMockMethodsForUnitTests();
+      setMockMethodsForUnitTests();
       await Redux.init();
     });
 
@@ -46,8 +48,7 @@ TestConstants.setMockMethodsForUnitTests();
         expect(find.byType(JustPlayButtonWidget), findsOneWidget);
       });
 
-      testWidgets('top text should be "How would you like it to be solved?" ',
-          (WidgetTester tester) async {
+      testWidgets('top text should be "How would you like it to be solved?" ', (WidgetTester tester) async {
         await createHomeScreen(tester);
         expect(find.text('How would you like it to be solved?'), findsOneWidget);
       });

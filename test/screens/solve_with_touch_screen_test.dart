@@ -1,18 +1,20 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../constants/test_constants.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/solve_with_touch_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
+
+import '../constants/test_constants.dart';
 
 void main() {
   group('SolveWithTouchScreen -', () {
     SolveWithTouchScreen solveWithTouchScreen;
 
     Future<void> createJustPlayHelpScreen(WidgetTester tester) async {
-      solveWithTouchScreen = SolveWithTouchScreen();
+      solveWithTouchScreen = const SolveWithTouchScreen();
       await tester.pumpWidget(
         StoreProvider<AppState>(
           store: Redux.store,
@@ -24,7 +26,7 @@ void main() {
     }
 
     setUp(() async {
-      TestConstants.setMockMethodsForUnitTests();
+      setMockMethodsForUnitTests();
       await Redux.init();
     });
 

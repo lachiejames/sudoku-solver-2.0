@@ -4,7 +4,8 @@ import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
 
 /// Contains all state reducers used by the NumberState List
-final Reducer<List<NumberState>> numberStateListReducer = combineReducers<List<NumberState>>([
+final Reducer<List<NumberState>> numberStateListReducer =
+    combineReducers<List<NumberState>>(<List<NumberState> Function(List<NumberState>, dynamic)>[
   TypedReducer<List<NumberState>, TileSelectedAction>(_makeNumberActive),
   TypedReducer<List<NumberState>, TileDeselectedAction>(_makeNumberInactive),
   TypedReducer<List<NumberState>, NumberPressedAction>(_makeNumberInactive2),
@@ -14,7 +15,7 @@ final Reducer<List<NumberState>> numberStateListReducer = combineReducers<List<N
 
 List<NumberState> _makeNumberActive(List<NumberState> numberStateList, TileSelectedAction action) {
   final List<NumberState> newNumberStateList = <NumberState>[];
-  for (NumberState numberState in numberStateList) {
+  for (final NumberState numberState in numberStateList) {
     newNumberStateList.add(numberState.copyWith(isActive: true));
   }
 
@@ -24,7 +25,7 @@ List<NumberState> _makeNumberActive(List<NumberState> numberStateList, TileSelec
 List<NumberState> _makeNumberInactive(List<NumberState> numberStateList, TileDeselectedAction action) {
   final List<NumberState> newNumberStateList = <NumberState>[];
 
-  for (NumberState numberState in numberStateList) {
+  for (final NumberState numberState in numberStateList) {
     newNumberStateList.add(numberState.copyWith(isActive: false));
   }
 
@@ -33,7 +34,7 @@ List<NumberState> _makeNumberInactive(List<NumberState> numberStateList, TileDes
 
 List<NumberState> _makeNumberInactive2(List<NumberState> numberStateList, NumberPressedAction action) {
   final List<NumberState> newNumberStateList = <NumberState>[];
-  for (NumberState numberState in numberStateList) {
+  for (final NumberState numberState in numberStateList) {
     newNumberStateList.add(numberState.copyWith(isActive: false));
   }
 
@@ -42,7 +43,7 @@ List<NumberState> _makeNumberInactive2(List<NumberState> numberStateList, Number
 
 List<NumberState> _makeNumberInactive3(List<NumberState> numberStateList, RestartAction action) {
   final List<NumberState> newNumberStateList = <NumberState>[];
-  for (NumberState numberState in numberStateList) {
+  for (final NumberState numberState in numberStateList) {
     newNumberStateList.add(numberState.copyWith(isActive: false));
   }
 
@@ -56,7 +57,7 @@ List<NumberState> _clearNumberStateListReducer(List<NumberState> numberStateList
   }
 
   final List<NumberState> newNumberStateList = <NumberState>[];
-  for (NumberState numberState in numberStateList) {
+  for (final NumberState numberState in numberStateList) {
     newNumberStateList.add(numberState.copyWith(isActive: false));
   }
 

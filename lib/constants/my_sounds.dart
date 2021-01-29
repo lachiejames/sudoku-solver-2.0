@@ -1,18 +1,18 @@
 part of './constants.dart';
 
-final String tileSelectedSound = 'tile_selected_sound.mp3';
-final String tileDeselectedSound = 'tile_deselected_sound.mp3';
-final String invalidTilesPresentSound = 'invalid_tiles_present_sound.mp3';
-final String buttonPressedSound = 'button_pressed_sound.mp3';
-final String gameSolvedSound = 'game_solved_sound.mp3';
-final String photoProcessedSound = 'photo_processed_sound.mp3';
-final String processingErrorSound = 'processing_error_sound.mp3';
+const String tileSelectedSound = 'tile_selected_sound.mp3';
+const String tileDeselectedSound = 'tile_deselected_sound.mp3';
+const String invalidTilesPresentSound = 'invalid_tiles_present_sound.mp3';
+const String buttonPressedSound = 'button_pressed_sound.mp3';
+const String gameSolvedSound = 'game_solved_sound.mp3';
+const String photoProcessedSound = 'photo_processed_sound.mp3';
+const String processingErrorSound = 'processing_error_sound.mp3';
 
 AudioCache _audioCache = AudioCache();
 
 Future<void> loadSoundsToCache() async {
   try {
-    await _audioCache.loadAll([
+    await _audioCache.loadAll(<String>[
       tileSelectedSound,
       tileDeselectedSound,
       invalidTilesPresentSound,
@@ -24,7 +24,7 @@ Future<void> loadSoundsToCache() async {
     // Ignore warning because this throws a FlutterError instead of an Exception
     // ignore: avoid_catches_without_on_clauses
   } catch (e) {
-    logError('ERROR: sound could not be loaded', e);
+    await logError('ERROR: sound could not be loaded', e);
   }
 }
 
@@ -32,6 +32,6 @@ Future<void> playSound(String pathToFile) async {
   try {
     await _audioCache.play(pathToFile);
   } on Exception catch (e) {
-    logError('ERROR: failed to load sound $pathToFile', e);
+    await logError('ERROR: failed to load sound $pathToFile', e);
   }
 }

@@ -15,7 +15,7 @@ import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:sudoku_solver_2/state/top_text_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 
 /// Core component for state management
 class Redux {
@@ -35,40 +35,40 @@ class Redux {
 
     _store = Store<AppState>(
       appReducer,
-      middleware: [thunkMiddleware],
+      middleware: <dynamic Function(Store<AppState>, dynamic, dynamic Function(dynamic))>[thunkMiddleware],
       initialState: AppState(
         tileStateMap: TileState.initTileStateMap(),
         numberStateList: NumberState.initNumberStateList(),
-        topTextState: TopTextState.initialState(),
+        topTextState: TopTextState(text: topTextNoTileSelected, color: white),
         gameNumber: (sharedPreferences != null) ? await _getGameNumber() : 0,
         screenState: ScreenState.homeScreen,
         gameState: GameState.normal,
-        cameraState: CameraState.initCameraState(),
+        cameraState: CameraState(),
       ),
     );
   }
 
   static Future<int> _getGameNumber() async {
     assert(sharedPreferences != null);
-    int gameNumber = sharedPreferences.getInt(constants.gameNumberSharedPrefsKey);
+    int gameNumber = sharedPreferences.getInt(gameNumberSharedPrefsKey);
 
     if (gameNumber == null) {
       gameNumber = 0;
-      await sharedPreferences.setInt(constants.gameNumberSharedPrefsKey, gameNumber);
+      await sharedPreferences.setInt(gameNumberSharedPrefsKey, gameNumber);
     }
 
     return gameNumber;
   }
 
-  static AppState appReducer(AppState state, dynamic action) {
-    return state.copyWith(
-      tileStateMap: tileStateMapReducer(state.tileStateMap, action),
-      numberStateList: numberStateListReducer(state.numberStateList, action),
-      topTextState: topTextStateReducer(state.topTextState, action),
-      gameNumber: gameNumberReducer(state.gameNumber, action),
-      screenState: screenStateReducer(state.screenState, action),
-      gameState: gameStateReducer(state.gameState, action),
-      cameraState: cameraStateReducer(state.cameraState, action),
-    );
-  }
+  static AppState appReducer(AppState state, dynamic action) => state.copyWith(
+        tileStateMap: tileStateMapReducer(state.tileStateMap, action),
+        numberStateList: numberStateListReducer(state.numberStateList, action),
+        topTextState: topTextStateReducer(state.topTextState, action),
+        gameNumber: gameNumberReducer(state.gameNumber, action),
+        screenState: screenStateReducer(state.screenState, action),
+        gameState: gameStateReducer(state.gameState, action),
+        cameraState: cameraStateReducer(state.cameraState, action),
+      );
+
+  void s() {}
 }

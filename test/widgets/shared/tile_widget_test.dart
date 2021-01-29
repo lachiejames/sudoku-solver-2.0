@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sudoku_solver_2/state/screen_state.dart';
-import '../../constants/test_constants.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
+import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/tile_widget.dart';
 
+import '../../constants/test_constants.dart';
+
 void main() {
   group('TileWidget -', () {
-    final Duration debounceTime = Duration(milliseconds: 100);
-    final TileKey tileKey = TileKey(row: 1, col: 1);
+    const Duration debounceTime = Duration(milliseconds: 100);
+    const TileKey tileKey = TileKey(row: 1, col: 1);
 
     TileWidget tileWidget;
 
     Future<void> createTileWidget(WidgetTester tester) async {
-      tileWidget = TileWidget(tileKey: tileKey);
+      tileWidget = const TileWidget(tileKey: tileKey);
       await tester.pumpWidget(
         StoreProvider<AppState>(
           store: Redux.store,
@@ -29,22 +30,18 @@ void main() {
     }
 
     Color getTileWidgetColor(WidgetTester tester) {
-      return ((tester.firstWidget(find.byType(Container)) as Container).decoration as BoxDecoration).color;
-    }
-
-    Future<void> addValueToSelectedTileWidget(WidgetTester tester, int value) async {
-      var number = Redux.store.state.numberStateList[value - 1];
-      Redux.store.dispatch(NumberPressedAction(number));
-      await tester.pump(debounceTime);
+      final Container container = tester.firstWidget(find.byType(Container));
+      final BoxDecoration boxDecoration = container.decoration;
+      return boxDecoration.color;
     }
 
     void setIsOriginalTile() {
-      TileState tileState = Redux.store.state.tileStateMap[tileKey];
+      final TileState tileState = Redux.store.state.tileStateMap[tileKey];
       Redux.store.state.tileStateMap[tileKey] = tileState.copyWith(isOriginalTile: true);
     }
 
     setUp(() async {
-      TestConstants.setMockMethodsForUnitTests();
+      setMockMethodsForUnitTests();
       await Redux.init();
       Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithTouchScreen));
     });
@@ -57,13 +54,13 @@ void main() {
 
       testWidgets('if its NOT an original tile, it should be white', (WidgetTester tester) async {
         await createTileWidget(tester);
-        expect(getTileWidgetColor(tester), constants.white);
+        expect(getTileWidgetColor(tester), white);
       });
 
       testWidgets('if its an original tile, it should be grey', (WidgetTester tester) async {
         setIsOriginalTile();
         await createTileWidget(tester);
-        expect(getTileWidgetColor(tester), constants.grey);
+        expect(getTileWidgetColor(tester), grey);
       });
     });
 
@@ -72,7 +69,7 @@ void main() {
       //   await createTileWidget(tester);
       //   await tester.tap(find.byWidget(tileWidget));
       //   await tester.pump(debounceTime);
-      //   expect(getTileWidgetColor(tester), constants.green);
+      //   expect(getTileWidgetColor(tester),green);
       // });
 
       // testWidgets('should display a value when NumberPressedAction dispatched', (WidgetTester tester) async {
@@ -111,7 +108,7 @@ void main() {
         await tester.pump(debounceTime);
         await tester.tap(find.byWidget(tileWidget));
         await tester.pump(debounceTime);
-        expect(getTileWidgetColor(tester), constants.white);
+        expect(getTileWidgetColor(tester), white);
       });
 
       // testWidgets('should have value removed, if applicable', (WidgetTester tester) async {

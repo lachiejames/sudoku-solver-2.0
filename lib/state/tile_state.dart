@@ -22,9 +22,8 @@ class TileState {
   });
 
   @override
-  String toString() {
-    return 'TileState(row=$row, col=$col, value=${(value != null) ? value : 'null'}, isSelected=${this.isSelected}, isOriginalTile=${this.isOriginalTile}, isinvalid=${this.isInvalid})';
-  }
+  String toString() =>
+      'TileState(row=$row, col=$col, value=${(value != null) ? value : 'null'}, isSelected=$isSelected, isOriginalTile=$isOriginalTile, isinvalid=$isInvalid)';
 
   int getSegment() {
     if (1 <= row && row <= 3 && 1 <= col && col <= 3) {
@@ -53,21 +52,20 @@ class TileState {
     bool isSelected,
     bool isOriginalTile,
     bool isInvalid,
-  }) {
-    return TileState(
-      row: this.row,
-      col: this.col,
-      value: _decideValueToPass(value),
-      isSelected: isSelected ?? this.isSelected,
-      isOriginalTile: isOriginalTile ?? this.isOriginalTile,
-      isInvalid: isInvalid ?? this.isInvalid,
-    );
-  }
+  }) =>
+      TileState(
+        row: row,
+        col: col,
+        value: _decideValueToPass(value),
+        isSelected: isSelected ?? this.isSelected,
+        isOriginalTile: isOriginalTile ?? this.isOriginalTile,
+        isInvalid: isInvalid ?? this.isInvalid,
+      );
 
   int _decideValueToPass(int valueProvided) {
     int valueToPass;
     if (valueProvided == null) {
-      valueToPass = this.value;
+      valueToPass = value;
     } else if (valueProvided == -1) {
       valueToPass = null;
     } else {
@@ -78,7 +76,7 @@ class TileState {
   }
 
   static HashMap<TileKey, TileState> initTileStateMap() {
-    HashMap<TileKey, TileState> _tileStateMap = HashMap<TileKey, TileState>();
+    final HashMap<TileKey, TileState> _tileStateMap = HashMap<TileKey, TileState>();
     for (int row = 1; row <= 9; row++) {
       for (int col = 1; col <= 9; col++) {
         _tileStateMap[TileKey(row: row, col: col)] = TileState(row: row, col: col);

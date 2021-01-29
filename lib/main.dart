@@ -8,17 +8,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/home_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 
-import 'constants/constants.dart';
-
 Future<void> main() async {
   // Allows us to run integration tests
-  enableFlutterDriverExtension(handler: (command) async {
+  enableFlutterDriverExtension(handler: (dynamic command) async {
     if (command == 'restart') {
       await restartApp();
     } else {
@@ -37,7 +35,7 @@ Future<void> _initCamera() async {
   try {
     cameras = await availableCameras();
   } on Exception catch (e) {
-    logError('ERROR: camera not found', e);
+    await logError('ERROR: camera not found', e);
     return;
   }
 
@@ -46,7 +44,7 @@ Future<void> _initCamera() async {
   try {
     await cameraController.initialize();
   } on Exception catch (e) {
-    logError('ERROR: camera could not be initialised', e);
+    await logError('ERROR: camera could not be initialised', e);
     return;
   }
 
@@ -58,13 +56,13 @@ Future<void> restartApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true); // send crash reports during debugging
-  await FirebaseAdMob.instance.initialize(appId: constants.appIdForAdMob);
+  await FirebaseAdMob.instance.initialize(appId: appIdForAdMob);
 
   await Redux.init();
-  SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
-  await sharedPrefs.setInt(constants.gameNumberSharedPrefsKey, 0);
+  final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+  await sharedPrefs.setInt(gameNumberSharedPrefsKey, 0);
   await _initCamera();
-  await constants.loadSoundsToCache();
+  await loadSoundsToCache();
 
   runApp(
     MyApp(
@@ -75,25 +73,25 @@ Future<void> restartApp() async {
 
 /// Base widget for the app
 class MyApp extends StatelessWidget {
-  MyApp({Key key}) : super(key: key);
+  const MyApp({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    this.setScreenProperties(context);
+    setScreenProperties(context);
     return StoreProvider<AppState>(
       store: Redux.store,
       child: MaterialApp(
         title: 'Sudoku Solver',
         debugShowCheckedModeBanner: false,
         navigatorObservers: <NavigatorObserver>[
-          FirebaseAnalyticsObserver(analytics: constants.firebaseAnalytics),
+          FirebaseAnalyticsObserver(analytics: firebaseAnalytics),
         ],
         theme: ThemeData(
-          primaryColor: constants.blue,
-          backgroundColor: constants.pink,
+          primaryColor: blue,
+          backgroundColor: pink,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: HomeScreen(),
+        home: const HomeScreen(),
       ),
     );
   }
@@ -101,7 +99,7 @@ class MyApp extends StatelessWidget {
   /// Gets default clutter off of the screen
   void setScreenProperties(BuildContext context) {
     // Remove status bar and system navigation bar
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    SystemChrome.setEnabledSystemUIOverlays(<SystemUiOverlay>[]);
     // Prevent screen rotation
     SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp]);
   }

@@ -6,10 +6,10 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 
 /// Contains all state reducers used by GameState
-final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
+final Reducer<GameState> gameStateReducer = combineReducers<GameState>(<GameState Function(GameState, dynamic)>[
   TypedReducer<GameState, SolveSudokuAction>(_solveSudokuReducer),
   TypedReducer<GameState, SudokuSolvedAction>(_sudokuSolvedReducer),
   TypedReducer<GameState, RestartAction>(_setToDefault),
@@ -29,7 +29,7 @@ final Reducer<GameState> gameStateReducer = combineReducers<GameState>([
 ]);
 
 GameState _solveSudokuReducer(GameState gameState, SolveSudokuAction action) {
-  Sudoku sudoku = Sudoku(tileStateMap: Redux.store.state.tileStateMap);
+  final Sudoku sudoku = Sudoku(tileStateMap: Redux.store.state.tileStateMap);
   assert(sudoku.tileStateMap.length == 81);
 
   solveSudokuAsync(sudoku);
@@ -46,39 +46,30 @@ GameState _stopSolvingSudokuReducer(GameState gameState, StopSolvingSudokuAction
   }
 }
 
-GameState _sudokuSolvedReducer(GameState gameState, SudokuSolvedAction action) {
-  return GameState.solved;
-}
+GameState _sudokuSolvedReducer(GameState gameState, SudokuSolvedAction action) => GameState.solved;
 
-GameState _setToDefault(GameState gameState, RestartAction action) {
-  return (Redux.store.state.screenState == ScreenState.solveWithCameraScreen)
-      ? GameState.takingPhoto
-      : GameState.normal;
-}
+GameState _setToDefault(GameState gameState, RestartAction action) =>
+    (Redux.store.state.screenState == ScreenState.solveWithCameraScreen) ? GameState.takingPhoto : GameState.normal;
 
 GameState _takePhotoReducer(GameState gameState, TakePhotoAction action) {
   processPhoto(action.imageFile);
   return GameState.processingPhoto;
 }
 
-GameState _photoProcessedReducer(GameState gameState, PhotoProcessedAction action) {
-  return GameState.photoProcessed;
-}
+GameState _photoProcessedReducer(GameState gameState, PhotoProcessedAction action) => GameState.photoProcessed;
 
-GameState _retakePhotoReducer(GameState gameState, RetakePhotoAction action) {
-  return GameState.takingPhoto;
-}
+GameState _retakePhotoReducer(GameState gameState, RetakePhotoAction action) => GameState.takingPhoto;
 
 GameState _updateGameStateReducer(GameState gameState, UpdateGameStateAction action) {
-  Sudoku newSudoku = Sudoku(tileStateMap: action.tileStateMap);
-  int numNewInvalidTiles = newSudoku.getInvalidTileKeys().length;
+  final Sudoku newSudoku = Sudoku(tileStateMap: action.tileStateMap);
+  final int numNewInvalidTiles = newSudoku.getInvalidTileKeys().length;
 
   if (numNewInvalidTiles > 0) {
-    Sudoku oldSudoku = Sudoku(tileStateMap: Redux.store.state.tileStateMap);
-    int numOldInvalidTiles = oldSudoku.getInvalidTileKeys().length;
+    final Sudoku oldSudoku = Sudoku(tileStateMap: Redux.store.state.tileStateMap);
+    final int numOldInvalidTiles = oldSudoku.getInvalidTileKeys().length;
 
     if (numNewInvalidTiles > numOldInvalidTiles) {
-      constants.playSound(constants.invalidTilesPresentSound);
+      playSound(invalidTilesPresentSound);
     }
 
     return GameState.invalidTilesPresent;
@@ -89,13 +80,9 @@ GameState _updateGameStateReducer(GameState gameState, UpdateGameStateAction act
   }
 }
 
-GameState _newGameButtonPressedReducer(GameState gameState, NewGameButtonPressedAction action) {
-  return GameState.normal;
-}
+GameState _newGameButtonPressedReducer(GameState gameState, NewGameButtonPressedAction action) => GameState.normal;
 
-GameState _gameSolvedReducerReducer(GameState gameState, GameSolvedAction action) {
-  return GameState.solved;
-}
+GameState _gameSolvedReducerReducer(GameState gameState, GameSolvedAction action) => GameState.solved;
 
 GameState _changeScreenReducer(GameState gameState, ChangeScreenAction action) {
   if (action.screenState == ScreenState.solveWithCameraScreen) {
@@ -110,18 +97,14 @@ GameState _stopProcessingPhotoReducer(GameState gameState, StopProcessingPhotoAc
   return GameState.takingPhoto;
 }
 
-GameState _cameraNotLoadedErrorReducer(GameState gameState, CameraNotLoadedErrorAction action) {
-  return GameState.cameraNotLoadedError;
-}
+GameState _cameraNotLoadedErrorReducer(GameState gameState, CameraNotLoadedErrorAction action) =>
+    GameState.cameraNotLoadedError;
 
-GameState _processingPhotoErrorReducer(GameState gameState, PhotoProcessingErrorAction action) {
-  return GameState.processingPhotoError;
-}
+GameState _processingPhotoErrorReducer(GameState gameState, PhotoProcessingErrorAction action) =>
+    GameState.processingPhotoError;
 
-GameState _sudokuSolvingTimeoutErrorReducer(GameState gameState, SudokuSolvingTimeoutErrorAction action) {
-  return GameState.solvingSudokuTimeoutError;
-}
+GameState _sudokuSolvingTimeoutErrorReducer(GameState gameState, SudokuSolvingTimeoutErrorAction action) =>
+    GameState.solvingSudokuTimeoutError;
 
-GameState _sudokuSolvingInvalidErrorReducer(GameState gameState, SudokuSolvingInvalidErrorAction action) {
-  return GameState.solvingSudokuInvalidError;
-}
+GameState _sudokuSolvingInvalidErrorReducer(GameState gameState, SudokuSolvingInvalidErrorAction action) =>
+    GameState.solvingSudokuInvalidError;

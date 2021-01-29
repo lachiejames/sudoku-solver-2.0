@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
@@ -17,7 +17,7 @@ import 'package:sudoku_solver_2/widgets/solve_with_camera_screen/stop_processing
 
 /// Shown when 'camera' is selected from the HomeScreen
 class SolveWithCameraScreen extends StatefulWidget {
-  SolveWithCameraScreen({Key key}) : super(key: key);
+  const SolveWithCameraScreen({Key key}) : super(key: key);
 
   @override
   _SolveWithCameraScreenState createState() => _SolveWithCameraScreenState();
@@ -27,12 +27,12 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
   @override
   void initState() {
     super.initState();
-    constants.showNewBannerAd();
+    showNewBannerAd();
   }
 
   @override
   void dispose() {
-    constants.disposeBannerAd();
+    disposeBannerAd();
     super.dispose();
   }
 
@@ -42,22 +42,21 @@ class _SolveWithCameraScreenState extends State<SolveWithCameraScreen> {
 
     return Scaffold(
       appBar: SolveWithCameraScreenAppBar(AppBar()),
-      backgroundColor: constants.pink,
+      backgroundColor: pink,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            TopTextWidget(),
-            CameraWidget(),
+            const TopTextWidget(),
+            const CameraWidget(),
             SudokuWidget(),
-            TakePhotoButtonWidget(),
+            const TakePhotoButtonWidget(),
             SolveSudokuButtonWidget(),
             RetakePhotoButtonWidget(),
-            RestartButtonWidget(),
+            const RestartButtonWidget(),
             ReturnToHomeButtonWidget(),
-            StopSolvingSudokuButtonWidget(),
-            StopProcessingPhotoButtonWidget(),
+            const StopSolvingSudokuButtonWidget(),
+            const StopProcessingPhotoButtonWidget(),
           ],
         ),
       ),

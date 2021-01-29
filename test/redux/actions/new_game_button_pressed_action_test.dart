@@ -14,7 +14,7 @@ void main() {
   }
 
   setUp(() async {
-    TestConstants.setMockMethodsForUnitTests();
+    setMockMethodsForUnitTests();
     await Redux.init();
     state = Redux.store.state;
   });

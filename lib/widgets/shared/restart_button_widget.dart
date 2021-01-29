@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:redux/redux.dart';
 import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
@@ -8,38 +8,38 @@ import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 
 class RestartButtonWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return StoreConnector<AppState, GameState>(
-      distinct: true,
-      converter: (store) => store.state.gameState,
-      builder: (context, gameState) {
-        if (gameState != GameState.solved) {
-          return Container();
-        }
-        return Container(
-          alignment: Alignment.center,
-          margin: constants.buttonMargins,
-          child: Directionality(
-            textDirection: TextDirection.ltr,
-            child: RaisedButton(
-              shape: constants.buttonShape,
-              padding: constants.buttonPadding,
-              color: constants.blue,
-              child: Text(
-                constants.restartButtonText,
-                style: constants.buttonTextStyle,
-              ),
-              onPressed: () async {
-                await constants.playSound(constants.buttonPressedSound);
-                await logEvent('button_restart');
+  const RestartButtonWidget({Key key}) : super(key: key);
 
-                Redux.store.dispatch(RestartAction());
-              },
+  @override
+  Widget build(BuildContext context) => StoreConnector<AppState, GameState>(
+        distinct: true,
+        converter: (Store<AppState> store) => store.state.gameState,
+        builder: (BuildContext context, GameState gameState) {
+          if (gameState != GameState.solved) {
+            return Container();
+          }
+          return Container(
+            alignment: Alignment.center,
+            margin: buttonMargins,
+            child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: RaisedButton(
+                shape: buttonShape,
+                padding: buttonPadding,
+                color: blue,
+                onPressed: () async {
+                  await playSound(buttonPressedSound);
+                  await logEvent('button_restart');
+
+                  Redux.store.dispatch(RestartAction());
+                },
+                child: const Text(
+                  restartButtonText,
+                  style: buttonTextStyle,
+                ),
+              ),
             ),
-          ),
-        );
-      },
-    );
-  }
+          );
+        },
+      );
 }

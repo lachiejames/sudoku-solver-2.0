@@ -1,24 +1,26 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
-import 'package:sudoku_solver_2/state/screen_state.dart';
-import '../constants/test_constants.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/just_play_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
+import 'package:sudoku_solver_2/state/screen_state.dart';
 import 'package:sudoku_solver_2/widgets/just_play_screen/new_game_button_widget.dart';
 import 'package:sudoku_solver_2/widgets/shared/number_bar_widget.dart';
 import 'package:sudoku_solver_2/widgets/shared/sudoku_widget.dart';
 import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
+
+import '../constants/test_constants.dart';
 
 void main() {
   group('JustPlayScreen -', () {
     JustPlayScreen justPlayScreen;
 
     Future<void> createJustPlayScreen(WidgetTester tester) async {
-      justPlayScreen = JustPlayScreen();
+      justPlayScreen = const JustPlayScreen();
       await tester.pumpWidget(
         StoreProvider<AppState>(
           store: Redux.store,
@@ -30,7 +32,7 @@ void main() {
     }
 
     setUp(() async {
-      TestConstants.setMockMethodsForUnitTests();
+      setMockMethodsForUnitTests();
       await Redux.init();
       await Redux.store.dispatch(ChangeScreenAction(ScreenState.justPlayScreen));
     });

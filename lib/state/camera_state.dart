@@ -14,30 +14,22 @@ class CameraState {
   CameraState({this.cameraController, this.screenSize});
 
   Future<File> getImageFileFromCamera() async {
-    String imagePath = await getUniqueFilePath();
+    final String imagePath = await getUniqueFilePath();
 
     try {
-      await this.cameraController.takePicture(imagePath);
+      await cameraController.takePicture(imagePath);
     } on Exception catch (e) {
-      logError('ERROR: failed to take picture', e);
+      await logError('ERROR: failed to take picture', e);
       Redux.store.dispatch(PhotoProcessingErrorAction());
     }
 
-    File imageFile = await File(imagePath).create();
+    final File imageFile = await File(imagePath).create();
 
     return imageFile;
   }
 
-  CameraState copyWith({CameraController cameraController, Size screenSize, Rect cameraWidgetBounds}) {
-    return CameraState(
-      cameraController: cameraController ?? this.cameraController,
-      screenSize: screenSize ?? this.screenSize,
-    );
-  }
-
-  static CameraState initCameraState() {
-    return CameraState(
-      cameraController: null,
-    );
-  }
+  CameraState copyWith({CameraController cameraController, Size screenSize, Rect cameraWidgetBounds}) => CameraState(
+        cameraController: cameraController ?? this.cameraController,
+        screenSize: screenSize ?? this.screenSize,
+      );
 }

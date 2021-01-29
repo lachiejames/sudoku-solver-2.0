@@ -1,11 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import '../../constants/test_constants.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/number_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
+
+import '../../constants/test_constants.dart';
 
 void main() {
   AppState state;
@@ -16,13 +17,13 @@ void main() {
   }
 
   setUp(() async {
-    TestConstants.setMockMethodsForUnitTests();
+    setMockMethodsForUnitTests();
     await Redux.init();
     state = Redux.store.state;
   });
 
   group('TileSelectedAction ->', () {
-    TileKey tileKey = TileKey(row: 6, col: 9);
+    const TileKey tileKey = TileKey(row: 6, col: 9);
 
     test('sets tile.isSelected to true', () {
       expect(state.tileStateMap[tileKey].isSelected, false);
@@ -33,15 +34,15 @@ void main() {
     });
 
     test('all numberStates are now active', () {
-      List<NumberState> prevNumberStateList = state.numberStateList;
-      for (NumberState numberState in prevNumberStateList) {
+      final List<NumberState> prevNumberStateList = state.numberStateList;
+      for (final NumberState numberState in prevNumberStateList) {
         expect(numberState.isActive, false);
       }
 
       dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
 
-      List<NumberState> nextNumberStateList = state.numberStateList;
-      for (NumberState numberState in nextNumberStateList) {
+      final List<NumberState> nextNumberStateList = state.numberStateList;
+      for (final NumberState numberState in nextNumberStateList) {
         expect(numberState.isActive, true);
       }
     });
@@ -51,7 +52,7 @@ void main() {
       dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
       expect(state.tileStateMap[tileKey].isSelected, true);
 
-      TileKey newTileKey = TileKey(row: 3, col: 4);
+      const TileKey newTileKey = TileKey(row: 3, col: 4);
       dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[newTileKey]));
       expect(state.tileStateMap[newTileKey].isSelected, true);
       expect(state.tileStateMap[tileKey].isSelected, false);
@@ -61,7 +62,7 @@ void main() {
       dispatchActionAndUpdateState(TileSelectedAction(state.tileStateMap[tileKey]));
 
       expect(state.topTextState.text, 'Pick a number');
-      expect(state.topTextState.color, constants.white);
+      expect(state.topTextState.color, white);
     });
   });
 }

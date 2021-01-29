@@ -7,8 +7,8 @@ import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:test/test.dart';
 import 'package:meta/meta.dart';
 
-final Timeout defaultTimeout = Timeout(Duration(seconds: 60));
-final Timeout longTimeout = Timeout(Duration(seconds: 300));
+const  Timeout defaultTimeout = Timeout(Duration(seconds: 60));
+const  Timeout longTimeout = Timeout(Duration(seconds: 300));
 FlutterDriver driver;
 
 Future<void> initTests() async {
@@ -18,14 +18,14 @@ Future<void> initTests() async {
 }
 
 Future<void> grantAppPermissions() async {
-  final envVars = Platform.environment;
-  final adbPath = join(
+  final Map<String, String> envVars = Platform.environment;
+  final String adbPath = join(
     envVars['ANDROID_SDK_ROOT'] ?? envVars['ANDROID_HOME'],
     'platform-tools',
     Platform.isWindows ? 'adb.exe' : 'adb',
   );
-  await Process.run(adbPath, ['shell', 'pm', 'grant', 'com.lachie.sudoku_solver_2', 'android.permission.CAMERA']);
-  await Process.run(adbPath, ['shell', 'pm', 'grant', 'com.lachie.sudoku_solver_2', 'android.permission.RECORD_AUDIO']);
+  await Process.run(adbPath, <String>['shell', 'pm', 'grant', 'com.lachie.sudoku_solver_2', 'android.permission.CAMERA']);
+  await Process.run(adbPath, <String>['shell', 'pm', 'grant', 'com.lachie.sudoku_solver_2', 'android.permission.RECORD_AUDIO']);
 }
 
 Future<void> pressBackButton() async {
@@ -65,7 +65,7 @@ Future<void> navigateToJustPlayScreen() async {
   await waitToAppear(find.text('Pick a tile'));
 
   // May load with the wrong sudoku when restarting, causing test failures
-  bool needsAnotherRestart = (await getNumberOnTile(TileKey(row: 1, col: 1)) != 5);
+  final bool needsAnotherRestart = await getNumberOnTile(const TileKey(row: 1, col: 1)) != 5;
   if (needsAnotherRestart) {
     await hotRestart();
     await navigateToJustPlayScreen();
@@ -95,7 +95,7 @@ Future<void> pressRestartOnDropDownMenu(String dropDownMenuType) async {
 }
 
 Future<void> tapTile(TileKey tileKey) async {
-  await waitForThenTap(find.byValueKey('${tileKey.toString()}'));
+  await waitForThenTap(find.byValueKey('$tileKey'));
 }
 
 Future<void> doubleTapTile(TileKey tileKey) async {
@@ -124,9 +124,9 @@ Future<void> expectNumbersAre({String color}) async {
 
 Future<int> getNumberOnTile(TileKey tileKey) async {
   await waitToAppear(find.byValueKey('${tileKey.toString()}_text'));
-  String tileText = await driver.getText(find.byValueKey('${tileKey.toString()}_text'));
+  final String tileText = await driver.getText(find.byValueKey('${tileKey.toString()}_text'));
 
-  if (tileText == "") {
+  if (tileText == '') {
     return null;
   } else {
     return int.parse(tileText);
@@ -149,7 +149,7 @@ Future<void> expectNumberPropertiesToBe({int number, String color}) async {
 }
 
 Future<void> expectNumberOnTileToBe(int number, TileKey tileKey) async {
-  int numberOnTile = await getNumberOnTile(tileKey);
+  final int numberOnTile = await getNumberOnTile(tileKey);
   expect(numberOnTile == number, true);
 }
 
@@ -164,7 +164,7 @@ Future<void> verifyInitialGameTiles(List<List<int>> game) async {
 Future<void> playGame(List<List<int>> game) async {
   for (int row = 1; row <= 9; row++) {
     for (int col = 1; col <= 9; col++) {
-      int numberOnTile = await getNumberOnTile(TileKey(row: row, col: col));
+      final int numberOnTile = await getNumberOnTile(TileKey(row: row, col: col));
       if (numberOnTile == null) {
         await addNumberToTile(game[row - 1][col - 1], TileKey(row: row, col: col));
       }
@@ -175,7 +175,7 @@ Future<void> playGame(List<List<int>> game) async {
 Future<void> addSudoku(List<List<int>> game) async {
   for (int row = 1; row <= 9; row++) {
     for (int col = 1; col <= 9; col++) {
-      int nextValue = game[row - 1][col - 1];
+      final int nextValue = game[row - 1][col - 1];
       if (nextValue != null) {
         await addNumberToTile(nextValue, TileKey(row: row, col: col));
       }
@@ -200,4 +200,3 @@ Future<void> waitToDisappear(SerializableFinder finder) async {
   await driver.waitUntilNoTransientCallbacks();
   await driver.waitForAbsent(finder);
 }
-

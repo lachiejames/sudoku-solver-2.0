@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -9,8 +8,8 @@ import '../../constants/test_constants.dart';
 
 void main() {
   AppState state;
-  TileKey tileKey1 = TileKey(row: 1, col: 1);
-  TileKey tileKey2 = TileKey(row: 1, col: 3);
+  const TileKey tileKey1 = TileKey(row: 1, col: 1);
+  const TileKey tileKey2 = TileKey(row: 1, col: 3);
 
   void dispatchActionAndUpdateState(dynamic action) {
     Redux.store.dispatch(action);
@@ -18,7 +17,7 @@ void main() {
   }
 
   setUp(() async {
-    TestConstants.setMockMethodsForUnitTests();
+    setMockMethodsForUnitTests();
     await Redux.init();
     state = Redux.store.state;
   });

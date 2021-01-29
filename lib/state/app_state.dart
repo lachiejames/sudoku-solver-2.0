@@ -20,7 +20,7 @@ class AppState {
   final GameState gameState;
   final CameraState cameraState;
 
-  AppState({
+  const AppState({
     @required this.tileStateMap,
     @required this.numberStateList,
     @required this.topTextState,
@@ -38,15 +38,14 @@ class AppState {
     ScreenState screenState,
     GameState gameState,
     CameraState cameraState,
-  }) {
-    return AppState(
-      tileStateMap: tileStateMap ?? this.tileStateMap,
-      numberStateList: numberStateList ?? this.numberStateList,
-      topTextState: topTextState ?? this.topTextState,
-      gameNumber: gameNumber ?? this.gameNumber,
-      screenState: screenState ?? this.screenState,
-      gameState: gameState ?? this.gameState,
-      cameraState: cameraState ?? this.cameraState,
-    );
-  }
+  }) =>
+      AppState(
+        tileStateMap: tileStateMap ?? this.tileStateMap,
+        numberStateList: numberStateList ?? this.numberStateList,
+        topTextState: topTextState ?? this.topTextState,
+        gameNumber: gameNumber ?? this.gameNumber,
+        screenState: screenState ?? this.screenState,
+        gameState: gameState ?? this.gameState,
+        cameraState: cameraState ?? this.cameraState,
+      );
 }

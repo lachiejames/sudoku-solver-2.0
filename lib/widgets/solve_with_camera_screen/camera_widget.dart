@@ -1,18 +1,20 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/state/camera_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
 
 /// Provides a live view of the front camera
 class CameraWidget extends StatelessWidget {
-  bool _isCameraReady(CameraState cameraState) {
-    return cameraState.cameraController != null && cameraState.cameraController.value.isInitialized;
-  }
+  bool _isCameraReady(CameraState cameraState) =>
+      cameraState.cameraController != null && cameraState.cameraController.value.isInitialized;
+
+  const CameraWidget({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,34 +22,33 @@ class CameraWidget extends StatelessWidget {
       Redux.store.dispatch(CameraNotLoadedErrorAction());
     }
 
-    double screenWidth = MediaQuery.of(context).size.width;
-    double widgetSize = screenWidth - constants.pad * 2.0;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double widgetSize = screenWidth - pad * 2.0;
 
     return StoreConnector<AppState, GameState>(
       distinct: true,
-      converter: (store) => store.state.gameState,
-      builder: (context, gameState) {
+      converter: (Store<AppState> store) => store.state.gameState,
+      builder: (BuildContext context, GameState gameState) {
         if (gameState == GameState.cameraNotLoadedError) {
           return Container(
             width: widgetSize,
             height: widgetSize,
-            color: constants.grey,
+            color: grey,
           );
         } else if (gameState != GameState.takingPhoto) {
           return Container();
         }
 
-        CameraState cameraState = Redux.store.state.cameraState;
+        final CameraState cameraState = Redux.store.state.cameraState;
         return (cameraState.cameraController != null && cameraState.cameraController.value.isInitialized)
-            ? Container(
+            ? SizedBox(
                 width: widgetSize,
                 height: widgetSize,
                 child: ClipRect(
                   child: OverflowBox(
-                    alignment: Alignment.center,
                     child: FittedBox(
                       fit: BoxFit.fitWidth,
-                      child: Container(
+                      child: SizedBox(
                         width: widgetSize,
                         height: widgetSize / cameraState.cameraController.value.aspectRatio,
                         child: CameraPreview(cameraState.cameraController),
@@ -59,7 +60,7 @@ class CameraWidget extends StatelessWidget {
             : Container(
                 width: widgetSize,
                 height: widgetSize,
-                color: constants.grey,
+                color: grey,
               );
       },
     );

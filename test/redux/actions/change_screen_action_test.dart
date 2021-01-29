@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -16,7 +16,7 @@ void main() {
   }
 
   setUp(() async {
-    TestConstants.setMockMethodsForUnitTests();
+    setMockMethodsForUnitTests();
     await Redux.init();
     state = Redux.store.state;
   });
@@ -30,15 +30,15 @@ void main() {
 
     test('if updating to SolveWithCameraScreen, should set topText to "Align with camera" in white', () {
       dispatchActionAndUpdateState(ChangeScreenAction(ScreenState.solveWithCameraScreen));
-      expect(state.topTextState.text, constants.topTextTakingPhoto);
-      expect(state.topTextState.color, constants.white);
+      expect(state.topTextState.text, topTextTakingPhoto);
+      expect(state.topTextState.color, white);
     });
 
     test('if updating to any other screen after, should set topText back to "Pick a tile" in white', () {
       dispatchActionAndUpdateState(ChangeScreenAction(ScreenState.solveWithCameraScreen));
       dispatchActionAndUpdateState(ChangeScreenAction(ScreenState.solveWithTouchScreen));
-      expect(state.topTextState.text, constants.topTextNoTileSelected);
-      expect(state.topTextState.color, constants.white);
+      expect(state.topTextState.text, topTextNoTileSelected);
+      expect(state.topTextState.color, white);
     });
   });
 }

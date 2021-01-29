@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:sudoku_solver_2/constants/constants.dart' as constants;
+import 'package:redux/redux.dart';
+import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -13,7 +14,7 @@ import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 
 /// Shown when 'just play' is selected from the HomeScreen
 class JustPlayScreen extends StatefulWidget {
-  JustPlayScreen({Key key}) : super(key: key);
+  const JustPlayScreen({Key key}) : super(key: key);
 
   @override
   _JustPlayScreenState createState() => _JustPlayScreenState();
@@ -23,12 +24,12 @@ class _JustPlayScreenState extends State<JustPlayScreen> {
   @override
   void initState() {
     super.initState();
-    constants.showNewBannerAd();
+    showNewBannerAd();
   }
 
   @override
   void dispose() {
-    constants.disposeBannerAd();
+    disposeBannerAd();
     super.dispose();
   }
 
@@ -37,22 +38,21 @@ class _JustPlayScreenState extends State<JustPlayScreen> {
     Redux.store.dispatch(ChangeScreenAction(ScreenState.justPlayScreen));
     return StoreConnector<AppState, int>(
       distinct: true,
-      converter: (store) => store.state.gameNumber,
-      builder: (context, gameNumber) {
+      converter: (Store<AppState> store) => store.state.gameNumber,
+      builder: (BuildContext context, int gameNumber) {
         Redux.store.dispatch(LoadSudokuGameAction(gameNumber));
         return Scaffold(
           appBar: JustPlayScreenAppBar(AppBar()),
-          backgroundColor: constants.pink,
+          backgroundColor: pink,
           body: SingleChildScrollView(
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  TopTextWidget(),
-                  NumberBarWidget(),
+                  const TopTextWidget(),
+                  const NumberBarWidget(),
                   SudokuWidget(),
-                  NewGameButtonWidget(),
+                  const NewGameButtonWidget(),
                 ],
               ),
             ),

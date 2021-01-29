@@ -2,46 +2,46 @@
 part of './constants.dart';
 
 // Screen names
-final String solveWithCameraScreenName = 'Camera';
-final String solveWithTouchScreenName = 'Touch';
-final String justPlayScreenName = 'Play';
-final String helpScreenName = 'Help';
+const String solveWithCameraScreenName = 'Camera';
+const String solveWithTouchScreenName = 'Touch';
+const String justPlayScreenName = 'Play';
+const String helpScreenName = 'Help';
 
 // TopText
-final String topTextHome = 'How would you like it to be solved?';
-final String topTextNoTileSelected = 'Pick a tile';
-final String topTextTileSelected = 'Pick a number';
-final String topTextTileWithValueSelected = 'Tap to remove';
-final String topTextTakingPhoto = 'Align with camera';
-final String topTextWhenSolving = 'AI thinking...';
-final String topTextSolved = 'SOLVED';
-final String topTextConstructingSudoku = 'Constructing Sudoku...';
-final String topTextStopConstructingSudoku = 'STOP CONSTRUCTING';
-final String topTextVerifySudoku = 'Is this your Sudoku?';
-final String topTextCameraNotFoundError = 'Camera not found';
-final String topTextPhotoProcessingError = 'Unable to generate Sudoku';
-final String topTextSudokuInvalidError = 'Cannot solve, Sudoku is invalid';
-final String topTextSolvingTimeoutError = 'The A.I. timed out';
+const String topTextHome = 'How would you like it to be solved?';
+const String topTextNoTileSelected = 'Pick a tile';
+const String topTextTileSelected = 'Pick a number';
+const String topTextTileWithValueSelected = 'Tap to remove';
+const String topTextTakingPhoto = 'Align with camera';
+const String topTextWhenSolving = 'AI thinking...';
+const String topTextSolved = 'SOLVED';
+const String topTextConstructingSudoku = 'Constructing Sudoku...';
+const String topTextStopConstructingSudoku = 'STOP CONSTRUCTING';
+const String topTextVerifySudoku = 'Is this your Sudoku?';
+const String topTextCameraNotFoundError = 'Camera not found';
+const String topTextPhotoProcessingError = 'Unable to generate Sudoku';
+const String topTextSudokuInvalidError = 'Cannot solve, Sudoku is invalid';
+const String topTextSolvingTimeoutError = 'The A.I. timed out';
 
-final String topTextWhenNoSolutionFound = 'NO SOLUTION';
+const String topTextWhenNoSolutionFound = 'NO SOLUTION';
 
 // DropDownMenu options
-final String dropDownMenuOption1 = 'Restart';
-final String dropDownMenuOption2 = 'Help';
+const String dropDownMenuOption1 = 'Restart';
+const String dropDownMenuOption2 = 'Help';
 
 // Button text
-final String solveWithCameraButtonText = 'SOLVE WITH CAMERA';
-final String solveWithTouchButtonText = 'SOLVE WITH TOUCH';
-final String justPlayButtonText = 'JUST PLAY';
-final String takePhotoButtonText = 'TAKE PHOTO';
-final String retakePhotoButtonText = 'RETAKE PHOTO';
-final String solveSudokuButtonText = 'SOLVE SUDOKU';
-final String stopSolvingButtonText = 'STOP SOLVING';
-final String newGameButtonText = 'NEW GAME';
-final String restartButtonText = 'RESTART';
-final String returnToHomeText = 'RETURN TO HOME';
+const String solveWithCameraButtonText = 'SOLVE WITH CAMERA';
+const String solveWithTouchButtonText = 'SOLVE WITH TOUCH';
+const String justPlayButtonText = 'JUST PLAY';
+const String takePhotoButtonText = 'TAKE PHOTO';
+const String retakePhotoButtonText = 'RETAKE PHOTO';
+const String solveSudokuButtonText = 'SOLVE SUDOKU';
+const String stopSolvingButtonText = 'STOP SOLVING';
+const String newGameButtonText = 'NEW GAME';
+const String restartButtonText = 'RESTART';
+const String returnToHomeText = 'RETURN TO HOME';
 
 // Set to null when running all tests
-final String dartVMServiceUrl = 'http://127.0.0.1:8888/';
+const String dartVMServiceUrl = 'http://127.0.0.1:8888/';
 
-final String gameNumberSharedPrefsKey = 'sudoku_solver_game_number';
+const String gameNumberSharedPrefsKey = 'sudoku_solver_game_number';
