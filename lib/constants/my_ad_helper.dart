@@ -6,7 +6,6 @@ final String appIdForAdMob = "ca-app-pub-6687326312027109~4201385146";
 BannerAd _bannerAd;
 
 Future<void> showNewBannerAd() async {
-  assert(_bannerAd == null);
   _bannerAd = BannerAd(
     adUnitId: BannerAd.testAdUnitId,
     size: AdSize.banner,

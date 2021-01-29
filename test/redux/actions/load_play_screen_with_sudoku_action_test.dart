@@ -5,6 +5,8 @@ import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 
+import '../../constants/test_constants.dart';
+
 void main() {
   AppState state;
   TileKey tileKey1 = TileKey(row: 1, col: 1);
@@ -16,7 +18,7 @@ void main() {
   }
 
   setUp(() async {
-    SharedPreferences.setMockInitialValues({});
+    TestConstants.setMockMethodsForUnitTests();
     await Redux.init();
     state = Redux.store.state;
   });

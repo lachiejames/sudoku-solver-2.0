@@ -4,7 +4,7 @@ import 'package:sudoku_solver_2/widgets/shared/number_widget.dart';
 /// Contains numbers 1-9, which can be added to a tile
 class NumberBarWidget extends StatelessWidget {
   Widget makeNumber(int number) {
-    return NumberWidget(number: number);
+    return Expanded(child:NumberWidget(number: number));
   }
 
   @override

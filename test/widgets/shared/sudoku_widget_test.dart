@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,6 +8,8 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/sudoku_widget.dart';
+
+import '../../constants/test_constants.dart';
 
 void main() {
   group('SudokuWidget -', () {
@@ -24,7 +27,8 @@ void main() {
     }
 
     setUp(() async {
-      SharedPreferences.setMockInitialValues({});
+      TestConstants.setMockMethodsForUnitTests();
+
       await Redux.init();
     });
 

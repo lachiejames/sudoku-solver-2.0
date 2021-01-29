@@ -9,6 +9,7 @@ void main() {
     Sudoku sudoku;
 
     setUp(() {
+      TestConstants.setMockMethodsForUnitTests();
       sudoku = Sudoku(tileStateMap: TileState.initTileStateMap());
     });
 

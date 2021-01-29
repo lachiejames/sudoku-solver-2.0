@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../constants/test_constants.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
@@ -14,7 +14,7 @@ void main() {
   AppState state;
 
   setUp(() async {
-    SharedPreferences.setMockInitialValues({});
+    TestConstants.setMockMethodsForUnitTests();
     await Redux.init();
     state = Redux.store.state;
   });

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../constants/test_constants.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/home_screen.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
@@ -28,7 +28,7 @@ void main() {
     }
 
     setUp(() async {
-      SharedPreferences.setMockInitialValues({});
+TestConstants.setMockMethodsForUnitTests();
       await Redux.init();
     });
 

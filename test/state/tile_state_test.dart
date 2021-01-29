@@ -1,11 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
-
+import '../constants/test_constants.dart';
 void main() {
   group('TileState ->', () {
     TileState tileState;
 
     setUp(() {
+      TestConstants.setMockMethodsForUnitTests();
       tileState = TileState(row: 6, col: 9);
     });
 

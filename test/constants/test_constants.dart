@@ -3,6 +3,8 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'my_solved_games.dart' as my_solved_games;
 
@@ -144,5 +146,24 @@ class TestConstants {
       'text': 'Hey!',
       'blocks': [],
     };
+  }
+
+  static void setMockMethodsForUnitTests() {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    SharedPreferences.setMockInitialValues({});
+
+    const MethodChannel('plugins.flutter.io/firebase_analytics')
+        .setMockMethodCallHandler((MethodCall methodCall) async {
+      return Future.value();
+    });
+
+    const MethodChannel('plugins.flutter.io/firebase_performance')
+        .setMockMethodCallHandler((MethodCall methodCall) async {
+      return Future.value();
+    });
+
+    const MethodChannel('xyz.luan/audioplayers').setMockMethodCallHandler((MethodCall methodCall) async {
+      return Future.value();
+    });
   }
 }

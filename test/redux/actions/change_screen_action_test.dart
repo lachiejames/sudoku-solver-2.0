@@ -1,10 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/constants/constants.dart' as constants;
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/screen_state.dart';
+
+import '../../constants/test_constants.dart';
 
 void main() {
   AppState state;
@@ -15,7 +16,7 @@ void main() {
   }
 
   setUp(() async {
-    SharedPreferences.setMockInitialValues({});
+    TestConstants.setMockMethodsForUnitTests();
     await Redux.init();
     state = Redux.store.state;
   });
@@ -27,15 +28,13 @@ void main() {
       expect(state.screenState, ScreenState.solveWithCameraScreen);
     });
 
-    test('if updating to SolveWithCameraScreen, should set topText to "Align with camera" in white',
-        () {
+    test('if updating to SolveWithCameraScreen, should set topText to "Align with camera" in white', () {
       dispatchActionAndUpdateState(ChangeScreenAction(ScreenState.solveWithCameraScreen));
       expect(state.topTextState.text, constants.topTextTakingPhoto);
       expect(state.topTextState.color, constants.white);
     });
 
-    test('if updating to any other screen after, should set topText back to "Pick a tile" in white',
-        () {
+    test('if updating to any other screen after, should set topText back to "Pick a tile" in white', () {
       dispatchActionAndUpdateState(ChangeScreenAction(ScreenState.solveWithCameraScreen));
       dispatchActionAndUpdateState(ChangeScreenAction(ScreenState.solveWithTouchScreen));
       expect(state.topTextState.text, constants.topTextNoTileSelected);
