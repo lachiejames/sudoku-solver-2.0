@@ -15,6 +15,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Redux.store.dispatch(ChangeScreenAction(ScreenState.homeScreen));
+    
     return Scaffold(
       backgroundColor: blue,
       body: SingleChildScrollView(

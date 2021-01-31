@@ -30,9 +30,9 @@ class JustPlayScreenAppBar extends StatelessWidget implements PreferredSizeWidge
         ],
         leading: IconButton(
           onPressed: () async {
-            Redux.store.dispatch(ChangeScreenAction(ScreenState.homeScreen));
-            Navigator.pop(context);
+            await playSound(buttonPressedSound);
             await logEvent('button_back');
+            Navigator.pop(context);
           },
           icon: (Platform.isAndroid) ? const Icon(Icons.arrow_back) : const Icon(Icons.arrow_back_ios),
         ),

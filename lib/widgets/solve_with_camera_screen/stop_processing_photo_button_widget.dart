@@ -34,7 +34,6 @@ class StopProcessingPhotoButtonWidget extends StatelessWidget {
                   await logEvent('button_take_photo');
                   await takePhotoButtonPressedTrace.incrementMetric('stop-constructing-button-pressed', 1);
                   Redux.store.dispatch(StopProcessingPhotoAction());
-                  Redux.store.dispatch(ChangeScreenAction(ScreenState.solveWithCameraScreen));
                 },
                 child: const Text(
                   topTextStopConstructingSudoku,

@@ -36,6 +36,7 @@ class _JustPlayScreenState extends State<JustPlayScreen> {
   @override
   Widget build(BuildContext context) {
     Redux.store.dispatch(ChangeScreenAction(ScreenState.justPlayScreen));
+    
     return StoreConnector<AppState, int>(
       distinct: true,
       converter: (Store<AppState> store) => store.state.gameNumber,

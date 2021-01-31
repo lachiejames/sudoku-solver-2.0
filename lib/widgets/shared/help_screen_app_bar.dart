@@ -18,8 +18,9 @@ class HelpScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         leading: IconButton(
           onPressed: () async {
-            Navigator.pop(context);
+            await playSound(buttonPressedSound);
             await logEvent('button_back');
+            Navigator.pop(context);
           },
           icon: (Platform.isAndroid) ? const Icon(Icons.arrow_back) : const Icon(Icons.arrow_back_ios),
         ),

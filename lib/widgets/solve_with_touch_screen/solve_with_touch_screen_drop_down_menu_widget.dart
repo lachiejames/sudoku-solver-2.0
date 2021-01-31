@@ -41,6 +41,7 @@ class SolveWithTouchScreenDropDownMenuWidget extends StatelessWidget {
       );
 
   Future<void> _performAction(String value, BuildContext context) async {
+    await playSound(buttonPressedSound);
     if (value == dropDownMenuOption1) {
       _restart();
     } else if (value == dropDownMenuOption2) {
