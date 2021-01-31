@@ -6,7 +6,6 @@ import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/state/app_state.dart';
 import 'package:sudoku_solver_2/state/game_state.dart';
-import 'package:sudoku_solver_2/state/screen_state.dart';
 
 /// Shown when the SolveWithCameraScreen is loaded
 class StopProcessingPhotoButtonWidget extends StatelessWidget {
