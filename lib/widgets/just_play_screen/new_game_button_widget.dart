@@ -18,24 +18,26 @@ class NewGameButtonWidget extends StatelessWidget {
         builder: (BuildContext context, GameState gameState) => Visibility(
           visible: gameState == GameState.solved,
           child: Container(
-            alignment: Alignment.center,
             margin: buttonMargins,
             child: Directionality(
               textDirection: TextDirection.ltr,
-              child: RaisedButton(
-                shape: buttonShape,
-                padding: buttonPadding,
-                color: blue,
-                onPressed: () async {
-                  await playSound(buttonPressedSound);
-                  Redux.store.dispatch(NewGameButtonPressedAction());
-                  final int nextGameNumber = Redux.store.state.gameNumber;
-                  await Redux.sharedPreferences.setInt(gameNumberSharedPrefsKey, nextGameNumber);
-                  await logEvent('button_new_game');
-                },
-                child: const Text(
-                  newGameButtonText,
-                  style: buttonTextStyle,
+              child: SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  shape: buttonShape,
+                  padding: buttonPadding,
+                  color: blue,
+                  onPressed: () async {
+                    await playSound(buttonPressedSound);
+                    Redux.store.dispatch(NewGameButtonPressedAction());
+                    final int nextGameNumber = Redux.store.state.gameNumber;
+                    await Redux.sharedPreferences.setInt(gameNumberSharedPrefsKey, nextGameNumber);
+                    await logEvent('button_new_game');
+                  },
+                  child: const Text(
+                    newGameButtonText,
+                    style: buttonTextStyle,
+                  ),
                 ),
               ),
             ),

@@ -33,26 +33,28 @@ class SolveSudokuButtonWidget extends StatelessWidget {
             return Container();
           }
           return Container(
-            alignment: Alignment.center,
             margin: buttonMargins,
             child: Directionality(
               textDirection: TextDirection.ltr,
-              child: RaisedButton(
-                shape: buttonShape,
-                padding: buttonPadding,
-                color: blue,
-                onPressed: (_cannotBeSolved(gameState))
-                    ? null
-                    : () async {
-                        await playSound(buttonPressedSound);
-                        await logEvent('button_solve_sudoku');
+              child: SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  shape: buttonShape,
+                  padding: buttonPadding,
+                  color: blue,
+                  onPressed: (_cannotBeSolved(gameState))
+                      ? null
+                      : () async {
+                          await playSound(buttonPressedSound);
+                          await logEvent('button_solve_sudoku');
 
-                        await solveSudokuButtonPressedTrace.start();
-                        Redux.store.dispatch(SolveSudokuAction());
-                      },
-                child: const Text(
-                  solveSudokuButtonText,
-                  style: buttonTextStyle,
+                          await solveSudokuButtonPressedTrace.start();
+                          Redux.store.dispatch(SolveSudokuAction());
+                        },
+                  child: const Text(
+                    solveSudokuButtonText,
+                    style: buttonTextStyle,
+                  ),
                 ),
               ),
             ),

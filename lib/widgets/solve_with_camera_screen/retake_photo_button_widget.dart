@@ -29,22 +29,27 @@ class RetakePhotoButtonWidget extends StatelessWidget {
           }
 
           return Container(
-            alignment: Alignment.center,
-            margin: const EdgeInsets.all(0),
+            margin: const EdgeInsets.only(
+              left: 32,
+              right: 32,
+            ),
             child: Directionality(
               textDirection: TextDirection.ltr,
-              child: RaisedButton(
-                shape: buttonShape,
-                padding: buttonPadding,
-                color: blue,
-                onPressed: () async {
-                  await playSound(buttonPressedSound);
-                  await logEvent('button_retake_photo');
-                  Redux.store.dispatch(RetakePhotoAction());
-                },
-                child: const Text(
-                  retakePhotoButtonText,
-                  style: buttonTextStyle,
+              child: SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  shape: buttonShape,
+                  padding: buttonPadding,
+                  color: blue,
+                  onPressed: () async {
+                    await playSound(buttonPressedSound);
+                    await logEvent('button_retake_photo');
+                    Redux.store.dispatch(RetakePhotoAction());
+                  },
+                  child: const Text(
+                    retakePhotoButtonText,
+                    style: buttonTextStyle,
+                  ),
                 ),
               ),
             ),

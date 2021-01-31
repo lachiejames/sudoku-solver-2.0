@@ -20,23 +20,25 @@ class StopProcessingPhotoButtonWidget extends StatelessWidget {
             return Container();
           }
           return Container(
-            alignment: Alignment.center,
             margin: buttonMargins,
             child: Directionality(
               textDirection: TextDirection.ltr,
-              child: RaisedButton(
-                shape: buttonShape,
-                padding: buttonPadding,
-                color: red,
-                onPressed: () async {
-                  await playSound(buttonPressedSound);
-                  await logEvent('button_take_photo');
-                  await takePhotoButtonPressedTrace.incrementMetric('stop-constructing-button-pressed', 1);
-                  Redux.store.dispatch(StopProcessingPhotoAction());
-                },
-                child: const Text(
-                  topTextStopConstructingSudoku,
-                  style: buttonTextStyle,
+              child: SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  shape: buttonShape,
+                  padding: buttonPadding,
+                  color: red,
+                  onPressed: () async {
+                    await playSound(buttonPressedSound);
+                    await logEvent('button_take_photo');
+                    await takePhotoButtonPressedTrace.incrementMetric('stop-constructing-button-pressed', 1);
+                    Redux.store.dispatch(StopProcessingPhotoAction());
+                  },
+                  child: const Text(
+                    topTextStopConstructingSudoku,
+                    style: buttonTextStyle,
+                  ),
                 ),
               ),
             ),

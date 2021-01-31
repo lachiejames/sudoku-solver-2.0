@@ -24,24 +24,26 @@ class ReturnToHomeButtonWidget extends StatelessWidget {
             return Container();
           }
           return Container(
-            alignment: Alignment.center,
             margin: buttonMargins,
             child: Directionality(
               textDirection: TextDirection.ltr,
-              child: RaisedButton(
-                shape: buttonShape,
-                padding: buttonPadding,
-                color: blue,
-                onPressed: () async {
-                  await playSound(buttonPressedSound);
-                  await logEvent('button_return_to_home');
+              child: SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  shape: buttonShape,
+                  padding: buttonPadding,
+                  color: blue,
+                  onPressed: () async {
+                    await playSound(buttonPressedSound);
+                    await logEvent('button_return_to_home');
 
-                  Redux.store.dispatch(ReturnToHomeAction());
-                  Navigator.pop(context);
-                },
-                child: const Text(
-                  returnToHomeText,
-                  style: buttonTextStyle,
+                    Redux.store.dispatch(ReturnToHomeAction());
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    returnToHomeText,
+                    style: buttonTextStyle,
+                  ),
                 ),
               ),
             ),

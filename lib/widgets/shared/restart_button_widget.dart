@@ -19,23 +19,25 @@ class RestartButtonWidget extends StatelessWidget {
             return Container();
           }
           return Container(
-            alignment: Alignment.center,
             margin: buttonMargins,
             child: Directionality(
               textDirection: TextDirection.ltr,
-              child: RaisedButton(
-                shape: buttonShape,
-                padding: buttonPadding,
-                color: blue,
-                onPressed: () async {
-                  await playSound(buttonPressedSound);
-                  await logEvent('button_restart');
+              child: SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  shape: buttonShape,
+                  padding: buttonPadding,
+                  color: blue,
+                  onPressed: () async {
+                    await playSound(buttonPressedSound);
+                    await logEvent('button_restart');
 
-                  Redux.store.dispatch(RestartAction());
-                },
-                child: const Text(
-                  restartButtonText,
-                  style: buttonTextStyle,
+                    Redux.store.dispatch(RestartAction());
+                  },
+                  child: const Text(
+                    restartButtonText,
+                    style: buttonTextStyle,
+                  ),
                 ),
               ),
             ),

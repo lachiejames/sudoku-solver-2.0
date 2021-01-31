@@ -20,23 +20,25 @@ class StopSolvingSudokuButtonWidget extends StatelessWidget {
             return Container();
           }
           return Container(
-            alignment: Alignment.center,
             margin: buttonMargins,
             child: Directionality(
               textDirection: TextDirection.ltr,
-              child: RaisedButton(
-                shape: buttonShape,
-                padding: buttonPadding,
-                color: red,
-                onPressed: () async {
-                  await playSound(buttonPressedSound);
-                  await logEvent('button_solve_sudoku');
-                  await solveSudokuButtonPressedTrace.incrementMetric('stop-solving-button-pressed', 1);
-                  Redux.store.dispatch(StopSolvingSudokuAction());
-                },
-                child: const Text(
-                  stopSolvingButtonText,
-                  style: buttonTextStyle,
+              child: SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  shape: buttonShape,
+                  padding: buttonPadding,
+                  color: red,
+                  onPressed: () async {
+                    await playSound(buttonPressedSound);
+                    await logEvent('button_solve_sudoku');
+                    await solveSudokuButtonPressedTrace.incrementMetric('stop-solving-button-pressed', 1);
+                    Redux.store.dispatch(StopSolvingSudokuAction());
+                  },
+                  child: const Text(
+                    stopSolvingButtonText,
+                    style: buttonTextStyle,
+                  ),
                 ),
               ),
             ),

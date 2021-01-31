@@ -21,30 +21,32 @@ class TakePhotoButtonWidget extends StatelessWidget {
             return Container();
           }
           return Container(
-            alignment: Alignment.center,
             margin: buttonMargins,
             child: Directionality(
               textDirection: TextDirection.ltr,
-              child: RaisedButton(
-                shape: buttonShape,
-                padding: buttonPadding,
-                color: blue,
-                onPressed: () async {
-                  await playSound(buttonPressedSound);
-                  await logEvent('button_take_photo');
-                  await takePhotoButtonPressedTrace.start();
+              child: SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  shape: buttonShape,
+                  padding: buttonPadding,
+                  color: blue,
+                  onPressed: () async {
+                    await playSound(buttonPressedSound);
+                    await logEvent('button_take_photo');
+                    await takePhotoButtonPressedTrace.start();
 
-                  Redux.store.dispatch(
-                    SetCameraStateProperties(
-                      screenSize: MediaQuery.of(context).size,
-                    ),
-                  );
-                  final File imageFile = await Redux.store.state.cameraState.getImageFileFromCamera();
-                  Redux.store.dispatch(TakePhotoAction(imageFile));
-                },
-                child: const Text(
-                  takePhotoButtonText,
-                  style: buttonTextStyle,
+                    Redux.store.dispatch(
+                      SetCameraStateProperties(
+                        screenSize: MediaQuery.of(context).size,
+                      ),
+                    );
+                    final File imageFile = await Redux.store.state.cameraState.getImageFileFromCamera();
+                    Redux.store.dispatch(TakePhotoAction(imageFile));
+                  },
+                  child: const Text(
+                    takePhotoButtonText,
+                    style: buttonTextStyle,
+                  ),
                 ),
               ),
             ),
