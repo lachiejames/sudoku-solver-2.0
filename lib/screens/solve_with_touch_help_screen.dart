@@ -10,7 +10,7 @@ import 'package:sudoku_solver_2/widgets/shared/help_screen_text_widget.dart';
 class SolveWithTouchHelpScreen extends StatelessWidget {
   static const String _tip1SolveWithTouchScreen = '1. Touch a tile to select it';
   static const String _tip2SolveWithTouchScreen = '2. Touch the number you want to add to the tile';
-  static const String _tip3SolveWithTouchScreen = '3. Continue until the sudoku matches the sudoku you want to solve';
+  static const String _tip3SolveWithTouchScreen = '3. Continue until the Sudoku matches the Sudoku you want to solve';
   static const String _tip4SolveWithTouchScreen = '4. Press SOLVE SUDOKU';
   static const String _tip5SolveWithTouchScreen = 'To remove the number from a tile, tap it twice';
 

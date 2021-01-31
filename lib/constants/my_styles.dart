@@ -33,6 +33,14 @@ const EdgeInsetsGeometry topTextMargins = EdgeInsets.only(
   right: 32,
 );
 
+const EdgeInsetsGeometry helpTextMargins = EdgeInsets.only(
+  top: 16,
+  bottom: 16,
+  left: 32,
+  right: 32,
+);
+
+
 final RoundedRectangleBorder buttonShape = RoundedRectangleBorder(
   borderRadius: BorderRadius.circular(10),
 );

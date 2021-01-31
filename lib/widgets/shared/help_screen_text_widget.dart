@@ -9,7 +9,8 @@ class HelpScreenTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        margin: topTextMargins,
+        alignment: Alignment.centerLeft,
+        margin: helpTextMargins,
         child: Text(
           text,
           textAlign: TextAlign.left,
