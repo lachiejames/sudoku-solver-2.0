@@ -13,6 +13,7 @@ final Reducer<HashMap<TileKey, TileState>> tileStateMapReducer = combineReducers
   TypedReducer<HashMap<TileKey, TileState>, TileSelectedAction>(_tileSelectedReducer),
   TypedReducer<HashMap<TileKey, TileState>, TileDeselectedAction>(_tileDeselectedReducer),
   TypedReducer<HashMap<TileKey, TileState>, LoadSudokuGameAction>(_loadExampleValues),
+  TypedReducer<HashMap<TileKey, TileState>, RetakePhotoAction>(_retakePhotoReducer),
   TypedReducer<HashMap<TileKey, TileState>, NumberPressedAction>(_addPressedNumberToTile),
   TypedReducer<HashMap<TileKey, TileState>, SudokuSolvedAction>(_updateTileMapWithSolvedSudokuReducer),
   TypedReducer<HashMap<TileKey, TileState>, RestartAction>(_clearAllValuesReducer),
@@ -121,7 +122,6 @@ HashMap<TileKey, TileState> _clearAllValuesReducer(HashMap<TileKey, TileState> t
   return tileStateMap;
 }
 
-// This one right here officer
 HashMap<TileKey, TileState> _clearTileStateMapReducer(
     HashMap<TileKey, TileState> tileStateMap, ChangeScreenAction action) {
   // Should not clear if looking at help screen
@@ -163,6 +163,19 @@ HashMap<TileKey, TileState> _updateInvalidTilesReducer(
 
 HashMap<TileKey, TileState> _newGamePressedReducer(
     HashMap<TileKey, TileState> tileStateMap, NewGameButtonPressedAction action) {
+  tileStateMap.forEach((TileKey tileKey, TileState tileState) {
+    tileStateMap[tileKey] = tileState.copyWith(
+      value: -1,
+      isSelected: false,
+      isOriginalTile: false,
+      isInvalid: false,
+    );
+  });
+
+  return tileStateMap;
+}
+
+HashMap<TileKey, TileState> _retakePhotoReducer(HashMap<TileKey, TileState> tileStateMap, RetakePhotoAction action) {
   tileStateMap.forEach((TileKey tileKey, TileState tileState) {
     tileStateMap[tileKey] = tileState.copyWith(
       value: -1,
