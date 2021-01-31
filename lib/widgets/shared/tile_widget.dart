@@ -45,7 +45,6 @@ class TileWidget extends StatelessWidget {
               }
 
               if (tileState.isSelected) {
-                await playSound(tileDeselectedSound);
                 Redux.store.dispatch(TileDeselectedAction(tileState));
                 Redux.store.dispatch(UpdateInvalidTilesAction());
                 Redux.store.dispatch(UpdateGameStateAction(Redux.store.state.tileStateMap));

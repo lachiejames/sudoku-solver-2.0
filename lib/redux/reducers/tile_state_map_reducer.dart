@@ -149,14 +149,24 @@ HashMap<TileKey, TileState> _updateInvalidTilesReducer(
     HashMap<TileKey, TileState> tileStateMap, UpdateInvalidTilesAction action) {
   final Sudoku sudoku = Sudoku(tileStateMap: tileStateMap);
   final List<TileKey> invalidTileKeys = sudoku.getInvalidTileKeys();
+  bool shouldPlayInvalidTileSound = false;
 
   tileStateMap.forEach((TileKey tileKey, TileState tileState) {
-    if (invalidTileKeys.contains(tileKey) == true) {
+    if (invalidTileKeys.contains(tileKey) && !tileState.isInvalid) {
+      shouldPlayInvalidTileSound = true;
+    }
+    if (invalidTileKeys.contains(tileKey)) {
       tileStateMap[tileKey] = tileState.copyWith(isInvalid: true);
-    } else if (tileState.isInvalid == true) {
+    } else if (tileState.isInvalid) {
       tileStateMap[tileKey] = tileState.copyWith(isInvalid: false);
     }
   });
+
+  if (shouldPlayInvalidTileSound) {
+    playSound(invalidTilesPresentSound);
+  } else {
+    playSound(tileDeselectedSound);
+  }
 
   return tileStateMap;
 }

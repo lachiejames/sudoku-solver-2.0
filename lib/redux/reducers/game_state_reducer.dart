@@ -65,13 +65,6 @@ GameState _updateGameStateReducer(GameState gameState, UpdateGameStateAction act
   final int numNewInvalidTiles = newSudoku.getInvalidTileKeys().length;
 
   if (numNewInvalidTiles > 0) {
-    final Sudoku oldSudoku = Sudoku(tileStateMap: Redux.store.state.tileStateMap);
-    final int numOldInvalidTiles = oldSudoku.getInvalidTileKeys().length;
-
-    if (numNewInvalidTiles > numOldInvalidTiles) {
-      playSound(invalidTilesPresentSound);
-    }
-
     return GameState.invalidTilesPresent;
   } else if (newSudoku.isFull() && newSudoku.allConstraintsSatisfied()) {
     return GameState.solved;

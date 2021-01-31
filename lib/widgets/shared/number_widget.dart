@@ -30,7 +30,6 @@ class NumberWidget extends StatelessWidget {
           return GestureDetector(
             onTap: () async {
               if (numberState.isActive) {
-                await playSound(tileDeselectedSound);
                 Redux.store.dispatch(NumberPressedAction(numberState));
                 Redux.store.dispatch(UpdateInvalidTilesAction());
                 Redux.store.dispatch(UpdateGameStateAction(Redux.store.state.tileStateMap));
