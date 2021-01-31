@@ -14,27 +14,29 @@ class SolveWithCameraButtonWidget extends StatefulWidget {
 class _SolveWithCameraButtonWidgetState extends State<SolveWithCameraButtonWidget> {
   @override
   Widget build(BuildContext context) => Container(
-        alignment: Alignment.center,
         margin: buttonMargins,
         child: Directionality(
           textDirection: TextDirection.ltr,
-          child: RaisedButton(
-            shape: buttonShape,
-            padding: const EdgeInsets.only(
-              top: 16,
-              bottom: 16,
-              left: 32,
-              right: 32,
-            ),
-            color: pink,
-            onPressed: () async {
-              await playSound(buttonPressedSound);
-              await logEvent('button_solve_with_camera');
-              await _navigateToSolveWithCameraScreen(context);
-            },
-            child: const Text(
-              solveWithCameraButtonText,
-              style: buttonTextStyle,
+          child: SizedBox(
+            width: double.infinity,
+            child: RaisedButton.icon(
+              icon: const Icon(
+                Icons.camera_alt,
+                color: white,
+                size: 40,
+              ),
+              shape: buttonShape,
+              padding: buttonPadding,
+              color: pink,
+              onPressed: () async {
+                await playSound(buttonPressedSound);
+                await logEvent('button_solve_with_camera');
+                await _navigateToSolveWithCameraScreen(context);
+              },
+              label: const Text(
+                solveWithCameraButtonText,
+                style: buttonTextStyle,
+              ),
             ),
           ),
         ),

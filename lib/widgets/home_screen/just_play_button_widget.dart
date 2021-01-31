@@ -9,27 +9,24 @@ class JustPlayButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        alignment: Alignment.center,
         margin: buttonMargins,
         child: Directionality(
           textDirection: TextDirection.ltr,
-          child: RaisedButton(
-            shape: buttonShape,
-            padding: const EdgeInsets.only(
-              top: 16,
-              bottom: 16,
-              left: 50,
-              right: 50,
-            ),
-            color: pink,
-            onPressed: () async {
-              await playSound(buttonPressedSound);
-              await logEvent('button_just_play');
-              await _navigateToJustPlayScreen(context);
-            },
-            child: const Text(
-              justPlayButtonText,
-              style: buttonTextStyle,
+          child: SizedBox(
+            width: double.infinity,
+            child: RaisedButton(
+              shape: buttonShape,
+              padding: buttonPadding,
+              color: pink,
+              onPressed: () async {
+                await playSound(buttonPressedSound);
+                await logEvent('button_just_play');
+                await _navigateToJustPlayScreen(context);
+              },
+              child: const Text(
+                justPlayButtonText,
+                style: buttonTextStyle,
+              ),
             ),
           ),
         ),

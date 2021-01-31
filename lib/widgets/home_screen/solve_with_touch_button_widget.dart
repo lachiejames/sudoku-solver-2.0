@@ -9,27 +9,29 @@ class SolveWithTouchButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        alignment: Alignment.center,
         margin: buttonMargins,
         child: Directionality(
           textDirection: TextDirection.ltr,
-          child: RaisedButton(
-            shape: buttonShape,
-            padding: const EdgeInsets.only(
-              top: 16,
-              bottom: 16,
-              left: 48,
-              right: 48,
-            ),
-            color: pink,
-            onPressed: () async {
-              await playSound(buttonPressedSound);
-              await logEvent('button_solve_with_touch');
-              await _navigateToSolveWithTouchScreen(context);
-            },
-            child: const Text(
-              solveWithTouchButtonText,
-              style: buttonTextStyle,
+          child: SizedBox(
+            width: double.infinity,
+            child: RaisedButton.icon(
+              icon: const Icon(
+                Icons.touch_app,
+                color: white,
+                size: 40,
+              ),
+              shape: buttonShape,
+              padding: buttonPadding,
+              color: pink,
+              onPressed: () async {
+                await playSound(buttonPressedSound);
+                await logEvent('button_solve_with_touch');
+                await _navigateToSolveWithTouchScreen(context);
+              },
+              label: const Text(
+                solveWithTouchButtonText,
+                style: buttonTextStyle,
+              ),
             ),
           ),
         ),
