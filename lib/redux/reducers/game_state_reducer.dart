@@ -78,10 +78,11 @@ GameState _newGameButtonPressedReducer(GameState gameState, NewGameButtonPressed
 GameState _gameSolvedReducerReducer(GameState gameState, GameSolvedAction action) => GameState.solved;
 
 GameState _changeScreenReducer(GameState gameState, ChangeScreenAction action) {
-  if (action.screenState == ScreenState.solveWithCameraScreen) {
-    return GameState.takingPhoto;
-  }
-  return GameState.normal;
+  const List<ScreenState> cameraScreens = <ScreenState>[
+    ScreenState.solveWithCameraScreen,
+    ScreenState.solveWithCameraHelpScreen
+  ];
+  return (cameraScreens.contains(action.screenState)) ? GameState.takingPhoto : GameState.normal;
 }
 
 GameState _stopProcessingPhotoReducer(GameState gameState, StopProcessingPhotoAction action) {
