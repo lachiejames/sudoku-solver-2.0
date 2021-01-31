@@ -7,7 +7,7 @@ const String fontStyleNumber = 'Segoe UI';
 
 const TextStyle buttonTextStyle = TextStyle(
   fontFamily: fontStyle,
-  fontSize: 20,
+  fontSize: 30,
   color: white,
   fontWeight: FontWeight.bold,
 );

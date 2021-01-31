@@ -8,7 +8,7 @@ double horizontalPadding;
 int appBarHeight = 56;
 
 // UI stuff
-const double topTextFontSize = 32;
+const double topTextFontSize = 40;
 const double appBarFontSize = 25;
 const double howToTextFontSize = 30;
 const double buttonTextFontSize = 40;

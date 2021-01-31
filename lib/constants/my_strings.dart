@@ -8,7 +8,7 @@ const String justPlayScreenName = 'Play';
 const String helpScreenName = 'Help';
 
 // TopText
-const String topTextHome = 'How would you like it to be solved?';
+const String topTextHome = 'Choose a solving method';
 const String topTextNoTileSelected = 'Pick a tile';
 const String topTextTileSelected = 'Pick a number';
 const String topTextTileWithValueSelected = 'Tap to remove';
@@ -30,8 +30,8 @@ const String dropDownMenuOption1 = 'Restart';
 const String dropDownMenuOption2 = 'Help';
 
 // Button text
-const String solveWithCameraButtonText = 'SOLVE WITH CAMERA';
-const String solveWithTouchButtonText = 'SOLVE WITH TOUCH';
+const String solveWithCameraButtonText = 'CAMERA';
+const String solveWithTouchButtonText = 'TOUCH';
 const String justPlayButtonText = 'JUST PLAY';
 const String takePhotoButtonText = 'TAKE PHOTO';
 const String retakePhotoButtonText = 'RETAKE PHOTO';

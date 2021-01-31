@@ -12,21 +12,33 @@ import 'package:sudoku_solver_2/widgets/shared/top_text_widget.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key key}) : super(key: key);
 
+  Widget createText() => Container(
+      margin: topTextMargins,
+      child: const Text(
+        'OR',
+        style: TextStyle(
+          fontSize: topTextFontSize,
+          color: white,
+        ),
+        textDirection: TextDirection.ltr,
+      ));
+
   @override
   Widget build(BuildContext context) {
     Redux.store.dispatch(ChangeScreenAction(ScreenState.homeScreen));
-    
+
     return Scaffold(
       backgroundColor: blue,
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
-              TopTextWidget(),
-              SolveWithCameraButtonWidget(),
-              SolveWithTouchButtonWidget(),
-              JustPlayButtonWidget(),
+            children: <Widget>[
+              const TopTextWidget(),
+              const SolveWithCameraButtonWidget(),
+              const SolveWithTouchButtonWidget(),
+              createText(),
+              const JustPlayButtonWidget(),
             ],
           ),
         ),
