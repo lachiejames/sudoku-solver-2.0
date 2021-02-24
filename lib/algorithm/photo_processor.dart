@@ -9,6 +9,7 @@ import 'package:sudoku_solver_2/algorithm/sudoku.dart';
 import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
+import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:sudoku_solver_2/state/tile_state.dart';
 import 'package:async/async.dart';
@@ -129,27 +130,43 @@ Future<void> processPhoto(File imageFile) async {
     'appFolder': (await getApplicationDocumentsDirectory()).path,
   }));
 
-  _processPhotoCancellableOperation.asStream().listen((dynamic tileFileMap) async {
-    if (tileFileMap != null) {
-      try {
-        final Sudoku constructedSudoku = await _getSudokuFromTileImageMap(tileFileMap);
-        await playSound(photoProcessedSound);
-        await takePhotoButtonPressedTrace.stop();
-        Redux.store.dispatch(PhotoProcessedAction(constructedSudoku));
-      } on Exception catch (e) {
-        await logError('ERROR: photo could not be processed', e);
-        await playSound(processingErrorSound);
-        Redux.store.dispatch(PhotoProcessingErrorAction());
+  _processPhotoCancellableOperation.asStream()
+    ..listen((dynamic tileFileMap) async {
+      final bool userDidNotStopProcessing = Redux.store.state.gameState == GameState.processingPhoto;
+      final bool photoIsProcessed = tileFileMap != null;
+      Sudoku constructedSudoku;
+      if (userDidNotStopProcessing && photoIsProcessed) {
+        try {
+          constructedSudoku = await _getSudokuFromTileImageMap(tileFileMap);
+        } on Exception catch (_) {
+          await _handleFailure();
+          return;
+        }
+        final bool userDidNotStopProcessing2 = Redux.store.state.gameState == GameState.processingPhoto;
+        if (constructedSudoku != null && userDidNotStopProcessing2) {
+          await _handleSuccess(constructedSudoku);
+        }
       }
-    }
-  }, onError: (dynamic e) async {
-    await playSound(processingErrorSound);
-    Redux.store.dispatch(PhotoProcessingErrorAction());
-  });
+    }, onError: (dynamic e) async {
+      await _handleFailure();
+    })
+    ..timeout(const Duration(seconds: 30), onTimeout: (_) => _handleFailure());
 }
 
 void stopProcessingPhoto() {
   _processPhotoCancellableOperation.cancel();
+}
+
+Future<void> _handleSuccess(Sudoku constructedSudoku) async {
+  await playSound(photoProcessedSound);
+  await takePhotoButtonPressedTrace.stop();
+  Redux.store.dispatch(PhotoProcessedAction(constructedSudoku));
+}
+
+Future<void> _handleFailure() async {
+  await logError('ERROR: photo could not be processed', e);
+  await playSound(processingErrorSound);
+  Redux.store.dispatch(PhotoProcessingErrorAction());
 }
 
 Future<String> getUniqueFilePath() async {

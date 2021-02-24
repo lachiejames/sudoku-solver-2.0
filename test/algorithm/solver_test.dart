@@ -18,7 +18,6 @@ void main() {
       });
 
       test('results in a solved sudoku', () {
-        startTime = DateTime.now().millisecondsSinceEpoch.toDouble();
         backtracking(sudoku);
         expect(sudoku.toString(), solvedGames[0]);
       });

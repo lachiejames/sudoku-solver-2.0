@@ -157,7 +157,7 @@ void main() {
           await addSudoku(solvingTimeoutErrorGame);
           await waitForThenTap(find.text('SOLVE SUDOKU'));
 
-          await waitToAppear(find.text('STOP SOLVING'));
+          await waitToAppear(find.text('STOP'));
           await pressRestartOnDropDownMenu('SolveWithTouchScreenDropDownMenuWidget');
           await waitToAppear(find.text('SOLVE SUDOKU'));
         });
@@ -188,21 +188,21 @@ void main() {
         await waitToAppear(find.text('RESTART'));
       }, timeout: defaultTimeout);
 
-      test('a STOP SOLVING button will appear during the solve', () async {
+      test('a STOP button will appear during the solve', () async {
         await addSudoku(games[0]);
 
         await driver.runUnsynchronized(() async {
           await waitForThenTap(find.text('SOLVE SUDOKU'));
-          await waitForThenTap(find.text('STOP SOLVING'));
+          await waitForThenTap(find.text('STOP'));
         });
       }, timeout: defaultTimeout);
 
-      test('pressing STOP SOLVING will stop the solve', () async {
+      test('pressing STOP will stop the solve', () async {
         await addSudoku(games[0]);
 
         await driver.runUnsynchronized(() async {
           await waitForThenTap(find.text('SOLVE SUDOKU'));
-          await waitForThenTap(find.text('STOP SOLVING'));
+          await waitForThenTap(find.text('STOP'));
         });
 
         await waitToAppear(find.text('Pick a tile'));

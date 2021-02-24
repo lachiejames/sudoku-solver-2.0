@@ -3,6 +3,7 @@ import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/redux/actions.dart';
 import 'package:sudoku_solver_2/redux/redux.dart';
 import 'package:sudoku_solver_2/screens/solve_with_camera_help_screen.dart';
+import 'package:sudoku_solver_2/state/game_state.dart';
 import 'package:sudoku_solver_2/widgets/shared/slide_animated_route.dart';
 
 /// Drop down menu shown on the SolveWithCameraScreen
@@ -49,6 +50,12 @@ class SolveWithCameraScreenDropDownMenuWidget extends StatelessWidget {
   }
 
   void _restart() {
+    if (Redux.store.state.gameState == GameState.isSolving) {
+      Redux.store.dispatch(StopSolvingSudokuAction());
+    }
+    if (Redux.store.state.gameState == GameState.processingPhoto) {
+      Redux.store.dispatch(StopProcessingPhotoAction());
+    }
     Redux.store.dispatch(RestartAction());
   }
 

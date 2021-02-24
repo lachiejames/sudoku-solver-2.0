@@ -33,7 +33,14 @@ class SolveSudokuButtonWidget extends StatelessWidget {
             return Container();
           }
           return Container(
-            margin: buttonMargins,
+            margin: gameState == GameState.photoProcessed
+                ? const EdgeInsets.only(
+                    top: 8,
+                    bottom: 16,
+                    left: 32,
+                    right: 32,
+                  )
+                : buttonMargins,
             child: Directionality(
               textDirection: TextDirection.ltr,
               child: SizedBox(

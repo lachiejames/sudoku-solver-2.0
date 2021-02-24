@@ -7,8 +7,9 @@ import 'package:sudoku_solver_2/state/tile_key.dart';
 import 'package:test/test.dart';
 import 'package:meta/meta.dart';
 
-const  Timeout defaultTimeout = Timeout(Duration(seconds: 60));
-const  Timeout longTimeout = Timeout(Duration(seconds: 300));
+const Timeout defaultTimeout = Timeout(Duration(seconds: 60));
+const Timeout longTimeout = Timeout(Duration(seconds: 300));
+bool waitUntilSettle = true;
 FlutterDriver driver;
 
 Future<void> initTests() async {
@@ -24,8 +25,10 @@ Future<void> grantAppPermissions() async {
     'platform-tools',
     Platform.isWindows ? 'adb.exe' : 'adb',
   );
-  await Process.run(adbPath, <String>['shell', 'pm', 'grant', 'com.lachie.sudoku_solver_2', 'android.permission.CAMERA']);
-  await Process.run(adbPath, <String>['shell', 'pm', 'grant', 'com.lachie.sudoku_solver_2', 'android.permission.RECORD_AUDIO']);
+  await Process.run(
+      adbPath, <String>['shell', 'pm', 'grant', 'com.lachie.sudoku_solver_2', 'android.permission.CAMERA']);
+  await Process.run(
+      adbPath, <String>['shell', 'pm', 'grant', 'com.lachie.sudoku_solver_2', 'android.permission.RECORD_AUDIO']);
 }
 
 Future<void> pressBackButton() async {
@@ -38,17 +41,32 @@ Future<void> pressBackButton() async {
 
 Future<void> hotRestart() async {
   await driver.requestData('restart');
-  await driver.waitUntilNoTransientCallbacks();
+  if (waitUntilSettle) {
+    await driver.waitUntilNoTransientCallbacks();
+  }
+}
+
+Future<void> waitToAppear(SerializableFinder finder) async {
+  if (waitUntilSettle) {
+    await driver.waitUntilNoTransientCallbacks();
+  }
+  await driver.waitFor(finder);
+}
+
+Future<void> waitToDisappear(SerializableFinder finder) async {
+  if (waitUntilSettle) {
+    await driver.waitUntilNoTransientCallbacks();
+  }
+  await driver.waitForAbsent(finder);
 }
 
 Future<void> waitForThenTap(SerializableFinder finder) async {
   await waitToAppear(finder);
   await driver.tap(finder);
-  await driver.waitUntilNoTransientCallbacks();
 }
 
 Future<void> navigateToSolveWithCameraScreen() async {
-  await waitForThenTap(find.text('SOLVE WITH CAMERA'));
+  await waitForThenTap(find.text('CAMERA'));
 
   await driver.runUnsynchronized(() async {
     await waitToAppear(find.text('Camera'));
@@ -56,7 +74,7 @@ Future<void> navigateToSolveWithCameraScreen() async {
 }
 
 Future<void> navigateToSolveWithTouchScreen() async {
-  await waitForThenTap(find.text('SOLVE WITH TOUCH'));
+  await waitForThenTap(find.text('TOUCH'));
   await waitToAppear(find.text('Touch'));
 }
 
@@ -139,12 +157,10 @@ Future<void> expectTileIs({
   @required String textColor,
   @required bool hasX,
 }) async {
-  await driver.waitUntilNoTransientCallbacks();
   await waitToAppear(find.byValueKey('$tileKey - color:$color - textColor:$textColor - X:$hasX'));
 }
 
 Future<void> expectNumberPropertiesToBe({int number, String color}) async {
-  await driver.waitUntilNoTransientCallbacks();
   await waitToAppear(find.byValueKey('Number($number) - color:$color'));
 }
 
@@ -189,14 +205,4 @@ Future<void> expectButtonPropertiesAre({
   @required String tappable,
 }) async {
   await waitToAppear(find.byValueKey('text:$text - color:$color - tappable:$tappable'));
-}
-
-Future<void> waitToAppear(SerializableFinder finder) async {
-  await driver.waitUntilNoTransientCallbacks();
-  await driver.waitFor(finder);
-}
-
-Future<void> waitToDisappear(SerializableFinder finder) async {
-  await driver.waitUntilNoTransientCallbacks();
-  await driver.waitForAbsent(finder);
 }
