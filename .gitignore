@@ -45,3 +45,6 @@ app.*.map.json
 #SonarQube
 .scannerwork/
 StartSonar.bat
+
+# Added by me
+key.properties

@@ -39,7 +39,7 @@ Future<void> _initCamera() async {
     return;
   }
 
-  cameraController = CameraController(cameras.first, ResolutionPreset.max);
+  cameraController = CameraController(cameras.first, ResolutionPreset.max, enableAudio: false);
 
   try {
     await cameraController.initialize();
