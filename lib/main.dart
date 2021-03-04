@@ -28,7 +28,7 @@ Future<void> main() async {
   await restartApp();
 }
 
-Future<void> _initCamera() async {
+Future<void> initCamera() async {
   List<CameraDescription> cameras;
   CameraController cameraController;
 
@@ -61,7 +61,6 @@ Future<void> restartApp() async {
   await Redux.init();
   final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
   await sharedPrefs.setInt(gameNumberSharedPrefsKey, 0);
-  await _initCamera();
   await loadSoundsToCache();
 
   runApp(

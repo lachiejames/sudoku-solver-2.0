@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sudoku_solver_2/constants/constants.dart';
 import 'package:sudoku_solver_2/screens/solve_with_camera_screen.dart';
 import 'package:sudoku_solver_2/widgets/shared/size_animated_route.dart';
+import 'package:sudoku_solver_2/main.dart';
 
 /// Lives on the HomeScreen, navigating users to the SolveWithCameraButtonWidget
 class SolveWithCameraButtonWidget extends StatefulWidget {
@@ -31,6 +32,7 @@ class _SolveWithCameraButtonWidgetState extends State<SolveWithCameraButtonWidge
               onPressed: () async {
                 await playSound(buttonPressedSound);
                 await logEvent('button_solve_with_camera');
+                await initCamera();
                 await _navigateToSolveWithCameraScreen(context);
               },
               label: const Text(
