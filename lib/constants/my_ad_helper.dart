@@ -1,20 +1,33 @@
 /// Stores stuff to assist with showing ads
 part of './constants.dart';
 
-const String appIdForAdMob = 'ca-app-pub-6687326312027109~4201385146';
+const String androidAdMobID = 'ca-app-pub-6687326312027109/8826669012';
+const String iosAdMobID = 'ca-app-pub-6687326312027109~1539205939';
 
 BannerAd _bannerAd;
 
+Future<void> initialiseAdMob() async {
+  if (Platform.isAndroid) {
+    await FirebaseAdMob.instance.initialize(appId: androidAdMobID);
+  } else {
+    await FirebaseAdMob.instance.initialize(appId: iosAdMobID);
+  }
+}
+
+String getAdMobID() {
+  if (Platform.isAndroid) {
+    return androidAdMobID;
+  } else {
+    return iosAdMobID;
+  }
+}
+
 Future<void> showNewBannerAd() async {
   _bannerAd = BannerAd(
-    adUnitId: BannerAd.testAdUnitId,
+    adUnitId: getAdMobID(),
     size: AdSize.banner,
     targetingInfo: const MobileAdTargetingInfo(
-      testDevices: <String>[appIdForAdMob],
-      keywords: <String>['puzzle'],
-      contentUrl: 'http://foo.com/bar.html',
-      childDirected: false,
-      nonPersonalizedAds: false,
+      keywords: <String>['sudoku', 'puzzle', 'camera', 'solve', 'solver'],
     ),
     listener: (MobileAdEvent event) async {
       await logEvent('banner_ad_event_${_mapAdEventToString(event)}');

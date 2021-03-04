@@ -1,5 +1,4 @@
 import 'package:camera/camera.dart';
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -39,7 +38,8 @@ Future<void> initCamera() async {
     return;
   }
 
-  cameraController = CameraController(cameras.first, ResolutionPreset.max, enableAudio: false);
+  cameraController =
+      CameraController(cameras.first, ResolutionPreset.max, enableAudio: false);
 
   try {
     await cameraController.initialize();
@@ -55,8 +55,9 @@ Future<void> initCamera() async {
 Future<void> restartApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true); // send crash reports during debugging
-  await FirebaseAdMob.instance.initialize(appId: appIdForAdMob);
+  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
+      true); // send crash reports during debugging
+  await initialiseAdMob();
 
   await Redux.init();
   final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
@@ -100,6 +101,7 @@ class MyApp extends StatelessWidget {
     // Remove status bar and system navigation bar
     SystemChrome.setEnabledSystemUIOverlays(<SystemUiOverlay>[]);
     // Prevent screen rotation
-    SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp]);
+    SystemChrome.setPreferredOrientations(
+        <DeviceOrientation>[DeviceOrientation.portraitUp]);
   }
 }
