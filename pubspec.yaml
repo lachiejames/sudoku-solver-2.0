@@ -24,13 +24,13 @@ dependencies:
   redux_thunk: ^0.3.0
   shared_preferences: ^0.5.12+4
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_driver:
-    sdk: flutter
-  test: any
-  pedantic: ^1.9.0
+# dev_dependencies:
+#   flutter_test:
+#     sdk: flutter
+#   flutter_driver:
+#     sdk: flutter
+#   test: "1.16.5"
+#   pedantic: "1.11.0"
 
 flutter:
   uses-material-design: true
