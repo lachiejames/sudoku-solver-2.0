@@ -2,7 +2,7 @@
 part of './constants.dart';
 
 const String androidAdMobID = 'ca-app-pub-6687326312027109/8826669012';
-const String iosAdMobID = 'ca-app-pub-6687326312027109~1539205939';
+const String iosAdMobID = 'ca-app-pub-6687326312027109/1061883152';
 
 BannerAd _bannerAd;
 

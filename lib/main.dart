@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_driver/driver_extension.dart';
+// import 'package:flutter_driver/driver_extension.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sudoku_solver_2/constants/constants.dart';
@@ -15,14 +15,14 @@ import 'package:sudoku_solver_2/state/app_state.dart';
 
 Future<void> main() async {
   // Allows us to run integration tests
-  enableFlutterDriverExtension(handler: (dynamic command) async {
-    if (command == 'restart') {
-      await restartApp();
-    } else {
-      await setMock(command);
-    }
-    return 'ok';
-  });
+  // enableFlutterDriverExtension(handler: (dynamic command) async {
+  //   if (command == 'restart') {
+  //     await restartApp();
+  //   } else {
+  //     await setMock(command);
+  //   }
+  //   return 'ok';
+  // });
 
   await restartApp();
 }
